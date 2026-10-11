@@ -1,0 +1,67 @@
+volumes:
+  test-data:
+
+services:
+  python-tests:
+    image: python:3.14.7-slim
+    working_dir: /app
+    volumes:
+      - .:/app
+      - test-data:/data
+    command: sh -c "pip install -r ${FOLDER_NAME}/requirements.txt && python ${PYTHON_FILE}"
+    profiles:
+      - workers
+  
+  javascript-tests:
+    image: node:26.10
+    working_dir: /app
+    volumes:
+      - .:/app
+      - test-data:/data
+    command: sh -c "node ${JAVASCRIPT_FILE}"
+    profiles:
+      - workers
+
+  java-tests:
+    image: eclipse-temurin:25-jdk-resolute
+    working_dir: /app
+    volumes:
+      - .:/app
+      - test-data:/data
+    command: sh -c "javac ${JAVA_FILE} -d /app && java -cp /app ${JAVA_FILE_NAME}"
+    profiles:
+      - workers
+
+  scheme-tests:
+    build: 
+      dockerfile: scheme.dockerfile
+      args:
+        FOLDER_NAME: ${FOLDER_NAME}
+        SCHEME_FILE: ${SCHEME_FILE}
+    working_dir: /app
+    volumes:
+      - .:/app
+      - test-data:/data
+    command: sh -c "csi -script ${SCHEME_FILE}"
+    profiles:
+      - workers
+
+  haskell-tests:
+    image: haskell:9.14.1
+    working_dir: /app
+    volumes:
+      - .:/app
+      - test-data:/data
+    command: sh -c "runghc ${HASKELL_FILE}"
+    profiles:
+      - workers
+
+  prolog-tests:
+    image: swipl:10.0.2
+    working_dir: /app
+    volumes:
+      - .:/app
+      - test-data:/data
+    command: swipl -s ${PROLOG_FILE} -g ${STRIPPED_PROLOG} -t halt
+    profiles:
+      - workers
