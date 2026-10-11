@@ -1,0 +1,12 @@
+[
+    {
+        "name": "Basic Input",
+        "input": "World",
+        "output": "Hello, World"
+    },
+    {
+        "name": "Longer Input",
+        "input": "World, Beautiful World",
+        "output": "Hello, World, Beautiful World"
+    }
+]

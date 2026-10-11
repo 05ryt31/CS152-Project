@@ -1,4 +1,4 @@
-package harness.smoke_io;
+package harness.tests.smoke_io;
 
 import java.util.Scanner;
 

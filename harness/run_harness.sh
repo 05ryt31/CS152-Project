@@ -9,10 +9,12 @@ RUN_SCHEME="true"
 RUN_HASKELL="true"
 RUN_PROLOG="true"
 
+REPORT_FILE="report.txt"
+
 while [[ $# -gt 0 ]]; do
     case "$1" in
         -h|--help)
-            echo "Usage: $0 [-f|--folder test_folder_path] [-j|--java-package harness]"
+            echo "Usage: $0 [-f|--folder test_folder_path] [-j|--java-package harness] [-r|--report report_file]"
             echo "[-p|--skip-python] [-a|--skip-js] [-v|--skip-java] [-s|--skip-scheme] [-k|--skip-haskell] [-l|--skip-prolog]"
             exit 0
             ;; 
@@ -22,6 +24,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         -j|--java-package)
             JAVA_PACKAGE="$2"
+            shift 2
+            ;;
+        -r|--report)
+            REPORT_FILE="$2"
             shift 2
             ;;
         -p|--skip-python)
@@ -55,7 +61,21 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-echo "Running test..."
+# Delete any compiled Java files and the directories that contained them, if needed
+java_cleanup() {
+    find . -type f -name "*.class" -delete
+    find . -type d -empty -delete
+}
+
+trap java_cleanup EXIT
+
+get_now() {
+    echo $(date "+%F %T")
+}
+
+NOW=$(get_now)
+echo "Test Run: ${NOW}" | tee "${REPORT_FILE}"
+echo "Test Folder: ${FOLDER_NAME}" | tee -a "${REPORT_FILE}"
 
 export PYTHON_FILE=$(find ${FOLDER_NAME} -maxdepth 1 -name "*.py" -print -quit)
 export JAVASCRIPT_FILE=$(find ${FOLDER_NAME} -maxdepth 1 -name "*.js" -print -quit)
@@ -64,95 +84,103 @@ export SCHEME_FILE=$(find ${FOLDER_NAME} -maxdepth 1 -name "*.scm" -print -quit)
 export HASKELL_FILE=$(find ${FOLDER_NAME} -maxdepth 1 -name "*.hs" -print -quit)
 export PROLOG_FILE=$(find ${FOLDER_NAME} -maxdepth 1 -name "*.pl" -print -quit)
 
-export JAVA_FILE_NAME="${JAVA_PACKAGE}.${JAVA_FILE%.java}"
+JAVA_FILE_NAME="${JAVA_FILE%.java}"
+JAVA_FILE_NAME="${JAVA_FILE_NAME/./}"
+export JAVA_FILE_NAME="${JAVA_PACKAGE}${JAVA_FILE_NAME////.}"
 STRIPPED_PROLOG=${PROLOG_FILE##*/}
 export STRIPPED_PROLOG=${STRIPPED_PROLOG%.pl}
 
-INPUT_FILE="${FOLDER_NAME}/input.txt"
-OUTPUT_FILE="${FOLDER_NAME}/expected.txt"
+CATEGORIES=("PYTHON" "JAVASCRIPT" "JAVA" "SCHEME" "HASKELL" "PROLOG")
+SERVICES=("python-tests" "javascript-tests" "java-tests" "scheme-tests" "haskell-tests" "prolog-tests")
+RUN_FLAGS=("${RUN_PYTHON}" "${RUN_JAVASCRIPT}" "${RUN_JAVA}" "${RUN_SCHEME}" "${RUN_HASKELL}" "${RUN_PROLOG}")
 
-# Make sure temp files will be destroyed, even on crash
-trap 'rm -f ./output_*.txt' EXIT
+TOTAL_TESTS=0
+TOTAL_SUCCESSFUL_TESTS=0
+TOTAL_FAILED_TESTS=0
+TOTAL_CRASHED_TESTS=0
+TOTAL_SKIPPED_TESTS=0
 
-rm -f diff_*.txt
+for i in "${!CATEGORIES[@]}"; do
+    NAME=""
+    INPUT=""
+    OUTPUT=""
 
-if [ "${RUN_PYTHON}" = "true" ]; then
-    cat "${INPUT_FILE}" | docker compose run --rm -T python-tests > ./output_python.txt
+    ((TESTS=0))
+    ((SUCCESSFUL_TESTS=0))
+    ((FAILED_TESTS=0))
+    ((SKIPPED_TESTS=0))
+    ((CRASHED_TESTS=0))
 
-    if diff -w ./output_python.txt "${OUTPUT_FILE}" > ./diff_python.txt; then
-        rm -f ./diff_python.txt
-        echo "[PYTHON] Test passed."
-    else
-        echo "[PYTHON] Test failed."
-    fi
-else
-    echo "[PYTHON] Test skipped."
-fi
+    echo "--------------------------------------------------" | tee -a "${REPORT_FILE}"
+    NOW=$(get_now)
+    echo "${NOW}" | tee -a "${REPORT_FILE}"
+    echo "${CATEGORIES[i]}" | tee -a "${REPORT_FILE}"
 
-if [ "${RUN_JAVASCRIPT}" = "true" ]; then
-    cat "${INPUT_FILE}" | docker compose run --rm -T javascript-tests > ./output_javascript.txt
+    while IFS= read -r item; do
+        if [ "${NAME}" = "" ]; then
+            NAME="${item}"
+            continue
+        fi
 
-    if diff -w ./output_javascript.txt "${OUTPUT_FILE}" > ./diff_javascript.txt; then
-        rm -f ./diff_javascript.txt
-        echo "[JAVASCRIPT] Test passed."
-    else
-        echo "[JAVASCRIPT] Test failed."
-    fi
-else
-    echo "[JAVASCRIPT] Test skipped."
-fi
+        if [ "${INPUT}" = "" ]; then
+            INPUT="${item}"
+            continue
+        fi
 
-if [ "${RUN_JAVA}" = "true" ]; then
-    cat "${INPUT_FILE}" | docker compose run --rm -T java-tests > ./output_java.txt
+        OUTPUT="${item}"
 
-    if diff -w ./output_java.txt "${OUTPUT_FILE}" > ./diff_java.txt; then
-        rm -f ./diff_java.txt
-        echo "[JAVA] Test passed."
-    else
-        echo "[JAVA] Test failed."
-    fi
-else
-    echo "[JAVA] Test skipped."
-fi
+        NAME="${NAME//$'\r'/}"
+        INPUT="${INPUT//$'\r'/}"
+        OUTPUT="${OUTPUT//$'\r'/}"
+        
+        EXECUTE=""
+        if [ "${RUN_FLAGS[i]}" = "false" ]; then
+            EXECUTE="-k"
+        fi
 
-if [ "${RUN_SCHEME}" = "true" ]; then
-    cat "${INPUT_FILE}" | docker compose run --rm -T scheme-tests > ./output_scheme.txt
+        RESULT=$(echo "${INPUT}" | ./run_test.sh ${EXECUTE} -c "${category}" -n "${NAME}" -o "${OUTPUT}\n" -s "${SERVICES[i]}")
+        echo "${RESULT}" | tee -a "${REPORT_FILE}"
 
-    if diff -w ./output_scheme.txt "${OUTPUT_FILE}" > ./diff_scheme.txt; then
-        rm -f ./diff_scheme.txt
-        echo "[SCHEME] Test passed."
-    else
-        echo "[SCHEME] Test failed."
-    fi
-else
-    echo "[SCHEME] Test skipped."
-fi
+        if [[ "${RESULT}" == *"PASSED"* ]]; then
+            ((SUCCESSFUL_TESTS++))
+        elif [[ "${RESULT}" == *"SKIPPED"* ]]; then
+            ((SKIPPED_TESTS++))
+        elif [[ "${RESULT}" == *"FAILED"* ]]; then
+            ((FAILED_TESTS++))
+        else
+            ((CRASHED_TESTS++))
+        fi
 
-if [ "${RUN_HASKELL}" = "true" ]; then
-    cat "${INPUT_FILE}" | docker compose run --rm -T haskell-tests > ./output_haskell.txt
+        ((TESTS++))
 
-    if diff -w ./output_haskell.txt "${OUTPUT_FILE}" > ./diff_haskell.txt; then
-        rm -f ./diff_haskell.txt
-        echo "[HASKELL] Test passed."
-    else
-        echo "[HASKELL] Test failed."
-    fi
-else
-    echo "[HASKELL] Test skipped."
-fi
+        NAME=""
+        INPUT=""
+        OUTPUT=""
+    done < <(cat "${FOLDER_NAME}/tests.json" | python3 -c"
+import sys, json
+data = json.load(sys.stdin)
+[print(item['name'] + '\n' + item['input'] + '\n' + item['output']) for item in data]")
 
-if [ "${RUN_PROLOG}" = "true" ]; then
-    cat "${INPUT_FILE}" | docker compose run --rm -T prolog-tests > ./output_prolog.txt
+    echo ""
+    echo "Tests: ${TESTS}" | tee -a "${REPORT_FILE}"
+    echo "Passed: ${SUCCESSFUL_TESTS}/${TESTS}" | tee -a "${REPORT_FILE}"
+    echo "Failed: ${FAILED_TESTS}/${TESTS}" | tee -a "${REPORT_FILE}"
+    echo "Crashed: ${CRASHED_TESTS}/${TESTS}" | tee -a "${REPORT_FILE}"
+    echo "Skipped: ${SKIPPED_TESTS}/${TESTS}" | tee -a "${REPORT_FILE}"
 
-    if diff -w ./output_prolog.txt "${OUTPUT_FILE}" > ./diff_prolog.txt; then
-        rm -f ./diff_prolog.txt
-        echo "[PROLOG] Test passed."
-    else
-        echo "[PROLOG] Test failed."
-    fi
-else
-    echo "[PROLOG] Test skipped."
-fi
+    ((TOTAL_TESTS+=${TESTS}))
+    ((TOTAL_SUCCESSFUL_TESTS+=${SUCCESSFUL_TESTS}))
+    ((TOTAL_FAILED_TESTS+=${FAILED_TESTS}))
+    ((TOTAL_SKIPPED_TESTS+=${SKIPPED_TESTS}))
+    ((TOTAL_CRASHED_TESTS+=${CRASHED_TESTS}))
+done
 
-rm -f ./output_python.txt ./output_javascript.txt ./output_java.txt ./output_scheme.txt ./output_haskell.txt ./output_prolog.txt
-rm -r ./harness
+echo "--------------------------------------------------" | tee -a "${REPORT_FILE}"
+NOW=$(get_now)
+echo "Summary: ${NOW}" | tee -a "${REPORT_FILE}"
+echo "" | tee -a "${REPORT_FILE}"
+echo "Total Tests: ${TOTAL_TESTS}" | tee -a "${REPORT_FILE}"
+echo "Passed: ${TOTAL_SUCCESSFUL_TESTS}/${TOTAL_TESTS}" | tee -a "${REPORT_FILE}"
+echo "Failed: ${TOTAL_FAILED_TESTS}/${TOTAL_TESTS}" | tee -a "${REPORT_FILE}"
+echo "Crashed: ${TOTAL_CRASHED_TESTS}/${TOTAL_TESTS}" | tee -a "${REPORT_FILE}"
+echo "Skipped: ${TOTAL_SKIPPED_TESTS}/${TOTAL_TESTS}" | tee -a "${REPORT_FILE}"

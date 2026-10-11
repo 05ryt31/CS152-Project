@@ -8,7 +8,7 @@ services:
     volumes:
       - .:/app
       - test-data:/data
-    command: sh -c "pip install -r ${FOLDER_NAME}/requirements.txt && python ${PYTHON_FILE}"
+    command: sh -c "pip install -r ${FOLDER_NAME}/py_requirements.txt && python ${PYTHON_FILE}"
     profiles:
       - workers
   
