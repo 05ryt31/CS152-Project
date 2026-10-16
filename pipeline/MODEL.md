@@ -46,7 +46,7 @@ we can finetune and run the full matrix ourselves is worth more than a stronger 
   accumulation 8), learning rate 2e-4 cosine, 2 epochs, gradient checkpointing on. Adjust only if loss does
   not fall or we OOM.
 - **Budget**: target 2,000-5,000 pairs → roughly 1-3 h on a T4 with Unsloth. Checkpoint to Drive every 100 steps.
-- **Artifacts**: adapter pushed to the Hugging Face Hub (`[decide]` org/name) and tagged; `pipeline/model.lock.json`
+- **Artifacts**: adapter pushed to the Hugging Face Hub as `05ryt31/lost-across-paradigms` (Ryuto's account) and tagged; `pipeline/model.lock.json`
   records base revision, adapter commit, and the training config hash.
 
 ## 3. Training data
@@ -123,9 +123,9 @@ re-run under it so the whole matrix shares one model.
 ## 6. Open decisions
 
 - [x] Base model: Qwen2.5-Coder-7B-Instruct, dense 7B (decided Oct 15)
-- [ ] `[decide]` Hugging Face org/name for the adapter and who owns the account
-- [ ] `[decide]` Colab Pro budget cap if the free quota throttles us (suggest: USD 10-12 / month, one account)
-- [ ] `[decide]` Whether #31 compares 1.5B vs 7B (cheap) or 7B vs 14B (needs more VRAM)
+- [x] Hugging Face: adapter lives at `05ryt31/lost-across-paradigms`, Ryuto owns the account (decided Oct 16)
+- [x] Colab Pro budget cap: USD 10-12 / month on one account, only if the free quota throttles us (decided Oct 16)
+- [x] #31 compares 1.5B vs 7B to stay within budget (decided Oct 16)
 - [x] Rosetta coverage counted (Oct 15): 1,877 pairs into Prolog, 1,773 into Scheme; no oversampling needed
 
 ## Sources consulted (Oct 15, 2026)
