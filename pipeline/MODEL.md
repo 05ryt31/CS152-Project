@@ -1,7 +1,7 @@
 # Model, finetuning, and fallback (Issue #13)
 
-Status: **base model decided (Oct 15): Qwen2.5-Coder-7B-Instruct, dense 7B.** Remaining `[decide]` items need a
-yes/no from both authors by **Oct 19** so the check-in video can state the full setup.
+Status: **decided (Oct 16).** Base model Qwen2.5-Coder-7B-Instruct, QLoRA on Rosetta Code pairs, adapter on
+Ryuto's Hugging Face account, Colab Pro cap USD 10-12 / month, #31 compares 1.5B vs 7B.
 
 ## Decision summary
 
@@ -14,7 +14,7 @@ yes/no from both authors by **Oct 19** so the check-in video can state the full 
 | Training data | Rosetta Code task pairs (same task, language A → language B), restricted to our six languages | Only public corpus with substantial Prolog, Scheme and Haskell solutions of the same tasks; 16,742 ordered pairs available (counted Oct 15, below) |
 | Inference | Same base + adapter via `transformers` (or vLLM) on Colab; greedy decoding | One code path for finetuned and fallback runs |
 | Fallback | Base Qwen2.5-Coder-7B-Instruct + fixed 3-shot prompt, no adapter | Decided on **Oct 31** by the go/no-go below |
-| Stretch (#31) | Qwen2.5-Coder-14B-Instruct with the same adapter recipe, or an API model as an upper-bound reference | Size comparison promised in the proposal "if time permits" |
+| Stretch (#31) | Qwen2.5-Coder-1.5B-Instruct with the same adapter recipe (decided Oct 16: 1.5B vs 7B, to stay within budget) | Size comparison promised in the proposal "if time permits" |
 
 Exact model revisions (Hugging Face commit hashes) go in `pipeline/model.lock.json` once pulled.
 `[decide]` Verify on the model cards that the 7B and 1.5B Instruct weights are Apache 2.0 at the revision we pin.
