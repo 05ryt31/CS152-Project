@@ -16,8 +16,8 @@ Ryuto's Hugging Face account, Colab Pro cap USD 10-12 / month, #31 compares 1.5B
 | Fallback | Base Qwen2.5-Coder-7B-Instruct + fixed 3-shot prompt, no adapter | Decided on **Oct 31** by the go/no-go below |
 | Stretch (#31) | Qwen2.5-Coder-1.5B-Instruct with the same adapter recipe (decided Oct 16: 1.5B vs 7B, to stay within budget) | Size comparison promised in the proposal "if time permits" |
 
-Exact model revisions (Hugging Face commit hashes) go in `pipeline/model.lock.json` once pulled.
-`[decide]` Verify on the model cards that the 7B and 1.5B Instruct weights are Apache 2.0 at the revision we pin.
+Exact model revisions (Hugging Face commit hashes) are in `pipeline/model.lock.json`. Hugging Face account `05ryt31` created Oct 16.
+Verified Oct 16 via the Hub API: both the 7B and 1.5B Instruct weights are `apache-2.0` and ungated; revisions are pinned in `pipeline/model.lock.json`.
 
 ## 1. Base model candidates
 
