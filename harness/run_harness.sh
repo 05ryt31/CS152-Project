@@ -104,6 +104,7 @@ for i in "${!CATEGORIES[@]}"; do
     NAME=""
     INPUT=""
     OUTPUT=""
+    INDEX=0
 
     ((TESTS=0))
     ((SUCCESSFUL_TESTS=0))
@@ -117,13 +118,15 @@ for i in "${!CATEGORIES[@]}"; do
     echo "${CATEGORIES[i]}" | tee -a "${REPORT_FILE}"
 
     while IFS= read -r item; do
-        if [ "${NAME}" = "" ]; then
+        if [ ${INDEX} -eq 0 ]; then
             NAME="${item}"
+            ((INDEX++))
             continue
         fi
 
-        if [ "${INPUT}" = "" ]; then
+        if [ ${INDEX} -eq 1 ]; then
             INPUT="${item}"
+            ((INDEX++))
             continue
         fi
 
@@ -156,6 +159,7 @@ for i in "${!CATEGORIES[@]}"; do
         NAME=""
         INPUT=""
         OUTPUT=""
+        INDEX=0
     done < <(cat "${FOLDER_NAME}/tests.json" | python3 -c"
 import sys, json
 data = json.load(sys.stdin)
