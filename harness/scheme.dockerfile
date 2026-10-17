@@ -1,0 +1,10 @@
+FROM ubuntu:26.04
+
+ARG FOLDER_NAME
+ARG SCHEMA_FILE
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+COPY ${SCHEME_FILE} /app/${SCHEME_FILE}
+
+RUN apt-get update && apt-get install -y chicken-bin=5.3.0-2build1 
