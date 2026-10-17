@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.venv/
+# raw model outputs: decide per run whether they go to git or a release asset (#17)
+results/raw/
