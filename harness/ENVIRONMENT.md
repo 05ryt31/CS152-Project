@@ -26,7 +26,7 @@ Docker OS: Ubuntu
 
 Using Chicken
 
-Version: 6.0.0
+Version: 5.3.0
 
 Docker OS: Ubuntu
 
