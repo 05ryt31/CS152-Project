@@ -154,6 +154,7 @@ for i in "${!CATEGORIES[@]}"; do
     fi
 
     while IFS=$'\t' read -r INDEX NAME; do
+        NAME="${NAME%$'\r'}"
         RESULT=$(./run_test.sh ${EXECUTE} -c "${CATEGORIES[i]}" -n "${NAME}" -i "${CASES_DIR}/${INDEX}.in" -o "${CASES_DIR}/${INDEX}.out" -s "${SERVICES[i]}")
         echo "${RESULT}" | tee -a "${REPORT_FILE}"
 
