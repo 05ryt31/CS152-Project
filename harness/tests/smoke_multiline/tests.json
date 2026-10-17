@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Three lines reversed",
+        "input": "a\nb\nc",
+        "output": "c\nb\na"
+    },
+    {
+        "name": "Empty input gives empty output",
+        "input": "",
+        "output": ""
+    },
+    {
+        "name": "Backslash is literal",
+        "input": "C:\\new\\tab",
+        "output": "C:\\new\\tab"
+    },
+    {
+        "name": "Status words in output are data",
+        "input": "x PASSED\ny FAILED",
+        "output": "y FAILED\nx PASSED"
+    }
+]

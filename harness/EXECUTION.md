@@ -25,8 +25,19 @@ To skip one or more tests, pass `-p` to skip Python, `-a` to skip JavaScript, `-
 ./run_harness.sh -f <test_folder_path> -p -s
 ```
 
-The name of the default root Java package is `harness`. For Java scripts outside of the `harness` folder, it may be necessary to change this by passing the explicit name:
+Languages with no program in the folder are reported as SKIPPED automatically, so a folder that holds a single
+`.hs` file runs only the Haskell tests.
 
-```bash
-./run_harness.sh -f <test_folder_path> -j <java_package_name>
-```
+## Test folder conventions
+
+- `tests.json` is a JSON array of `{ "name", "input", "output" }`. `input` is fed to stdin and `output` is compared
+  with stdout. Both may contain newlines. A trailing newline is appended to each unless it is empty, so a program
+  that prints `x\n` matches `"output": "x"` and a program that prints nothing matches `"output": ""`.
+- The comparison is `diff -w`, which ignores whitespace differences within a line.
+- One source file per language: `*.py`, `*.js` (ES modules are fine), `*.java`, `*.scm` (CHICKEN 5), `*.hs`, `*.pl`.
+- Java: the file's `package` declaration must equal the test folder path relative to the project root with `/`
+  replaced by `.`, and the public class must be named after the file (e.g. `harness/tests/smoke_io/SmokeIO.java`
+  declares `package harness.tests.smoke_io;`). Folder names must therefore be valid Java identifiers.
+- Prolog: the entry predicate has arity 0 and is named after the file (`smoke_io.pl` defines `smoke_io/0`); the
+  runner calls `swipl -s <file> -g <name> -t halt`.
+- Python: a `*_requirements.txt` in the folder is pip-installed before the run; it is optional.

@@ -8,7 +8,8 @@ services:
     volumes:
       - ${PROJECT_ROOT-.}:/app
       - test-data:/data
-    command: sh -c "pip install -r ${PYTHON_REQUIREMENTS} && python ${PYTHON_FILE}"
+    # Only install requirements when the folder has a *_requirements.txt (pipeline pair folders do not)
+    command: sh -c "( [ -z '${PYTHON_REQUIREMENTS}' ] || pip install -q -r '${PYTHON_REQUIREMENTS}' ) && python ${PYTHON_FILE}"
     profiles:
       - workers
   
@@ -33,10 +34,8 @@ services:
       - workers
 
   scheme-tests:
-    build: 
+    build:
       dockerfile: scheme.dockerfile
-      args:
-        SCHEME_FILE: ${SCHEME_FILE}
     working_dir: /app
     volumes:
       - ${PROJECT_ROOT-.}:/app

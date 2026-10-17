@@ -1,1 +1,7 @@
+__pycache__/
+*.pyc
+*.class
+.venv/
+# harness report and raw model outputs: decide per run whether raw outputs go to git or a release asset (#17)
 report.txt
+results/raw/
