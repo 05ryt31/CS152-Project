@@ -137,6 +137,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--base-url", help="http backend: server root, e.g. http://localhost:11434")
     ap.add_argument("--model", help="http backend: model name on the server (default: base repo from model.lock.json)")
     ap.add_argument("--adapter", action="store_true", help="hf backend: load the adapter from model.lock.json")
+    ap.add_argument("--load-4bit", action="store_true", help="hf backend: NF4 quantized base (needed on a 15 GB T4)")
     ap.add_argument("--template", type=Path, default=HERE / "prompts" / "v1.md")
     ap.add_argument("--results-dir", type=Path, default=ROOT / "results" / "raw")
     args = ap.parse_args(argv)
@@ -150,7 +151,7 @@ def main(argv: list[str] | None = None) -> int:
     pairs = select_pairs(matrix, args.pairs, args.priority)
     problems = [args.problems_dir / p for p in args.problem] if args.problem else sorted(
         d for d in args.problems_dir.iterdir() if (d / "tests.json").exists())
-    backend = make_backend(args.backend, lock, args.base_url, args.model, args.adapter)
+    backend = make_backend(args.backend, lock, args.base_url, args.model, args.adapter, args.load_4bit)
     run_dir = args.results_dir / args.run_id
 
     print(f"{len(problems)} problems x {len(pairs)} pairs -> {run_dir}  [backend={backend.name}, prompt={template.version}]")

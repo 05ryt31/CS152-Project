@@ -63,13 +63,22 @@ class HFBackend:
 
     name = "hf"
 
-    def __init__(self, repo: str, revision: str, decoding: dict, adapter: str | None = None, adapter_revision: str | None = None):
+    def __init__(self, repo: str, revision: str, decoding: dict, adapter: str | None = None,
+                 adapter_revision: str | None = None, load_4bit: bool = False):
         import torch
         from transformers import AutoModelForCausalLM, AutoTokenizer
 
+        kwargs = {"revision": revision, "device_map": "auto"}
+        if load_4bit:  # 7B in NF4 is ~5.5 GB, fits a Colab T4; the QLoRA adapter is trained on this same 4-bit base
+            from transformers import BitsAndBytesConfig
+
+            kwargs["quantization_config"] = BitsAndBytesConfig(
+                load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16)
+        else:
+            kwargs["torch_dtype"] = "auto"
         self.tokenizer = AutoTokenizer.from_pretrained(repo, revision=revision)
-        self.model = AutoModelForCausalLM.from_pretrained(repo, revision=revision, torch_dtype="auto", device_map="auto")
-        self.model_id = f"{repo}@{revision[:12]}"
+        self.model = AutoModelForCausalLM.from_pretrained(repo, **kwargs)
+        self.model_id = f"{repo}@{revision[:12]}" + ("+nf4" if load_4bit else "")
         if adapter:
             from peft import PeftModel
 
@@ -90,7 +99,8 @@ class HFBackend:
         )
 
 
-def make_backend(kind: str, lock: dict, base_url: str | None, model_override: str | None, use_adapter: bool):
+def make_backend(kind: str, lock: dict, base_url: str | None, model_override: str | None, use_adapter: bool,
+                 load_4bit: bool = False):
     decoding = lock["decoding"]
     if kind == "dry":
         return DryBackend()
@@ -107,5 +117,6 @@ def make_backend(kind: str, lock: dict, base_url: str | None, model_override: st
             decoding,
             adapter=adapter["repo"] if adapter else None,
             adapter_revision=adapter["revision"] if adapter else None,
+            load_4bit=load_4bit,
         )
     raise SystemExit(f"unknown backend: {kind}")
