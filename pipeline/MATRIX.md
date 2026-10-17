@@ -9,7 +9,7 @@
 | Python | imperative | imperative-oo | Python 3.14 |
 | JavaScript | imperative | imperative-oo | Node 26 |
 | Java | oo | imperative-oo | JDK 25 |
-| Scheme | functional | functional | CHICKEN 6 |
+| Scheme | functional | functional | CHICKEN 5.3 |
 | Haskell | functional | functional | GHC 9.14 |
 | Prolog | logic | logic | SWI-Prolog 10 |
 
