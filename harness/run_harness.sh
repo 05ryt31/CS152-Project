@@ -1,6 +1,5 @@
 #!/bin/bash
-export FOLDER_NAME="smoke"
-JAVA_PACKAGE="harness"
+FOLDER_PATH="smoke"
 
 RUN_PYTHON="true"
 RUN_JAVASCRIPT="true"
@@ -11,19 +10,18 @@ RUN_PROLOG="true"
 
 REPORT_FILE="report.txt"
 
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+export PROJECT_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+
 while [[ $# -gt 0 ]]; do
     case "$1" in
         -h|--help)
-            echo "Usage: $0 [-f|--folder test_folder_path] [-j|--java-package harness] [-r|--report report_file]"
+            echo "Usage: $0 [-f|--folder test_folder_path] [-r|--report report_file]"
             echo "[-p|--skip-python] [-a|--skip-js] [-v|--skip-java] [-s|--skip-scheme] [-k|--skip-haskell] [-l|--skip-prolog]"
             exit 0
             ;; 
         -f|--folder)
-            export FOLDER_NAME="$2"
-            shift 2
-            ;;
-        -j|--java-package)
-            JAVA_PACKAGE="$2"
+            FOLDER_PATH="$2"
             shift 2
             ;;
         -r|--report)
@@ -73,20 +71,30 @@ get_now() {
     echo $(date "+%F %T")
 }
 
+get_file_path() {
+    local WILDCARD="$1"
+    local FILE_NAME=$(basename $(find ${TEST_DIR} -maxdepth 1 -name "${WILDCARD}" -print -quit))
+
+    echo "${FOLDER_PATH}/${FILE_NAME}"
+}
+
+TEST_DIR="${PROJECT_ROOT}/${FOLDER_PATH}/${TEST_NAME}"
+export TEST_DIR="$(realpath "$TEST_DIR")"
+
 NOW=$(get_now)
 echo "Test Run: ${NOW}" | tee "${REPORT_FILE}"
-echo "Test Folder: ${FOLDER_NAME}" | tee -a "${REPORT_FILE}"
+echo "Test Folder: ${FOLDER_PATH}" | tee -a "${REPORT_FILE}"
 
-export PYTHON_FILE=$(find ${FOLDER_NAME} -maxdepth 1 -name "*.py" -print -quit)
-export JAVASCRIPT_FILE=$(find ${FOLDER_NAME} -maxdepth 1 -name "*.js" -print -quit)
-export JAVA_FILE=$(find ${FOLDER_NAME} -maxdepth 1 -name "*.java" -print -quit)
-export SCHEME_FILE=$(find ${FOLDER_NAME} -maxdepth 1 -name "*.scm" -print -quit)
-export HASKELL_FILE=$(find ${FOLDER_NAME} -maxdepth 1 -name "*.hs" -print -quit)
-export PROLOG_FILE=$(find ${FOLDER_NAME} -maxdepth 1 -name "*.pl" -print -quit)
+export PYTHON_FILE=$(get_file_path "*.py")
+export PYTHON_REQUIREMENTS=$(get_file_path "*_requirements.txt")
+export JAVASCRIPT_FILE=$(get_file_path "*.js")
+export JAVA_FILE=$(get_file_path "*.java")
+export SCHEME_FILE=$(get_file_path "*.scm")
+export HASKELL_FILE=$(get_file_path "*.hs")
+export PROLOG_FILE=$(get_file_path "*.pl")
 
 JAVA_FILE_NAME="${JAVA_FILE%.java}"
-JAVA_FILE_NAME="${JAVA_FILE_NAME/./}"
-export JAVA_FILE_NAME="${JAVA_PACKAGE}${JAVA_FILE_NAME////.}"
+export JAVA_FILE_NAME="${JAVA_FILE_NAME/./}"
 STRIPPED_PROLOG=${PROLOG_FILE##*/}
 export STRIPPED_PROLOG=${STRIPPED_PROLOG%.pl}
 
@@ -160,7 +168,7 @@ for i in "${!CATEGORIES[@]}"; do
         INPUT=""
         OUTPUT=""
         INDEX=0
-    done < <(cat "${FOLDER_NAME}/tests.json" | python3 -c"
+    done < <(cat "${TEST_DIR}/tests.json" | python3 -c"
 import sys, json
 data = json.load(sys.stdin)
 [print(item['name'] + '\n' + item['input'] + '\n' + item['output']) for item in data]")

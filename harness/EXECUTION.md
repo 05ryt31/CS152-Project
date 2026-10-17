@@ -5,6 +5,12 @@ With `harness/` as the CWD, run:
 ./run_harness.sh -f <test_folder_path>
 ```
 
+`<test_folder_path>` must be relative to the project root. For example:
+
+```bash
+./run_harness.sh -f harness/tests/smoke_io
+```
+
 The harness will execute against the programs inside `<test_folder_path>`, using the inputs and expected outputs in a `tests.json` file within the folder. The results will be stored in a `report.txt` file.
 
 To change the name of the report file:

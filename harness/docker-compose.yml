@@ -6,9 +6,9 @@ services:
     image: python:3.14.7-slim
     working_dir: /app
     volumes:
-      - .:/app
+      - ${PROJECT_ROOT-.}:/app
       - test-data:/data
-    command: sh -c "pip install -r ${FOLDER_NAME}/py_requirements.txt && python ${PYTHON_FILE}"
+    command: sh -c "pip install -r ${PYTHON_REQUIREMENTS} && python ${PYTHON_FILE}"
     profiles:
       - workers
   
@@ -16,7 +16,7 @@ services:
     image: node:26.10
     working_dir: /app
     volumes:
-      - .:/app
+      - ${PROJECT_ROOT-.}:/app
       - test-data:/data
     command: sh -c "node ${JAVASCRIPT_FILE}"
     profiles:
@@ -26,7 +26,7 @@ services:
     image: eclipse-temurin:25-jdk-resolute
     working_dir: /app
     volumes:
-      - .:/app
+      - ${PROJECT_ROOT-.}:/app
       - test-data:/data
     command: sh -c "javac ${JAVA_FILE} -d /app && java -cp /app ${JAVA_FILE_NAME}"
     profiles:
@@ -36,11 +36,10 @@ services:
     build: 
       dockerfile: scheme.dockerfile
       args:
-        FOLDER_NAME: ${FOLDER_NAME}
         SCHEME_FILE: ${SCHEME_FILE}
     working_dir: /app
     volumes:
-      - .:/app
+      - ${PROJECT_ROOT-.}:/app
       - test-data:/data
     command: sh -c "csi -script ${SCHEME_FILE}"
     profiles:
@@ -50,7 +49,7 @@ services:
     image: haskell:9.14.1
     working_dir: /app
     volumes:
-      - .:/app
+      - ${PROJECT_ROOT-.}:/app
       - test-data:/data
     command: sh -c "runghc ${HASKELL_FILE}"
     profiles:
@@ -60,7 +59,7 @@ services:
     image: swipl:10.0.2
     working_dir: /app
     volumes:
-      - .:/app
+      - ${PROJECT_ROOT-.}:/app
       - test-data:/data
     command: swipl -s ${PROLOG_FILE} -g ${STRIPPED_PROLOG} -t halt
     profiles:
