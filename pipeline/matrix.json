@@ -1,0 +1,229 @@
+{
+  "version": 1,
+  "languages": {
+    "python": {
+      "name": "Python",
+      "paradigm": "imperative",
+      "family": "imperative-oo",
+      "ext": "py",
+      "fence": "python"
+    },
+    "javascript": {
+      "name": "JavaScript",
+      "paradigm": "imperative",
+      "family": "imperative-oo",
+      "ext": "js",
+      "fence": "javascript"
+    },
+    "java": {
+      "name": "Java",
+      "paradigm": "oo",
+      "family": "imperative-oo",
+      "ext": "java",
+      "fence": "java"
+    },
+    "scheme": {
+      "name": "Scheme",
+      "paradigm": "functional",
+      "family": "functional",
+      "ext": "scm",
+      "fence": "scheme"
+    },
+    "haskell": {
+      "name": "Haskell",
+      "paradigm": "functional",
+      "family": "functional",
+      "ext": "hs",
+      "fence": "haskell"
+    },
+    "prolog": {
+      "name": "Prolog",
+      "paradigm": "logic",
+      "family": "logic",
+      "ext": "pl",
+      "fence": "prolog"
+    }
+  },
+  "pairs": [
+    {
+      "src": "python",
+      "tgt": "javascript",
+      "group": "intra",
+      "priority": 1
+    },
+    {
+      "src": "python",
+      "tgt": "java",
+      "group": "intra",
+      "priority": 1
+    },
+    {
+      "src": "python",
+      "tgt": "scheme",
+      "group": "inter",
+      "priority": 2
+    },
+    {
+      "src": "python",
+      "tgt": "haskell",
+      "group": "inter",
+      "priority": 1
+    },
+    {
+      "src": "python",
+      "tgt": "prolog",
+      "group": "inter",
+      "priority": 1
+    },
+    {
+      "src": "javascript",
+      "tgt": "python",
+      "group": "intra",
+      "priority": 1
+    },
+    {
+      "src": "javascript",
+      "tgt": "java",
+      "group": "intra",
+      "priority": 1
+    },
+    {
+      "src": "javascript",
+      "tgt": "scheme",
+      "group": "inter",
+      "priority": 2
+    },
+    {
+      "src": "javascript",
+      "tgt": "haskell",
+      "group": "inter",
+      "priority": 2
+    },
+    {
+      "src": "javascript",
+      "tgt": "prolog",
+      "group": "inter",
+      "priority": 1
+    },
+    {
+      "src": "java",
+      "tgt": "python",
+      "group": "intra",
+      "priority": 1
+    },
+    {
+      "src": "java",
+      "tgt": "javascript",
+      "group": "intra",
+      "priority": 1
+    },
+    {
+      "src": "java",
+      "tgt": "scheme",
+      "group": "inter",
+      "priority": 2
+    },
+    {
+      "src": "java",
+      "tgt": "haskell",
+      "group": "inter",
+      "priority": 1
+    },
+    {
+      "src": "java",
+      "tgt": "prolog",
+      "group": "inter",
+      "priority": 1
+    },
+    {
+      "src": "scheme",
+      "tgt": "python",
+      "group": "inter",
+      "priority": 2
+    },
+    {
+      "src": "scheme",
+      "tgt": "javascript",
+      "group": "inter",
+      "priority": 2
+    },
+    {
+      "src": "scheme",
+      "tgt": "java",
+      "group": "inter",
+      "priority": 2
+    },
+    {
+      "src": "scheme",
+      "tgt": "haskell",
+      "group": "intra",
+      "priority": 1
+    },
+    {
+      "src": "scheme",
+      "tgt": "prolog",
+      "group": "inter",
+      "priority": 1
+    },
+    {
+      "src": "haskell",
+      "tgt": "python",
+      "group": "inter",
+      "priority": 1
+    },
+    {
+      "src": "haskell",
+      "tgt": "javascript",
+      "group": "inter",
+      "priority": 2
+    },
+    {
+      "src": "haskell",
+      "tgt": "java",
+      "group": "inter",
+      "priority": 1
+    },
+    {
+      "src": "haskell",
+      "tgt": "scheme",
+      "group": "intra",
+      "priority": 1
+    },
+    {
+      "src": "haskell",
+      "tgt": "prolog",
+      "group": "inter",
+      "priority": 1
+    },
+    {
+      "src": "prolog",
+      "tgt": "python",
+      "group": "inter",
+      "priority": 1
+    },
+    {
+      "src": "prolog",
+      "tgt": "javascript",
+      "group": "inter",
+      "priority": 1
+    },
+    {
+      "src": "prolog",
+      "tgt": "java",
+      "group": "inter",
+      "priority": 1
+    },
+    {
+      "src": "prolog",
+      "tgt": "scheme",
+      "group": "inter",
+      "priority": 1
+    },
+    {
+      "src": "prolog",
+      "tgt": "haskell",
+      "group": "inter",
+      "priority": 1
+    }
+  ]
+}
