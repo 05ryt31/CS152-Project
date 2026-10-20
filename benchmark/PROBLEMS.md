@@ -9,6 +9,11 @@ Conventions (from `harness/EXECUTION.md`): one folder per problem under `benchma
 and the reference programs named `<id>.py`, `<id>.js`, `<Id>.java` (package `benchmark.<id>`), `<id>.scm`,
 `<id>.hs`, `<id>.pl` (entry predicate `<id>/0`). Ids are lowercase identifiers so they work as Java packages.
 
+Input is always valid: every test case respects the stated format and ranges, and reference programs do **no**
+input validation and no error handling for malformed input (decided Oct 19). That keeps each program at 20-80 lines
+and keeps the translation task about the paradigm rather than about error handling. Where a problem has
+defined error behaviour (`error` lines in p08/p09, `none`/`-1` sentinels), that is part of the spec, not validation.
+
 Numbers are integers only (no floats, so formatting is identical across languages). Division, where used, is
 integer division truncating toward zero on non-negative operands only. Strings are ASCII. Output lines end
 with `\n`; empty output means print nothing.
@@ -69,8 +74,8 @@ Paradigm notes: functional rebuilds the tree on insert; imperative mutates nodes
 Python -> Haskell often keeps a mutable-node design via IORef, which the rubric should catch.
 
 ### p05_expr_tree: Postfix to fully parenthesised infix
-Read one line of space-separated postfix tokens (non-negative integers and `+ - *`), build the expression tree,
-and print the fully parenthesised infix form. Example: `3 4 + 2 *` -> `((3 + 4) * 2)`. A single number prints
+Read one line of space-separated postfix tokens (non-negative integers and `+ - *`; no unary minus, so `-` is
+always binary), build the expression tree, and print the fully parenthesised infix form. Example: `3 4 + 2 *` -> `((3 + 4) * 2)`. A single number prints
 itself without parentheses. Edge cases: nested same-operator chains, single token.
 Paradigm notes: algebraic data type plus one recursive printer; imperative versions use a stack of strings and
 skip the tree, which still passes the tests (relevant to the readability/idiomaticity gap).
@@ -159,11 +164,11 @@ imperative versions tend to implement Heap's algorithm or next-permutation, whic
 
 ## Open points for sign-off
 
-- [ ] OO is favoured by only three problems. Accept that OO shows up through the state-management problems, or
-      swap one problem for an "inventory" style task (objects with fields, commands that mutate them)?
-- [ ] p06_calc: allow unary minus? Current draft says no (keeps every language's parser at 40-60 lines).
+- [x] OO favoured by only three problems: accepted (Oct 19); imperative + OO is one family, 8 problems combined.
+- [x] Unary minus: not allowed in p05_expr_tree or p06_calc (Oct 19); `-` is always binary.
 - [ ] Test case count: 5-10 per problem. Who writes which tests is decided with the Python references (#6).
-- [ ] Which problems get hand-written sources in all six languages (#7)? Suggested minimum: p02, p04, p06, p08,
-      p11, p13 (one per category), the rest from verified LLM translations.
+- [x] Hand-written sources in all six languages (#7): p02, p04, p06, p08, p11, p13 (Oct 19); the rest from
+      verified LLM translations.
+- [x] Invalid input: never given; programs do not validate (Oct 19, see Conventions).
 - Dropped on Oct 17 to reach 15 (can be revived if time allows): Pascal's triangle rows, depth and leaf count from
   an edge list, reverse Polish evaluation, compose string transforms, first subset with a given sum.
