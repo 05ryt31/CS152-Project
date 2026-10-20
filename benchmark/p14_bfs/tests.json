@@ -1,0 +1,9 @@
+[
+    {"name": "path graph", "input": "4 3\n1 2\n2 3\n3 4\n1 4", "output": "3"},
+    {"name": "unreachable", "input": "3 1\n1 2\n1 3", "output": "-1"},
+    {"name": "source equals target", "input": "2 0\n1 1", "output": "0"},
+    {"name": "direct edge beats long path", "input": "5 5\n1 2\n2 3\n3 4\n4 5\n1 5\n1 5", "output": "1"},
+    {"name": "duplicate edges", "input": "3 3\n1 2\n1 2\n2 3\n1 3", "output": "2"},
+    {"name": "single node", "input": "1 0\n1 1", "output": "0"},
+    {"name": "cycle", "input": "6 6\n1 2\n2 3\n3 4\n4 5\n5 6\n6 1\n1 4", "output": "3"}
+]
