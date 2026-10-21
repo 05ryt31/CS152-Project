@@ -2,7 +2,7 @@ import sys
 
 
 def main():
-    line = sys.stdin.readline().rstrip("\n")
+    line = sys.stdin.readline().rstrip("\n\r")
     result = ""
     i = 0
     while i < len(line):

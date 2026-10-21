@@ -18,7 +18,7 @@ def balanced(text):
 def main():
     n = int(sys.stdin.readline())
     for _ in range(n):
-        line = sys.stdin.readline().rstrip("\n")
+        line = sys.stdin.readline().rstrip("\n\r")
         if balanced(line):
             print("yes")
         else:
