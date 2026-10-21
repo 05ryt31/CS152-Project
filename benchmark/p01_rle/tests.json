@@ -1,0 +1,10 @@
+[
+    {"name": "mixed runs", "input": "aaabccdddd", "output": "a3b1c2d4"},
+    {"name": "single character", "input": "a", "output": "a1"},
+    {"name": "no repeats", "input": "abc", "output": "a1b1c1"},
+    {"name": "all the same", "input": "zzzz", "output": "z4"},
+    {"name": "repeated letter in separate runs", "input": "aabbaa", "output": "a2b2a2"},
+    {"name": "case sensitive", "input": "AAaa", "output": "A2a2"},
+    {"name": "digits as characters", "input": "1122", "output": "1222"},
+    {"name": "long run", "input": "xxxxxxxxxxxx", "output": "x12"}
+]

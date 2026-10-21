@@ -14,6 +14,10 @@ input validation and no error handling for malformed input (decided Oct 19). Tha
 and keeps the translation task about the paradigm rather than about error handling. Where a problem has
 defined error behaviour (`error` lines in p08/p09, `none`/`-1` sentinels), that is part of the spec, not validation.
 
+Reference programs are written in plain imperative Python: loops, explicit variables, small helper functions.
+No comprehension- or `reduce`-heavy style, so the source side of every migration is unambiguously imperative and
+the idiomaticity of the *target* is what varies.
+
 Numbers are integers only (no floats, so formatting is identical across languages). Division, where used, is
 integer division truncating toward zero on non-negative operands only. Strings are ASCII. Output lines end
 with `\n`; empty output means print nothing.
