@@ -1,0 +1,11 @@
+[
+    {"name": "precedence and parentheses", "input": "2 + 3 * (4 - 1)", "output": "11"},
+    {"name": "bare number", "input": "42", "output": "42"},
+    {"name": "left associative subtraction", "input": "1 - 2 - 3", "output": "-4"},
+    {"name": "two parenthesised groups", "input": "(1 + 2) * (3 + 4)", "output": "21"},
+    {"name": "redundant parentheses", "input": "((7))", "output": "7"},
+    {"name": "no spaces and surrounding spaces", "input": "  2*3+4  ", "output": "10"},
+    {"name": "negative result", "input": "2 * 3 * 4 - 100", "output": "-76"},
+    {"name": "zero", "input": "0 * 5 + 0", "output": "0"},
+    {"name": "deep nesting", "input": "(((1 + 2) * 3 + 4) * 5)", "output": "65"}
+]
