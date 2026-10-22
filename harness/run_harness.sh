@@ -124,7 +124,7 @@ with open(sys.argv[2]) as f:
 for i, t in enumerate(tests):
     for key, ext in (("input", "in"), ("output", "out")):
         value = t[key].replace("\r", "")
-        with open(f"{d}/{i}.{ext}", "w") as f:
+        with open(f"{d}/{i}.{ext}", "w", newline="\n") as f:
             f.write(value + "\n" if value else "")
     print(f"{i}\t{t['name']}")
 PY
