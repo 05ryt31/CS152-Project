@@ -7,8 +7,10 @@ Usage (from the repo root):
       --backend http --base-url http://localhost:11434 --model qwen2.5-coder:7b
 
 Output: results/raw/<run_id>/<problem>/<src>_to_<tgt>/{<problem>.<ext>, tests.json, meta.json}
-Each pair folder is runnable by the harness (`./run_harness.sh -f <folder>` plus the skip flags for the
-other five languages). Resumable: a folder whose meta.json has status "ok" is skipped.
+Each pair folder is runnable by the harness once it sits at results/raw/<run_id>/... in the repo
+(`./run_harness.sh -f results/raw/...`; languages without a file auto-skip). --results-dir may point
+elsewhere while generating (Google Drive on Colab); copy the run folder into results/raw/ afterwards.
+Resumable: a folder whose meta.json has status "ok" is skipped. pipeline/collect.py scores a whole run.
 """
 from __future__ import annotations
 
@@ -57,7 +59,10 @@ def target_filename(problem_id: str, tgt: str, langs: dict) -> str:
     return f"{problem_id}.{langs[tgt]['ext']}"
 
 
-def prompt_fields(problem_id: str, src: str, tgt: str, source: Path, out_dir: Path, langs: dict) -> dict:
+def prompt_fields(problem_id: str, src: str, tgt: str, source: Path, run_id: str, langs: dict) -> dict:
+    # The Java package is the path the pair folder will have once it sits in the repo at results/raw/<run>/...,
+    # regardless of where --results-dir points while generating (e.g. Google Drive on Colab).
+    package = to_package(["results", "raw", run_id, problem_id, f"{src}_to_{tgt}"])
     return {
         "source_language": langs[src]["name"],
         "target_language": langs[tgt]["name"],
@@ -66,7 +71,7 @@ def prompt_fields(problem_id: str, src: str, tgt: str, source: Path, out_dir: Pa
         "source_filename": source.name,
         "source_code": source.read_text(),
         "target_filename": target_filename(problem_id, tgt, langs),
-        "java_package": to_package(list(out_dir.relative_to(ROOT).parts)),
+        "java_package": package,
         "java_class": to_java_class(problem_id),
         "prolog_entry": problem_id,
     }
@@ -105,7 +110,7 @@ def run_one(problem_dir: Path, pair: dict, run_dir: Path, template, matrix: dict
         meta_path.write_text(json.dumps(meta, indent=2) + "\n")
         return "skipped: no_source"
 
-    fields = prompt_fields(problem_id, src, tgt, source, out_dir, langs)
+    fields = prompt_fields(problem_id, src, tgt, source, run_dir.name, langs)
     system, user = build_messages(template, tgt, fields)
     started = time.time()
     reply, attempts, error = call_with_retries(backend, system, user)
