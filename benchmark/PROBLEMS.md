@@ -18,7 +18,8 @@ Reference programs are written in plain imperative Python: loops, explicit varia
 No comprehension- or `reduce`-heavy style, so the source side of every migration is unambiguously imperative and
 the idiomaticity of the *target* is what varies.
 
-Numbers are integers only (no floats, so formatting is identical across languages). Division, where used, is
+Numbers are integers only (no floats, so formatting is identical across languages). Every input value, intermediate value and
+result fits in a signed 32-bit integer, so `int` is sufficient in Java and no language needs big integers (added Oct 30). Division, where used, is
 integer division truncating toward zero on non-negative operands only. Strings are ASCII. Output lines end
 with `\n`; empty output means print nothing.
 
