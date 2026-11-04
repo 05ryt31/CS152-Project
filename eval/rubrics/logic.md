@@ -1,0 +1,11 @@
+# Prolog
+
+| Criterion | 0 - Not idiomatic | 1 - Partially idiomatic | 2 - Idiomatic |
+|---|---|---|---|
+| Declarative relations and cut use | Relies heavily on cuts (`!`) for procedural control, including unnecessary or poorly placed cuts. | Uses some declarative relations but includes cuts whose purpose or placement is not always justified. | Expresses the problem declaratively and uses cuts only when their determinism or pruning behavior is clearly appropriate. |
+| Unification and backtracking | Replaces logical inference with explicit tests, assignments, or nested `if-then-else` chains. | Uses unification and backtracking in some places but relies on procedural branching unnecessarily. | Uses unification, pattern matching, and natural backtracking as the primary control mechanisms. |
+| Dynamic state | Uses `assert`, `retract`, or global mutable state for ordinary computation. | Uses dynamic predicates sparingly but where a cleaner relational design may be possible. | Avoids dynamic state for ordinary computation and represents information through arguments and relations. |
+| Recursive data processing | Emulates loops with `between/3`, global variables, or repeated side effects. | Uses recursion over lists or structures inconsistently. | Recursively processes lists and structures using clear base and recursive cases. |
+| Predicate modes | Predicates work only in one narrowly anticipated mode without a clear reason. | Predicates support multiple modes in some cases but have avoidable restrictions. | Predicates are readable and useful in multiple reasonable modes where the problem permits it. |
+| Predicate decomposition | Uses large predicates, duplicated clauses, or predicates with several unrelated responsibilities. | Has some useful decomposition but leaves certain operations overly complex or repetitive. | Uses small, focused predicates with clear relationships and minimal duplication. |
+| Built-in predicates and data representation | Reimplements common operations or uses awkward representations and procedural workarounds. | Uses some standard predicates appropriately but misses clear opportunities for reuse. | Uses standard predicates, list processing, and logical data representations appropriately. |
