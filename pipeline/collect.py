@@ -30,9 +30,9 @@ def harness_scores(pair_dir: Path, tgt: str) -> dict:
     """Run the harness on one pair folder and parse the target language's block of the report."""
     with tempfile.NamedTemporaryFile(suffix=".txt", delete=False) as tmp:
         report = Path(tmp.name)
-    rel = pair_dir.resolve().relative_to(ROOT)
-    subprocess.run(["./run_harness.sh", "-f", str(rel), "-r", str(report)], cwd=HARNESS,
-                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
+    rel = pair_dir.resolve().relative_to(ROOT).as_posix()
+    subprocess.run(["sh", "./run_harness.sh", "-f", rel, "-r", report.as_posix()], cwd=HARNESS,
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
     text = report.read_text() if report.exists() else ""
     report.unlink(missing_ok=True)
     block = re.search(rf"^{CATEGORY[tgt]}\n(.*?)^Skipped: ", text, flags=re.M | re.S)
