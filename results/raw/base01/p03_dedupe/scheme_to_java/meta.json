@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p03_dedupe",
+  "src": "scheme",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:41:59+00:00",
+  "source_file": "p03_dedupe.scm",
+  "target_file": "P03Dedupe.java",
+  "attempts": 1,
+  "duration_s": 19.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 513,
+    "completion_tokens": 345
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p03_dedupe.scheme_to_java;\n\nimport java.util.*;\n\npublic class P03Dedupe {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String line = scanner.nextLine();\n        List<Integer> numbers = numbers(line);\n        List<Integer> deduped = dedupe(numbers, new ArrayList<>());\n        printList(deduped);\n        System.exit(0);\n    }\n\n    private static List<Integer> numbers(String line) {\n        if (line.isEmpty()) {\n            return Collections.emptyList();\n        }\n        String[] parts = line.split(\" \");\n        List<Integer> result = new ArrayList<>();\n        for (String part : parts) {\n            result.add(Integer.parseInt(part));\n        }\n        return result;\n    }\n\n    private static List<Integer> dedupe(List<Integer> values, List<Integer> seen) {\n        if (values.isEmpty()) {\n            return Collections.emptyList();\n        }\n        int value = values.get(0);\n        if (seen.contains(value)) {\n            return dedupe(values.subList(1, values.size()), seen);\n        } else {\n            seen.add(value);\n            List<Integer> rest = dedupe(values.subList(1, values.size()), seen);\n            rest.add(0, value);\n            return rest;\n        }\n    }\n\n    private static void printList(List<Integer> values) {\n        if (!values.isEmpty()) {\n            System.out.print(values.get(0));\n            for (int i = 1; i < values.size(); i++) {\n                System.out.print(\" \" + values.get(i));\n            }\n            System.out.println();\n        }\n    }\n}\n```"
+}

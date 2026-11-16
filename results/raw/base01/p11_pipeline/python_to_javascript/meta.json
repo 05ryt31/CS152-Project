@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "python",
+  "tgt": "javascript",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:44:58+00:00",
+  "source_file": "p11_pipeline.py",
+  "target_file": "p11_pipeline.js",
+  "attempts": 1,
+  "duration_s": 22.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 581,
+    "completion_tokens": 422
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nlet values = [];\nrl.on('line', (line) => {\n  if (!values.length) {\n    values = line.split(' ').map(Number);\n  } else if (k === undefined) {\n    k = parseInt(line);\n  } else {\n    const [kind, name, ...rest] = line.split(' ');\n    values = applyStage(values, kind, name, rest);\n  }\n}).on('close', () => {\n  if (Array.isArray(values)) {\n    if (values.length > 0) {\n      console.log(values.join(' '));\n    }\n  } else {\n    console.log(values);\n  }\n  process.exit(0);\n});\n\nfunction applyStage(values, kind, name, rest) {\n  if (kind === 'map') {\n    const amount = parseInt(rest[0]);\n    if (name === 'add') {\n      return values.map(v => v + amount);\n    } else {\n      return values.map(v => v * amount);\n    }\n  }\n  if (kind === 'filter') {\n    if (name === 'even') {\n      return values.filter(v => v % 2 === 0);\n    } else if (name === 'odd') {\n      return values.filter(v => v % 2 !== 0);\n    } else if (name === 'gt') {\n      const threshold = parseInt(rest[0]);\n      return values.filter(v => v > threshold);\n    }\n  }\n  // reduce\n  if (name === 'sum') {\n    return values.reduce((total, v) => total + v, 0);\n  }\n  if (values.length === 0) {\n    return 'none';\n  }\n  let best = values[0];\n  for (const v of values) {\n    if (v > best) {\n      best = v;\n    }\n  }\n  return best;\n}\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "python",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:11:03+00:00",
+  "source_file": "p14_bfs.py",
+  "target_file": "p14_bfs.pl",
+  "attempts": 1,
+  "duration_s": 33.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 539,
+    "completion_tokens": 636
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\np14_bfs :-\n    read_line_to_string(current_input, Line),\n    atom_codes(Line, Codes),\n    split_string(Codes, ' ', '', [N, M]),\n    maplist(string_to_integer, [N, M], [N, M]),\n    findall(_, (between(1, N, Node), assertz(neighbour(Node, []))), _),\n    repeat,\n        read_line_to_string(current_input, Line),\n        atom_codes(Line, Codes),\n        split_string(Codes, ' ', '', [U, V]),\n        maplist(string_to_integer, [U, V], [U, V]),\n        neighbour(U, Neighbours1),\n        append(Neighbours1, [V], Neighbours2),\n        retractall(neighbour(U, _)),\n        assertz(neighbour(U, Neighbours2)),\n        neighbour(V, Neighbours3),\n        append(Neighbours3, [U], Neighbours4),\n        retractall(neighbour(V, _)),\n        assertz(neighbour(V, Neighbours4)),\n        !,\n    fail,\n    read_line_to_string(current_input, Line),\n    atom_codes(Line, Codes),\n    split_string(Codes, ' ', '', [S, T]),\n    maplist(string_to_integer, [S, T], [S, T]),\n    bfs(S, T, Distance),\n    (   member(T, Distance)\n    ->  format('~d~n', [Distance[T]])\n    ;   format('-1~n')\n    ),\n    halt.\n\nbfs(S, T, Distance) :-\n    bfs(S, T, [], [S], Distance).\n\nbfs(S, S, _, _, _) :- !.\nbfs(S, T, Visited, Queue, Distance) :-\n    dequeue(Queue, NewQueue, Head),\n    (   member(Head, Visited)\n    ->  bfs(S, T, Visited, NewQueue, Distance)\n    ;   findall(NewNode, (neighbour(Head, Nodes), member(NewNode, Nodes), \\+ member(NewNode, Visited)), NewNodes),\n        append(NewNodes, NewQueue, NewNewQueue),\n        update_distance(Head, NewNodes, Distance, NewDistance),\n        bfs(S, T, [Head | Visited], NewNewQueue, NewDistance)\n    ).\n\ndequeue([H | T], T, H).\n\nupdate_distance(Node, NewNodes, Distance, NewDistance) :-\n    findall(Dist, (member(NewNode, NewNodes), get_distance(Distance, NewNode, Dist)), Dists),\n    max_list(Dists, MaxDist),\n    put_distance(NewDistance, Node, MaxDist + 1).\n\nget_distance(Distance, Node, Dist) :-\n    member(Node-Dist, Distance).\nput_distance(Distance, Node, Dist) :-\n    retractall(get_distance(Distance, Node, _)),\n    assertz(get_distance(Distance, Node, Dist)).\n\nstring_to_integer(String, Integer) :-\n    number_string(Integer, String).\n```"
+}

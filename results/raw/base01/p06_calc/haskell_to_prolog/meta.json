@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p06_calc",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:10:11+00:00",
+  "source_file": "p06_calc.hs",
+  "target_file": "p06_calc.pl",
+  "attempts": 1,
+  "duration_s": 24.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 699,
+    "completion_tokens": 464
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(readutil)).\n\ntokens([], []) :- !.\ntokens([C|Cs], Tokens) :-\n    C == ' ', !,\n    tokens(Cs, Tokens).\ntokens([C|Cs], [Token|Tokens]) :-\n    member(C, \"+-*()\"), !,\n    Token = [C],\n    tokens(Cs, Tokens).\ntokens([C|Cs], [Digit|Tokens]) :-\n    digit_char(C), !,\n    append(Digits, [C], Digit),\n    tokens(Cs, Digits).\n\ndigit_char(C) :-\n    C >= '0', C =< '9'.\n\nparse_expression(P, Result) :-\n    parse_term(P, X, Rest1),\n    parse_adds(X, Rest1, Rest2),\n    Result = X.\n\nparse_adds(X, [], Rest, Rest) :-\n    !.\nparse_adds(X, [\"+\"|Rest1], Rest2, Rest3) :-\n    parse_term(Rest1, Y, Rest2),\n    NewX is X + Y,\n    parse_adds(NewX, Rest2, Rest3).\nparse_adds(X, [\"-\"|Rest1], Rest2, Rest3) :-\n    parse_term(Rest1, Y, Rest2),\n    NewX is X - Y,\n    parse_adds(NewX, Rest2, Rest3).\n\nparse_term(P, Result) :-\n    parse_factor(P, X, Rest1),\n    parse_muls(X, Rest1, Rest2),\n    Result = X.\n\nparse_muls(X, [], Rest, Rest) :-\n    !.\nparse_muls(X, [\"*\"|Rest1], Rest2, Rest3) :-\n    parse_factor(Rest1, Y, Rest2),\n    NewX is X * Y,\n    parse_muls(NewX, Rest2, Rest3).\n\nparse_factor([\"(\"|Rest], Result) :-\n    parse_expression(Rest, X, \")\":Rest1),\n    Result = X.\n\nparse_factor([X|Rest], Result, Rest) :-\n    number_chars(Result, [X]).\n\np06_calc :-\n    read_line_to_string(current_input, Line),\n    parse_expression(tokens(Line), Result),\n    format('~d~n', [Result]),\n    halt(0).\n```"
+}

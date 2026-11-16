@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "scheme",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:50:47+00:00",
+  "source_file": "p11_pipeline.scm",
+  "target_file": "p11_pipeline.js",
+  "attempts": 1,
+  "duration_s": 27.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 717,
+    "completion_tokens": 505
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nfunction numbers(line) {\n  if (line === \"\") return [];\n  return line.split(' ').map(Number);\n}\n\nfunction sum(values) {\n  return values.reduce((acc, val) => acc + val, 0);\n}\n\nfunction maximum(values) {\n  return Math.max(...values);\n}\n\nfunction keep(predicate, values) {\n  return values.filter(predicate);\n}\n\nfunction applyStage(values, parts) {\n  const [kind, name] = parts;\n  if (kind === \"map\") {\n    const amount = Number(parts[2]);\n    if (name === \"add\") {\n      return values.map(x => x + amount);\n    } else {\n      return values.map(x => x * amount);\n    }\n  } else if (kind === \"filter\") {\n    if (name === \"even\") {\n      return keep(x => x % 2 === 0, values);\n    } else if (name === \"odd\") {\n      return keep(x => x % 2 !== 0, values);\n    } else {\n      const threshold = Number(parts[2]);\n      return keep(x => x > threshold, values);\n    }\n  } else if (name === \"sum\") {\n    return sum(values);\n  } else if (values.length === 0) {\n    return 'none';\n  } else {\n    return maximum(values);\n  }\n}\n\nasync function pipeline(k, values) {\n  let result = values;\n  for (let i = 0; i < k; i++) {\n    const parts = await new Promise(resolve => rl.question('', resolve)).split(' ');\n    result = applyStage(result, parts);\n  }\n  if (Array.isArray(result)) {\n    if (result.length > 0) {\n      process.stdout.write(`${result[0]}`);\n      for (let j = 1; j < result.length; j++) {\n        process.stdout.write(` ${result[j]}`);\n      }\n      process.stdout.write('\\n');\n    } else {\n      console.log('none');\n    }\n  } else {\n    console.log(result);\n  }\n}\n\n(async () => {\n  const values = numbers(await new Promise(resolve => rl.question('', resolve)));\n  const k = Number(await new Promise(resolve => rl.question('', resolve)));\n  await pipeline(k, values);\n})();\n```"
+}

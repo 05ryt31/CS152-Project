@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p08_bank",
+  "src": "scheme",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:20:27+00:00",
+  "source_file": "p08_bank.scm",
+  "target_file": "p08_bank.py",
+  "attempts": 1,
+  "duration_s": 5.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 399,
+    "completion_tokens": 103
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\ndef bank(n):\n    balance = 0\n    for _ in range(n):\n        parts = input().split()\n        command = parts[0]\n        if command == \"deposit\":\n            balance += int(parts[1])\n        elif command == \"withdraw\":\n            amount = int(parts[1])\n            if amount > balance:\n                print(\"error\")\n            else:\n                balance -= amount\n        else:\n            print(balance)\n\nn = int(input())\nbank(n)\n```"
+}

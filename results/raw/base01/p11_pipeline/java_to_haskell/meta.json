@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "java",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:49:37+00:00",
+  "source_file": "P11Pipeline.java",
+  "target_file": "p11_pipeline.hs",
+  "attempts": 1,
+  "duration_s": 14.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 755,
+    "completion_tokens": 260
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nmodule Main where\n\nimport Data.List (find)\nimport Control.Monad (when)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let lines' = lines input\n        values = map read . words $ head lines'\n        commands = tail $ init $ tail lines'\n    processCommands values commands >>= print\n\nprocessCommands :: [Int] -> [String] -> IO (Either String [Int])\nprocessCommands values [] = return $ Right values\nprocessCommands values (command:rest) = case words command of\n    [\"map\", op, amount] ->\n        let amount' = read amount\n            newValues = map (\\v -> if op == \"add\" then v + amount' else v * amount') values\n        in processCommands newValues rest\n    [\"filter\", pred, val] ->\n        let predicate = case pred of\n                \"even\" -> even\n                \"odd\" -> odd\n                _ -> (> read val)\n            newValues = filter predicate values\n        in processCommands newValues rest\n    [\"sum\"] ->\n        return $ Left $ show $ sum values\n    [\"max\"] ->\n        return $ Left $ show $ maximum values\n    _ -> return $ Left \"Invalid command\"\n\n```"
+}

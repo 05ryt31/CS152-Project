@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "python",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:45:57+00:00",
+  "source_file": "p04_bst.py",
+  "target_file": "p04_bst.pl",
+  "attempts": 1,
+  "duration_s": 21.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 633,
+    "completion_tokens": 398
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\nnode(Value, Left, Right).\n\ninsert(nil, Value, node(Value, nil, nil)).\ninsert(node(Value, Left, Right), InsertValue, Result) :-\n    InsertValue < Value,\n    insert(Left, InsertValue, NewLeft),\n    Result = node(Value, NewLeft, Right).\ninsert(node(Value, Left, Right), InsertValue, Result) :-\n    InsertValue >= Value,\n    insert(Right, InsertValue, NewRight),\n    Result = node(Value, Left, NewRight).\n\ninorder(nil, []).\ninorder(node(_, Left, Right), Values) :-\n    inorder(Left, LeftValues),\n    append(LeftValues, [Value], Temp),\n    inorder(Right, RightValues),\n    append(Temp, RightValues, Values).\n\npreorder(nil, []).\npreorder(node(Value, Left, Right), Values) :-\n    append([Value], LeftValues, Temp),\n    preorder(Left, LeftValues),\n    append(Temp, RightValues, Temp2),\n    preorder(Right, RightValues),\n    append(Temp2, Values, Values).\n\nheight(nil, 0).\nheight(node(_, Left, Right), Height) :-\n    height(Left, LeftHeight),\n    height(Right, RightHeight),\n    Height is 1 + max(LeftHeight, RightHeight).\n\np04_bst :-\n    read_line_to_string(current_input, Input),\n    split_string(Input, Tokens, ' '),\n    maplist(string_to_integer, Tokens, Integers),\n    foldl(insert, Integers, nil, Root),\n    inorder(Root, InOrderValues),\n    preorder(Root, PreOrderValues),\n    format(\"~w~n\", [InOrderValues]),\n    format(\"~w~n\", [PreOrderValues]),\n    height(Root, Height),\n    format(\"~d~n\", [Height]),\n    halt.\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p03_dedupe",
+  "src": "haskell",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:42:45+00:00",
+  "source_file": "p03_dedupe.hs",
+  "target_file": "p03_dedupe.js",
+  "attempts": 1,
+  "duration_s": 9.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 450,
+    "completion_tokens": 189
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\nimport { stdin, stdout } from 'node:process';\n\nconst rl = createInterface({\n    input: stdin,\n    output: stdout,\n    terminal: false\n});\n\nlet input = '';\n\nrl.on('line', (line) => {\n    input += line + '\\n';\n});\n\nrl.on('close', () => {\n    const result = unique(readNums(input));\n    if (result.length > 0) {\n        console.log(result.join(' '));\n    }\n    process.exit(0);\n});\n\nfunction readNums(s) {\n    return s.trim().split(/\\s+/).map(Number);\n}\n\nfunction unique(arr) {\n    const seen = new Set();\n    return arr.filter(x => {\n        if (seen.has(x)) {\n            return false;\n        } else {\n            seen.add(x);\n            return true;\n        }\n    });\n}\n```"
+}

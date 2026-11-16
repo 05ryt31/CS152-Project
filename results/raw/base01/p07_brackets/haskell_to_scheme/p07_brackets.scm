@@ -1,0 +1,32 @@
+(import scheme (chicken base) (chicken io))
+
+(define (matching? open close)
+  (or (and (eq? open #\() (eq? close #\)))
+      (and (eq? open #\[) (eq? close #\]))
+      (and (eq? open #\{) (eq? close #\}))))
+
+(define (balanced? str)
+  (define (valid chars stack)
+    (cond ((null? chars)
+           (null? stack))
+          ((member (car chars) '(#\(#\[ #\{))
+           (valid (cdr chars) (cons (car chars) stack)))
+          ((null? stack)
+           #f)
+          ((matching? (car stack) (car chars))
+           (valid (cdr chars) (cdr stack)))
+          (else
+           #f)))
+  (valid (string->list str) '()))
+
+(define (main)
+  (let* ((n (string->number (read-line)))
+         (lines (map string->list (take-n-lines n))))
+    (for-each (lambda (line)
+                (if (balanced? line)
+                    (display "yes")
+                    (display "no"))
+                (newline))
+              lines)))
+
+(main)

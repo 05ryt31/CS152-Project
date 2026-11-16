@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p03_dedupe",
+  "src": "java",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:41:30+00:00",
+  "source_file": "P03Dedupe.java",
+  "target_file": "p03_dedupe.pl",
+  "attempts": 1,
+  "duration_s": 15.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 493,
+    "completion_tokens": 289
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\np03_dedupe :-\n    read_line_to_string(current_input, Line),\n    (   Line = ''\n    ->  true\n    ;   string_tokens(Line, Tokens, ' \\t\\n\\r'),\n        process_tokens(Tokens, Seen, Result),\n        (   Result = []\n        ->  true\n        ;   format('~w~n', [Result])\n        )\n    ),\n    halt(0).\n\nprocess_tokens([], _, []) :- !.\nprocess_tokens([Token | Rest], Seen, Result) :-\n    integer(Token),\n    (   memberchk(Token, Seen)\n    ->  process_tokens(Rest, Seen, Result)\n    ;   append(Result, [Token], NewResult),\n        process_tokens(Rest, [Token | Seen], NewResult)\n    ).\n\nstring_tokens(S, Tokens, Delims) :-\n    atom_codes(S, Codes),\n    string_tokens(Codes, Tokens, Delims, []).\n\nstring_tokens([], [], _, Acc) :-\n    reverse(Acc, Tokens).\nstring_tokens([C | Cs], Tokens, Delims, Acc) :-\n    (   member(C, Delims)\n    ->  string_tokens(Cs, Tokens, Delims, [])\n    ;   append(Acc, [C], NewAcc),\n        string_tokens(Cs, Tokens, Delims, NewAcc)\n    ).\n```"
+}

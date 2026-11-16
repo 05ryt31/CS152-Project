@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "scheme",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:15:47+00:00",
+  "source_file": "p14_bfs.scm",
+  "target_file": "P14Bfs.java",
+  "attempts": 1,
+  "duration_s": 31.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 747,
+    "completion_tokens": 592
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p14_bfs.scheme_to_java;\n\nimport java.util.*;\n\npublic class P14Bfs {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        List<Integer> nm = Arrays.stream(scanner.nextLine().split(\" \"))\n                                  .map(Integer::parseInt)\n                                  .collect(Collectors.toList());\n        int n = nm.get(0);\n        int m = nm.get(1);\n\n        Map<Integer, List<Integer>> graph = readGraph(m, scanner);\n\n        List<Integer> st = Arrays.stream(scanner.nextLine().split(\" \"))\n                                  .map(Integer::parseInt)\n                                  .collect(Collectors.toList());\n        int s = st.get(0);\n        int t = st.get(1);\n\n        System.out.println(bfs(s, t, graph));\n    }\n\n    private static Map<Integer, List<Integer>> readGraph(int m, Scanner scanner) {\n        Map<Integer, List<Integer>> graph = new HashMap<>();\n        for (int i = 0; i < m; i++) {\n            String[] uv = scanner.nextLine().split(\" \");\n            int u = Integer.parseInt(uv[0]);\n            int v = Integer.parseInt(uv[1]);\n\n            graph.putIfAbsent(u, new ArrayList<>());\n            graph.putIfAbsent(v, new ArrayList<>());\n\n            graph.get(u).add(v);\n            graph.get(v).add(u);\n        }\n        return graph;\n    }\n\n    private static List<Integer> getNeighbors(int node, Map<Integer, List<Integer>> graph) {\n        return graph.getOrDefault(node, Collections.emptyList());\n    }\n\n    private static List<List<Integer>> expandLayer(List<Integer> layer, Map<Integer, List<Integer>> graph, Set<Integer> visited) {\n        List<Integer> next = new ArrayList<>();\n        for (int u : layer) {\n            if (!visited.contains(u)) {\n                visited.add(u);\n                for (int v : getNeighbors(u, graph)) {\n                    if (!visited.contains(v)) {\n                        next.add(v);\n                    }\n                }\n            }\n        }\n        return Arrays.asList(next, new ArrayList<>(visited));\n    }\n\n    private static int bfs(int start, int target, Map<Integer, List<Integer>> graph) {\n        Queue<Integer> queue = new LinkedList<>();\n        Set<Integer> visited = new HashSet<>();\n        queue.offer(start);\n        visited.add(start);\n        int distance = 0;\n\n        while (!queue.isEmpty()) {\n            int size = queue.size();\n            for (int i = 0; i < size; i++) {\n                int current = queue.poll();\n                if (current == target) {\n                    return distance;\n                }\n                for (int neighbor : getNeighbors(current, graph)) {\n                    if (!visited.contains(neighbor)) {\n                        queue.offer(neighbor);\n                        visited.add(neighbor);\n                    }\n                }\n            }\n            distance++;\n        }\n\n        return -1;\n    }\n}\n```"
+}

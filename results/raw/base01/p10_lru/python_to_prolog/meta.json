@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "python",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:36:24+00:00",
+  "source_file": "p10_lru.py",
+  "target_file": "p10_lru.pl",
+  "attempts": 1,
+  "duration_s": 24.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 486,
+    "completion_tokens": 458
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(readutil)).\n:- use_module(library(lists)).\n\np10_lru :-\n    read_line_to_string(current_input, CapacityStr),\n    string_to_integer(CapacityStr, Capacity),\n    read_line_to_string(current_input, NStr),\n    string_to_integer(NStr, N),\n    init_cache(Capacity, Cache, Order),\n    process_requests(N, Cache, Order, []),\n    halt.\n\ninit_cache(_, [], []).\n\nprocess_requests(0, _, _, _) :- !.\n\nprocess_requests(N, Cache, Order, Acc) :-\n    read_line_to_string(current_input, Line),\n    parse_request(Line, Request),\n    handle_request(Request, Cache, Order, NewCache, NewOrder),\n    process_requests(N-1, NewCache, NewOrder, [Request|Acc]).\n\nparse_request(Line, Request) :-\n    split_string(Line, ' ', '', Parts),\n    Request =.. Parts.\n\nhandle_request(['get', Key], Cache, Order, Cache, NewOrder) :-\n    member(Key, Order), !,\n    remove_all_but_last(Order, Key, NewOrder).\nhandle_request(['get', _], _, Order, _, Order) :-\n    !.\nhandle_request(['set', Key, Value], Cache, Order, NewCache, NewOrder) :-\n    (   member(Key, Order)\n    ->  remove_all_but_last(Order, Key, NewOrder),\n        Cache = [Value|Rest],\n        NewCache = [Value|Rest]\n    ;   length(Order, Len),\n        Len < Cap,\n        NewOrder = [Key|Order],\n        NewCache = [Value|Cache]\n    ;   remove_first(Order, Oldest),\n        remove_key_value(Cache, Oldest, NewCache),\n        NewOrder = [Key|Order],\n        NewCache = [Value|NewCache]\n    ).\n\nremove_all_but_last([H|T], H, T).\n\nremove_first([], _, []).\n\nremove_first([H|T], H, T).\n\nremove_key_value([], _, []).\n\nremove_key_value([K|V], K, V).\n\nremove_key_value([K|V], Key, [K|NV]) :-\n    remove_key_value(V, Key, NV).\n```"
+}

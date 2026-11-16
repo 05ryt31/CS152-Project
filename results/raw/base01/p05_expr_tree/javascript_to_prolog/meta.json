@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p05_expr_tree",
+  "src": "javascript",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:57:23+00:00",
+  "source_file": "p05_expr_tree.js",
+  "target_file": "p05_expr_tree.pl",
+  "attempts": 1,
+  "duration_s": 16.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 484,
+    "completion_tokens": 317
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(readutil)).\n:- use_module(library(lists)).\n\np05_expr_tree :-\n    read_line_to_string(current_input, Input),\n    Tokens =.. [tokens, Input],\n    parse_tokens(Tokens, Stack),\n    render(Stack, Result),\n    format('~w~n', [Result]),\n    halt.\n\nparse_tokens([], []).\nparse_tokens([Token | Rest], Stack) :-\n    member_of('+-*', Token), !,\n    pop(Stack, Right),\n    pop(Stack, Left),\n    NewNode =.. [token, Token, Left, Right],\n    parse_tokens(Rest, [NewNode | Stack]).\nparse_tokens([Token | Rest], [NewNode | Stack]) :-\n    NewNode =.. [token, Token],\n    parse_tokens(Rest, [NewNode | Stack]).\n\npop([H | T], H, T).\n\nmember_of(X, [X | _]).\nmember_of(X, [_ | T]) :- member_of(X, T).\n\nrender([], '').\nrender([token(Token, Left, Right)], Result) :-\n    render(Left, LeftStr),\n    render(Right, RightStr),\n    Result =.. ['(', LeftStr, Token, RightStr, ')'].\nrender([token(Token, Left, Right) | Rest], Result) :-\n    render(Left, LeftStr),\n    render(Right, RightStr),\n    render(Rest, RestStr),\n    Result =.. ['(', LeftStr, Token, RightStr, ' ', RestStr, ')'].\n```"
+}

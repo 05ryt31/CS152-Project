@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "scheme",
+  "tgt": "haskell",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:16:19+00:00",
+  "source_file": "p14_bfs.scm",
+  "target_file": "p14_bfs.hs",
+  "attempts": 1,
+  "duration_s": 24.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 704,
+    "completion_tokens": 453
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List (elemIndex, isPrefixOf, isInfixOf, isSuffixOf, intercalate, lines, words, unwords)\nimport Data.Maybe (fromJust, fromMaybe)\nimport System.IO (hFlush, stdout)\n\n-- Read a graph from standard input\nreadGraph :: Int -> [(Int, Int)]\nreadGraph m = go 0 []\n  where\n    go i acc\n      | i == m    = acc\n      | otherwise = do\n          line <- getLine\n          let [u, v] = map read $ words line\n          go (i + 1) ((u, v) : (v, u) : acc)\n\n-- Get neighbors of a node in the graph\ngetNeighbors :: Int -> [(Int, Int)] -> [Int]\ngetNeighbors node graph = [v | (u, v) <- graph, u == node]\n\n-- Expand the current layer of BFS\nexpandLayer :: [Int] -> [(Int, Int)] -> [Int] -> ([Int], [Int])\nexpandLayer layer graph visited = (newLayer, newVisited)\n  where\n    newLayer = concatMap (getNeighbors graph . flip elem layer) [x | x <- [0..], notElem x visited]\n    newVisited = visited ++ newLayer\n\n-- Perform BFS to find the shortest path distance\nbfs :: Int -> Int -> [(Int, Int)] -> Int\nbfs start target graph = go [start] [] 0\n  where\n    go [] _ _ = -1\n    go layer visited dist\n      | target `elem` layer = dist\n      | otherwise = go nextLayer (newVisited \\\\ layer) (dist + 1)\n      where\n        (nextLayer, newVisited) = expandLayer layer graph visited\n\n-- Main function to read input and print the result\nmain :: IO ()\nmain = do\n  line <- getLine\n  let [n, m] = map read $ words line\n  graph <- readGraph m\n  line <- getLine\n  let [s, t] = map read $ words line\n  print $ bfs s t graph\n```"
+}

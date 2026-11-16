@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "python",
+  "tgt": "javascript",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:23:54+00:00",
+  "source_file": "p09_stack_vm.py",
+  "target_file": "p09_stack_vm.js",
+  "attempts": 1,
+  "duration_s": 20.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 515,
+    "completion_tokens": 391
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nlet n;\nrl.on('line', (input) => {\n  if (!n) {\n    n = parseInt(input);\n  } else {\n    const parts = input.split();\n    const op = parts[0];\n    let stack = [];\n    switch (op) {\n      case 'push':\n        stack.push(parseInt(parts[1]));\n        break;\n      case 'pop':\n        if (stack.length < 1) {\n          console.error('error');\n        } else {\n          stack.pop();\n        }\n        break;\n      case 'add':\n      case 'mul':\n        if (stack.length < 2) {\n          console.error('error');\n        } else {\n          const b = stack.pop();\n          const a = stack.pop();\n          if (op === 'add') {\n            stack.push(a + b);\n          } else {\n            stack.push(a * b);\n          }\n        }\n        break;\n      case 'dup':\n        if (stack.length < 1) {\n          console.error('error');\n        } else {\n          stack.push(stack[stack.length - 1]);\n        }\n        break;\n      case 'swap':\n        if (stack.length < 2) {\n          console.error('error');\n        } else {\n          [stack[stack.length - 1], stack[stack.length - 2]] = [stack[stack.length - 2], stack[stack.length - 1]];\n        }\n        break;\n      case 'print':\n        if (stack.length < 1) {\n          console.error('error');\n        } else {\n          console.log(stack[stack.length - 1]);\n        }\n        break;\n    }\n  }\n}).on('close', () => {\n  process.exit(0);\n});\n```"
+}

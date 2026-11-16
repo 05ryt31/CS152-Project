@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p13_n_queens",
+  "src": "javascript",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:05:09+00:00",
+  "source_file": "p13_n_queens.js",
+  "target_file": "p13_n_queens.scm",
+  "attempts": 1,
+  "duration_s": 11.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 461,
+    "completion_tokens": 203
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (safe columns row col)\n  (define (loop previous)\n    (cond ((>= previous row) #t)\n          ((or (= (list-ref columns previous) col)\n               (= (abs (- (list-ref columns previous) col)) (- row previous)))\n           #f)\n          (else (loop (+ previous 1)))))\n  (loop 0))\n\n(define (count row columns)\n  (if (= row n)\n      1\n      (let loop ((col 0) (total 0))\n        (if (< col n)\n            (if (safe columns row col)\n                (loop (+ col 1) (+ total (count (+ row 1) (cons col columns))))\n                (loop (+ col 1) total))\n            total))))\n\n(let* ((n (string->number (read-line)))\n       (result (count 0 '())))\n  (display result)\n  (newline))\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p07_brackets",
+  "src": "prolog",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:17:21+00:00",
+  "source_file": "p07_brackets.pl",
+  "target_file": "p07_brackets.hs",
+  "attempts": 1,
+  "duration_s": 13.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 518,
+    "completion_tokens": 241
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport System.IO\n\nmain :: IO ()\nmain = do\n    nLine <- getLine\n    let n = read nLine :: Int\n    run n\n    return ()\n\nrun :: Int -> IO ()\nrun 0 = return ()\nrun n | n > 0     = do\n    line <- getLine\n    if balanced line then putStrLn \"yes\" else putStrLn \"no\"\n    run $ n - 1\n\nbalanced :: String -> Bool\nbalanced line = balancedChars (stringToCharArray line) []\n\nbalancedChars :: [Char] -> [Char] -> Bool\nbalancedChars [] _ = True\nbalancedChars (c:cs) stack\n    | c `elem` \"([{\" = balancedChars cs (c:stack)\n    | otherwise       = case stack of\n                            []      -> False\n                            (o:os)  -> matching o c && balancedChars cs os\n\nmatching :: Char -> Char -> Bool\nmatching '(' ')' = True\nmatching '[' ']' = True\nmatching '{' '}' = True\nmatching _ _     = False\n\nstringToCharArray :: String -> [Char]\nstringToCharArray = id\n```"
+}

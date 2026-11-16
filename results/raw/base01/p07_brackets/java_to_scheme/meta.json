@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p07_brackets",
+  "src": "java",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:13:20+00:00",
+  "source_file": "P07Brackets.java",
+  "target_file": "p07_brackets.scm",
+  "attempts": 1,
+  "duration_s": 14.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 500,
+    "completion_tokens": 283
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (balanced text)\n  (if (null? text)\n      #t\n      (let loop ((chars (string->list text))\n                 (stack '()))\n        (cond\n          ((null? chars)\n           (null? stack))\n          ((member (car chars) '(#\\( #\\[ #\\{))\n           (loop (cdr chars) (cons (car chars) stack)))\n          (else\n           (let ((top (car stack)))\n             (cond\n               ((or (null? top)\n                    (and (eqv? (car chars) #\\)) (not (eqv? top #\\())))\n                     (and (eqv? (car chars) #\\]) (not (eqv? top #\\[)))\n                     (and (eqv? (car chars) #\\}) (not (eqv? top #\\{)))))\n                (return #f))\n               (else\n                (loop (cdr chars) (cdr stack))))))))))\n\n(define (main)\n  (let* ((n (string->number (read-line)))\n         (results (map balanced (sequence 0 (- n 1)))))\n    (for-each (lambda (result)\n                (display (if result \"yes\" \"no\"))\n                (newline))\n              results)))\n\n(main)\n```"
+}

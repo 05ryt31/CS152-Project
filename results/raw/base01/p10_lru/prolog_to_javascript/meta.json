@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "prolog",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:43:30+00:00",
+  "source_file": "p10_lru.pl",
+  "target_file": "p10_lru.js",
+  "attempts": 1,
+  "duration_s": 18.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 601,
+    "completion_tokens": 341
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nlet cacheSize;\nlet commands;\n\nrl.on('line', (line) => {\n  if (!cacheSize) {\n    cacheSize = parseInt(line.trim());\n  } else if (!commands) {\n    commands = line.split(' ').map(Number);\n  }\n});\n\nrl.on('close', () => {\n  const cache = [];\n  let index = 0;\n\n  while (index < commands.length) {\n    const command = commands[index];\n    const key = commands[++index];\n    const value = commands[++index];\n\n    if (command === 0) {\n      get(cache, key);\n    } else if (command === 1) {\n      put(cache, cacheSize, key, value);\n    }\n\n    index++;\n  }\n});\n\nfunction get(cache, key) {\n  const entry = cache.find(entry => entry.key === key);\n  if (entry) {\n    console.log(entry.value);\n    entry.order = Date.now();\n  } else {\n    console.log(-1);\n  }\n}\n\nfunction put(cache, capacity, key, value) {\n  const existingEntry = cache.find(entry => entry.key === key);\n  if (existingEntry) {\n    existingEntry.value = value;\n    existingEntry.order = Date.now();\n  } else {\n    if (cache.length >= capacity) {\n      cache.sort((a, b) => a.order - b.order);\n      cache.shift();\n    }\n    cache.push({ key, value, order: Date.now() });\n  }\n}\n```"
+}

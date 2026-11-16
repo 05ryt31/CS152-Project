@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p12_group_by",
+  "src": "scheme",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:00:08+00:00",
+  "source_file": "p12_group_by.scm",
+  "target_file": "p12_group_by.py",
+  "attempts": 1,
+  "duration_s": 11.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 530,
+    "completion_tokens": 214
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\ndef keep(predicate, values):\n    return [value for value in values if predicate(value)]\n\ndef without(key, groups):\n    return [group for group in groups if group[0] != key]\n\ndef update(key, value, groups):\n    for i, group in enumerate(groups):\n        if group[0] == key:\n            groups[i] = [key, group[1] + value, group[2] + 1]\n            return groups\n    groups.append([key, value, 1])\n    return groups\n\ndef read_groups(n):\n    groups = []\n    for _ in range(n):\n        parts = input().split()\n        groups = update(parts[0], int(parts[1]), groups)\n    return groups\n\ndef print_groups(groups):\n    sorted_groups = sorted(groups, key=lambda x: x[0])\n    for group in sorted_groups:\n        print(group[0], group[1], group[2])\n\nn = int(input())\ngroups = read_groups(n)\nprint_groups(groups)\n```"
+}

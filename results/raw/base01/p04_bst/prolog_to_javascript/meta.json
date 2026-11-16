@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "prolog",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:53:43+00:00",
+  "source_file": "p04_bst.pl",
+  "target_file": "p04_bst.js",
+  "attempts": 1,
+  "duration_s": 23.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 692,
+    "completion_tokens": 455
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nlet inputLines = [];\nrl.on('line', (line) => {\n  inputLines.push(line);\n}).on('close', () => {\n  const line = inputLines.join('\\n');\n  const nums = parseNums(line);\n  let tree = empty;\n  for (const num of nums) {\n    tree = insert(num, tree);\n  }\n  const inOrder = inorder(tree);\n  const preOrder = preorder(tree);\n  printNums(inOrder);\n  printNums(preOrder);\n  console.log(height(tree));\n  process.exit(0);\n});\n\nfunction parseNums(line) {\n  if (line === '') return [];\n  const parts = line.split(' ');\n  if (parts.length === 0) return [];\n  return parts.map(Number);\n}\n\nfunction insert(x, tree) {\n  if (tree === empty) return { value: x, left: empty, right: empty };\n  if (x < tree.value) return { ...tree, left: insert(x, tree.left) };\n  return { ...tree, right: insert(x, tree.right) };\n}\n\nconst empty = null;\n\nfunction inorder(tree) {\n  return inorderAcc(tree, []);\n}\n\nfunction inorderAcc(tree, acc) {\n  if (tree === empty) return acc;\n  return inorderAcc(tree.right, inorderAcc(tree.left, [...acc, tree.value]));\n}\n\nfunction preorder(tree) {\n  return preorderAcc(tree, []);\n}\n\nfunction preorderAcc(tree, acc) {\n  if (tree === empty) return acc;\n  return [...acc, tree.value, ...preorderAcc(tree.right, preorderAcc(tree.left, []))];\n}\n\nfunction height(tree) {\n  if (tree === empty) return 0;\n  const leftHeight = height(tree.left);\n  const rightHeight = height(tree.right);\n  return 1 + Math.max(leftHeight, rightHeight);\n}\n\nfunction printNums(nums) {\n  if (nums.length === 0) return '\\n';\n  const text = nums.join(' ');\n  console.log(text);\n}\n```"
+}

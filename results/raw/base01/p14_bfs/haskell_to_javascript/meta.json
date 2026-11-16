@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "haskell",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:17:31+00:00",
+  "source_file": "p14_bfs.hs",
+  "target_file": "p14_bfs.js",
+  "attempts": 1,
+  "duration_s": 16.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 560,
+    "completion_tokens": 311
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n    input: process.stdin,\n    output: process.stdout,\n    terminal: false\n});\n\nlet lines = [];\nrl.on('line', (line) => {\n    lines.push(line);\n}).on('close', () => {\n    const [n, m] = lines.shift().split(' ').map(Number);\n    const edges = lines.slice(0, m).map(edge => edge.split(' ').map(Number));\n    const [s, t] = lines[m].split(' ').map(Number);\n\n    const graph = new Map();\n    edges.forEach(([u, v]) => {\n        if (!graph.has(u)) graph.set(u, []);\n        if (!graph.has(v)) graph.set(v, []);\n        graph.get(u).push(v);\n        graph.get(v).push(u);\n    });\n\n    function bfs(start, target) {\n        const queue = [[start, 0]];\n        const seen = new Set([start]);\n\n        while (queue.length > 0) {\n            const [node, distance] = queue.shift();\n            if (node === target) return distance;\n            const neighbors = graph.get(node) || [];\n            neighbors.forEach(neighbor => {\n                if (!seen.has(neighbor)) {\n                    seen.add(neighbor);\n                    queue.push([neighbor, distance + 1]);\n                }\n            });\n        }\n\n        return -1;\n    }\n\n    const result = bfs(s, t);\n    console.log(result);\n});\n```"
+}

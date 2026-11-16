@@ -1,0 +1,10 @@
+[
+    {"name": "map then filter", "input": "1 2 3 4\n2\nmap mul 3\nfilter even", "output": "6 12"},
+    {"name": "no stages", "input": "1 2 3\n0", "output": "1 2 3"},
+    {"name": "reduce sum", "input": "1 2 3\n1\nreduce sum", "output": "6"},
+    {"name": "reduce max on empty", "input": "1 2 3\n2\nfilter gt 5\nreduce max", "output": "none"},
+    {"name": "reduce sum on empty", "input": "1 2 3\n2\nfilter gt 5\nreduce sum", "output": "0"},
+    {"name": "filter empties the list", "input": "1 2 3\n2\nfilter gt 5\nmap add 1", "output": ""},
+    {"name": "three stages", "input": "5 1 4\n3\nmap add 1\nfilter odd\nreduce max", "output": "5"},
+    {"name": "negative numbers and gt", "input": "-3 0 3\n2\nfilter gt -1\nreduce sum", "output": "3"}
+]

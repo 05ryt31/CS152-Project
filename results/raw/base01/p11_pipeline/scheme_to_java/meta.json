@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "scheme",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:51:14+00:00",
+  "source_file": "p11_pipeline.scm",
+  "target_file": "P11Pipeline.java",
+  "attempts": 1,
+  "duration_s": 35.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 762,
+    "completion_tokens": 656
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p11_pipeline.scheme_to_java;\n\nimport java.util.*;\nimport java.io.*;\n\npublic class P11Pipeline {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        List<Integer> values = numbers(scanner.nextLine());\n        int k = Integer.parseInt(scanner.nextLine());\n        pipeline(k, values);\n    }\n\n    private static List<Integer> numbers(String line) {\n        if (line.isEmpty()) return Collections.emptyList();\n        String[] parts = line.split(\" \");\n        List<Integer> result = new ArrayList<>();\n        for (String part : parts) {\n            result.add(Integer.parseInt(part));\n        }\n        return result;\n    }\n\n    private static int sum(List<Integer> values) {\n        return values.stream().reduce(0, Integer::sum);\n    }\n\n    private static int maximum(List<Integer> values) {\n        return values.stream().max(Integer::compare).orElseThrow(NoSuchElementException::new);\n    }\n\n    private static List<Integer> keep(Predicate<Integer> predicate, List<Integer> values) {\n        return values.stream().filter(predicate).collect(Collectors.toList());\n    }\n\n    private static List<Integer> applyStage(List<Integer> values, String[] parts) {\n        String kind = parts[0];\n        String name = parts[1];\n        switch (kind) {\n            case \"map\":\n                int amount = Integer.parseInt(parts[2]);\n                if (\"add\".equals(name)) {\n                    return values.stream().map(x -> x + amount).collect(Collectors.toList());\n                } else {\n                    return values.stream().map(x -> x * amount).collect(Collectors.toList());\n                }\n            case \"filter\":\n                switch (name) {\n                    case \"even\":\n                        return keep(Predicates::isEven, values);\n                    case \"odd\":\n                        return keep(Predicates::isOdd, values);\n                    default:\n                        int threshold = Integer.parseInt(parts[2]);\n                        return keep(x -> x > threshold, values);\n                }\n            case \"sum\":\n                return Collections.singletonList(sum(values));\n            default:\n                return values.isEmpty() ? Collections.singletonList(-1) : Collections.singletonList(maximum(values));\n        }\n    }\n\n    private static void pipeline(int k, List<Integer> values) {\n        for (int i = 0; i < k; i++) {\n            String[] parts = readLine().split(\" \");\n            values = applyStage(values, parts);\n        }\n        if (!values.isEmpty()) {\n            System.out.print(values.get(0));\n            for (int j = 1; j < values.size(); j++) {\n                System.out.print(\" \" + values.get(j));\n            }\n            System.out.println();\n        } else {\n            System.out.println(-1);\n        }\n    }\n\n    private static String readLine() {\n        try {\n            return new BufferedReader(new InputStreamReader(System.in)).readLine();\n        } catch (IOException e) {\n            throw new RuntimeException(e);\n        }\n    }\n\n    private static class Predicates {\n        public static boolean isEven(int x) {\n            return x % 2 == 0;\n        }\n\n        public static boolean isOdd(int x) {\n            return x % 2 != 0;\n        }\n    }\n}\n```"
+}

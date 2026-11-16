@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "haskell",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:41:15+00:00",
+  "source_file": "p10_lru.hs",
+  "target_file": "p10_lru.py",
+  "attempts": 1,
+  "duration_s": 12.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 589,
+    "completion_tokens": 226
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\ndef touch(key, order):\n    return [x for x in order if x != key] + [key]\n\ndef run_lru(cap, commands):\n    values = {}\n    order = []\n    outputs = []\n\n    for command in commands:\n        parts = command.split()\n        if parts[0] == \"get\":\n            key = int(parts[1])\n            if key in values:\n                outputs.append(str(values[key]))\n                order = touch(key, order)\n            else:\n                outputs.append(\"-1\")\n\n        elif parts[0] == \"put\":\n            key = int(parts[1])\n            value = int(parts[2])\n            values[key] = value\n            order = touch(key, order)\n            if len(order) > cap:\n                oldest = order.pop(0)\n                del values[oldest]\n\n    return outputs\n\nif __name__ == \"__main__\":\n    cap = int(input())\n    n = int(input())\n    commands = [input().strip() for _ in range(n)]\n    print(\"\\n\".join(run_lru(cap, commands)))\n```"
+}

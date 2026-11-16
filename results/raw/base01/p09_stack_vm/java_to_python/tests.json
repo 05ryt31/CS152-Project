@@ -1,0 +1,10 @@
+[
+    {"name": "add dup print", "input": "5\npush 2\npush 3\nadd\ndup\nprint", "output": "5"},
+    {"name": "pop on empty", "input": "1\npop", "output": "error"},
+    {"name": "swap with one element", "input": "2\npush 1\nswap", "output": "error"},
+    {"name": "print on empty", "input": "1\nprint", "output": "error"},
+    {"name": "swap then pop", "input": "6\npush 2\npush 5\nswap\nprint\npop\nprint", "output": "2\n5"},
+    {"name": "multiply", "input": "4\npush 3\npush 4\nmul\nprint", "output": "12"},
+    {"name": "negative operand", "input": "4\npush -2\npush 3\nadd\nprint", "output": "1"},
+    {"name": "error does not consume operands", "input": "4\npush 7\nadd\nprint\nprint", "output": "error\n7\n7"}
+]

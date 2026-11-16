@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "prolog",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:53:27+00:00",
+  "source_file": "p04_bst.pl",
+  "target_file": "p04_bst.py",
+  "attempts": 1,
+  "duration_s": 15.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 658,
+    "completion_tokens": 290
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\nclass Node:\n    def __init__(self, value, left=None, right=None):\n        self.value = value\n        self.left = left\n        self.right = right\n\ndef insert(value, tree):\n    if tree is None:\n        return Node(value)\n    elif value < tree.value:\n        tree.left = insert(value, tree.left)\n    else:\n        tree.right = insert(value, tree.right)\n    return tree\n\ndef inorder(tree, acc):\n    if tree is None:\n        return acc\n    return inorder(tree.left, inorder(tree.right, acc + [tree.value]))\n\ndef preorder(tree, acc):\n    if tree is None:\n        return acc\n    return preorder(tree.left, preorder(tree.right, [tree.value] + acc))\n\ndef height(tree):\n    if tree is None:\n        return 0\n    return 1 + max(height(tree.left), height(tree.right))\n\ndef print_nums(nums):\n    print(' '.join(map(str, nums)))\n\ndef main():\n    lines = sys.stdin.readlines()\n    nums = list(map(int, lines[0].split()))\n    tree = None\n    for num in nums:\n        tree = insert(num, tree)\n    in_order = inorder(tree, [])\n    pre_order = preorder(tree, [])\n    print_nums(in_order)\n    print_nums(pre_order)\n    print(height(tree))\n\nif __name__ == \"__main__\":\n    main()\n```"
+}

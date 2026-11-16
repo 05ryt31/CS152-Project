@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p15_permutations",
+  "src": "prolog",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:25:41+00:00",
+  "source_file": "p15_permutations.pl",
+  "target_file": "p15_permutations.scm",
+  "attempts": 1,
+  "duration_s": 16.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 379,
+    "completion_tokens": 299
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (main args)\n  (let ((input (read-line)))\n    (permutations input)))\n\n(define (permutations str)\n  (define chars (string->list str))\n  (define sorted-chars (sort chars char<?))\n  (define ordered-pelems\n    (remove-duplicates\n     (map list->string\n          (permutations-helper sorted-chars))))\n  (for-each displayln ordered-pelems))\n\n(define (permutations-helper lst)\n  (cond\n   ((null? lst) (list '()))\n   (else (append-map (lambda (perm)\n                       (map (lambda (i)\n                              (cons (car lst) (insert i perm)))\n                            (iota (length perm + 1))))\n                     (permutations-helper (cdr lst))))))\n\n(define (insert x lst)\n  (if (null? lst)\n      (list x)\n      (cons (car lst) (insert x (cdr lst)))))\n\n(define (remove-duplicates lst)\n  (cond\n   ((null? lst) '())\n   (else (let ((head (car lst))\n                (tail (cdr lst)))\n           (if (member head tail)\n               (remove-duplicates tail)\n               (cons head (remove-duplicates tail))))))\n\n(define (displayln . args)\n  (apply display args)\n  (newline))\n\n(main (command-line-arguments))\n```"
+}

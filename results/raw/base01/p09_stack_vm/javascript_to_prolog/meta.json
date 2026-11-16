@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "javascript",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:27:19+00:00",
+  "source_file": "p09_stack_vm.js",
+  "target_file": "p09_stack_vm.pl",
+  "attempts": 1,
+  "duration_s": 30.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 660,
+    "completion_tokens": 578
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\np09_stack_vm :-\n    read_lines(InputLines),\n    process_lines(InputLines, [], Output),\n    print_output(Output),\n    halt.\n\nread_lines([]) :-\n    at_end_of_stream(current_input), !.\nread_lines([H|T]) :-\n    read_line_to_string(current_input, H),\n    read_lines(T).\n\nprocess_lines([], _, []).\nprocess_lines([Line|Rest], Stack, Output) :-\n    parse_line(Line, Op, Args),\n    execute_op(Op, Args, Stack, NewStack),\n    process_lines(Rest, NewStack, NewOutput),\n    append(NewOutput, [OpResult], Output).\n\nparse_line(Line, Op, Args) :-\n    split_string(Line, \" \", \"\", Parts),\n    Op = Parts[0],\n    Args = Parts[1:].\n\nexecute_op('push', [Arg], Stack, [NewTop|Stack]) :-\n    NewTop is Arg.\nexecute_op('pop', [], Stack, NewStack) :-\n    length(Stack, Len),\n    Len > 0,\n    pop(Stack, NewStack).\nexecute_op('pop', [], _Stack, ['error']).\nexecute_op('add', [], Stack, [NewTop|Stack]) :-\n    length(Stack, Len),\n    Len >= 2,\n    pop(Stack, [B, A|Rest]),\n    NewTop is A + B.\nexecute_op('add', [], _Stack, ['error']).\nexecute_op('mul', [], Stack, [NewTop|Stack]) :-\n    length(Stack, Len),\n    Len >= 2,\n    pop(Stack, [B, A|Rest]),\n    NewTop is A * B.\nexecute_op('mul', [], _Stack, ['error']).\nexecute_op('dup', [], Stack, [Top|NewStack]) :-\n    length(Stack, Len),\n    Len > 0,\n    Top = Stack[-1],\n    NewStack = [Top|Stack].\nexecute_op('dup', [], _Stack, ['error']).\nexecute_op('swap', [], Stack, [Top1, Top2|NewStack]) :-\n    length(Stack, Len),\n    Len >= 2,\n    Top1 = Stack[-1],\n    Top2 = Stack[-2],\n    NewStack = [Top2, Top1|Stack].\nexecute_op('swap', [], _Stack, ['error']).\nexecute_op(_, [], _Stack, ['error']) :-\n    true.\n\npop([_], []) :- !.\npop([_|Tail], Tail) :- !.\n\nprint_output(['error'|_]) :-\n    format('error~n'), !.\nprint_output([H|T]) :-\n    format('~w~n', [H]),\n    print_output(T).\nprint_output([]) :-\n    true.\n```"
+}

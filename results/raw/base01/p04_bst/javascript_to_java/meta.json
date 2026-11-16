@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "javascript",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:46:34+00:00",
+  "source_file": "p04_bst.js",
+  "target_file": "P04Bst.java",
+  "attempts": 1,
+  "duration_s": 28.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 687,
+    "completion_tokens": 529
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p04_bst.javascript_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class P04Bst {\n    public static void main(String[] args) throws Exception {\n        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));\n        String line = reader.readLine();\n        List<Integer> values = new ArrayList<>();\n        if (line != null && !line.trim().isEmpty()) {\n            for (String s : line.split(\"\\\\s+\")) {\n                values.add(Integer.parseInt(s));\n            }\n        }\n\n        Node root = null;\n        for (int value : values) {\n            root = insert(root, value);\n        }\n\n        List<Integer> inOrder = new ArrayList<>();\n        inorder(root, inOrder);\n\n        List<Integer> preOrder = new ArrayList<>();\n        preorder(root, preOrder);\n\n        System.out.println(String.join(\" \", inOrder.stream().map(String::valueOf).toArray(String[]::new)));\n        System.out.println(String.join(\" \", preOrder.stream().map(String::valueOf).toArray(String[]::new)));\n        System.out.println(height(root));\n    }\n\n    static class Node {\n        int value;\n        Node left;\n        Node right;\n\n        Node(int value, Node left, Node right) {\n            this.value = value;\n            this.left = left;\n            this.right = right;\n        }\n    }\n\n    static Node insert(Node root, int value) {\n        Node node = new Node(value);\n        if (root == null) return node;\n\n        Node current = root;\n        while (true) {\n            if (value < current.value) {\n                if (current.left == null) {\n                    current.left = node;\n                    return root;\n                }\n                current = current.left;\n            } else {\n                if (current.right == null) {\n                    current.right = node;\n                    return root;\n                }\n                current = current.right;\n            }\n        }\n    }\n\n    static void inorder(Node root, List<Integer> out) {\n        if (root != null) {\n            inorder(root.left, out);\n            out.add(root.value);\n            inorder(root.right, out);\n        }\n    }\n\n    static void preorder(Node root, List<Integer> out) {\n        if (root != null) {\n            out.add(root.value);\n            preorder(root.left, out);\n            preorder(root.right, out);\n        }\n    }\n\n    static int height(Node root) {\n        return root != null ? 1 + Math.max(height(root.left), height(root.right)) : 0;\n    }\n}\n```"
+}

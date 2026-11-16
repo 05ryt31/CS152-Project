@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p15_permutations",
+  "src": "java",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:23:04+00:00",
+  "source_file": "P15Permutations.java",
+  "target_file": "p15_permutations.scm",
+  "attempts": 1,
+  "duration_s": 11.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 467,
+    "completion_tokens": 210
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (generate letters used current)\n  (if (= (string-length current) (length letters))\n      (begin\n        (display current)\n        (newline))\n      (for-each (lambda (i)\n                  (when (not (list-ref used i))\n                    (set-car! (list-tail used i) #t)\n                    (string-append! current (string (list-ref letters i)))\n                    (generate letters used current)\n                    (string-set! current (- (string-length current) 1) #\\null)\n                    (set-car! (list-tail used i) #f)))\n                (iota (length letters)))))\n\n(define (main)\n  (let* ((input (read-line))\n         (letters (string->list input))\n         (sorted-letters (sort letters char<?))\n         (used (make-list (length sorted-letters) #f)))\n    (generate sorted-letters used \"\")))\n\n(main)\n```"
+}

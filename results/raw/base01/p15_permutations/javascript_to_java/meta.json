@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p15_permutations",
+  "src": "javascript",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:22:17+00:00",
+  "source_file": "p15_permutations.js",
+  "target_file": "P15Permutations.java",
+  "attempts": 1,
+  "duration_s": 13.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 423,
+    "completion_tokens": 248
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p15_permutations.javascript_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.util.ArrayList;\nimport java.util.Collections;\nimport java.util.List;\n\npublic class P15Permutations {\n    public static void main(String[] args) throws Exception {\n        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));\n        String input = reader.readLine();\n        List<Character> letters = new ArrayList<>();\n        for (char c : input.toCharArray()) {\n            letters.add(c);\n        }\n        Collections.sort(letters);\n\n        List<String> output = new ArrayList<>();\n        generate(\"\", letters, output);\n\n        for (String perm : output) {\n            System.out.println(perm);\n        }\n    }\n\n    private static void generate(String prefix, List<Character> remaining, List<String> output) {\n        if (remaining.isEmpty()) {\n            output.add(prefix);\n        } else {\n            for (int i = 0; i < remaining.size(); i++) {\n                char current = remaining.get(i);\n                List<Character> nextRemaining = new ArrayList<>(remaining);\n                nextRemaining.remove(i);\n                generate(prefix + current, nextRemaining, output);\n            }\n        }\n    }\n}\n```"
+}

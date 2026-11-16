@@ -1,0 +1,30 @@
+(import scheme (chicken base) (chicken io))
+
+(define (parse line)
+  (if (or (null? line) (string=? line ""))
+      '()
+      (map string->number (string-split (string-trim line) #\space))))
+
+(define (merge-sorted a b)
+  (let loop ((i 0) (j 0))
+    (cond
+     ((and (< i (length a)) (< j (length b)))
+      (let ((ai (list-ref a i))
+            (bj (list-ref b j)))
+        (if (<= ai bj)
+            (cons ai (loop (+ i 1) j))
+            (cons bj (loop i (+ j 1))))))
+     ((< i (length a))
+      (append (take a i) (drop a i)))
+     ((< j (length b))
+      (append (take b j) (drop b j)))
+     (else '()))))
+
+(define (main)
+  (let* ((a (parse (read-line)))
+         (b (parse (read-line)))
+         (merged (merge-sorted a b)))
+    (for-each display merged)
+    (newline)))
+
+(main)

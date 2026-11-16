@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p02_merge_sorted",
+  "src": "python",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:33:24+00:00",
+  "source_file": "p02_merge_sorted.py",
+  "target_file": "p02_merge_sorted.scm",
+  "attempts": 1,
+  "duration_s": 16.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 482,
+    "completion_tokens": 299
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (parse-line line)\n  (map string->number (string-split line)))\n\n(define (merge-sorted a b)\n  (let loop ((i 0) (j 0) (merged '()))\n    (cond\n      ((and (< i (length a)) (< j (length b)))\n       (if (<= (list-ref a i) (list-ref b j))\n           (loop (+ i 1) j (cons (list-ref a i) merged))\n           (loop i (+ j 1) (cons (list-ref b j) merged))))\n      ((< i (length a))\n       (loop (+ i 1) j (cons (list-ref a i) merged)))\n      ((< j (length b))\n       (loop i (+ j 1) (cons (list-ref b j) merged)))\n      (else\n       (reverse merged)))))\n\n(define (main)\n  (let* ((lines (string-split (read-all-input) \"\\n\"))\n         (a (if (> (length lines) 0) (parse-line (car lines)) '()))\n         (b (if (> (length lines) 1) (parse-line (cadr lines)) '()))\n         (merged (merge-sorted a b)))\n    (when (> (length merged) 0)\n      (for-each display merged)\n      (newline))))\n\n(main)\n```"
+}

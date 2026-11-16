@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:52:15+00:00",
+  "source_file": "p11_pipeline.scm",
+  "target_file": "p11_pipeline.pl",
+  "attempts": 1,
+  "duration_s": 30.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 787,
+    "completion_tokens": 551
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\nnumbers(Line, Values) :-\n    Line = \"\",\n    Values = [].\nnumbers(Line, Values) :-\n    split_string(Line, \" \", \"\", Tokens),\n    maplist(string_to_number, Tokens, Values).\n\nsum([], 0).\nsum([H|T], Sum) :-\n    sum(T, TailSum),\n    Sum is H + TailSum.\n\nmaximum([], none).\nmaximum([H], H).\nmaximum([H|T], Max) :-\n    maximum(T, TailMax),\n    (   TailMax == none -> Max = H ;\n        Max is max(H, TailMax)\n    ).\n\nkeep(_, [], []).\nkeep(Pred, [H|T], [H|Rest]) :-\n    Pred(H),\n    keep(Pred, T, Rest).\nkeep(Pred, [_|T], Rest) :-\n    keep(Pred, T, Rest).\n\napply_stage(Values, Parts) :-\n    Parts = [Kind, Name],\n    (   Kind == \"map\" ->\n        Parts = [\"map\", _, Amount],\n        (   Name == \"add\" ->\n            maplist(lambda(X, X + Amount), Values, Result);\n            maplist(lambda(X, X * Amount), Values, Result)\n        );\n        Parts = [\"filter\", _, _] ->\n        (   Name == \"even\" -> keep(even, Values, Result);\n            Name == \"odd\" -> keep(odd, Values, Result);\n            Parts = [\"filter\", _, Threshold] ->\n            keep(lambda(X, X > string_to_number(Threshold)), Values, Result)\n        );\n        Parts = [\"sum\"] -> sum(Values, Result);\n        Result = none;\n        maximum(Values, Result)\n    ),\n    Result.\n\npipeline(K, Values) :-\n    pipeline(K, Values, 0).\n\npipeline(_, [], _).\npipeline(K, Values, I) :-\n    I < K,\n    read_line(InputLine),\n    apply_stage(Values, InputParts),\n    pipeline(K, NewValues, I + 1),\n    !,\n    (   NewValues \\= none ->\n        (   list(NewValues) ->\n            (   NewValues = [] -> true ;\n                display(car(NewValues)),\n                maplist(lambda(X, format(\"~d \", X)), cdr(NewValues)),\n                nl\n            )\n        ;   print(NewValues)\n        )\n    ;   true\n    ).\n\np11_pipeline :-\n    read_line_to_string(current_input, Line),\n    numbers(Line, Values),\n    read_line_to_string(current_input, KLine),\n    string_to_number(KLine, K),\n    pipeline(K, Values),\n    halt.\n```"
+}

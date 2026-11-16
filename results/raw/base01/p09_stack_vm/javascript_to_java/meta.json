@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "javascript",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:25:53+00:00",
+  "source_file": "p09_stack_vm.js",
+  "target_file": "P09StackVm.java",
+  "attempts": 1,
+  "duration_s": 26.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 638,
+    "completion_tokens": 502
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p09_stack_vm.javascript_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class P09StackVm {\n    public static void main(String[] args) {\n        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {\n            List<String> lines = new ArrayList<>();\n            String line;\n            while ((line = reader.readLine()) != null) {\n                lines.add(line);\n            }\n            int n = Integer.parseInt(lines.get(0));\n            List<Integer> stack = new ArrayList<>();\n            List<String> output = new ArrayList<>();\n            for (int i = 0; i < n; i++) {\n                String[] parts = lines.get(i + 1).split(\"\\\\s+\");\n                String op = parts[0];\n                if (\"push\".equals(op)) {\n                    stack.add(Integer.parseInt(parts[1]));\n                } else if (\"pop\".equals(op)) {\n                    if (stack.isEmpty()) {\n                        output.add(\"error\");\n                    } else {\n                        stack.remove(stack.size() - 1);\n                    }\n                } else if (\"add\".equals(op) || \"mul\".equals(op)) {\n                    if (stack.size() < 2) {\n                        output.add(\"error\");\n                    } else {\n                        int b = stack.remove(stack.size() - 1);\n                        int a = stack.remove(stack.size() - 1);\n                        stack.add(\"add\".equals(op) ? a + b : a * b);\n                    }\n                } else if (\"dup\".equals(op)) {\n                    if (stack.isEmpty()) {\n                        output.add(\"error\");\n                    } else {\n                        stack.add(stack.get(stack.size() - 1));\n                    }\n                } else if (\"swap\".equals(op)) {\n                    if (stack.size() < 2) {\n                        output.add(\"error\");\n                    } else {\n                        int top = stack.size() - 1;\n                        int temp = stack.get(top);\n                        stack.set(top, stack.get(top - 1));\n                        stack.set(top - 1, temp);\n                    }\n                } else {\n                    output.add(stack.isEmpty() ? \"error\" : String.valueOf(stack.get(stack.size() - 1)));\n                }\n            }\n            if (!output.isEmpty()) {\n                System.out.println(String.join(\"\\n\", output));\n            }\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n}\n```"
+}

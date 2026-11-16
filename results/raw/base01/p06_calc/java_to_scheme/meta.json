@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p06_calc",
+  "src": "java",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:05:36+00:00",
+  "source_file": "P06Calc.java",
+  "target_file": "p06_calc.scm",
+  "attempts": 1,
+  "duration_s": 25.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 659,
+    "completion_tokens": 479
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (parse-token str)\n  (cond ((string=? \"\" str) #f)\n        ((char-whitespace? (string-ref str 0))\n         (parse-token (substring str 1)))\n        ((char-numeric? (string-ref str 0))\n         (let loop ((i 0) (acc \"\"))\n           (if (< i (string-length str))\n               (loop (+ i 1)\n                     (string-append acc (string (string-ref str i))))\n               (string->number acc))))\n        (else\n         (substring str 0 1))))\n\n(define (parser text)\n  (define tokens '())\n  (define pos 0)\n\n  (define (add-token token)\n    (set! tokens (cons token tokens)))\n\n  (define (next-token)\n    (when (< pos (string-length text))\n      (let ((token (parse-token (substring text pos))))\n        (set! pos (+ pos (string-length token)))\n        token)))\n\n  (define (expression)\n    (let ((value (term)))\n      (loop)))\n\n  (define (loop)\n    (let ((op (next-token)))\n      (if (or (string=? \"+\" op) (string=? \"-\" op))\n          (let ((right (term)))\n            (set! value (if (string=? \"+\" op) (+ value right) (- value right)))\n            (loop))\n          value)))\n\n  (define (term)\n    (let ((value (factor)))\n      (loop)))\n\n  (define (loop)\n    (let ((op (next-token)))\n      (if (string=? \"*\" op)\n          (begin\n            (next-token)\n            (set! value (* value (factor)))\n            (loop))\n          value)))\n\n  (define (factor)\n    (let ((token (next-token)))\n      (if (string=? \"(\" token)\n          (let ((value (expression)))\n            (next-token)\n            value)\n          (string->number token))))\n\n  (lambda ()\n    (let loop ()\n      (let ((token (next-token)))\n        (when token\n          (add-token token)\n          (loop))))\n    (expression)))\n\n(define (main)\n  (let ((text (read-line)))\n    (display (parser text))\n    (newline)))\n\n(main)\n```"
+}

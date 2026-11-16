@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p07_brackets",
+  "src": "python",
+  "tgt": "javascript",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:10:59+00:00",
+  "source_file": "p07_brackets.py",
+  "target_file": "p07_brackets.js",
+  "attempts": 1,
+  "duration_s": 12.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 393,
+    "completion_tokens": 218
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nconst PAIRS = {\n  ')': '(',\n  ']': '[',\n  '}': '{'\n};\n\nfunction balanced(text) {\n  const stack = [];\n  for (const ch of text) {\n    if ('([{'.includes(ch)) {\n      stack.push(ch);\n    } else {\n      if (stack.length === 0 || stack[stack.length - 1] !== PAIRS[ch]) {\n        return false;\n      }\n      stack.pop();\n    }\n  }\n  return stack.length === 0;\n}\n\nasync function main() {\n  const n = parseInt(await rl.question(''), 10);\n  for (let i = 0; i < n; i++) {\n    const line = await rl.question('');\n    if (balanced(line)) {\n      console.log('yes');\n    } else {\n      console.log('no');\n    }\n  }\n}\n\nmain();\n```"
+}

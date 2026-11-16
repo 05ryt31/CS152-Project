@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p15_permutations",
+  "src": "java",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:23:25+00:00",
+  "source_file": "P15Permutations.java",
+  "target_file": "p15_permutations.pl",
+  "attempts": 1,
+  "duration_s": 10.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 524,
+    "completion_tokens": 197
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\ngenerate(_, [], _).\n\ngenerate(Letters, Used, Current) :-\n    length(Current, Length),\n    Length =:= length(Letters), !,\n    format('~s~n', [Current]).\n\ngenerate(Letters, Used, Current) :-\n    findall(Index, (between(0, Length, Index), \\+ nth0(Index, Used, true)), Indices),\n    member(Index, Indices),\n    nth0(Index, Letters, Letter),\n    nth0(Index, Used, _, NewUsed),\n    string_concat(Current, [Letter], NewCurrent),\n    generate(Letters, NewUsed, NewCurrent).\n\np15_permutations :-\n    read_line_to_string(current_input, Line),\n    atom_codes(Line, Codes),\n    sort(Codes, SortedCodes),\n    generate(SortedCodes, maplist(=(false), SortedCodes), []),\n    halt.\n```"
+}

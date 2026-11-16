@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "python",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:24:35+00:00",
+  "source_file": "p09_stack_vm.py",
+  "target_file": "p09_stack_vm.scm",
+  "attempts": 1,
+  "duration_s": 19.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 530,
+    "completion_tokens": 377
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (main)\n  (let ((n (string->number (read-line))))\n    (define stack '())\n    (do ((i 0 (+ i 1)))\n        ((= i n))\n      (let* ((line (read-line))\n             (parts (string-split line #\\Space))\n             (op (car parts)))\n        (cond\n          ((string=? op \"push\") (set! stack (cons (string->number (cadr parts)) stack)))\n          ((string=? op \"pop\")\n           (if (null? stack)\n               (display \"error\\n\")\n               (set! stack (cdr stack))))\n          ((or (string=? op \"add\") (string=? op \"mul\"))\n           (if (< (length stack) 2)\n               (display \"error\\n\")\n               (begin\n                 (let* ((b (car stack))\n                        (a (cadr stack))\n                        (result (if (string=? op \"add\") (+ a b) (* a b))))\n                   (set! stack (cons result (cddr stack)))))))\n          ((string=? op \"dup\")\n           (if (null? stack)\n               (display \"error\\n\")\n               (set! stack (cons (car stack) stack))))\n          ((string=? op \"swap\")\n           (if (< (length stack) 2)\n               (display \"error\\n\")\n               (begin\n                 (let ((temp (car stack)))\n                   (set! stack (cons (cadr stack) (cons temp (cddr stack))))))))\n          ((string=? op \"print\")\n           (if (null? stack)\n               (display \"error\\n\")\n               (begin\n                 (display (car stack))\n                 (newline))))))))\n\n(main)\n```"
+}

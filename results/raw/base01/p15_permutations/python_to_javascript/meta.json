@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p15_permutations",
+  "src": "python",
+  "tgt": "javascript",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:21:13+00:00",
+  "source_file": "p15_permutations.py",
+  "target_file": "p15_permutations.js",
+  "attempts": 1,
+  "duration_s": 10.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 391,
+    "completion_tokens": 195
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nlet letters;\nrl.on('line', (input) => {\n  letters = input.trim().split('').sort();\n  rl.close();\n}).on('close', () => {\n  const results = [];\n  function generate(used, current) {\n    if (current.length === letters.length) {\n      results.push(current.join(''));\n      return;\n    }\n    for (let i = 0; i < letters.length; i++) {\n      if (!used[i]) {\n        used[i] = true;\n        current.push(letters[i]);\n        generate(used, current);\n        current.pop();\n        used[i] = false;\n      }\n    }\n  }\n\n  generate(Array(letters.length).fill(false), []);\n  results.forEach(word => console.log(word));\n});\n```"
+}

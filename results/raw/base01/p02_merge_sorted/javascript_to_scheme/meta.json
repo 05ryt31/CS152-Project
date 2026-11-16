@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p02_merge_sorted",
+  "src": "javascript",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:34:30+00:00",
+  "source_file": "p02_merge_sorted.js",
+  "target_file": "p02_merge_sorted.scm",
+  "attempts": 1,
+  "duration_s": 16.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 462,
+    "completion_tokens": 301
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (parse-line line)\n  (let ((trimmed (string-trim (or line \"\"))))\n    (if (not (string=? trimmed \"\"))\n        (map string->number (string-split trimmed #\\space))\n        '())))\n\n(let* ((lines (string-split (read-string) #\\newline))\n       (a (parse-line (car lines)))\n       (b (parse-line (cadr lines)))\n       (result '())\n       (i 0)\n       (j 0))\n  (define (merge)\n    (cond\n      ((and (< i (length a)) (< j (length b)))\n       (if (<= (list-ref a i) (list-ref b j))\n           (begin\n             (set! result (append result (list (list-ref a i))))\n             (set! i (+ i 1))\n             (merge))\n           (begin\n             (set! result (append result (list (list-ref b j))))\n             (set! j (+ j 1))\n             (merge))))\n      ((< i (length a))\n       (set! result (append result (list-tail a i))))\n      ((< j (length b))\n       (set! result (append result (list-tail b j)))))\n  (merge)\n  (when (> (length result) 0)\n    (for-each display result)\n    (newline)))\n```"
+}

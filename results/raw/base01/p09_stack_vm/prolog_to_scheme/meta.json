@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "prolog",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:34:38+00:00",
+  "source_file": "p09_stack_vm.pl",
+  "target_file": "p09_stack_vm.scm",
+  "attempts": 1,
+  "duration_s": 24.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 620,
+    "completion_tokens": 443
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (p09-stack-vm)\n  (let loop ((n (string->number (read-line))))\n    (if (> n 0)\n        (begin\n          (let* ((line (read-line))\n                 (parts (string-split line #\\space))\n                 (stack (execute parts '())))\n            (loop (- n 1)))\n          (exit 0))\n        (exit 1))))\n\n(define (execute parts stack)\n  (cond\n    [(equal? (car parts) \"push\")\n     (let ((value (string->number (cadr parts))))\n       (cons value stack))]\n    [(equal? (car parts) \"pop\")\n     (if (null? stack)\n         (begin\n           (display \"error\\n\")\n           '())\n         (cdr stack))]\n    [(member (car parts) '(\"add\" \"mul\"))\n     (if (< (length stack) 2)\n         (begin\n           (display \"error\\n\")\n           stack)\n         (let* ((b (car stack))\n                (a (cadr stack))\n                (result (if (equal? (car parts) \"add\") (+ a b) (* a b))))\n           (cons result (cddr stack)))))]\n    [(equal? (car parts) \"dup\")\n     (if (null? stack)\n         (begin\n           (display \"error\\n\")\n           '())\n         (cons (car stack) stack))]\n    [(equal? (car parts) \"swap\")\n     (if (< (length stack) 2)\n         (begin\n           (display \"error\\n\")\n           stack)\n         (let ((a (car stack))\n               (b (cadr stack)))\n           (cons b (cons a (cddr stack)))))]\n    [(equal? (car parts) \"print\")\n     (if (null? stack)\n         (begin\n           (display \"error\\n\")\n           '())\n         (begin\n           (display (car stack))\n           (newline)\n           stack))]\n    [else stack]))\n\n(p09-stack-vm)\n```"
+}

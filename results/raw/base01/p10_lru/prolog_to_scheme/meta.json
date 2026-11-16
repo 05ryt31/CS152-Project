@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "prolog",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:44:12+00:00",
+  "source_file": "p10_lru.pl",
+  "target_file": "p10_lru.scm",
+  "attempts": 1,
+  "duration_s": 26.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 616,
+    "completion_tokens": 490
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (p10_lru)\n  (let* ((c-line (read-line))\n         (n-line (read-line))\n         (c (string->number c-line))\n         (n (string->number n-line)))\n    (run n c '())))\n\n(define (run n c cache)\n  (if (= n 0)\n      (halt)\n      (let* ((line (read-line))\n             (parts (string-split line #\\space))\n             (next-cache (operation parts c cache)))\n        (run (- n 1) c next-cache))))\n\n(define (operation parts c cache)\n  (match parts\n    ((\"get\" k)\n     (let ((key (string->number k)))\n       (cond ((assoc key cache)\n              (let ((value (cdr (assoc key cache))))\n                (display value)\n                (newline)\n                (cons (cons key value) (remove-assoc key cache))))\n             (else\n              (display -1)\n              (newline)\n              cache))))\n    ((\"put\" k v)\n     (let ((key (string->number k))\n           (value (string->number v)))\n       (if (> c 0)\n           (if (assoc key cache)\n               (cons (cons key value) (remove-assoc key cache))\n               (let ((len (length cache)))\n                 (if (>= len c)\n                     (let ((front (butlast cache)))\n                       (cons (cons key value) front))\n                     (cons (cons key value) cache)))))))))\n    (_ cache)))\n\n(define (halt)\n  (exit 0))\n\n(define (string-split str delimiter)\n  (define (split-helper s acc)\n    (let ((pos (string-index s delimiter)))\n      (if pos\n          (split-helper (substring s (+ pos 1)) (cons (substring s 0 pos) acc))\n          (reverse (cons s acc)))))\n  (split-helper str '()))\n\n(define (string->number str)\n  (string->number str))\n\n(define (assoc key alist)\n  (car (member key alist)))\n\n(define (remove-assoc key alist)\n  (filter (lambda (pair) (not (= (car pair) key))) alist))\n\n(define (butlast lst)\n  (reverse (cdr (reverse lst))))\n\n(p10_lru)\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p06_calc",
+  "src": "scheme",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:07:04+00:00",
+  "source_file": "p06_calc.scm",
+  "target_file": "p06_calc.js",
+  "attempts": 1,
+  "duration_s": 25.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 733,
+    "completion_tokens": 484
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n});\n\nrl.question('', (input) => {\n  const calc = (str) => {\n    const tokenize = (str) => {\n      let tokens = [];\n      let i = 0;\n      while (i < str.length) {\n        if (/\\s/.test(str[i])) {\n          i++;\n        } else if (/[\\d]/.test(str[i])) {\n          let num = '';\n          while (i < str.length && /\\d/.test(str[i])) {\n            num += str[i];\n            i++;\n          }\n          tokens.push(parseInt(num));\n        } else {\n          tokens.push(str[i]);\n          i++;\n        }\n      }\n      return tokens.reverse();\n    };\n\n    const parseExpr = (tokens) => {\n      let res = parseTerm(tokens);\n      let val = res[0];\n      let rest = res.slice(1);\n      while (rest.length > 0 && (rest[0] === '+' || rest[0] === '-')) {\n        let op = rest[0];\n        let next = parseTerm(rest.slice(1));\n        if (op === '+') {\n          val += next[0];\n        } else {\n          val -= next[0];\n        }\n        rest = next.slice(1);\n      }\n      return [val, ...rest];\n    };\n\n    const parseTerm = (tokens) => {\n      let res = parseFactor(tokens);\n      let val = res[0];\n      let rest = res.slice(1);\n      while (rest.length > 0 && rest[0] === '*') {\n        let next = parseFactor(rest.slice(1));\n        val *= next[0];\n        rest = next.slice(1);\n      }\n      return [val, ...rest];\n    };\n\n    const parseFactor = (tokens) => {\n      if (typeof tokens[0] === 'number') {\n        return [tokens[0], ...tokens.slice(1)];\n      } else {\n        let res = parseExpr(tokens.slice(1));\n        return [res[0], ...tokens.slice(res.length + 1)];\n      }\n    };\n\n    return parseExpr(tokenize(str))[0];\n  };\n\n  console.log(calc(input));\n  rl.close();\n});\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "java",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:38:56+00:00",
+  "source_file": "P10Lru.java",
+  "target_file": "p10_lru.hs",
+  "attempts": 1,
+  "duration_s": 11.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 455,
+    "completion_tokens": 201
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nmodule Main where\n\nimport Data.IORef\nimport qualified Data.Map.Strict as Map\nimport Control.Monad\nimport System.IO\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdin NoBuffering\n    hSetBuffering stdout NoBuffering\n    capacity <- readLn\n    n <- readLn\n    cache <- newIORef $ Map.empty :: IO (IORef (Map.Map Int Int))\n    forM_ [1..n] $ \\_ -> do\n        line <- getLine\n        let [op, k, v] = words line\n        case op of\n            \"get\" -> do\n                cache' <- readIORef cache\n                print $ Map.findWithDefault (-1) (read k) cache'\n            _ -> do\n                cache' <- readIORef cache\n                let newCache = Map.insert (read k) (read v) cache'\n                writeIORef cache newCache\n```"
+}

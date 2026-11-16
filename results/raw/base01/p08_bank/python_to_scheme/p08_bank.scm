@@ -1,0 +1,23 @@
+(import scheme (chicken base) (chicken io))
+
+(define (main)
+  (let ((n (string->number (read-line))))
+    (define balance 0)
+    (do ((i 0 (+ i 1)))
+        ((= i n))
+      (let* ((line (read-line))
+             (parts (string-split line #\space))
+             (command (car parts)))
+        (cond
+          ((string=? command "deposit")
+           (set! balance (+ balance (string->number (cadr parts)))))
+          ((string=? command "withdraw")
+           (let ((amount (string->number (cadr parts))))
+             (if (> amount balance)
+                 (display "error\n")
+                 (set! balance (- balance amount)))))
+          ((string=? command "balance")
+           (display balance)
+           (newline)))))))
+
+(main)

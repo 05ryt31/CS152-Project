@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p13_n_queens",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:08:25+00:00",
+  "source_file": "p13_n_queens.hs",
+  "target_file": "p13_n_queens.pl",
+  "attempts": 1,
+  "duration_s": 11.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 470,
+    "completion_tokens": 221
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\nsafe(Cols, Col) :-\n    all(\\(C, D) -> C \\= Col, abs(C - Col) \\= D), Cols, [_, D|_]).\n\ncount(N, Row, Cols, Count) :-\n    Row == N,\n    !,\n    Count is 1.\ncount(N, Row, Cols, Count) :-\n    Row < N,\n    findall(NewCols, (between(0, N-1, Col),\n                       safe(Cols, Col),\n                       NewCols = [Col|Cols]), NewColsList),\n    length(NewColsList, NewCount),\n    count(N, Row + 1, Cols, OldCount),\n    Count is OldCount + NewCount.\n\np13_n_queens :-\n    read_line_to_string(current_input, NStr),\n    atom_number(NStr, N),\n    count(N, 0, [], Count),\n    format('~d~n', [Count]),\n    halt.\n```"
+}

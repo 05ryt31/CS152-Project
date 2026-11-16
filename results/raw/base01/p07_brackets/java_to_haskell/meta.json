@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p07_brackets",
+  "src": "java",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:13:35+00:00",
+  "source_file": "P07Brackets.java",
+  "target_file": "p07_brackets.hs",
+  "attempts": 1,
+  "duration_s": 11.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 490,
+    "completion_tokens": 204
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nmodule Main where\n\nimport Data.Char (isDigit)\nimport Control.Monad (replicateM_)\nimport Text.Read (readMaybe)\n\nbalanced :: String -> Bool\nbalanced text = case stack of\n    [] -> True\n    _  -> False\n  where\n    stack = foldl process [] text\n    process s c\n      | c == '(' || c == '[' || c == '{' = c:s\n      | otherwise = case s of\n          [] -> []\n          t@(x:xs)\n              | c == ')' && x == '(' = xs\n              | c == ']' && x == '[' = xs\n              | c == '}' && x == '{' = xs\n              | otherwise = s\n\nmain :: IO ()\nmain = do\n    n <- readMaybe . head <$> lines <$> getContents\n    replicateM_ n $ do\n        line <- getLine\n        putStrLn $ if balanced line then \"yes\" else \"no\"\n```"
+}

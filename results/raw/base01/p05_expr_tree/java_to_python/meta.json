@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p05_expr_tree",
+  "src": "java",
+  "tgt": "python",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:57:40+00:00",
+  "source_file": "P05ExprTree.java",
+  "target_file": "p05_expr_tree.py",
+  "attempts": 1,
+  "duration_s": 9.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 497,
+    "completion_tokens": 161
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nclass Node:\n    def __init__(self, token, left=None, right=None):\n        self.token = token\n        self.left = left\n        self.right = right\n\ndef render(node):\n    if node.left is None and node.right is None:\n        return node.token\n    return f\"({render(node.left)} {node.token} {render(node.right)})\"\n\ndef main():\n    tokens = input().split()\n    stack = []\n\n    for token in tokens:\n        if token in \"+-*\":\n            right = stack.pop()\n            left = stack.pop()\n            parent = Node(token, left, right)\n            stack.append(parent)\n        else:\n            stack.append(Node(token))\n\n    print(render(stack.pop()))\n\nif __name__ == \"__main__\":\n    main()\n```"
+}

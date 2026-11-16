@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p02_merge_sorted",
+  "src": "javascript",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:34:11+00:00",
+  "source_file": "p02_merge_sorted.js",
+  "target_file": "P02MergeSorted.java",
+  "attempts": 1,
+  "duration_s": 18.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 497,
+    "completion_tokens": 350
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p02_merge_sorted.javascript_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class P02MergeSorted {\n    public static void main(String[] args) {\n        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {\n            List<Integer> a = parseLine(reader.readLine());\n            List<Integer> b = parseLine(reader.readLine());\n            List<Integer> result = mergeLists(a, b);\n            if (!result.isEmpty()) {\n                System.out.println(result.stream().mapToInt(i -> i).toString());\n            }\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n\n    private static List<Integer> parseLine(String line) {\n        String[] parts = line.trim().split(\"\\\\s+\");\n        List<Integer> list = new ArrayList<>();\n        for (String part : parts) {\n            list.add(Integer.parseInt(part));\n        }\n        return list;\n    }\n\n    private static List<Integer> mergeLists(List<Integer> a, List<Integer> b) {\n        List<Integer> result = new ArrayList<>();\n        int i = 0, j = 0;\n        while (i < a.size() && j < b.size()) {\n            if (a.get(i) <= b.get(j)) {\n                result.add(a.get(i));\n                i++;\n            } else {\n                result.add(b.get(j));\n                j++;\n            }\n        }\n        while (i < a.size()) {\n            result.add(a.get(i));\n            i++;\n        }\n        while (j < b.size()) {\n            result.add(b.get(j));\n            j++;\n        }\n        return result;\n    }\n}\n```"
+}

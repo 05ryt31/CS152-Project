@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p05_expr_tree",
+  "src": "javascript",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:57:00+00:00",
+  "source_file": "p05_expr_tree.js",
+  "target_file": "p05_expr_tree.scm",
+  "attempts": 1,
+  "duration_s": 11.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 427,
+    "completion_tokens": 204
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (render node)\n  (if (and (not (assoc 'left node)) (not (assoc 'right node)))\n      (car node)\n      (string-append \"(\" (render (cdr (assoc 'left node))) \" \"\n                     (car node) \" \"\n                     (render (cdr (assoc 'right node)))))))\n\n(let loop ((tokens (string-split (read-line) #px\"[ \\t]+\"))\n           (stack '()))\n  (if (null? tokens)\n      (display (render (car stack)))\n      (let ((token (car tokens)))\n        (if (member token '(+ - *))\n            (loop (cdr tokens)\n                  (cons (list 'token token\n                              'left (car stack)\n                              'right (cadr stack))\n                        (cddr stack)))\n            (loop (cdr tokens)\n                  (cons (list 'token token) stack)))))))\n\n(newline)\n```"
+}

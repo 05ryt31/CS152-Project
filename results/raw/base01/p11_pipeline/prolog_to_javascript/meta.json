@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "prolog",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:55:07+00:00",
+  "source_file": "p11_pipeline.pl",
+  "target_file": "p11_pipeline.js",
+  "attempts": 1,
+  "duration_s": 23.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 726,
+    "completion_tokens": 422
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nasync function main() {\n  const line1 = await new Promise(resolve => rl.question('', resolve));\n  const parts = line1.split(' ');\n  const values = parts.map(Number);\n\n  const kLine = await new Promise(resolve => rl.question('', resolve));\n  const k = Number(kLine);\n\n  let result = values;\n  for (let i = 0; i < k; i++) {\n    const line = await new Promise(resolve => rl.question('', resolve));\n    const stageParts = line.split(' ');\n    result = applyStage(stageParts, result);\n  }\n\n  output(result);\n  rl.close();\n}\n\nfunction applyStage(parts, values) {\n  switch (parts[0]) {\n    case 'map':\n      if (parts[1] === 'add') return values.map(x => x + Number(parts[2]));\n      if (parts[1] === 'mul') return values.map(x => x * Number(parts[2]));\n      break;\n    case 'filter':\n      if (parts[1] === 'even') return values.filter(x => x % 2 === 0);\n      if (parts[1] === 'odd') return values.filter(x => x % 2 !== 0);\n      if (parts[1] === 'gt') return values.filter(x => x > Number(parts[2]));\n      break;\n    case 'reduce':\n      if (parts[1] === 'sum') return [values.reduce((a, b) => a + b, 0)];\n      if (parts[1] === 'max') return [Math.max(...values)];\n      break;\n  }\n  return values;\n}\n\nfunction output(values) {\n  if (values.length === 0 || values[0] === undefined) {\n    console.log('none');\n  } else {\n    console.log(values.join(' '));\n  }\n}\n\nmain();\n```"
+}

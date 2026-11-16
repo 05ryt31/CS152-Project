@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "python",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:45:49+00:00",
+  "source_file": "p11_pipeline.py",
+  "target_file": "p11_pipeline.scm",
+  "attempts": 1,
+  "duration_s": 20.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 596,
+    "completion_tokens": 368
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (apply-stage values parts)\n  (let* ((kind (car parts))\n         (name (cadr parts))\n         (amount (and (eq? kind \"map\") (string->number (caddr parts))))\n         (predicate (cond\n                      ((and (eq? kind \"filter\") (string=? name \"even\")) even?)\n                      ((and (eq? kind \"filter\") (string=? name \"odd\")) odd?)\n                      ((and (eq? kind \"filter\") (string=? name \"gt\"))\n                       (lambda (v) (> v (string->number (caddr parts)))))))\n    (if kind\n        (cond\n          ((eq? kind \"map\")\n           (map (lambda (v)\n                  (if (eq? name \"add\")\n                      (+ v amount)\n                      (* v amount)))\n                values))\n          ((eq? kind \"filter\")\n           (filter predicate values))\n          ((eq? kind \"reduce\")\n           (if (eq? name \"sum\")\n               (apply + values)\n               (fold max -inf.0 values))))\n        (if (null? values)\n            \"none\"\n            (car (sort values >))))))\n\n(define (main)\n  (let loop ()\n    (let ((line (read-line)))\n      (unless (eof-object? line)\n        (let* ((values (map string->number (string-split line)))\n               (k (string->number (read-line)))\n               (result (apply-stage values (make-list k read-line))))\n          (if (list? result)\n              (begin\n                (for-each display result)\n                (display \" \"))\n              (display result))\n          (newline)\n          (loop)))))\n\n(main)\n```"
+}

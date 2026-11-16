@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "prolog",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:43:49+00:00",
+  "source_file": "p10_lru.pl",
+  "target_file": "P10Lru.java",
+  "attempts": 1,
+  "duration_s": 23.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 651,
+    "completion_tokens": 415
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p10_lru.prolog_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.io.IOException;\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.Scanner;\n\npublic class P10Lru {\n    public static void main(String[] args) {\n        try (Scanner scanner = new Scanner(new BufferedReader(new InputStreamReader(System.in)))) {\n            int C = Integer.parseInt(scanner.nextLine());\n            int N = Integer.parseInt(scanner.nextLine());\n            List<String> cache = new ArrayList<>();\n            while (N-- > 0) {\n                String[] parts = scanner.nextLine().split(\" \");\n                if (\"get\".equals(parts[0])) {\n                    get(Integer.parseInt(parts[1]), cache);\n                } else if (\"put\".equals(parts[0])) {\n                    put(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), C, cache);\n                }\n            }\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    }\n\n    private static void get(int key, List<String> cache) {\n        for (int i = 0; i < cache.size(); i++) {\n            String[] entry = cache.get(i).split(\"-\");\n            if (Integer.parseInt(entry[0]) == key) {\n                System.out.println(entry[1]);\n                cache.remove(i);\n                cache.add(0, cache.get(i));\n                return;\n            }\n        }\n        System.out.println(-1);\n    }\n\n    private static void put(int key, int value, int capacity, List<String> cache) {\n        for (int i = 0; i < cache.size(); i++) {\n            String[] entry = cache.get(i).split(\"-\");\n            if (Integer.parseInt(entry[0]) == key) {\n                cache.set(i, key + \"-\" + value);\n                return;\n            }\n        }\n        if (cache.size() >= capacity) {\n            cache.remove(cache.size() - 1);\n        }\n        cache.add(0, key + \"-\" + value);\n    }\n}\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "python",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:46:23+00:00",
+  "source_file": "p11_pipeline.py",
+  "target_file": "p11_pipeline.pl",
+  "attempts": 1,
+  "duration_s": 27.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 651,
+    "completion_tokens": 521
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(readutil)).\n\napply_stage([], _, _).\napply_stage([V | Rest], [\"map\", \"add\", Amount], Result) :-\n    NewV is V + Amount,\n    apply_stage(Rest, [\"map\", \"add\", Amount], Tail),\n    append([NewV], Tail, Result).\napply_stage([V | Rest], [\"map\", \"mul\", Amount], Result) :-\n    NewV is V * Amount,\n    apply_stage(Rest, [\"map\", \"mul\", Amount], Tail),\n    append([NewV], Tail, Result).\napply_stage([V | Rest], [\"filter\", \"even\"], Result) :-\n    V mod 2 =:= 0,\n    apply_stage(Rest, [\"filter\", \"even\"], Tail),\n    append([V], Tail, Result).\napply_stage([V | Rest], [\"filter\", \"odd\"], Result) :-\n    V mod 2 =\\= 0,\n    apply_stage(Rest, [\"filter\", \"odd\"], Tail),\n    append([V], Tail, Result).\napply_stage([V | Rest], [\"filter\", \"gt\", Amount], Result) :-\n    V > Amount,\n    apply_stage(Rest, [\"filter\", \"gt\", Amount], Tail),\n    append([V], Tail, Result).\napply_stage(_, [\"reduce\", \"sum\"], Total) :-\n    sum_list(Total, 0).\napply_stage([Best], _, Best) :-\n    !.\napply_stage([V | Rest], _, Best) :-\n    V > Best,\n    apply_stage(Rest, _, Best).\n\np11_pipeline :-\n    read_line_to_string(current_input, Line),\n    string_codes(Line, Codes),\n    Tokens =.. [tokens|Codes],\n    maplist(string_to_integer, Tokens, Values),\n    read_line_to_string(current_input, KLine),\n    string_codes(KLine, KCodes),\n    integer_string(K, KCodes),\n    process_stages(Values, K, []),\n    !,\n    halt.\n\nprocess_stages(_, 0, Values) :-\n    format(\"~w~n\", [Values]).\nprocess_stages(Values, K, Acc) :-\n    read_line_to_string(current_input, StageLine),\n    string_codes(StageLine, StageCodes),\n    Tokens =.. [tokens|StageCodes],\n    maplist(string_to_integer, Tokens, Parts),\n    apply_stage(Acc, Parts, NewAcc),\n    K1 is K - 1,\n    process_stages(Values, K1, NewAcc).\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p02_merge_sorted",
+  "src": "scheme",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:36:21+00:00",
+  "source_file": "p02_merge_sorted.scm",
+  "target_file": "p02_merge_sorted.js",
+  "attempts": 1,
+  "duration_s": 14.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 468,
+    "completion_tokens": 259
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nfunction numbers(line) {\n  if (line === '') return [];\n  return line.split(' ').map(Number);\n}\n\nfunction merge(a, b) {\n  if (a.length === 0) return b;\n  if (b.length === 0) return a;\n  if (a[0] <= b[0]) return [a[0], ...merge(a.slice(1), b)];\n  return [b[0], ...merge(a, b.slice(1))];\n}\n\nfunction printList(values) {\n  if (values.length > 0) {\n    process.stdout.write(`${values[0]}`);\n    for (let i = 1; i < values.length; i++) {\n      process.stdout.write(` ${values[i]}`);\n    }\n    process.stdout.write('\\n');\n  }\n}\n\nasync function main() {\n  const line1 = await new Promise(resolve => rl.question('', resolve));\n  const line2 = await new Promise(resolve => rl.question('', resolve));\n  rl.close();\n  printList(merge(numbers(line1), numbers(line2)));\n}\n\nmain();\n```"
+}

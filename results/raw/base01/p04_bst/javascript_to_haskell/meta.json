@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "javascript",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:47:27+00:00",
+  "source_file": "p04_bst.js",
+  "target_file": "p04_bst.hs",
+  "attempts": 1,
+  "duration_s": 14.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 642,
+    "completion_tokens": 261
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nmodule Main where\n\ndata Node = Node Int Node Node deriving (Show)\n\ninsert :: Node -> Int -> Node\ninsert (Node v l r) x\n  | x < v     = Node v (insert l x) r\n  | otherwise = Node v l (insert r x)\ninsert Null x = Node x Null Null\n\ninorder :: Node -> [Int]\ninorder Null = []\ninorder (Node v l r) = inorder l ++ [v] ++ inorder r\n\npreorder :: Node -> [Int]\npreorder Null = []\npreorder (Node v l r) = [v] ++ preorder l ++ preorder r\n\nheight :: Node -> Int\nheight Null = 0\nheight (Node _ l r) = 1 + max (height l) (height r)\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let values = map read . words $ input\n      root = foldl insert Null values\n      inOrder = inorder root\n      preOrder = preorder root\n      h = height root\n  putStr $ unwords (map show inOrder) ++ \"\\n\"\n  putStr $ unwords (map show preOrder) ++ \"\\n\"\n  print h\n```"
+}

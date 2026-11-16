@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "java",
+  "tgt": "python",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:48:36+00:00",
+  "source_file": "P11Pipeline.java",
+  "target_file": "p11_pipeline.py",
+  "attempts": 1,
+  "duration_s": 17.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 716,
+    "completion_tokens": 318
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\ndef main():\n    reader = sys.stdin.read\n    lines = reader().strip().split('\\n')\n    \n    values = list(map(int, lines[0].split()))\n    k = int(lines[1])\n    \n    for i in range(k):\n        parts = lines[i + 2].split()\n        if parts[0] == \"map\":\n            amount = int(parts[2])\n            operation = parts[1]\n            if operation == \"add\":\n                values = [x + amount for x in values]\n            elif operation == \"mul\":\n                values = [x * amount for x in values]\n        elif parts[0] == \"filter\":\n            filter_type = parts[1]\n            threshold = int(parts[2]) if filter_type == \"gt\" else None\n            if filter_type == \"even\":\n                values = [x for x in values if x % 2 == 0]\n            elif filter_type == \"odd\":\n                values = [x for x in values if x % 2 != 0]\n            elif filter_type == \"gt\":\n                values = [x for x in values if x > threshold]\n        elif parts[1] == \"sum\":\n            result = sum(values)\n        else:\n            if not values:\n                result = \"none\"\n            else:\n                result = max(values)\n    \n    if isinstance(result, list):\n        print(' '.join(map(str, values)))\n    else:\n        print(result)\n\nif __name__ == \"__main__\":\n    main()\n```"
+}

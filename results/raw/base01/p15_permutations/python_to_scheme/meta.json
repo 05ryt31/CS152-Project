@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p15_permutations",
+  "src": "python",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:21:39+00:00",
+  "source_file": "p15_permutations.py",
+  "target_file": "p15_permutations.scm",
+  "attempts": 1,
+  "duration_s": 10.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 406,
+    "completion_tokens": 206
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (generate letters used current out)\n  (if (= (length current) (length letters))\n      (begin\n        (set! out (cons (list->string current) out))\n        (return))\n      (for ([i (in-range (length letters))])\n        (when (not (list-ref used i))\n          (set-car! (list-tail used i) #t)\n          (set! current (append current (list (list-ref letters i))))\n          (generate letters used current out)\n          (set! current (butlast current))\n          (set-car! (list-tail used i) #f)))))\n\n\n(define (main)\n  (let* ((letters (sort (string->list (read-line)) char<?))\n         (results '()))\n    (generate letters (make-list (length letters) #f) '() results)\n    (for-each displayln results)))\n\n(main)\n```"
+}

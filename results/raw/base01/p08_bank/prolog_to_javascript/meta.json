@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p08_bank",
+  "src": "prolog",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:23:02+00:00",
+  "source_file": "p08_bank.pl",
+  "target_file": "p08_bank.js",
+  "attempts": 1,
+  "duration_s": 13.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 481,
+    "completion_tokens": 244
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nlet balance = 0;\n\nasync function main() {\n  const nLine = await readline();\n  const n = parseInt(nLine);\n  await processCommands(n, 0);\n}\n\nfunction processCommands(n, balance) {\n  if (n === 0) return;\n  return new Promise((resolve) => {\n    rl.question('', async (line) => {\n      const parts = line.split(' ');\n      const [cmd, amount] = parts;\n      let newBalance = balance;\n      switch (cmd) {\n        case 'deposit':\n          newBalance += parseInt(amount);\n          break;\n        case 'withdraw':\n          const value = parseInt(amount);\n          if (value > balance) {\n            console.error('error');\n          } else {\n            newBalance -= value;\n          }\n          break;\n        case 'balance':\n          console.log(balance);\n          break;\n      }\n      resolve(processCommands(n - 1, newBalance));\n    });\n  });\n}\n\nmain().then(() => process.exit(0));\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p02_merge_sorted",
+  "src": "haskell",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:37:30+00:00",
+  "source_file": "p02_merge_sorted.hs",
+  "target_file": "p02_merge_sorted.js",
+  "attempts": 1,
+  "duration_s": 11.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 447,
+    "completion_tokens": 218
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n    input: process.stdin,\n    output: process.stdout,\n    terminal: false\n});\n\nlet lines = [];\nrl.on('line', (line) => {\n    lines.push(line);\n}).on('close', () => {\n    const a = lines[0];\n    const b = lines[1];\n    const result = merge(readNums(a), readNums(b));\n    if (result.length > 0) {\n        console.log(result.join(' '));\n    }\n    process.exit(0);\n});\n\nfunction readNums(s) {\n    return s.split(' ').map(Number);\n}\n\nfunction merge(xs, ys) {\n    if (xs.length === 0) return ys;\n    if (ys.length === 0) return xs;\n    if (xs[0] <= ys[0]) return [xs[0], ...merge(xs.slice(1), ys)];\n    return [ys[0], ...merge(xs, ys.slice(1))];\n}\n```"
+}

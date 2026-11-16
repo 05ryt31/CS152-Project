@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p06_calc",
+  "src": "python",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:02:53+00:00",
+  "source_file": "p06_calc.py",
+  "target_file": "p06_calc.scm",
+  "attempts": 1,
+  "duration_s": 31.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 609,
+    "completion_tokens": 598
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (tokenize text)\n  (define (helper i)\n    (if (< i (string-length text))\n        (let ((ch (string-ref text i)))\n          (cond\n           ((char=? ch #\\space) (helper (+ i 1)))\n           ((char-numeric? ch)\n            (let loop ((j i))\n              (if (and (< j (string-length text))\n                       (char-numeric? (string-ref text j)))\n                  (loop (+ j 1))\n                  (cons (substring text i j) (helper j)))))\n           (else (cons (string ch) (helper (+ i 1))))))))\n        '()))\n  (reverse (helper 0)))\n\n(define-record-type parser\n  (make-parser tokens pos)\n  parser?\n  (tokens parser-tokens)\n  (pos parser-pos))\n\n(define (parser-peek parser)\n  (if (< (parser-pos parser) (length (parser-tokens parser)))\n      (list-ref (parser-tokens parser) (parser-pos parser))\n      #f))\n\n(define (parser-next parser)\n  (let* ((tokens (parser-tokens parser))\n         (pos (parser-pos parser))\n         (token (list-ref tokens pos)))\n    (make-parser tokens (+ pos 1)) token))\n\n(define (expression parser)\n  (let ((value (term parser)))\n    (define (loop parser)\n      (let ((op (parser-peek parser)))\n        (if (member op '(#\\+ #\\-))\n            (let* ((parser (parser-next parser))\n                   (right (term parser)))\n              (if (char=? op #\\+)\n                  (loop (make-parser (parser-tokens parser) (+ (parser-pos parser) 1)) (+ value right))\n                  (loop (make-parser (parser-tokens parser) (+ (parser-pos parser) 1)) (- value right)))))\n            parser)))\n    (loop parser value)))\n\n(define (term parser)\n  (let ((value (factor parser)))\n    (define (loop parser)\n      (if (char=? (parser-peek parser) #\\*)\n          (let* ((parser (parser-next parser))\n                 (right (factor parser)))\n            (loop (make-parser (parser-tokens parser) (+ (parser-pos parser) 1)) (* value right)))\n          parser))\n    (loop parser value)))\n\n(define (factor parser)\n  (let* ((token (parser-next parser))\n         (value (if (char=? (car token) #\\()\n                    (expression (make-parser (cdr token) 0))\n                    (string->number token))))\n    value))\n\n(define (main)\n  (let* ((text (read-line))\n         (parser (make-parser (tokenize text) 0))\n         (result (expression parser)))\n    (display result)\n    (newline)))\n\n(main)\n```"
+}

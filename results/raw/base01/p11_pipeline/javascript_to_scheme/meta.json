@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "javascript",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:47:32+00:00",
+  "source_file": "p11_pipeline.js",
+  "target_file": "p11_pipeline.scm",
+  "attempts": 1,
+  "duration_s": 21.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 549,
+    "completion_tokens": 400
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (main args)\n  (define lines (string-split (read-string) #\\newline))\n  (define first (and (not (null? lines)) (string-trim (car lines))))\n  (define-values (values k)\n    (if first\n        (let* ((first-values (string-split first #px\"[ \\t]+\"))\n               (num-values (map string->number first-values)))\n          (values num-values (string->number (cadr lines))))\n        (values '() 0)))\n  (define (process-result result)\n    (cond\n      ((and (list? result) (null? result)) \"none\")\n      ((and (list? result) (pair? result)) (apply string-append (map number->string result) \"\\n\"))\n      (else (number->string result))))\n  (define (process-command command)\n    (match command\n      ((\"map\" \"add\" n) (map (lambda (x) (+ x (string->number n))) values))\n      ((\"map\" \"mul\" n) (map (lambda (x) (* x (string->number n))) values))\n      ((\"filter\" \"even\") (filter even? values))\n      ((\"filter\" \"odd\") (filter odd? values))\n      ((\"filter\" n) (filter (lambda (x) (> x (string->number n))) values))\n      ((\"sum\") (apply + values))\n      ((\"max\") (if (null? values) \"none\" (number->string (apply max values)))))\n  (define result\n    (foldl (lambda (command acc)\n             (process-command (string-split command #px\"[ \\t]+\")))\n           values\n           (drop lines (+ 2 k))))\n  (display (process-result result))\n  (newline)\n  (exit 0))\n\n(main (command-line-arguments))\n```"
+}

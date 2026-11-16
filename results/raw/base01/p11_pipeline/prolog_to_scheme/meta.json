@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "prolog",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:56:00+00:00",
+  "source_file": "p11_pipeline.pl",
+  "target_file": "p11_pipeline.scm",
+  "attempts": 1,
+  "duration_s": 29.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 741,
+    "completion_tokens": 545
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (number-string s)\n  (string->number s))\n\n(define (split-string str delim)\n  (string-split str #\\Space))\n\n(define (maplist proc lst)\n  (if (null? lst)\n      '()\n      (cons (proc (car lst)) (maplist proc (cdr lst)))))\n\n(define (apply-stage parts values)\n  (let ((op (car parts))\n        (arg (cadr parts)))\n    (cond\n      [(and (eq? op \"map\") (eq? arg \"add\"))\n       (let ((n (number-string (caddr parts))))\n         (maplist (lambda (x) (+ x n)) values))]\n      [(and (eq? op \"map\") (eq? arg \"mul\"))\n       (let ((n (number-string (caddr parts))))\n         (maplist (lambda (x) (* x n)) values))]\n      [(and (eq? op \"filter\") (eq? arg \"even\"))\n       (include even values)]\n      [(and (eq? op \"filter\") (eq? arg \"odd\"))\n       (include odd values)]\n      [(and (eq? op \"filter\") (eq? arg \"gt\"))\n       (let ((n (number-string (caddr parts))))\n         (include (lambda (x) (> x n)) values))]\n      [(and (eq? op \"reduce\") (eq? arg \"sum\"))\n       (list (apply + values))]\n      [(and (eq? op \"reduce\") (eq? arg \"max\"))\n       (if (null? values)\n           'none\n           (list (apply max values)))])))\n\n(define (stages k values)\n  (if (= k 0)\n      values\n      (let* ((line (read-line))\n             (parts (split-string line))\n             (new-values (apply-stage parts values))\n             (k1 (- k 1)))\n        (stages k1 new-values))))\n\n(define (output result)\n  (cond\n    [(eq? result 'none)\n     (display \"none\")\n     (newline)]\n    [(null? result)\n     (void)]\n    [else\n     (atomic-list-concatenate result \" \")\n     (newline)]))\n\n(define (main)\n  (let* ((line (read-line))\n         (parts (split-string line))\n         (values (maplist number-string parts))\n         (k-line (read-line))\n         (k (number-string k-line))\n         (result (stages k values)))\n    (output result)\n    (exit 0)))\n\n(main)\n```"
+}

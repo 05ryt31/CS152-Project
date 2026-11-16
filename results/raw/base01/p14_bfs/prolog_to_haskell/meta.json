@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "prolog",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:20:50+00:00",
+  "source_file": "p14_bfs.pl",
+  "target_file": "p14_bfs.hs",
+  "attempts": 1,
+  "duration_s": 23.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 868,
+    "completion_tokens": 422
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List (find, isInfixOf)\nimport Data.Maybe (fromJust)\n\nmain :: IO ()\nmain = do\n    firstLine <- getLine\n    let [ns, ms] = map read . words $ firstLine\n    graph <- buildGraph ms []\n    lastLine <- getLine\n    let [ss, ts] = map read . words $ lastLine\n    let result = bfs [(ss, 0)] [ss] graph ts\n    print result\n\nbuildGraph :: Int -> [[Int]] -> IO [[Int]]\nbuildGraph 0 graph = return graph\nbuildGraph n graph = do\n    line <- getLine\n    let [u, v] = map read . words $ line\n    let newGraph = addEdge u v graph\n    buildGraph (n - 1) newGraph\n\naddEdge :: Int -> Int -> [[Int]] -> [[Int]]\naddEdge u v graph = updateAdj u v graph ++ updateAdj v u graph\n\nupdateAdj :: Int -> Int -> [[Int]] -> [[Int]]\nupdateAdj _ _ [] = []\nupdateAdj u v (x@(y:_):xs)\n    | y == u = x { snd = v : snd x } : xs\n    | otherwise = x : updateAdj u v xs\n\nbfs :: [(Int, Int)] -> [Int] -> [[Int]] -> Int -> Int\nbfs [] _ _ _ = -1\nbfs ((node, distance):queue) seen graph target\n    | node == target = distance\n    | otherwise = bfs (queue ++ newQueue) (node : seen) graph target\n    where\n        neighbors = findNeighbors node graph\n        unseenNeighbors = filter (\\n -> notElem n seen) neighbors\n        newQueue = [(n, distance + 1) | n <- unseenNeighbors]\n\nfindNeighbors :: Int -> [[Int]] -> [Int]\nfindNeighbors node graph = concatMap snd $ filter (\\(x, _) -> x == node) graph\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "prolog",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:20:05+00:00",
+  "source_file": "p14_bfs.pl",
+  "target_file": "P14Bfs.java",
+  "attempts": 1,
+  "duration_s": 21.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 913,
+    "completion_tokens": 418
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p14_bfs.prolog_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.util.*;\n\npublic class P14Bfs {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(new BufferedReader(new InputStreamReader(System.in)));\n        String firstLine = scanner.nextLine();\n        String[] parts = firstLine.split(\" \");\n        int n = Integer.parseInt(parts[0]);\n        int m = Integer.parseInt(parts[1]);\n\n        List<List<Integer>> graph = new ArrayList<>();\n        for (int i = 0; i < n; i++) {\n            graph.add(new ArrayList<>());\n        }\n\n        for (int i = 0; i < m; i++) {\n            String line = scanner.nextLine();\n            parts = line.split(\" \");\n            int u = Integer.parseInt(parts[0]);\n            int v = Integer.parseInt(parts[1]);\n            graph.get(u).add(v);\n            graph.get(v).add(u);\n        }\n\n        String lastLine = scanner.nextLine();\n        parts = lastLine.split(\" \");\n        int s = Integer.parseInt(parts[0]);\n        int t = Integer.parseInt(parts[1]);\n\n        int result = bfs(graph, s, t);\n        System.out.println(result);\n\n        System.exit(0);\n    }\n\n    private static int bfs(List<List<Integer>> graph, int start, int target) {\n        Queue<int[]> queue = new LinkedList<>();\n        Set<Integer> seen = new HashSet<>();\n        queue.offer(new int[]{start, 0});\n        seen.add(start);\n\n        while (!queue.isEmpty()) {\n            int[] current = queue.poll();\n            int node = current[0];\n            int distance = current[1];\n\n            if (node == target) {\n                return distance;\n            }\n\n            for (int neighbor : graph.get(node)) {\n                if (!seen.contains(neighbor)) {\n                    seen.add(neighbor);\n                    queue.offer(new int[]{neighbor, distance + 1});\n                }\n            }\n        }\n\n        return -1;\n    }\n}\n```"
+}

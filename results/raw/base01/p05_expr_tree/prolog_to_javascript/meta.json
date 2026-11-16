@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p05_expr_tree",
+  "src": "prolog",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:01:01+00:00",
+  "source_file": "p05_expr_tree.pl",
+  "target_file": "p05_expr_tree.js",
+  "attempts": 1,
+  "duration_s": 15.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 495,
+    "completion_tokens": 301
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nlet inputLines = [];\n\nrl.on('line', (line) => {\n  inputLines.push(line);\n});\n\nrl.on('close', () => {\n  const line = inputLines.join('\\n');\n  const tokens = line.split(/\\s+/);\n  const tree = build(tokens, []);\n  const text = render(tree);\n  console.log(text);\n  process.exit(0);\n});\n\nfunction build(tokens, stack) {\n  if (tokens.length === 0) return stack;\n  const token = tokens.shift();\n  if (['+', '-', '*'].includes(token)) {\n    return build(tokens, [new Op(token, stack[0], stack[1]), ...stack.slice(2)]);\n  }\n  return build(tokens, [new Leaf(token), ...stack]);\n}\n\nclass Op {\n  constructor(op, left, right) {\n    this.op = op;\n    this.left = left;\n    this.right = right;\n  }\n\n  toString() {\n    return `(${this.left} ${this.op} ${this.right})`;\n  }\n}\n\nclass Leaf {\n  constructor(value) {\n    this.value = value;\n  }\n\n  toString() {\n    return this.value;\n  }\n}\n\nfunction render(node) {\n  if (node instanceof Leaf) return node.toString();\n  return node.toString();\n}\n```"
+}

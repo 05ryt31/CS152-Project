@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p01_rle",
+  "src": "prolog",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:32:30+00:00",
+  "source_file": "p01_rle.pl",
+  "target_file": "p01_rle.scm",
+  "attempts": 1,
+  "duration_s": 10.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 448,
+    "completion_tokens": 194
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (main)\n  (let* ((line (read-line))\n         (chars (string->list line))\n         (out (encode chars)))\n    (display out)\n    (newline)\n    (exit 0)))\n\n(define (encode lst)\n  (cond\n    ((null? lst) '())\n    (else\n     (let loop ((lst lst) (current-char (car lst)) (count 1) (result '()))\n       (if (null? lst)\n           (reverse (append (list (cons current-char count)) result))\n           (let ((next-char (car lst)))\n             (if (eqv? next-char current-char)\n                 (loop (cdr lst) current-char (+ count 1) result)\n                 (loop (cdr lst) next-char 1 (append (list (cons current-char count)) result))))))))\n\n(main)\n```"
+}

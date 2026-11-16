@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "javascript",
+  "tgt": "python",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:46:18+00:00",
+  "source_file": "p04_bst.js",
+  "target_file": "p04_bst.py",
+  "attempts": 1,
+  "duration_s": 16.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 603,
+    "completion_tokens": 296
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nclass Node:\n    def __init__(self, value, left=None, right=None):\n        self.value = value\n        self.left = left\n        self.right = right\n\ndef insert(root, value):\n    node = Node(value)\n    if not root:\n        return node\n\n    current = root\n    while True:\n        if value < current.value:\n            if not current.left:\n                current.left = node\n                return root\n            current = current.left\n        else:\n            if not current.right:\n                current.right = node\n                return root\n            current = current.right\n\ndef inorder(root, out):\n    if root:\n        inorder(root.left, out)\n        out.append(root.value)\n        inorder(root.right, out)\n\ndef preorder(root, out):\n    if root:\n        out.append(root.value)\n        preorder(root.left, out)\n        preorder(root.right, out)\n\ndef height(root):\n    return 1 + max(height(root.left), height(root.right)) if root else 0\n\nimport sys\n\nline = sys.stdin.read().strip()\nvalues = list(map(int, line.split())) if line else []\n\nroot = None\nfor value in values:\n    root = insert(root, value)\n\nin_order = []\ninorder(root, in_order)\n\npre_order = []\npreorder(root, pre_order)\n\nprint(\" \".join(map(str, in_order)))\nprint(\" \".join(map(str, pre_order)))\nprint(height(root))\n```"
+}

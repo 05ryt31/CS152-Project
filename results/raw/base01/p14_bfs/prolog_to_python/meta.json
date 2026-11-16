@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "prolog",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:19:07+00:00",
+  "source_file": "p14_bfs.pl",
+  "target_file": "p14_bfs.py",
+  "attempts": 1,
+  "duration_s": 32.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 829,
+    "completion_tokens": 609
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\ndef read_int():\n    return int(input().strip())\n\ndef read_line():\n    return input().strip()\n\ndef split_string(s, sep):\n    return s.split(sep)\n\ndef number_string(n):\n    return str(n)\n\ndef edges(m, graph, result):\n    if m == 0:\n        result[0] = graph\n    else:\n        line = read_line()\n        us, vs = split_string(line, \" \")\n        u, v = int(us), int(vs)\n        new_graph = add_edge(u, v, graph)\n        n1 = m - 1\n        edges(n1, new_graph, result)\n\ndef add_edge(u, v, graph):\n    new_graph = update_adj(u, v, graph)\n    new_graph = update_adj(v, u, new_graph)\n    return new_graph\n\ndef update_adj(u, v, graph):\n    if not graph:\n        return {u: [v]}\n    elif list(graph.keys())[0] == u:\n        neighbors = graph[u]\n        if v in neighbors:\n            return graph\n        else:\n            return {u: neighbors + [v]}\n    else:\n        other_key = list(graph.keys())[1]\n        rest = graph[other_key]\n        new_rest = update_adj(u, v, rest)\n        return {other_key: new_rest}\n\ndef adj(node, graph):\n    if node in graph:\n        return graph[node][0]\n\ndef bfs(queue, seen, graph, target, result):\n    if not queue:\n        result[0] = -1\n    elif queue[0][0] == target:\n        result[0] = queue[0][1]\n    else:\n        node, distance = queue[0]\n        neighbors = adj(node, graph)\n        new_seen, added = unseen(neighbors, seen)\n        distance1 = distance + 1\n        entries = pairs(added, distance1)\n        new_queue = queue[1:] + entries\n        bfs(new_queue, new_seen, graph, target, result)\n\ndef unseen(neighbors, seen):\n    new_seen = seen.copy()\n    added = []\n    for x in neighbors:\n        if x in seen:\n            continue\n        new_seen.add(x)\n        added.append(x)\n    return new_seen, added\n\ndef pairs(nodes, distance):\n    return [(node, distance) for node in nodes]\n\ndef main():\n    first_line = read_line()\n    ns, ms = split_string(first_line, \" \")\n    n, m = int(ns), int(ms)\n    graph = {}\n    edges(m, graph, [graph])\n    last_line = read_line()\n    ss, ts = split_string(last_line, \" \")\n    s, t = int(ss), int(ts)\n    result = [-1]\n    bfs([(s, 0)], set(), graph, t, result)\n    print(result[0])\n\nif __name__ == \"__main__\":\n    main()\n```"
+}

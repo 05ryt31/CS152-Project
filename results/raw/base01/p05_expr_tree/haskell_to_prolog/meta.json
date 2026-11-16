@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p05_expr_tree",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:00:35+00:00",
+  "source_file": "p05_expr_tree.hs",
+  "target_file": "p05_expr_tree.pl",
+  "attempts": 1,
+  "duration_s": 15.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 477,
+    "completion_tokens": 285
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\n% Define the Tree data structure\ntree(leaf(X), X).\ntree(op(Op, Left, Right), Op, Left, Right).\n\n% Build the tree from a list of tokens\nbuild_tree(Line) :-\n    string_tokens(Line, Tokens),\n    build_tree(Tokens, []).\n\nbuild_tree([], Acc) :-\n    reverse(Acc, Trees),\n    member(Tree, Trees),\n    !,\n    tree(Tree, Result),\n    format('~w~n', [Result]).\nbuild_tree([Token | Rest], Acc) :-\n    Token =:= '+' ; Token =:= '-' ; Token =:= '*' ->\n        pop_n(Rest, 2, [Right, Left | Rest2]),\n        NewAcc = [op(Token, Left, Right) | Acc],\n        build_tree(Rest2, NewAcc);\n    NewAcc = [leaf(Token) | Acc],\n    build_tree(Rest, NewAcc).\n\npop_n(_, 0, List) :-\n    !,\n    List = [].\npop_n([H | T], N, [H | NT]) :-\n    M is N - 1,\n    pop_n(T, M, NT).\n\n% Entry point of the program\np05_expr_tree :-\n    read_line_to_string(current_input, Line),\n    build_tree(Line),\n    halt.\n```"
+}

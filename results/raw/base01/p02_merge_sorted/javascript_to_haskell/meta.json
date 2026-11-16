@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p02_merge_sorted",
+  "src": "javascript",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:34:46+00:00",
+  "source_file": "p02_merge_sorted.js",
+  "target_file": "p02_merge_sorted.hs",
+  "attempts": 1,
+  "duration_s": 8.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 452,
+    "completion_tokens": 158
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport System.IO\n\nparseLine :: String -> [Int]\nparseLine line = map read . words $ line\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let lines = lines input\n        a = parseLine $ head lines\n        b = parseLine $ lines !! 1\n        result = merge a b\n    putStr $ unwords $ map show result ++ [\"\\n\"]\n\nmerge :: [Int] -> [Int] -> [Int]\nmerge [] ys = ys\nmerge xs [] = xs\nmerge (x:xs) (y:ys)\n    | x <= y    = x : merge xs (y:ys)\n    | otherwise = y : merge (x:xs) ys\n```"
+}

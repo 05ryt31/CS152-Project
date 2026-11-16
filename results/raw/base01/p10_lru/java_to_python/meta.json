@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "java",
+  "tgt": "python",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:38:22+00:00",
+  "source_file": "P10Lru.java",
+  "target_file": "p10_lru.py",
+  "attempts": 1,
+  "duration_s": 7.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 416,
+    "completion_tokens": 130
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nfrom sys import stdin, stdout\n\ndef main():\n    reader = stdin\n    writer = stdout\n\n    capacity = int(next(reader))\n    n = int(next(reader))\n    cache = OrderedDict()\n\n    for _ in range(n):\n        command, key, value = next(reader).strip().split()\n        key = int(key)\n        if command == \"get\":\n            writer.write(f\"{cache.get(key, -1)}\\n\")\n        else:\n            cache[key] = int(value)\n            if len(cache) > capacity:\n                cache.popitem(last=False)\n\nif __name__ == \"__main__\":\n    main()\n```"
+}

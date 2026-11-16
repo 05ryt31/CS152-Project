@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p12_group_by",
+  "src": "prolog",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:02:59+00:00",
+  "source_file": "p12_group_by.pl",
+  "target_file": "P12GroupBy.java",
+  "attempts": 1,
+  "duration_s": 16.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 600,
+    "completion_tokens": 309
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p12_group_by.prolog_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\nimport java.util.ArrayList;\nimport java.util.Collections;\nimport java.util.Comparator;\nimport java.util.HashMap;\nimport java.util.List;\nimport java.util.Map;\n\npublic class P12GroupBy {\n    public static void main(String[] args) {\n        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {\n            String nLine = reader.readLine();\n            int n = Integer.parseInt(nLine);\n            Map<String, int[]> groups = new HashMap<>();\n            for (int i = 0; i < n; i++) {\n                String line = reader.readLine();\n                String[] parts = line.split(\" \");\n                String key = parts[0];\n                int value = Integer.parseInt(parts[1]);\n                groups.merge(key, new int[]{value, 1}, (a, b) -> new int[]{a[0] + b[0], a[1] + 1});\n            }\n            List<Map.Entry<String, int[]>> sortedEntries = new ArrayList<>(groups.entrySet());\n            Collections.sort(sortedEntries, Comparator.comparing(Map.Entry::getKey));\n            for (Map.Entry<String, int[]> entry : sortedEntries) {\n                System.out.printf(\"%s %d %d%n\", entry.getKey(), entry.getValue()[0], entry.getValue()[1]);\n            }\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    }\n}\n```"
+}

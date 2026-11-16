@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p13_n_queens",
+  "src": "prolog",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:09:20+00:00",
+  "source_file": "p13_n_queens.pl",
+  "target_file": "p13_n_queens.scm",
+  "attempts": 1,
+  "duration_s": 13.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 501,
+    "completion_tokens": 251
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (p13-n-queens)\n  (let* ((line (read-line))\n         (n (string->number line))\n         (result (aggregate-all count (n-queens n '()))))\n    (display result)\n    (newline)\n    (exit 0)))\n\n(define (n-queens n columns)\n  (cond\n    ((= n (length columns)) (list columns))\n    (else\n     (let loop ((col 0))\n       (if (< col n)\n           (let ((new-columns (cons col columns)))\n             (if (safe new-columns columns)\n                 (append (n-queens n new-columns) (loop (+ col 1)))\n                 (loop (+ col 1))))\n           '())))))\n\n(define (safe new-column columns dist)\n  (cond\n    ((null? columns) #t)\n    (else\n     (let ((previous (car columns)))\n       (and (/= previous new-column)\n            (/= (abs (- previous new-column)) dist)\n            (safe new-column (cdr columns) (+ dist 1)))))))\n\n(p13-n-queens)\n```"
+}

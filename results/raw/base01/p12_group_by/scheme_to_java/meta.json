@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p12_group_by",
+  "src": "scheme",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:00:37+00:00",
+  "source_file": "p12_group_by.scm",
+  "target_file": "P12GroupBy.java",
+  "attempts": 1,
+  "duration_s": 19.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 612,
+    "completion_tokens": 346
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p12_group_by.scheme_to_java;\n\nimport java.util.*;\n\npublic class P12GroupBy {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = Integer.parseInt(scanner.nextLine());\n        List<List<Object>> groups = readGroups(n, scanner);\n        printGroups(groups);\n        System.exit(0);\n    }\n\n    private static List<List<Object>> readGroups(int n, Scanner scanner) {\n        List<List<Object>> groups = new ArrayList<>();\n        for (int i = 0; i < n; i++) {\n            String[] parts = scanner.nextLine().split(\" \");\n            update(parts[0], Integer.parseInt(parts[1]), groups);\n        }\n        return groups;\n    }\n\n    private static void update(String key, int value, List<List<Object>> groups) {\n        Iterator<List<Object>> iterator = groups.iterator();\n        while (iterator.hasNext()) {\n            List<Object> group = iterator.next();\n            if (key.equals(group.get(0))) {\n                group.set(1, (Integer) group.get(1) + value);\n                group.set(2, (Integer) group.get(2) + 1);\n                return;\n            }\n        }\n        groups.add(Arrays.asList(key, value, 1));\n    }\n\n    private static void printGroups(List<List<Object>> groups) {\n        Collections.sort(groups, Comparator.comparing(o -> (String) o.get(0)));\n        for (List<Object> group : groups) {\n            System.out.println(group.get(0) + \" \" + group.get(1) + \" \" + group.get(2));\n        }\n    }\n}\n```"
+}

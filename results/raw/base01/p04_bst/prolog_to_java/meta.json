@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "prolog",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:54:07+00:00",
+  "source_file": "p04_bst.pl",
+  "target_file": "P04Bst.java",
+  "attempts": 1,
+  "duration_s": 33.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 742,
+    "completion_tokens": 635
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p04_bst.prolog_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.Scanner;\n\npublic class P04Bst {\n    public static void main(String[] args) {\n        try (Scanner scanner = new Scanner(new BufferedReader(new InputStreamReader(System.in)))) {\n            String line = scanner.nextLine();\n            List<Integer> ns = nums(line);\n            Node tree = empty;\n            for (int n : ns) {\n                tree = insert(n, tree);\n            }\n            List<Integer> inOrder = new ArrayList<>();\n            inorder(tree, inOrder);\n            List<Integer> preOrder = new ArrayList<>();\n            preorder(tree, preOrder);\n            printNums(inOrder);\n            printNums(preOrder);\n            int height = height(tree);\n            System.out.println(height);\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n\n    private static List<Integer> nums(String line) {\n        if (line == null || line.isEmpty()) {\n            return List.of();\n        }\n        String[] parts = line.split(\" \");\n        List<Integer> ns = new ArrayList<>();\n        for (String part : parts) {\n            ns.add(Integer.parseInt(part));\n        }\n        return ns;\n    }\n\n    private static Node insert(int x, Node tree) {\n        if (tree == null) {\n            return new Node(x, null, null);\n        } else if (x < tree.value) {\n            tree.left = insert(x, tree.left);\n        } else {\n            tree.right = insert(x, tree.right);\n        }\n        return tree;\n    }\n\n    private static void inorder(Node tree, List<Integer> list) {\n        if (tree != null) {\n            inorder(tree.left, list);\n            list.add(tree.value);\n            inorder(tree.right, list);\n        }\n    }\n\n    private static void preorder(Node tree, List<Integer> list) {\n        if (tree != null) {\n            list.add(tree.value);\n            preorder(tree.left, list);\n            preorder(tree.right, list);\n        }\n    }\n\n    private static int height(Node tree) {\n        if (tree == null) {\n            return 0;\n        } else {\n            int leftHeight = height(tree.left);\n            int rightHeight = height(tree.right);\n            return 1 + Math.max(leftHeight, rightHeight);\n        }\n    }\n\n    private static void printNums(List<Integer> ns) {\n        if (!ns.isEmpty()) {\n            System.out.print(ns.stream().mapToInt(i -> i).summaryStatistics().getMin());\n            for (int i = 1; i < ns.size(); i++) {\n                System.out.print(\" \" + ns.get(i));\n            }\n            System.out.println();\n        }\n    }\n\n    private static class Node {\n        int value;\n        Node left;\n        Node right;\n\n        Node(int value, Node left, Node right) {\n            this.value = value;\n            this.left = left;\n            this.right = right;\n        }\n    }\n\n    private static final Node empty = null;\n}\n```"
+}

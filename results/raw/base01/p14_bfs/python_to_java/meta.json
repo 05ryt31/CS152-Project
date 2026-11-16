@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "python",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:09:58+00:00",
+  "source_file": "p14_bfs.py",
+  "target_file": "P14Bfs.java",
+  "attempts": 1,
+  "duration_s": 21.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 515,
+    "completion_tokens": 402
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p14_bfs.python_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.util.HashMap;\nimport java.util.LinkedList;\nimport java.util.Map;\nimport java.util.Queue;\n\npublic class P14Bfs {\n    public static void main(String[] args) {\n        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {\n            String[] nm = reader.readLine().split(\" \");\n            int n = Integer.parseInt(nm[0]);\n            int m = Integer.parseInt(nm[1]);\n\n            Map<Integer, LinkedList<Integer>> neighbors = new HashMap<>();\n            for (int i = 1; i <= n; i++) {\n                neighbors.put(i, new LinkedList<>());\n            }\n\n            for (int i = 0; i < m; i++) {\n                String[] uv = reader.readLine().split(\" \");\n                int u = Integer.parseInt(uv[0]);\n                int v = Integer.parseInt(uv[1]);\n                neighbors.get(u).add(v);\n                neighbors.get(v).add(u);\n            }\n\n            String[] st = reader.readLine().split(\" \");\n            int s = Integer.parseInt(st[0]);\n            int t = Integer.parseInt(st[1]);\n\n            Map<Integer, Integer> distance = new HashMap<>();\n            distance.put(s, 0);\n            Queue<Integer> queue = new LinkedList<>();\n            queue.add(s);\n\n            while (!queue.isEmpty()) {\n                int node = queue.poll();\n                if (node == t) {\n                    break;\n                }\n                for (int other : neighbors.get(node)) {\n                    if (!distance.containsKey(other)) {\n                        distance.put(other, distance.get(node) + 1);\n                        queue.add(other);\n                    }\n                }\n            }\n\n            if (distance.containsKey(t)) {\n                System.out.println(distance.get(t));\n            } else {\n                System.out.println(-1);\n            }\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n}\n```"
+}

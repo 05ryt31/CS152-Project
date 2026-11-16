@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p08_bank",
+  "src": "java",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:19:50+00:00",
+  "source_file": "P08Bank.java",
+  "target_file": "p08_bank.scm",
+  "attempts": 1,
+  "duration_s": 10.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 443,
+    "completion_tokens": 189
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (main)\n  (let loop ((n (string->number (read-line))))\n    (if (> n 0)\n        (begin\n          (let* ((command (read-line))\n                 (parts (string-split command #\\space)))\n            (cond\n              ((string=? (car parts) \"deposit\")\n               (set! balance (+ balance (string->number (cadr parts)))))\n              ((string=? (car parts) \"withdraw\")\n               (let ((amount (string->number (cadr parts))))\n                 (if (> amount balance)\n                     (display \"error\\n\")\n                     (set! balance (- balance amount)))))\n              ((string=? (car parts) \"balance\")\n               (display balance \"\\n\")))\n            (loop (- n 1))))\n        (exit 0))))\n\n(let ((balance 0))\n  (main))\n```"
+}

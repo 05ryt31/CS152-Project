@@ -1,0 +1,20 @@
+(import scheme (chicken base) (chicken io))
+
+(define (process-rows rows)
+  (define (add groups line)
+    (let* ((words (string-split line))
+           (key (car words))
+           (value (string->number (cadr words))))
+      (if (= (length words) 2)
+          (hash-table-update! groups key (lambda (pair) (cons (+ (car pair) value) (+ 1 (cdr pair)))) #f)
+          groups)))
+  (define (show-group key pair)
+    (string-append key " " (number->string (car pair)) " " (number->string (cdr pair))))
+  (map (lambda (pair) (show-group (car pair) (cdr pair))) (sort (hash-table->list (foldl add (make-hash-table) rows)) car)))
+
+(define (main)
+  (let* ((n (string->number (read-line)))
+         (rows (build-list n read-line)))
+    (for-each displayln (process-rows rows))))
+
+(main)

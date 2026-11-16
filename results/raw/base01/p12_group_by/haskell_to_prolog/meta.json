@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p12_group_by",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:02:16+00:00",
+  "source_file": "p12_group_by.hs",
+  "target_file": "p12_group_by.pl",
+  "attempts": 1,
+  "duration_s": 18.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 556,
+    "completion_tokens": 340
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\np12_group_by :-\n    read_line_to_string(current_input, N),\n    string_to_number(N, NumRows),\n    findall(Line, read_line_to_string(current_input, Line), Lines),\n    process_rows(Lines, Result),\n    maplist(write_row, Result),\n    nl,\n    halt.\n\nprocess_rows([], []).\nprocess_rows(Rows, Result) :-\n    group_by_key(Rows, Groups),\n    maplist(show_group, Groups, Result).\n\ngroup_by_key([], []).\ngroup_by_key([Row | Rows], [Key-Value | Rest]) :-\n    split_string(Row, \" \", \"\", [Key, Value]),\n    number(Value, Number),\n    group_by_key(Rows, Rest1),\n    insert_or_update(Key, Number, Rest1, Key-Value, Rest).\n\ninsert_or_update(_, _, [], New, [New]).\ninsert_or_update(Key, Number, [Key-Old | Rest], New, [Key-(Sum, Count) | Rest]) :-\n    sum_and_count(Number, Old, Sum, Count).\ninsert_or_update(Key, Number, [Other | Rest], New, [Other | Rest1]) :-\n    insert_or_update(Key, Number, Rest, New, Rest1).\n\nsum_and_count(New, Old, Sum, Count) :-\n    Sum is New + Old,\n    Count is 1 + Old.\n\nshow_group(Key-Value, Row) :-\n    format('~w ~d ~d~n', [Key, Value, Value]).\n\nwrite_row(Row) :-\n    write(Row),\n    nl.\n```"
+}

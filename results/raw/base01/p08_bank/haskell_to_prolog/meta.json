@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p08_bank",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:22:22+00:00",
+  "source_file": "p08_bank.hs",
+  "target_file": "p08_bank.pl",
+  "attempts": 1,
+  "duration_s": 28.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 551,
+    "completion_tokens": 543
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(readutil)).\n:- use_module(library(lists)).\n\np08_bank :-\n    read_line_to_string(current_input, N),\n    string_number(N, Num),\n    findall(Command, read_command(Command), Commands),\n    process_commands(Num, Commands, Output),\n    format('~s~n', [Output]),\n    halt.\n\nread_command(Command) :-\n    read_line_to_string(current_input, Line),\n    atom_codes(Line, Codes),\n    phrase(parse_command(Codes), Command).\n\nparse_command([97, 100, 115, 116, 111, 112, 101|T], ['deposit'|Rest]) -->\n    parse_int(T, Rest).\nparse_command([119, 114, 97, 110, 119, 105, 114, 116, 101|T], ['withdraw'|Rest]) -->\n    parse_int(T, Rest).\nparse_command([98, 97, 114, 97, 116, 101|T], ['balance'|Rest]) -->\n    !,\n    {Rest = []}.\nparse_command(_, []) --> !.\n\nparse_int([], []).\nparse_int([C|T], [N|NT]) :-\n    digit_code(C, D),\n    N is D * 10^Length,\n    parse_int(T, NT).\n\ndigit_code(C, D) :-\n    C >= 48, C =< 57,\n    D is C - 48.\n\nprocess_commands(0, _, '') :- !.\nprocess_commands(N, [Command|Commands], Output) :-\n    process_command(Command, State, NewState),\n    process_commands(N-1, Commands, Rest),\n    append(Output, NewState, NewOutput),\n    process_commands(N-1, Commands, Rest),\n    !.\n\nprocess_command(['deposit'|[Amount]], Balance, '':-\n    NewBalance is Balance + Amount,\n    format('New balance: ~d~n', [NewBalance]),\n    NewBalance.\n\nprocess_command(['withdraw'|[Amount]], Balance, 'error' :-\n    Amount > Balance,\n    format('Insufficient funds~n').\nprocess_command(['withdraw'|[Amount]], Balance, '' :-\n    NewBalance is Balance - Amount,\n    format('New balance: ~d~n', [NewBalance]),\n    NewBalance.\n\nprocess_command(['balance'], Balance, '' :-\n    format('Current balance: ~d~n', [Balance]).\n```"
+}

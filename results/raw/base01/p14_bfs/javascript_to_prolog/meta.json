@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "javascript",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:12:47+00:00",
+  "source_file": "p14_bfs.js",
+  "target_file": "p14_bfs.pl",
+  "attempts": 1,
+  "duration_s": 41.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 581,
+    "completion_tokens": 776
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\np14_bfs :-\n    read_lines(InputLines),\n    parse_input(InputLines, N, M, Graph, Start, Target),\n    bfs(Graph, Start, Target, Distance),\n    format('~d~n', [Distance]),\n    halt.\n\nread_lines(InputLines) :-\n    read_string(current_input, _, Input),\n    split_string(Input, '\\n', '', Lines),\n    maplist(trim, Lines, InputLines).\n\nparse_input([_ | Rest], N, M, Graph, Start, Target) :-\n    split_string(Rest, ' ', '', [NStr, MStr]),\n    number_codes(N, NStr),\n    number_codes(M, MStr),\n    initialize_graph(N, Graph),\n    parse_edges(Rest, M, Graph, Edges),\n    parse_nodes(Edges, Start, Target).\n\ninitialize_graph(N, Graph) :-\n    length(Graph, N+1),\n    maplist(init_list, Graph).\n\ninit_list([]).\n\nparse_edges(_, 0, _, _).\n\nparse_edges(Lines, M, Graph, Edges) :-\n    split_string(Lines, ' ', '', [UStr, VStr]),\n    number_codes(U, UStr),\n    number_codes(V, VStr),\n    append(Edges, [[U, V]], NewEdges),\n    M1 is M - 1,\n    parse_edges(Lines, M1, Graph, NewEdges).\n\nparse_nodes(Edges, Start, Target) :-\n    member([Start, _], Edges),\n    member([_, Target], Edges).\n\nbfs(Graph, Start, Target, Distance) :-\n    initialize_distance(Distance, Start),\n    bfs_loop(Graph, [Start], [], Distance, Target).\n\ninitialize_distance(Distance, Start) :-\n    length(Distance, Length),\n    fill_list(Length, -1, Distance),\n    nth0(Start, Distance, 0).\n\nfill_list(0, _, _).\nfill_list(N, Value, List) :-\n    N > 0,\n    NewN is N - 1,\n    append(List, [Value], NewList),\n    fill_list(NewN, Value, NewList).\n\nbfs_loop(_, [], _, Distance, _) :-\n    !.\n\nbfs_loop(Graph, Queue, Visited, Distance, Target) :-\n    Queue = [Node | _],\n    Node == Target,\n    !,\n    nth0(Target, Distance, Result),\n    Result >= 0,\n    format('~d~n', [Result]),\n    halt.\n\nbfs_loop(Graph, [Node | Tail], Visited, Distance, Target) :-\n    findall(Next, (member([Node, Next], Graph), \\+ member(Next, Visited)), Neighbors),\n    extend_queue(Tail, Neighbors, NewQueue),\n    update_distance(Graph, Distance, Neighbors, NewDistance),\n    bfs_loop(Graph, NewQueue, [Node | Visited], NewDistance, Target).\n\nextend_queue(Queue, [], Queue).\n\nextend_queue(Queue, [Neighbor | Tail], [Neighbor | NewQueue]) :-\n    extend_queue(Queue, Tail, NewQueue).\n\nupdate_distance(Graph, Distance, [], Distance).\n\nupdate_distance(Graph, Distance, [Neighbor | Tail], NewDistance) :-\n    nth0(Neighbor, Distance, OldDist),\n    (   OldDist < 0 ->\n        NewDist is OldDist + 1,\n        set_nth0(Neighbor, NewDist, Distance, NewDistance)\n    ;   true ),\n    update_distance(Graph, Distance, Tail, NewDistance).\n\nset_nth0(Index, Value, List, NewList) :-\n    nth0(Index, List, _, Tail),\n    append(List, [Value | Tail], NewList).\n```"
+}

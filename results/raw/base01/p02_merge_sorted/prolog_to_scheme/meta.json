@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p02_merge_sorted",
+  "src": "prolog",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:39:13+00:00",
+  "source_file": "p02_merge_sorted.pl",
+  "target_file": "p02_merge_sorted.scm",
+  "attempts": 1,
+  "duration_s": 14.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 538,
+    "completion_tokens": 257
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (p02_merge_sorted)\n  (let* ((ALine (read-line))\n         (BLine (read-line))\n         (A (nums ALine))\n         (B (nums BLine))\n         (Result (merge A B)))\n    (print_nums Result)))\n\n(define (nums line)\n  (cond\n    ((eof-object? line) '())\n    ((string=? line \"\") '())\n    (else\n     (let ((parts (string-split line #\\space)))\n       (if (null? parts)\n           '()\n           (map string->number parts))))))\n\n(define (merge xs ys)\n  (cond\n    ((null? xs) ys)\n    ((null? ys) xs)\n    ((<= (car xs) (car ys))\n     (cons (car xs) (merge (cdr xs) ys)))\n    (else\n     (cons (car ys) (merge xs (cdr ys))))))\n\n(define (print_nums ns)\n  (when (not (null? ns))\n    (display (apply string-append (map number->string ns)))\n    (display \" \")\n    (print_nums (cdr ns))))\n\n(p02_merge_sorted)\n```"
+}

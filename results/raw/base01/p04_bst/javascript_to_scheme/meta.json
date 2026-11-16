@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "javascript",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:47:03+00:00",
+  "source_file": "p04_bst.js",
+  "target_file": "p04_bst.scm",
+  "attempts": 1,
+  "duration_s": 24.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 652,
+    "completion_tokens": 447
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define-record-type node\n  (make-node value left right)\n  node?\n  (value node-value)\n  (left node-left)\n  (right node-right))\n\n(define (insert root value)\n  (if (not root)\n      (make-node value #f #f)\n      (let loop ((current root))\n        (cond ((< value (node-value current))\n               (if (node-left current)\n                   (loop (node-left current))\n                   (begin\n                     (set-node-left! current (make-node value #f #f))\n                     root)))\n              ((> value (node-value current))\n               (if (node-right current)\n                   (loop (node-right current))\n                   (begin\n                     (set-node-right! current (make-node value #f #f))\n                     root)))\n              (else current))))))\n\n(define (inorder root out)\n  (when root\n    (inorder (node-left root) out)\n    (push! out (node-value root))\n    (inorder (node-right root) out)))\n\n(define (preorder root out)\n  (when root\n    (push! out (node-value root))\n    (preorder (node-left root) out)\n    (preorder (node-right root) out)))\n\n(define (height root)\n  (if root\n      (+ 1 (max (height (node-left root)) (height (node-right root))))\n      0))\n\n(let* ((line (read-line))\n       (trimmed (string-trim line))\n       (values (if (string=? trimmed \"\")\n                    '()\n                    (map string->number (string-split trimmed))))\n       (root (foldl insert #f values))\n       (in-order (list))\n       (pre-order (list)))\n  (inorder root in-order)\n  (preorder root pre-order)\n  (display (string-join (map number->string in-order) \" \"))\n  (newline)\n  (display (string-join (map number->string pre-order) \" \"))\n  (newline)\n  (display (number->string (height root)))\n  (newline))\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p15_permutations",
+  "src": "haskell",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:24:22+00:00",
+  "source_file": "p15_permutations.hs",
+  "target_file": "p15_permutations.js",
+  "attempts": 1,
+  "duration_s": 8.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 383,
+    "completion_tokens": 170
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n    input: process.stdin,\n    output: process.stdout,\n    terminal: false\n});\n\nlet input = '';\n\nrl.on('line', (line) => {\n    input += line + '\\n';\n});\n\nrl.on('close', () => {\n    const permutations = (arr) => {\n        if (arr.length === 0) return [[]];\n        return arr.flatMap((_, i) =>\n            permutations(arr.slice(0, i).concat(arr.slice(i + 1))).map(pick => [arr[i], ...pick])\n        );\n    };\n\n    const sortLines = (lines) => lines.sort();\n\n    const result = sortLines(permutations(input.trim().split('\\n')));\n    console.log(result.join('\\n'));\n});\n```"
+}

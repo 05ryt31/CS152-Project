@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p15_permutations",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:24:52+00:00",
+  "source_file": "p15_permutations.hs",
+  "target_file": "p15_permutations.pl",
+  "attempts": 1,
+  "duration_s": 11.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 455,
+    "completion_tokens": 217
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\n% Entry point of the program\np15_permutations :-\n    read_line_to_string(current_input, Line),\n    Perms =.. [permutations, Line],\n    SortedPerms = sort(Perms),\n    format('~w~n', [SortedPerms]),\n    halt.\n\n% Predicate to generate all permutations of a list\npermutations([]) --> [[]].\npermutations(XS) -->\n    { picks(XS, Pairs) },\n    pairs_to_perms(Pairs).\n\n% Helper predicate to convert pairs to permutations\npairs_to_perms([]) --> [].\npairs_to_perms([(Y, YS)|Pairs]) -->\n    { permutations(YS, RestPerms) },\n    [[Y|Rest]|RestPerms].\n\n% Predicate to generate all possible pairs of an element and the rest of the list\npicks([], []) :- !.\npicks([X|XS], [(X, XS)|Pairs]) :-\n    picks(XS, Pairs).\n```"
+}

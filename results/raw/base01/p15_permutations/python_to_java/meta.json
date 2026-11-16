@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p15_permutations",
+  "src": "python",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:21:24+00:00",
+  "source_file": "p15_permutations.py",
+  "target_file": "P15Permutations.java",
+  "attempts": 1,
+  "duration_s": 15.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 439,
+    "completion_tokens": 275
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p15_permutations.python_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.List;\n\npublic class P15Permutations {\n    public static void main(String[] args) throws Exception {\n        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));\n        String line = reader.readLine();\n        List<String> letters = Arrays.asList(line.split(\"\"));\n        Collections.sort(letters);\n        List<String> results = new ArrayList<>();\n        boolean[] used = new boolean[letters.size()];\n        generate(letters, used, new ArrayList<>(), results);\n        for (String word : results) {\n            System.out.println(word);\n        }\n    }\n\n    private static void generate(List<String> letters, boolean[] used, List<String> current, List<String> out) {\n        if (current.size() == letters.size()) {\n            out.add(String.join(\"\", current));\n            return;\n        }\n        for (int i = 0; i < letters.size(); i++) {\n            if (!used[i]) {\n                used[i] = true;\n                current.add(letters.get(i));\n                generate(letters, used, current, out);\n                current.remove(current.size() - 1);\n                used[i] = false;\n            }\n        }\n    }\n}\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p02_merge_sorted",
+  "src": "prolog",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:38:50+00:00",
+  "source_file": "p02_merge_sorted.pl",
+  "target_file": "P02MergeSorted.java",
+  "attempts": 1,
+  "duration_s": 23.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 573,
+    "completion_tokens": 430
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p02_merge_sorted.prolog_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\nimport java.util.ArrayList;\nimport java.util.List;\nimport java.util.Scanner;\n\npublic class P02MergeSorted {\n    public static void main(String[] args) {\n        try (Scanner scanner = new Scanner(new BufferedReader(new InputStreamReader(System.in)))) {\n            String ALine = scanner.nextLine();\n            String BLine = scanner.nextLine();\n            List<Integer> A = nums(ALine);\n            List<Integer> B = nums(BLine);\n            List<Integer> Result = merge(A, B);\n            printNums(Result);\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    }\n\n    private static List<Integer> nums(String Line) {\n        if (\"end_of_file\".equals(Line)) return new ArrayList<>();\n        if (\"\".equals(Line)) return new ArrayList<>();\n        String[] Parts = Line.split(\" \");\n        if (Parts.length == 0) return new ArrayList<>();\n        List<Integer> Ns = new ArrayList<>();\n        for (String Part : Parts) {\n            Ns.add(Integer.parseInt(Part));\n        }\n        return Ns;\n    }\n\n    private static List<Integer> merge(List<Integer> Xs, List<Integer> Ys) {\n        if (Xs.isEmpty()) return Ys;\n        if (Ys.isEmpty()) return Xs;\n        if (Xs.get(0) <= Ys.get(0)) {\n            List<Integer> Rest = merge(Xs.subList(1, Xs.size()), Ys);\n            Rest.add(0, Xs.get(0));\n            return Rest;\n        } else {\n            List<Integer> Rest = merge(Xs, Ys.subList(1, Ys.size()));\n            Rest.add(0, Ys.get(0));\n            return Rest;\n        }\n    }\n\n    private static void printNums(List<Integer> Ns) {\n        System.out.println(String.join(\" \", Ns.stream().map(String::valueOf).toArray(String[]::new)));\n    }\n}\n```"
+}

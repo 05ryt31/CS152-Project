@@ -1,0 +1,8 @@
+[
+    {"name": "two keys unsorted input", "input": "3\nb 2\na 5\nb 4", "output": "a 5 1\nb 6 2"},
+    {"name": "zero lines", "input": "0", "output": ""},
+    {"name": "negative values", "input": "2\nx -3\nx 1", "output": "x -2 2"},
+    {"name": "single key", "input": "1\nonly 7", "output": "only 7 1"},
+    {"name": "interleaved keys", "input": "4\nz 1\ny 1\nz 1\ny 2", "output": "y 3 2\nz 2 2"},
+    {"name": "keys sort by full string", "input": "3\nab 1\na 1\nabc 1", "output": "a 1 1\nab 1 1\nabc 1 1"}
+]

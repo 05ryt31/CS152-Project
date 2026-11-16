@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "haskell",
+  "tgt": "scheme",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:18:15+00:00",
+  "source_file": "p14_bfs.hs",
+  "target_file": "p14_bfs.scm",
+  "attempts": 1,
+  "duration_s": 21.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 575,
+    "completion_tokens": 408
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (read-numbers str)\n  (map string->number (string-split str)))\n\n(define (bfs graph start target)\n  (define (helper queue seen)\n    (if (null? queue)\n        -1\n        (let* ([node (caar queue)]\n               [distance (cdar queue)]\n               [neighbors (hash-table-ref/default graph node '())])\n          (if (= node target)\n              distance\n              (let loop ([next-neighbors '()])\n                  (cond\n                    [(null? neighbors) (helper (cdr queue) seen)]\n                    [(member (car neighbors) seen) (loop (cdr neighbors))]\n                    [else\n                     (helper (append queue (list (cons (car neighbors) (+ distance 1))))\n                             (cons (car neighbors) seen))\n                     (loop (cdr neighbors))])))))))\n  (helper (list (cons start 0)) (list start)))\n\n(define (main)\n  (let* ([input (read-line)]\n         [nm (read-numbers input)]\n         [edges (build-list (cadr nm) (lambda (_) (read-numbers (read-line))))])\n    (let* ([graph (make-hash-table)]\n           [start (car (last edges))]\n           [target (cadr (last edges))]\n           [add-edge! (lambda (u v)\n                        (hash-table-set! graph u (cons v (hash-table-ref/default graph u '())))\n                        (hash-table-set! graph v (cons u (hash-table-ref/default graph v '()))))]\n           [result (apply min (filter (lambda (edge) (or (= (car edge) start) (= (cadr edge) start)))\n                                      (map (lambda (edge) (min (car edge) (cadr edge))) edges)))]\n           [bfs-result (bfs graph start target)])\n      (display bfs-result)\n      (newline))))\n\n(main)\n```"
+}

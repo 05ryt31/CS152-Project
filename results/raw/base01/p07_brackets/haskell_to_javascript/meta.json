@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p07_brackets",
+  "src": "haskell",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:15:17+00:00",
+  "source_file": "p07_brackets.hs",
+  "target_file": "p07_brackets.js",
+  "attempts": 1,
+  "duration_s": 14.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 442,
+    "completion_tokens": 268
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n    input: process.stdin,\n    output: process.stdout,\n    terminal: false\n});\n\nlet n;\nrl.question('', (inputN) => {\n    n = parseInt(inputN.trim(), 10);\n    let linesRead = 0;\n    const results = [];\n\n    const checkBalanced = (text) => {\n        const stack = [];\n        for (const char of text) {\n            if (\"([{\".includes(char)) {\n                stack.push(char);\n            } else if (\"]})\".includes(char)) {\n                if (stack.length === 0 || !matching(stack.pop(), char)) {\n                    return \"no\";\n                }\n            }\n        }\n        return stack.length === 0 ? \"yes\" : \"no\";\n    };\n\n    const matching = (open, close) => {\n        return open === '(' && close === ')' ||\n               open === '[' && close === ']' ||\n               open === '{' && close === '}';\n    };\n\n    rl.on('line', (line) => {\n        results.push(checkBalanced(line));\n        linesRead++;\n        if (linesRead === n) {\n            results.forEach(result => console.log(result));\n            process.exit(0);\n        }\n    });\n});\n```"
+}

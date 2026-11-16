@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "scheme",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:50:28+00:00",
+  "source_file": "p11_pipeline.scm",
+  "target_file": "p11_pipeline.py",
+  "attempts": 1,
+  "duration_s": 18.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 683,
+    "completion_tokens": 349
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\ndef numbers(line):\n    return [] if line == \"\" else list(map(int, line.split()))\n\ndef sum_values(values):\n    return 0 if not values else sum(values)\n\ndef maximum_value(values):\n    return None if not values else max(values)\n\ndef keep(predicate, values):\n    return [value for value in values if predicate(value)]\n\ndef apply_stage(values, parts):\n    kind, name = parts[0], parts[1]\n    if kind == \"map\":\n        amount = int(parts[2])\n        if name == \"add\":\n            return [value + amount for value in values]\n        else:\n            return [value * amount for value in values]\n    elif kind == \"filter\":\n        if name == \"even\":\n            return keep(lambda x: x % 2 == 0, values)\n        elif name == \"odd\":\n            return keep(lambda x: x % 2 != 0, values)\n        else:\n            threshold = int(parts[2])\n            return keep(lambda x: x > threshold, values)\n    elif name == \"sum\":\n        return sum_values(values)\n    elif not values:\n        return \"none\"\n    else:\n        return maximum_value(values)\n\ndef pipeline(k, values):\n    for _ in range(k):\n        parts = input().split()\n        values = apply_stage(values, parts)\n    if isinstance(values, list):\n        if values:\n            print(values[0], end='')\n            for value in values[1:]:\n                print(f\" {value}\", end='')\n            print()\n        else:\n            print(\"none\")\n    else:\n        print(values)\n\nvalues = numbers(input())\nk = int(input())\npipeline(k, values)\n```"
+}

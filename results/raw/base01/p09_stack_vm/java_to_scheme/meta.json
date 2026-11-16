@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "java",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:28:22+00:00",
+  "source_file": "P09StackVm.java",
+  "target_file": "p09_stack_vm.scm",
+  "attempts": 1,
+  "duration_s": 23.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 624,
+    "completion_tokens": 441
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (main)\n  (let loop ()\n    (let ((line (read-line)))\n      (if (eof-object? line)\n          (exit 0)\n          (begin\n            (process-command line)\n            (loop))))))\n\n(define (process-command command)\n  (let* ((parts (string-split command))\n         (op (car parts)))\n    (cond\n      ((string=? op \"push\")\n       (push-stack (string->number (cadr parts))))\n      ((string=? op \"pop\")\n       (pop-stack))\n      ((or (string=? op \"add\") (string=? op \"mul\"))\n       (binary-op (if (string=? op \"add\") + *)))\n      ((string=? op \"dup\")\n       (dup-stack))\n      ((string=? op \"swap\")\n       (swap-stack))\n      ((string=? op \"print\")\n       (print-stack-top)))))\n      \n(define stack '())\n\n(define (push-stack value)\n  (set! stack (cons value stack)))\n\n(define (pop-stack)\n  (if (null? stack)\n      (display \"error\\n\")\n      (set! stack (cdr stack))))\n\n(define (binary-op op)\n  (if (< (length stack) 2)\n      (display \"error\\n\")\n      (let* ((b (car stack))\n             (a (cadr stack))\n             (result (op a b)))\n        (pop-stack)\n        (pop-stack)\n        (push-stack result))))\n\n(define (dup-stack)\n  (if (null? stack)\n      (display \"error\\n\")\n      (push-stack (car stack))))\n\n(define (swap-stack)\n  (if (< (length stack) 2)\n      (display \"error\\n\")\n      (let* ((b (car stack))\n             (a (cadr stack)))\n        (pop-stack)\n        (pop-stack)\n        (push-stack a)\n        (push-stack b))))\n\n(define (print-stack-top)\n  (if (null? stack)\n      (display \"error\\n\")\n      (display (car stack))\n      (newline)))\n\n(main)\n```"
+}

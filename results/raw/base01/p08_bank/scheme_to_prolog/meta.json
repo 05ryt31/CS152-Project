@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p08_bank",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:21:08+00:00",
+  "source_file": "p08_bank.scm",
+  "target_file": "p08_bank.pl",
+  "attempts": 1,
+  "duration_s": 12.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 503,
+    "completion_tokens": 237
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\np08_bank :-\n    read_line_to_string(current_input, N),\n    number_codes(N, Number),\n    bank(Number).\n\nbank(0) :- !.\nbank(N) :-\n    read_line_to_string(current_input, Line),\n    split_string(Line, \" \", \"\", Parts),\n    Command = Parts,\n    handle_command(Command, N, 0).\n\nhandle_command([\"deposit\", Amount], N, Balance) :-\n    number_codes(Amount, Number),\n    NewBalance is Balance + Number,\n    handle_command([], N, NewBalance).\nhandle_command([\"withdraw\", Amount], N, Balance) :-\n    number_codes(Amount, Number),\n    (Number > Balance ->\n        format(\"error~n\"),\n        handle_command([], N, Balance);\n     true),\n    NewBalance is Balance - Number,\n    handle_command([], N, NewBalance).\nhandle_command(_, N, Balance) :-\n    format(\"~d~n\", [Balance]),\n    NewIndex is N - 1,\n    handle_command([], NewIndex, Balance).\n\n:- initialization(p08_bank).\n:- halt.\n```"
+}

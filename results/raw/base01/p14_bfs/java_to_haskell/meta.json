@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "java",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:14:23+00:00",
+  "source_file": "P14Bfs.java",
+  "target_file": "p14_bfs.hs",
+  "attempts": 1,
+  "duration_s": 16.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 602,
+    "completion_tokens": 311
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nmodule Main where\n\nimport Data.List (find)\nimport Data.Maybe (fromJust)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let [n:m:_] = map read . words $ head (lines input)\n    let edges = tail (lines input)\n    let graph = buildGraph n edges\n    let [start:target:_] = map read . words $ last (lines input)\n    print $ bfsDistance graph start target\n\nbuildGraph :: Int -> [String] -> [[Int]]\nbuildGraph n edges = foldl addEdge (replicate (n + 1) []) edges\n  where\n    addEdge g (e:_) = let [u:v:_] = map read . words $ e in\n                      g { !! u = v : g !! u,\n                          !! v = u : g !! v }\n\nbfsDistance :: [[Int]] -> Int -> Int -> Maybe Int\nbfsDistance graph start target = go [start] (-1)\n  where\n    go [] _ = Nothing\n    go (node:rest) dist =\n      case find ((== target) . snd) (zip rest (repeat (dist + 1))) of\n        Just _ -> Just (dist + 1)\n        Nothing ->\n          let nextNodes = concatMap (\\v -> filter (/= node) (graph !! v)) rest\n              newDist = dist + 1\n          in go (nextNodes ++ rest) newDist\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "scheme",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:15:11+00:00",
+  "source_file": "p14_bfs.scm",
+  "target_file": "p14_bfs.py",
+  "attempts": 1,
+  "duration_s": 15.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 665,
+    "completion_tokens": 283
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\ndef read_graph(m):\n    graph = []\n    for _ in range(m):\n        uv = list(map(int, input().split()))\n        u, v = uv[0], uv[1]\n        graph.append((u, v))\n        graph.append((v, u))\n    return graph\n\ndef get_neighbors(node, graph):\n    neighbors = [v for u, v in graph if u == node]\n    return neighbors\n\ndef expand_layer(layer, graph, visited):\n    next_layer = []\n    new_visited = visited.copy()\n    for u in layer:\n        for v in get_neighbors(u, graph):\n            if v not in new_visited:\n                next_layer.append(v)\n                new_visited.add(v)\n    return next_layer, new_visited\n\ndef bfs(start, target, graph):\n    layer = [start]\n    visited = {start}\n    distance = 0\n    while layer:\n        if target in layer:\n            return distance\n        layer, visited = expand_layer(layer, graph, visited)\n        distance += 1\n    return -1\n\nnm = list(map(int, input().split()))\nn, m = nm[0], nm[1]\ngraph = read_graph(m)\nst = list(map(int, input().split()))\ns, t = st[0], st[1]\n\nprint(bfs(s, t, graph))\n```"
+}

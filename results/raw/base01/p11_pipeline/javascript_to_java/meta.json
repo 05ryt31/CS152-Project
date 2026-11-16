@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "javascript",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:47:07+00:00",
+  "source_file": "p11_pipeline.js",
+  "target_file": "P11Pipeline.java",
+  "attempts": 1,
+  "duration_s": 25.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 581,
+    "completion_tokens": 465
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p11_pipeline.javascript_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.util.Arrays;\nimport java.util.List;\nimport java.util.stream.Collectors;\n\npublic class P11Pipeline {\n    public static void main(String[] args) {\n        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {\n            String firstLine = reader.readLine();\n            List<Integer> values = firstLine != null && !firstLine.trim().isEmpty() ?\n                    Arrays.stream(firstLine.split(\"\\\\s+\")).map(Integer::parseInt).collect(Collectors.toList()) :\n                    List.of();\n            int k = Integer.parseInt(reader.readLine());\n            List<String[]> operations = new ArrayList<>();\n            for (int i = 0; i < k; i++) {\n                operations.add(reader.readLine().split(\"\\\\s+\"));\n            }\n\n            List<Object> result = values;\n            for (String[] operation : operations) {\n                if (\"map\".equals(operation[0])) {\n                    result = result.stream()\n                            .map(x -> \"add\".equals(operation[1]) ? (Integer) x + Integer.parseInt(operation[2]) : (Integer) x * Integer.parseInt(operation[2]))\n                            .collect(Collectors.toList());\n                } else if (\"filter\".equals(operation[0])) {\n                    result = result.stream()\n                            .filter(x -> \"even\".equals(operation[1]) ? ((Integer) x) % 2 == 0 : \"odd\".equals(operation[1]) ? ((Integer) x) % 2 != 0 : ((Integer) x) > Integer.parseInt(operation[2]))\n                            .collect(Collectors.toList());\n                } else {\n                    if (\"sum\".equals(operation[1])) {\n                        result = result.stream().reduce(0, Integer::sum);\n                    } else if (!result.isEmpty()) {\n                        result = Collections.singletonList(Collections.max(result));\n                    } else {\n                        result = List.of(\"none\");\n                    }\n                }\n            }\n\n            if (!(result instanceof List<?>)) {\n                System.out.println(result);\n            } else {\n                System.out.println(((List<?>) result).stream().map(Object::toString).collect(Collectors.joining(\" \")));\n            }\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n}\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "scheme",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:50:25+00:00",
+  "source_file": "p04_bst.scm",
+  "target_file": "P04Bst.java",
+  "attempts": 1,
+  "duration_s": 34.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 715,
+    "completion_tokens": 640
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p04_bst.scheme_to_java;\n\nimport java.util.*;\n\npublic class P04Bst {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String line = scanner.nextLine();\n        List<Integer> numbers = numbers(line);\n        Node tree = buildTree(numbers);\n        printList(inorder(tree));\n        printList(preorder(tree));\n        System.out.println(height(tree));\n    }\n\n    private static Node insert(Node tree, int value) {\n        if (tree == null) {\n            return new Node(value, null, null);\n        }\n        if (value < tree.value) {\n            tree.left = insert(tree.left, value);\n        } else {\n            tree.right = insert(tree.right, value);\n        }\n        return tree;\n    }\n\n    private static List<Integer> inorder(Node tree) {\n        List<Integer> result = new ArrayList<>();\n        inorderHelper(tree, result);\n        return result;\n    }\n\n    private static void inorderHelper(Node node, List<Integer> result) {\n        if (node != null) {\n            inorderHelper(node.left, result);\n            result.add(node.value);\n            inorderHelper(node.right, result);\n        }\n    }\n\n    private static List<Integer> preorder(Node tree) {\n        List<Integer> result = new ArrayList<>();\n        preorderHelper(tree, result);\n        return result;\n    }\n\n    private static void preorderHelper(Node node, List<Integer> result) {\n        if (node != null) {\n            result.add(node.value);\n            preorderHelper(node.left, result);\n            preorderHelper(node.right, result);\n        }\n    }\n\n    private static int height(Node tree) {\n        if (tree == null) {\n            return 0;\n        }\n        return Math.max(height(tree.left), height(tree.right)) + 1;\n    }\n\n    private static void printList(List<Integer> values) {\n        if (!values.isEmpty()) {\n            System.out.print(values.get(0));\n            for (int i = 1; i < values.size(); i++) {\n                System.out.print(\" \" + values.get(i));\n            }\n            System.out.println();\n        }\n    }\n\n    private static List<Integer> numbers(String line) {\n        if (line.isEmpty()) {\n            return Collections.emptyList();\n        }\n        String[] parts = line.split(\"\\\\s+\");\n        List<Integer> result = new ArrayList<>();\n        for (String part : parts) {\n            result.add(Integer.parseInt(part));\n        }\n        return result;\n    }\n\n    private static String safeReadLine(Scanner scanner) {\n        if (scanner.hasNextLine()) {\n            return scanner.nextLine();\n        }\n        return \"\";\n    }\n\n    private static Node buildTree(List<Integer> values) {\n        Node tree = null;\n        for (int value : values) {\n            tree = insert(tree, value);\n        }\n        return tree;\n    }\n\n    private static class Node {\n        int value;\n        Node left;\n        Node right;\n\n        Node(int value, Node left, Node right) {\n            this.value = value;\n            this.left = left;\n            this.right = right;\n        }\n    }\n}\n```"
+}

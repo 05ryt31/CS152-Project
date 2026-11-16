@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "scheme",
+  "tgt": "haskell",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:30:33+00:00",
+  "source_file": "p09_stack_vm.scm",
+  "target_file": "p09_stack_vm.hs",
+  "attempts": 1,
+  "duration_s": 18.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 661,
+    "completion_tokens": 332
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.Char (intToDigit)\nimport Data.List (splitAt)\nimport System.IO\n\nmain :: IO ()\nmain = do\n    n <- readLn\n    interact $ unlines . processCommands . lines . head . splitAt n . lines\n\nprocessCommands :: [String] -> [String]\nprocessCommands commands = reverse $ foldl processCommand [] commands\n\nprocessCommand :: [Int] -> String -> [Int]\nprocessCommand stack command = case words command of\n    [\"push\", num] -> push (read num) stack\n    [\"pop\"] -> pop stack\n    [\"add\"] -> add stack\n    [\"mul\"] -> mul stack\n    [\"dup\"] -> dup stack\n    [\"swap\"] -> swap stack\n    _ -> error \"Invalid command\"\n\npush :: Int -> [Int] -> [Int]\npush x stack = x : stack\n\npop :: [Int] -> [Int]\npop [] = []\npop (x:xs) = xs\n\nadd :: [Int] -> [Int]\nadd [] = []\nadd [_] = []\nadd (x:y:xs) = (x + y) : xs\n\nmul :: [Int] -> [Int]\nmul [] = []\nmul [_] = []\nmul (x:y:xs) = (x * y) : xs\n\ndup :: [Int] -> [Int]\ndup [] = []\ndup (x:xs) = x : x : xs\n\nswap :: [Int] -> [Int]\nswap [] = []\nswap [_] = []\nswap (x:y:xs) = y : x : xs\n```"
+}

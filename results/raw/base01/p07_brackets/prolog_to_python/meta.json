@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p07_brackets",
+  "src": "prolog",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:16:13+00:00",
+  "source_file": "p07_brackets.pl",
+  "target_file": "p07_brackets.py",
+  "attempts": 1,
+  "duration_s": 11.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 479,
+    "completion_tokens": 200
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\ndef safe_read_line():\n    try:\n        return input()\n    except EOFError:\n        return \"\"\n\ndef run(n):\n    if n == 0:\n        return\n    line = safe_read_line()\n    if balanced(line):\n        print(\"yes\")\n    else:\n        print(\"no\")\n    run(n - 1)\n\ndef balanced(line):\n    stack = []\n    for char in line:\n        if char in \"([{\":\n            stack.append(char)\n        elif char in \")]}\":\n            if not stack or not matching(stack.pop(), char):\n                return False\n    return not stack\n\ndef matching(open_char, close_char):\n    match {\n        '(': ')',\n        '[': ']',\n        '{': '}'\n    }.get(open_char, None) == close_char\n\nif __name__ == \"__main__\":\n    n_line = safe_read_line()\n    n = int(n_line)\n    run(n)\n    sys.exit(0)\n```"
+}

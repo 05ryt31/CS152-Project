@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "prolog",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:55:06+00:00",
+  "source_file": "p04_bst.pl",
+  "target_file": "p04_bst.hs",
+  "attempts": 1,
+  "duration_s": 15.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 697,
+    "completion_tokens": 283
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List (maximum)\nimport Data.Maybe (fromJust)\n\ndata BST = Empty | Node Int BST BST deriving (Show)\n\nmain :: IO ()\nmain = do\n    line <- getContents\n    let ns = nums line\n    let tree = foldl insert Empty ns\n    let inOrder = inorder tree\n    let preOrder = preorder tree\n    putStr $ unwords $ show <$> inOrder ++ show <$> preOrder\n    putStrLn \"\"\n    print $ height tree\n\nnums :: String -> [Int]\nnums \"\" = []\nnums line = case words line of\n    [] -> []\n    parts -> map read parts\n\ninsert :: Int -> BST -> BST\ninsert x Empty = Node x Empty Empty\ninsert x (Node y l r)\n    | x < y     = Node y (insert x l) r\n    | otherwise = Node y l (insert x r)\n\ninorder :: BST -> [Int]\ninorder Empty = []\ninorder (Node x l r) = inorder l ++ [x] ++ inorder r\n\npreorder :: BST -> [Int]\npreorder Empty = []\npreorder (Node x l r) = [x] ++ preorder l ++ preorder r\n\nheight :: BST -> Int\nheight Empty = 0\nheight (Node _ l r) = 1 + maximum [height l, height r]\n```"
+}

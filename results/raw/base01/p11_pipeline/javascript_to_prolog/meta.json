@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "javascript",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:48:07+00:00",
+  "source_file": "p11_pipeline.js",
+  "target_file": "p11_pipeline.pl",
+  "attempts": 1,
+  "duration_s": 28.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 604,
+    "completion_tokens": 533
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(readutil)).\n:- use_module(library(lists)).\n\np11_pipeline :-\n    read_lines(InputLines),\n    process_lines(InputLines, Result),\n    print_result(Result),\n    halt.\n\nread_lines([]) :-\n    at_end_of_stream(current_input), !.\nread_lines([Line | Lines]) :-\n    read_line_to_string(current_input, Line),\n    read_lines(Lines).\n\nprocess_lines([], []).\nprocess_lines([FirstLine | Rest], Result) :-\n    FirstValues =.. [_, Values],\n    maplist(number_string, Values, NumValues),\n    K =.. [_, _K],\n    read_line_to_string(current_input, KLine),\n    number_string(_K, KNum),\n    process_commands(Rest, NumValues, KNum, Result).\n\nprocess_commands([], _, _, []).\nprocess_commands(['map', Op, Val | Rest], Values, _, NewValues) :-\n    process_map(Op, Val, Values, NewValues),\n    process_commands(Rest, [], _, RemainingValues),\n    append(NewValues, RemainingValues, Result).\nprocess_commands(['filter', Op, Val | Rest], Values, _, NewValues) :-\n    process_filter(Op, Val, Values, NewValues),\n    process_commands(Rest, [], _, RemainingValues),\n    append(NewValues, RemainingValues, Result).\nprocess_commands(['reduce', Op, Val | Rest], Values, _, Result) :-\n    process_reduce(Op, Val, Values, Result),\n    process_commands(Rest, [], _, []).\n\nprocess_map(add, Val, Values, NewValues) :-\n    maplist(lambda(X, X + Val), Values, NewValues).\nprocess_map(mul, Val, Values, NewValues) :-\n    maplist(lambda(X, X * Val), Values, NewValues).\n\nprocess_filter(even, _, Values, NewValues) :-\n    keep_if(lambda(X, X mod 2 =:= 0), Values, NewValues).\nprocess_filter(odd, _, Values, NewValues) :-\n    keep_if(lambda(X, X mod 2 \\= 0), Values, NewValues).\nprocess_filter(greater, Val, Values, NewValues) :-\n    keep_if(lambda(X, X > Val), Values, NewValues).\n\nprocess_reduce(sum, _, Values, Result) :-\n    sum_list(Values, Result).\nprocess_reduce(max, _, Values, Result) :-\n    max_list(Values, Result).\n\nprint_result([]) :- !.\nprint_result(Result) :-\n    format('~w~n', [Result]).\n\nnumber_string(N, S) :-\n    atom_number(S, N).\n```"
+}

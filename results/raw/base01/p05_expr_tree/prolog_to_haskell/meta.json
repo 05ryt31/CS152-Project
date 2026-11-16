@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p05_expr_tree",
+  "src": "prolog",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:01:53+00:00",
+  "source_file": "p05_expr_tree.pl",
+  "target_file": "p05_expr_tree.hs",
+  "attempts": 1,
+  "duration_s": 12.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 500,
+    "completion_tokens": 216
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List (splitOn)\nimport System.IO\n\ndata Expr = Leaf String | Op Char Expr Expr deriving (Show)\n\nmain :: IO ()\nmain = do\n    line <- getLine\n    let tokens = splitOn \" \" line\n    tree <- buildExpr tokens []\n    text <- renderExpr tree\n    putStrLn text\n\nbuildExpr :: [String] -> [Expr] -> IO Expr\nbuildExpr [] stack = return $ head stack\nbuildExpr (token:tokens) stack\n    | elem token \"+-*\" = do\n        right <- buildExpr tokens stack\n        left <- buildExpr tokens [right]\n        return $ Op (head token) left right\n    | otherwise = return $ Leaf token\n\nrenderExpr :: Expr -> IO String\nrenderExpr (Leaf text) = return text\nrenderExpr (Op op left right) = do\n    l <- renderExpr left\n    r <- renderExpr right\n    return $ \"(\" ++ l ++ \" \" ++ [op] ++ \" \" ++ r ++ \")\"\n```"
+}

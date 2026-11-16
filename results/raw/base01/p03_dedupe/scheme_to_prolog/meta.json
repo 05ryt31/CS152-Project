@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p03_dedupe",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:42:22+00:00",
+  "source_file": "p03_dedupe.scm",
+  "target_file": "p03_dedupe.pl",
+  "attempts": 1,
+  "duration_s": 15.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 536,
+    "completion_tokens": 284
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\np03_dedupe :-\n    read_line_to_string(current_input, Line),\n    Numbers = [N | _] ^ numbers(Line, N),\n    Deduped = [D | _] ^ dedupe(Numbers, []),\n    print_list(Deduped),\n    halt.\n\nnumbers(\"\", []).\nnumbers(Line, [N | Rest]) :-\n    split_string(Line, \" \", \"\", Parts),\n    maplist(string_number, Parts, [N | Rest]).\n\nstring_number(S, N) :-\n    number_string(N, S).\n\ndedupe([], _Seen, []).\ndedupe([H | T], Seen, [H | Deduped]) :-\n    \\+ member(H, Seen),\n    dedupe(T, [H | Seen], Deduped).\ndedupe([_ | T], Seen, Deduped) :-\n    dedupe(T, Seen, Deduped).\n\nprint_list([]).\nprint_list([H | T]) :-\n    format('~d', H),\n    (   T = []\n    ->  nl\n    ;   format(' ~d', T),\n        nl\n    ).\n\nsafe_read_line :-\n    read_line_to_string(current_input, Line),\n    (   Line = \"\"\n    ->  safe_read_line\n    ;   Line = Line\n    ).\n```"
+}

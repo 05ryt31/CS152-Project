@@ -1,0 +1,45 @@
+(import scheme (chicken base) (chicken io))
+
+(define (apply-stage values parts)
+  (let* ((kind (car parts))
+         (name (cadr parts))
+         (amount (and (eq? kind "map") (string->number (caddr parts))))
+         (predicate (cond
+                      ((and (eq? kind "filter") (string=? name "even")) even?)
+                      ((and (eq? kind "filter") (string=? name "odd")) odd?)
+                      ((and (eq? kind "filter") (string=? name "gt"))
+                       (lambda (v) (> v (string->number (caddr parts)))))))
+    (if kind
+        (cond
+          ((eq? kind "map")
+           (map (lambda (v)
+                  (if (eq? name "add")
+                      (+ v amount)
+                      (* v amount)))
+                values))
+          ((eq? kind "filter")
+           (filter predicate values))
+          ((eq? kind "reduce")
+           (if (eq? name "sum")
+               (apply + values)
+               (fold max -inf.0 values))))
+        (if (null? values)
+            "none"
+            (car (sort values >))))))
+
+(define (main)
+  (let loop ()
+    (let ((line (read-line)))
+      (unless (eof-object? line)
+        (let* ((values (map string->number (string-split line)))
+               (k (string->number (read-line)))
+               (result (apply-stage values (make-list k read-line))))
+          (if (list? result)
+              (begin
+                (for-each display result)
+                (display " "))
+              (display result))
+          (newline)
+          (loop)))))
+
+(main)

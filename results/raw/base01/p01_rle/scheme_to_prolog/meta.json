@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p01_rle",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:31:07+00:00",
+  "source_file": "p01_rle.scm",
+  "target_file": "p01_rle.pl",
+  "attempts": 1,
+  "duration_s": 11.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 481,
+    "completion_tokens": 221
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\np01_rle :-\n    read_line_to_string(current_input, Line),\n    encode(Line, Encoded),\n    format('~s~n', [Encoded]),\n    halt(0).\n\nencode([], \"\").\nencode([H|T], Encoded) :-\n    encode_loop(T, H, 1, \"\", Acc),\n    reverse(Acc, Reversed),\n    atom_chars(Result, Reversed),\n    atom_concat(H, Result, Encoded).\n\nencode_loop([], _, _, Acc, Acc).\nencode_loop([H|T], Current, Count, Acc, Result) :-\n    (   H =:= Current\n    ->  NewCount is Count + 1,\n        encode_loop(T, Current, NewCount, Acc, Result)\n    ;   atom_chars(CurrentStr, [Current]),\n        atom_chars(CountStr, [Count]),\n        atom_concat(CurrentStr, CountStr, Pair),\n        encode_loop(T, H, 1, [Pair | Acc], Result)\n    ).\n```"
+}

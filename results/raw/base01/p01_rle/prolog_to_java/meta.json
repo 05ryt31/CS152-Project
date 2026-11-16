@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p01_rle",
+  "src": "prolog",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:32:13+00:00",
+  "source_file": "p01_rle.pl",
+  "target_file": "P01Rle.java",
+  "attempts": 1,
+  "duration_s": 16.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 483,
+    "completion_tokens": 298
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p01_rle.prolog_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class P01Rle {\n    public static void main(String[] args) {\n        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {\n            String line = reader.readLine();\n            List<Character> chars = new ArrayList<>();\n            for (char c : line.toCharArray()) {\n                chars.add(c);\n            }\n            List<Object> out = encode(chars);\n            System.out.println(out.stream().map(Object::toString).collect(Collectors.joining()));\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    }\n\n    private static List<Object> encode(List<Character> chars) {\n        if (chars.isEmpty()) {\n            return new ArrayList<>();\n        }\n        char current = chars.get(0);\n        int count = 1;\n        List<Object> rest = new ArrayList<>(chars.subList(1, chars.size()));\n        while (!rest.isEmpty() && rest.get(0) == current) {\n            rest.remove(0);\n            count++;\n        }\n        List<Object> encodedRest = encode(rest);\n        List<Object> result = new ArrayList<>();\n        result.add(current);\n        result.addAll(Integer.toString(count).chars().mapToObj(i -> (char) i));\n        result.addAll(encodedRest);\n        return result;\n    }\n}\n```"
+}
