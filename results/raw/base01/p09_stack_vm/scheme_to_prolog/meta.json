@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:30:51+00:00",
+  "source_file": "p09_stack_vm.scm",
+  "target_file": "p09_stack_vm.pl",
+  "attempts": 1,
+  "duration_s": 26.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 728,
+    "completion_tokens": 483
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\np09_stack_vm :-\n    read_line_to_string(current_input, Input),\n    N is string_to_number(Input),\n    stack_vm(N),\n    halt.\n\nstack_vm(N) :-\n    stack_vm(N, []).\n\nstack_vm(0, Stack) :-\n    print_stack(Stack).\n\nstack_vm(N, Stack) :-\n    read_line_to_string(current_input, Line),\n    process_command(Line, Stack, NewStack),\n    M is N - 1,\n    stack_vm(M, NewStack).\n\nprocess_command(Command, Stack, NewStack) :-\n    atom_codes(Command, Codes),\n    phrase(parse_command(Codes), Tokens),\n    handle_command(Tokens, Stack, NewStack).\n\nparse_command([], []).\nparse_command([H|T], [H|T]) :-\n    H \\= ' '.\n\nhandle_command(['push', Value], Stack, NewStack) :-\n    Number is string_to_number(Value),\n    NewStack = [Number | Stack].\nhandle_command(['pop'], Stack, NewStack) :-\n    Stack = [_ | Rest],\n    NewStack = Rest.\nhandle_command(['add'], Stack, NewStack) :-\n    length(Stack, Len),\n    Len >= 2,\n    pop_two(Stack, A, B, Rest),\n    NewStack = [(A + B) | Rest].\nhandle_command(['mul'], Stack, NewStack) :-\n    length(Stack, Len),\n    Len >= 2,\n    pop_two(Stack, A, B, Rest),\n    NewStack = [(A * B) | Rest].\nhandle_command(['dup'], Stack, NewStack) :-\n    length(Stack, Len),\n    Len > 0,\n    pop_one(Stack, Top, Rest),\n    NewStack = [Top, Top | Rest].\nhandle_command(['swap'], Stack, NewStack) :-\n    length(Stack, Len),\n    Len >= 2,\n    pop_two(Stack, A, B, Rest),\n    NewStack = [B, A | Rest].\nhandle_command(_, _, _) :-\n    print('error').\n\npop_one([Top | Rest], Top, Rest).\npop_two([First, Second | Rest], First, Second, Rest).\n\nprint_stack([]).\nprint_stack([Top | Rest]) :-\n    format('~d~n', [Top]),\n    print_stack(Rest).\n```"
+}

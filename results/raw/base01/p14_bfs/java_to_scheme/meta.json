@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "java",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:13:59+00:00",
+  "source_file": "P14Bfs.java",
+  "target_file": "p14_bfs.scm",
+  "attempts": 1,
+  "duration_s": 23.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 612,
+    "completion_tokens": 425
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (main)\n  (let* ((input (read-line))\n         (first (string-split input #\\space))\n         (n (string->number (list-ref first 0)))\n         (m (string->number (list-ref first 1)))\n         (neighbours (make-vector (+ n 1))))\n    \n    ;; Initialize neighbors list\n    (do ((i 0 (+ i 1))) ((> i n))\n      (vector-set! neighbours i '()))\n    \n    ;; Read edges and build adjacency list\n    (do ((i 0 (+ i 1))) ((= i m))\n      (let* ((edge (string-split (read-line) #\\space))\n             (u (string->number (list-ref edge 0)))\n             (v (string->number (list-ref edge 1))))\n        (push v (vector-ref neighbours u))\n        (push u (vector-ref neighbours v))))\n    \n    ;; Read start and target\n    (let* ((last (string-split (read-line) #\\space))\n           (start (string->number (list-ref last 0)))\n           (target (string->number (list-ref last 1)))\n           (distance (make-vector (+ n 1) -1)))\n      \n      ;; BFS initialization\n      (define queue (make-queue))\n      (enqueue! queue start)\n      (vector-set! distance start 0)\n      \n      ;; BFS loop\n      (while (not (queue-empty? queue))\n        (let ((node (dequeue! queue)))\n          (if (= node target)\n              (begin\n                (display (vector-ref distance target))\n                (newline)\n                (return)))\n          (for-each (lambda (other)\n                      (when (= (vector-ref distance other) -1)\n                        (vector-set! distance other (+ (vector-ref distance node) 1))\n                        (enqueue! queue other)))\n                    (vector-ref neighbours node)))))\n    \n    (exit 0)))\n\n(main)\n```"
+}

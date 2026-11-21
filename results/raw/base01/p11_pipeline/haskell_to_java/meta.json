@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "haskell",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:53:25+00:00",
+  "source_file": "p11_pipeline.hs",
+  "target_file": "P11Pipeline.java",
+  "attempts": 1,
+  "duration_s": 27.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 563,
+    "completion_tokens": 517
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p11_pipeline.haskell_to_java;\n\nimport java.util.*;\nimport java.io.*;\n\npublic class P11Pipeline {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        List<Integer> values = Arrays.stream(scanner.nextLine().split(\" \"))\n                                     .map(Integer::parseInt)\n                                     .collect(Collectors.toList());\n        int k = Integer.parseInt(scanner.nextLine());\n        List<String> stages = new ArrayList<>();\n        for (int i = 0; i < k; i++) {\n            stages.add(scanner.nextLine());\n        }\n        \n        List<Integer> result = stages.stream()\n                                      .reduce(values, (xs, stage) -> apply(xs, stage.split(\" \")), \n                                              (a, b) -> a); // This should never happen\n        \n        if (result.isEmpty() && k > 0 && \"reduce\".equals(stages.get(k - 1).split(\" \")[0])) {\n            System.out.println(\"none\");\n        } else if (!result.isEmpty()) {\n            System.out.println(result.stream().map(String::valueOf).collect(Collectors.joining(\" \")));\n        }\n    }\n\n    private static List<Integer> apply(List<Integer> xs, String[] stage) {\n        switch (stage[0]) {\n            case \"map\":\n                if (\"add\".equals(stage[1])) {\n                    return xs.stream().map(x -> x + Integer.parseInt(stage[2])).collect(Collectors.toList());\n                } else if (\"mul\".equals(stage[1])) {\n                    return xs.stream().map(x -> x * Integer.parseInt(stage[2])).collect(Collectors.toList());\n                }\n                break;\n            case \"filter\":\n                if (\"even\".equals(stage[1])) {\n                    return xs.stream().filter(x -> x % 2 == 0).collect(Collectors.toList());\n                } else if (\"odd\".equals(stage[1])) {\n                    return xs.stream().filter(x -> x % 2 != 0).collect(Collectors.toList());\n                } else if (\"gt\".equals(stage[1])) {\n                    return xs.stream().filter(x -> x > Integer.parseInt(stage[2])).collect(Collectors.toList());\n                }\n                break;\n            case \"reduce\":\n                if (\"sum\".equals(stage[1])) {\n                    return Collections.singletonList(xs.stream().mapToInt(Integer::intValue).sum());\n                } else if (\"max\".equals(stage[1])) {\n                    return xs.isEmpty() ? Collections.emptyList() : Collections.singletonList(Collections.max(xs));\n                }\n                break;\n        }\n        return xs;\n    }\n}\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p12_group_by",
+  "src": "haskell",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:01:50+00:00",
+  "source_file": "p12_group_by.hs",
+  "target_file": "P12GroupBy.java",
+  "attempts": 1,
+  "duration_s": 14.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 534,
+    "completion_tokens": 263
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p12_group_by.haskell_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\nimport java.util.HashMap;\nimport java.util.Map;\nimport java.util.Scanner;\n\npublic class P12GroupBy {\n    public static void main(String[] args) {\n        try (Scanner scanner = new Scanner(new BufferedReader(new InputStreamReader(System.in)))) {\n            int n = Integer.parseInt(scanner.nextLine());\n            Map<String, int[]> grouped = new HashMap<>();\n            for (int i = 0; i < n; i++) {\n                String[] parts = scanner.nextLine().split(\" \");\n                if (parts.length == 2) {\n                    String key = parts[0];\n                    int value = Integer.parseInt(parts[1]);\n                    grouped.merge(key, new int[]{value, 1}, (a, b) -> new int[]{a[0] + b[0], a[1] + b[1]});\n                }\n            }\n\n            for (Map.Entry<String, int[]> entry : grouped.entrySet()) {\n                System.out.println(entry.getKey() + \" \" + entry.getValue()[0] + \" \" + entry.getValue()[1]);\n            }\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    }\n}\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p02_merge_sorted",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:37:06+00:00",
+  "source_file": "p02_merge_sorted.scm",
+  "target_file": "p02_merge_sorted.pl",
+  "attempts": 1,
+  "duration_s": 15.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 540,
+    "completion_tokens": 279
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\nnumbers(Line, Numbers) :-\n    Line = \"\",\n    Numbers = [] ;\n    split_string(Line, \" \", \"\", Tokens),\n    maplist(string_number, Tokens, Numbers).\n\nstring_number(String, Number) :-\n    number_string(Number, String).\n\nmerge([], B, B).\nmerge(A, [], A).\nmerge([H1|T1], [H2|T2], [H1|Result]) :-\n    H1 =< H2,\n    merge(T1, [H2|T2], Result).\nmerge([H1|T1], [H2|T2], [H2|Result]) :-\n    H1 > H2,\n    merge([H1|T1], T2, Result).\n\nprint_list([]).\nprint_list([H|T]) :-\n    format('~d', [H]),\n    print_list(T).\n\nsafe_read_line(Input) :-\n    read_line_to_string(current_input, Input),\n    Input \\= end_of_file.\n\np02_merge_sorted :-\n    safe_read_line(Line1),\n    numbers(Line1, List1),\n    safe_read_line(Line2),\n    numbers(Line2, List2),\n    merge(List1, List2, Merged),\n    print_list(Merged),\n    nl,\n    halt(0).\n```"
+}

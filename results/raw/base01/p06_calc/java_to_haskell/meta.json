@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p06_calc",
+  "src": "java",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:06:02+00:00",
+  "source_file": "P06Calc.java",
+  "target_file": "p06_calc.hs",
+  "attempts": 1,
+  "duration_s": 16.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 649,
+    "completion_tokens": 312
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nmodule Main where\n\nimport Data.Char (isDigit, isSpace)\nimport Text.Read (reads)\n\ndata Parser = Parser { tokens :: [String], pos :: Int }\n\nparse :: String -> Parser\nparse text = Parser { tokens = tokenize text, pos = 0 }\n\ntokenize :: String -> [String]\ntokenize = filter (/= \"\") . words . concatMap (\\c -> if isSpace c then \" \" else [c])\n\npeek :: Parser -> Maybe String\npeek p = if pos p < length (tokens p) then Just (tokens p !! pos p) else Nothing\n\nnext :: Parser -> String\nnext p = let t = tokens p !! pos p in Parser { tokens = tokens p, pos = pos p + 1 } t\n\nexpression :: Parser -> Int\nexpression p = let value = term p in case peek p of\n    Just \"+\" -> expression (next p) + term p\n    Just \"-\" -> expression (next p) - term p\n    _ -> value\n\nterm :: Parser -> Int\nterm p = let value = factor p in case peek p of\n    Just \"*\" -> term (next p) * factor p\n    _ -> value\n\nfactor :: Parser -> Int\nfactor p = case peek p of\n    Just \"(\" -> let value = expression (next p) in next p; value\n    _ -> read $ next p\n\nmain :: IO ()\nmain = do\n    text <- getLine\n    print $ expression $ parse text\n```"
+}

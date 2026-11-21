@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "python",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:24:54+00:00",
+  "source_file": "p09_stack_vm.py",
+  "target_file": "p09_stack_vm.hs",
+  "attempts": 1,
+  "duration_s": 25.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 520,
+    "completion_tokens": 472
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport System.IO\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdin NoBuffering\n    hSetBuffering stdout NoBuffering\n    n <- readLn\n    stack <- processCommands n\n    mapM_ print stack\n\nprocessCommands :: Int -> IO [Int]\nprocessCommands n = go [] <$> replicateM n getCommand\n  where\n    go :: [Int] -> [Command] -> IO [Int]\n    go acc [] = return acc\n    go acc cmds = case cmds of\n        Push x : rest -> go (x : acc) rest\n        Pop : rest ->\n            if null acc then putStrLn \"error\" >> go acc rest\n            else go (tail acc) rest\n        Add : rest ->\n            if length acc < 2 then putStrLn \"error\" >> go acc rest\n            else let (b:a:rest') = acc in go (a + b : rest') rest\n        Mul : rest ->\n            if length acc < 2 then putStrLn \"error\" >> go acc rest\n            else let (b:a:rest') = acc in go (a * b : rest') rest\n        Dup : rest ->\n            if null acc then putStrLn \"error\" >> go acc rest\n            else go (acc ++ [last acc]) rest\n        Swap : rest ->\n            if length acc < 2 then putStrLn \"error\" >> go acc rest\n            else let (b:a:rest') = acc in go (a : b : rest') rest\n        Print : rest ->\n            if null acc then putStrLn \"error\"\n            else do\n                print $ last acc\n                go (init acc) rest\n\ndata Command = Push Int | Pop | Add | Mul | Dup | Swap | Print deriving (Show)\n\ngetCommand :: IO Command\ngetCommand = do\n    line <- getLine\n    let parts = words line\n    case parts of\n        [\"push\", x] -> return $ Push (read x)\n        [\"pop\"] -> return Pop\n        [\"add\"] -> return Add\n        [\"mul\"] -> return Mul\n        [\"dup\"] -> return Dup\n        [\"swap\"] -> return Swap\n        [\"print\"] -> return Print\n        _ -> error \"Invalid command\"\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "java",
+  "tgt": "javascript",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:38:29+00:00",
+  "source_file": "P10Lru.java",
+  "target_file": "p10_lru.js",
+  "attempts": 1,
+  "duration_s": 11.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 450,
+    "completion_tokens": 198
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nlet capacity;\nlet n;\nlet cache = new Map();\n\nrl.on('line', (line) => {\n  if (!capacity) {\n    capacity = parseInt(line);\n  } else if (!n) {\n    n = parseInt(line);\n  } else {\n    const [operation, key, value] = line.split(/\\s+/);\n    key = parseInt(key);\n    value = parseInt(value);\n\n    if (operation === 'get') {\n      console.log(cache.has(key) ? cache.get(key) : -1);\n    } else {\n      cache.set(key, value);\n      if (cache.size > capacity) {\n        cache.delete(cache.keys().next().value);\n      }\n    }\n\n    if (--n === 0) {\n      rl.close();\n    }\n  }\n});\n```"
+}

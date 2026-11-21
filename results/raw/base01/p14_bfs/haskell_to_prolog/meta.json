@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:18:37+00:00",
+  "source_file": "p14_bfs.hs",
+  "target_file": "p14_bfs.pl",
+  "attempts": 1,
+  "duration_s": 30.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 632,
+    "completion_tokens": 558
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\nread_nums(S, L) :-\n    atom_codes(S, Codes),\n    split_string(Codes, \" \", \"\", Words),\n    maplist(atom_number, Words, L).\n\np14_bfs :-\n    read_line_to_string(current_input, Line1),\n    read_nums(Line1, [N, M]),\n    findall(Edge, (between(1, M, _), read_line_to_string(current_input, Line2), read_nums(Line2, Edge)), Edges),\n    read_line_to_string(current_input, Line3),\n    read_nums(Line3, [S, T]),\n\n    build_graph(Edges, N, Graph),\n    bfs(Graph, S, T, Result),\n\n    format('~d~n', [Result]),\n    halt.\n\nbuild_graph(Edges, N, Graph) :-\n    init_graph(N, Graph0),\n    foldl(add_edge, Edges, Graph0, Graph).\n\ninit_graph(N, Graph) :-\n    length(Graph, N),\n    maplist(init_node, Graph).\n\ninit_node([], _).\ninit_node([_ | Tail], Node) :-\n    Node = [], init_node(Tail, Node).\n\nadd_edge([U, V], Graph, NewGraph) :-\n    add_to_list(U, V, Graph, NewGraph1),\n    add_to_list(V, U, NewGraph1, NewGraph).\n\nadd_to_list(_, _, [], []).\nadd_to_list(Node, Value, [Head | Tail], [NewHead | Tail]) :-\n    Head = Node, append(Head, [Value], NewHead), !.\nadd_to_list(Node, Value, [Head | Tail], [Head | NewTail]) :-\n    add_to_list(Node, Value, Tail, NewTail).\n\nbfs(Graph, Start, End, Result) :-\n    bfs_queue([(Start, 0)], IS.singleton(Start), Graph, End, Result).\n\nbfs_queue(Queue, Seen, Graph, End, Result) :-\n    Queue = [],\n    Result = -1.\nbfs_queue([(Node, D) | Tail], Seen, Graph, End, Result) :-\n    Node = End,\n    Result = D.\nbfs_queue([(Node, D) | Tail], Seen, Graph, End, Result) :-\n    \\+ memberchk(Node, Seen),\n    findall(Next, (member(Next, Graph), \\+ memberchk(Next, Seen)), Neighbors),\n    NewSeen = union(Seen, Neighbors),\n    NewQueue = append(Tail, [(Next, D + 1) | Nexts]),\n    bfs_queue(NewQueue, NewSeen, Graph, End, Result).\n```"
+}

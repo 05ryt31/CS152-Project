@@ -1,0 +1,16 @@
+(import scheme (chicken base) (chicken io))
+
+(define (rle-compress input)
+  (let loop ((chars (string->list input))
+             (result '()))
+    (if (null? chars)
+        (list->string (reverse result))
+        (let* ((first-char (car chars))
+               (count (length (take-while (lambda (c) (= c first-char)) chars))))
+          (loop (drop chars count)
+                (append result (list first-char (number->string count))))))))
+
+(when (eq? (command-line-length) 1)
+  (let ((input (read-line)))
+    (display (rle-compress input))
+    (newline)))

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p05_expr_tree",
+  "src": "prolog",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:01:39+00:00",
+  "source_file": "p05_expr_tree.pl",
+  "target_file": "p05_expr_tree.scm",
+  "attempts": 1,
+  "duration_s": 14.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 510,
+    "completion_tokens": 265
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (main)\n  (let* ((line (read-line))\n         (tokens (string-split line #\\space))\n         (tree (build tokens '()))\n         (text (render tree)))\n    (display text)\n    (newline)\n    (exit 0)))\n\n(define (build tokens stack)\n  (if (null? tokens)\n      stack\n      (let ((token (car tokens)))\n        (cond\n          ((member token '(\"+\", \"-\", \"*\"))\n           (build (cdr tokens) (cons (list token (car stack) (cadr stack)) (cddr stack))))\n          (else\n           (build (cdr tokens) (cons token stack)))))))\n\n(define (render tree)\n  (cond\n    ((atom tree) tree)\n    (else\n     (let* ((op (car tree))\n            (left (render (cadr tree)))\n            (right (render (caddr tree)))\n            (lstr (if (atom left) (symbol->string left) left))\n            (rstr (if (atom right) (symbol->string right) right))\n            (result (string-append \"(\" lstr \" \" op \" \" rstr \")\")))\n       result))))\n\n(main)\n```"
+}

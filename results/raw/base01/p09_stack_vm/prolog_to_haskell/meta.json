@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "prolog",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:35:03+00:00",
+  "source_file": "p09_stack_vm.pl",
+  "target_file": "p09_stack_vm.hs",
+  "attempts": 1,
+  "duration_s": 17.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 610,
+    "completion_tokens": 331
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport System.IO\nimport Data.List\n\nmain :: IO ()\nmain = do\n    n <- readLn\n    stackVM n []\n\nstackVM :: Int -> [Int] -> IO ()\nstackVM 0 stack = return ()\nstackVM n stack = do\n    line <- getLine\n    let parts = words line\n    newStack <- execute parts stack\n    stackVM (n - 1) newStack\n\nexecute :: [String] -> [Int] -> IO [Int]\nexecute [\"push\", x] stack = return $ read x : stack\nexecute [\"pop\"] [] = do\n    putStrLn \"error\"\n    return []\nexecute [\"pop\"] (_:_) = return []\nexecute [op] stack | op `elem` [\"add\", \"mul\"] && length stack < 2 = do\n    putStrLn \"error\"\n    return stack\nexecute [\"add\"] (b:a:s) = return $ c:s where c = a + b\nexecute [\"mul\"] (b:a:s) = return $ c:s where c = a * b\nexecute [\"dup\"] [] = do\n    putStrLn \"error\"\n    return []\nexecute [\"dup\"] (x:xs) = return $ x:x:xs\nexecute [\"swap\"] (a:b:s) = return $ b:a:s\nexecute [\"swap\"] s | length s < 2 = do\n    putStrLn \"error\"\n    return s\nexecute [\"print\"] [] = do\n    putStrLn \"error\"\n    return []\nexecute [\"print\"] (x:_) = do\n    print x\n    return (x:)\n```"
+}

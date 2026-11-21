@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p08_bank",
+  "src": "scheme",
+  "tgt": "haskell",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:20:57+00:00",
+  "source_file": "p08_bank.scm",
+  "target_file": "p08_bank.hs",
+  "attempts": 1,
+  "duration_s": 11.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 438,
+    "completion_tokens": 205
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport System.IO\nimport Data.List.Split\n\nbank :: Int -> IO ()\nbank n = do\n    lines <- getContents\n    let commands = map words $ lines\n    loop 0 0 commands\n  where\n    loop :: Int -> Int -> [[String]] -> IO ()\n    loop _ _ [] = return ()\n    loop i balance ((command:args):rest)\n      | command == \"deposit\" = loop (i + 1) (balance + read args) rest\n      | command == \"withdraw\" = do\n          let amount = read args\n          if amount > balance then do\n              putStrLn \"error\"\n              loop (i + 1) balance rest\n          else\n              loop (i + 1) (balance - amount) rest\n      | otherwise = do\n          print balance\n          loop (i + 1) balance rest\n\nmain :: IO ()\nmain = do\n    n <- readLn\n    bank n\n```"
+}

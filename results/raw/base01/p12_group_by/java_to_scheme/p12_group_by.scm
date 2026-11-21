@@ -1,0 +1,23 @@
+(import scheme (chicken base) (chicken io))
+
+(define (main)
+  (let* ((n (string->number (read-line)))
+         (groups (make-hash-table)))
+    (do ((i 0 (+ i 1))) ((= i n))
+      (let* ((line (read-line))
+             (parts (string-split line #\space))
+             (key (car parts))
+             (value (string->number (cadr parts))))
+        (hash-set! groups key
+                   (let ((existing (hash-ref groups key '(0 . 0))))
+                     (cons (+ value (car existing)) (+ 1 (cdr existing)))))))
+    (for-each (lambda (entry)
+                (display (car entry))
+                (display " ")
+                (display (car (cdr entry)))
+                (display " ")
+                (display (cdr (cdr entry)))
+                (newline))
+              (hash-map groups))))
+
+(main)

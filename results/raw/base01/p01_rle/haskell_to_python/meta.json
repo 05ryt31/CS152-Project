@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p01_rle",
+  "src": "haskell",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:31:18+00:00",
+  "source_file": "p01_rle.hs",
+  "target_file": "p01_rle.py",
+  "attempts": 1,
+  "duration_s": 3.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 268,
+    "completion_tokens": 61
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\ndef main():\n    line = sys.stdin.read().strip()\n    result = ''.join([char + str(len(list(group))) for char, group in itertools.groupby(line)])\n    print(result)\n\nif __name__ == \"__main__\":\n    import itertools\n    main()\n```"
+}

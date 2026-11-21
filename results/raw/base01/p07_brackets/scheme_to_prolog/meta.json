@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p07_brackets",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:14:51+00:00",
+  "source_file": "p07_brackets.scm",
+  "target_file": "p07_brackets.pl",
+  "attempts": 1,
+  "duration_s": 15.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 559,
+    "completion_tokens": 294
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\nmatching_opener_closer(Opener, Closer) :-\n    (   Opener = '(' , Closer = ')' ;\n        Opener = '[' , Closer = ']' ;\n        Opener = '{' , Closer = '}' ).\n\nbalanced_text(Text) :-\n    string_to_list(Text, Chars),\n    balanced_chars(Chars, []).\n\nbalanced_chars([], []).\nbalanced_chars([H|T], Stack) :-\n    (   matching_opener_closer(H, C) ->\n        balanced_chars(T, [C|Stack])\n    ;   H = '(' -> false ;\n        H = '[' -> false ;\n        H = '{' -> false ;\n        Stack = [_|_] ->\n            pop(Stack, _, NewStack),\n            matching_opener_closer(Pop, H),\n            balanced_chars(T, NewStack)\n        ;   false\n    ).\n\npop([_ | T], Head, T).\n\np07_brackets :-\n    read_line_to_string(current_input, N),\n    number_string(Number, N),\n    between(1, Number, _),\n    repeat,\n        read_line_to_string(current_input, Line),\n        (   balanced_text(Line) ->\n            format('yes~n')\n        ;   format('no~n')\n        ),\n        !,\n        fail.\n\n:- initialization(p07_brackets).\n:- halt.\n```"
+}

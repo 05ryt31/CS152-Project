@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p03_dedupe",
+  "src": "haskell",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:42:38+00:00",
+  "source_file": "p03_dedupe.hs",
+  "target_file": "p03_dedupe.py",
+  "attempts": 1,
+  "duration_s": 7.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 416,
+    "completion_tokens": 125
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\ndef read_nums(s):\n    return list(map(int, s.split()))\n\ndef unique(nums):\n    seen = set()\n    result = []\n    for num in nums:\n        if num not in seen:\n            result.append(num)\n            seen.add(num)\n    return result\n\ndef safe_get_line():\n    try:\n        return input()\n    except EOFError:\n        return \"\"\n\ndef main():\n    line = safe_get_line()\n    result = unique(read_nums(line))\n    if result:\n        print(\" \".join(map(str, result)))\n\nif __name__ == \"__main__\":\n    main()\n```"
+}

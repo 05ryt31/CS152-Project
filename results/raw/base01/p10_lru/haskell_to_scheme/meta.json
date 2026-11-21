@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "haskell",
+  "tgt": "scheme",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:42:21+00:00",
+  "source_file": "p10_lru.hs",
+  "target_file": "p10_lru.scm",
+  "attempts": 1,
+  "duration_s": 23.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 638,
+    "completion_tokens": 430
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (touch key order)\n  (filter (/= key) order) ++ (list key))\n\n(define (apply state command)\n  (match state\n    [(values order)\n     (let* ([words (string-split command)]\n            [cmd (car words)]\n            [key (and (eq? cmd \"get\") (cadr words))]\n            [val (and (eq? cmd \"put\") (caddr words))]\n            [new-values values]\n            [new-order order])\n       (cond\n         [(and cmd (eq? cmd \"get\"))\n          (if (hash-table-exists? values key)\n              (values values (touch (string->number key) order))\n              (values values order))]\n         [(and cmd (eq? cmd \"put\"))\n          (set! new-values (hash-update values (string->number key) (lambda (_) (string->number val)) (lambda () (string->number val))))\n          (set! new-order (touch (string->number key) order))\n          (if (> (length new-order) cap)\n              (set! new-values (hash-delete new-values (car new-order)))\n              '()))\n          (values new-values new-order)]\n         [else state]))]))\n\n(define (run-lru cap commands)\n  (let loop ([commands commands] [values (make-hash-table)] [order '()] [output '()])\n    (if (null? commands)\n        (reverse output)\n        (let* ([command (car commands)]\n               [result (apply (cons values order) command)])\n          (loop (cdr commands) (car result) (cdr result) (if (pair? (cdr result)) (cons (cdr result) output) output))))))\n\n(define (main)\n  (let* ([cap (read-line)]\n         [n (read-line)]\n         [commands (build-list (string->number n) read-line)])\n    (for-each display (run-lru (string->number cap) commands))\n    (newline)))\n\n(main)\n```"
+}

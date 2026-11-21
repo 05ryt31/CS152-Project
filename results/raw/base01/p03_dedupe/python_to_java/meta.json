@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p03_dedupe",
+  "src": "python",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:39:45+00:00",
+  "source_file": "p03_dedupe.py",
+  "target_file": "P03Dedupe.java",
+  "attempts": 1,
+  "duration_s": 10.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 389,
+    "completion_tokens": 193
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p03_dedupe.python_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.util.HashSet;\nimport java.util.Set;\n\npublic class P03Dedupe {\n    public static void main(String[] args) {\n        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {\n            String line = reader.readLine();\n            Set<Integer> seen = new HashSet<>();\n            StringBuilder unique = new StringBuilder();\n            for (String token : line.split()) {\n                int value = Integer.parseInt(token);\n                if (!seen.contains(value)) {\n                    seen.add(value);\n                    if (unique.length() > 0) {\n                        unique.append(\" \");\n                    }\n                    unique.append(value);\n                }\n            }\n            if (unique.length() > 0) {\n                System.out.println(unique.toString());\n            }\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n}\n```"
+}

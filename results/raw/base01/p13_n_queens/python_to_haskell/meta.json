@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p13_n_queens",
+  "src": "python",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:04:25+00:00",
+  "source_file": "p13_n_queens.py",
+  "target_file": "p13_n_queens.hs",
+  "attempts": 1,
+  "duration_s": 10.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 414,
+    "completion_tokens": 194
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nmodule Main where\n\nimport System.IO (hGetContents, stdout)\nimport Data.List (tails)\n\nsafe :: [Int] -> Int -> Int -> Bool\nsafe columns row col =\n    all (\\(r, c) -> c /= col && abs (c - col) /= row - r) $ zip [0..row-1] columns\n\ncount :: Int -> Int -> [Int] -> Int\ncount n row columns\n    | row == n    = 1\n    | otherwise   = sum [count n (row + 1) (columns ++ [col]) | col <- [0..n-1], safe columns row col]\n\nmain :: IO ()\nmain = do\n    contents <- hGetContents stdin\n    let n = read . head . lines $ contents\n    putStr $ show (count n 0 [0] ++ replicate (n^2 - n) 0)\n```"
+}

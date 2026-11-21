@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:16:43+00:00",
+  "source_file": "p14_bfs.scm",
+  "target_file": "p14_bfs.pl",
+  "attempts": 1,
+  "duration_s": 34.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 771,
+    "completion_tokens": 639
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\nread_graph(M, Graph) :-\n    read_lines(M, Lines),\n    maplist(parse_edge, Lines, Edges),\n    build_graph(Edges, Graph).\n\nparse_edge(Line, Edge) :-\n    split_string(Line, \" \", _, Parts),\n    maplist(string_to_number, Parts, [U, V]),\n    Edge = [U, V].\n\nbuild_graph(Edges, Graph) :-\n    findall([U, V], member([U, _], Edges), UList),\n    findall([V, U], member([_, V], Edges), VList),\n    append(UList, VList, All),\n    sort(All, Nodes),\n    maplist(find_neighbors(Nodes, Edges), Nodes, Neighbors),\n    pairs_keys_values(Graph, Nodes, Neighbors).\n\nfind_neighbors(_, [], _).\nfind_neighbors(Nodes, [Edge | Rest], Acc) :-\n    member(Edge, Nodes),\n    find_neighbors(Nodes, Rest, Acc),\n    !.\nfind_neighbors(Nodes, [_ | Rest], Acc) :-\n    find_neighbors(Nodes, Rest, Acc).\n\nget_neighbors(Node, Graph, Neighbors) :-\n    member([Node, Neighbors], Graph).\n\nexpand_layer(Layer, Graph, Visited, NextLayer, NewVisited) :-\n    expand_layer(Layer, Graph, Visited, [], NextLayer, NewVisited).\n\nexpand_layer([], _, _, Acc, Acc, Acc).\nexpand_layer([Node | Rest], Graph, Visited, Acc, NextLayer, NewVisited) :-\n    get_neighbors(Node, Graph, Neighbors),\n    filter(not_member(Visited), Neighbors, NewNeighbors),\n    append(Acc, NewNeighbors, NewAcc),\n    expand_layer(Rest, Graph, Visited, NewAcc, NextLayer, NewVisited).\n\nnot_member(X, []) :- !, fail.\nnot_member(X, [H | T]) :-\n    X \\= H,\n    not_member(X, T).\n\nbfs(Start, Target, Graph, Distance) :-\n    bfs_loop([[Start]], [[Start]], 0, Target, Graph, Distance).\n\nbfs_loop([], _, _, _, _, -1).\nbfs_loop([[Target | _] | _], _, _, _, _, 0).\nbfs_loop([Layer | Rest], Visited, Dist, Target, Graph, Distance) :-\n    expand_layer(Layer, Graph, Visited, NextLayer, NewVisited),\n    bfs_loop(Rest, NewVisited, Dist + 1, Target, Graph, Distance).\n\np14_bfs :-\n    read_line_to_string(current_input, Line),\n    split_string(Line, \" \", _, Parts),\n    maplist(string_to_number, Parts, [N, M]),\n    read_graph(M, Graph),\n    read_line_to_string(current_input, Line),\n    split_string(Line, \" \", _, Parts),\n    maplist(string_to_number, Parts, [S, T]),\n    bfs(S, T, Graph, Distance),\n    format(\"~d~n\", [Distance]),\n    halt.\n```"
+}

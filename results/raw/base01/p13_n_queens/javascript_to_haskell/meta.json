@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p13_n_queens",
+  "src": "javascript",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:05:20+00:00",
+  "source_file": "p13_n_queens.js",
+  "target_file": "p13_n_queens.hs",
+  "attempts": 1,
+  "duration_s": 10.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 451,
+    "completion_tokens": 182
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nmodule Main where\n\nimport System.IO\nimport Data.List\n\nsafe :: [Int] -> Int -> Int -> Bool\nsafe columns row col = all (\\previous -> columns !! previous /= col && abs (columns !! previous - col) /= row - previous) [0..row-1]\n\ncount :: Int -> [Int] -> Int\ncount row columns\n  | row == n    = 1\n  | otherwise = sum [count (row + 1) (columns ++ [col]) | col <- [0..n-1], safe columns row col]\n  where n = length columns\n\nmain :: IO ()\nmain = do\n  hSetBuffering stdin NoBuffering\n  hSetBuffering stdout NoBuffering\n  input <- getContents\n  let n = read $ head $ lines input\n  print $ count 0 []\n```"
+}

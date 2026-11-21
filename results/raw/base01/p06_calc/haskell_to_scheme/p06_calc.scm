@@ -1,0 +1,40 @@
+(import scheme (chicken base) (chicken io))
+
+(define (tokens str)
+  (define (helper chars acc)
+    (cond ((null? chars) (reverse acc))
+          ((char=? (car chars) #\space) (helper (cdr chars) acc))
+          ((member (car chars) '(#\+ #\- #\* #\( #\))) (helper (cdr chars) (cons (string (car chars)) acc)))
+          (else (let loop ((i 1) (num ""))
+                 (if (and (< i (string-length str)) (char<=? #\0 (string-ref str i) #\9))
+                     (loop (+ i 1) (string-append num (string (string-ref str i))))
+                     (helper (append (list (substring str 0 i) num) (cdr chars)) acc)))))))
+  (helper (string->list str) '()))
+
+(define (parse-expression lst)
+  (let loop ((lst lst) (acc 0) (op #f))
+    (if (null? lst)
+        acc
+        (let ((token (car lst)))
+          (cond ((or (eq? token "+") (eq? token "-"))
+                 (loop (cdr lst) acc token))
+                ((eq? token "*")
+                 (loop (cdr lst) (* acc (parse-factor (cdr lst))) op))
+                ((eq? token "(")
+                 (let ((val (parse-expression (cdr lst))))
+                   (loop (cdr (drop-while (lambda (x) (not (eq? x ")"))) lst)) val op)))
+                (else
+                 (loop (cdr lst) (if op (if (eq? op "+") (+ acc (string->number token)) (- acc (string->number token))) (string->number token)) op)))))))
+
+(define (parse-factor lst)
+  (if (eq? (car lst) "(")
+      (let ((val (parse-expression (cdr lst))))
+        (values val (cdr (drop-while (lambda (x) (not (eq? x ")"))) lst))))
+      (values (string->number (car lst)) (cdr lst))))
+
+(define (main)
+  (let ((line (read-line)))
+    (display (parse-expression (tokens line)))
+    (newline)))
+
+(main)

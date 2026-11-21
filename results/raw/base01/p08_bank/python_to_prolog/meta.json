@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p08_bank",
+  "src": "python",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:18:15+00:00",
+  "source_file": "p08_bank.py",
+  "target_file": "p08_bank.pl",
+  "attempts": 1,
+  "duration_s": 15.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 433,
+    "completion_tokens": 289
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(readutil)).\n\np08_bank :-\n    read_line_to_string(current_input, N),\n    number_codes(N, Number),\n    process_commands(Number).\n\nprocess_commands(0) :- !.\nprocess_commands(N) :-\n    read_line_to_string(current_input, Line),\n    split_string(Line, ' ', '', Parts),\n    handle_command(Parts),\n    M is N - 1,\n    process_commands(M).\n\nhandle_command(['deposit', Amount]) :-\n    number_codes(Amount, Num),\n    add_balance(Num).\nhandle_command(['withdraw', Amount]) :-\n    number_codes(Amount, Num),\n    withdraw_balance(Num).\nhandle_command(['balance']) :-\n    get_balance.\n\nadd_balance(Amount) :-\n    current_output(Stream),\n    tell(Stream, Amount),\n    nl(Stream),\n    told.\n\nwithdraw_balance(Amount) :-\n    get_balance(Balance),\n    NewBalance is Balance - Amount,\n    (   NewBalance >= 0 ->\n        set_balance(NewBalance),\n        current_output(Stream),\n        tell(Stream, NewBalance),\n        nl(Stream),\n        told\n    ;   current_output(Stream),\n        tell(Stream, 'error'),\n        nl(Stream),\n        told\n    ).\n\nget_balance :-\n    current_output(Stream),\n    tell(Stream, CurrentBalance),\n    nl(Stream),\n    told.\n\nset_balance(NewBalance) :-\n    retractall(balance(_)),\n    assertz(balance(NewBalance)).\n```"
+}

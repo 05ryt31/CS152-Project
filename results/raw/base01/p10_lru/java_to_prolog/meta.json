@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "java",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:39:08+00:00",
+  "source_file": "P10Lru.java",
+  "target_file": "p10_lru.pl",
+  "attempts": 1,
+  "duration_s": 29.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 522,
+    "completion_tokens": 548
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\np10_lru :-\n    read_line_to_string(current_input, CapacityStr),\n    string_to_integer(CapacityStr, Capacity),\n    read_line_to_string(current_input, NStr),\n    string_to_integer(NStr, N),\n    lru_cache(Capacity, N, Cache),\n    format('~w~n', [Cache]),\n    halt.\n\nlru_cache(_, _, []) :- !.\nlru_cache(Capacity, N, Cache) :-\n    findall([Key, Value], (between(0, N, _), read_line_to_string(current_input, Line), parse_line(Line, Key, Value)), Lines),\n    process_lines(Lines, Capacity, [], Cache).\n\nparse_line(Line, Key, Value) :-\n    atom_codes(Line, Codes),\n    split_string(Codes, ' ', '', Parts),\n    nth0(0, Parts, Action),\n    nth0(1, Parts, KeyStr),\n    string_to_integer(KeyStr, Key),\n    (   Action == 'put' ->\n        nth0(2, Parts, ValueStr),\n        string_to_integer(ValueStr, Value)\n    ;   Action == 'get' ->\n        Value = -1\n    ).\n\nprocess_lines([], _, Acc, Acc).\nprocess_lines([[Action, Key, Value]|T], Capacity, Acc, Cache) :-\n    (   Action == 'get' ->\n        (   member([Key, _], Acc) ->\n            format('~w~n', [Value])\n        ;   format('-1~n')\n        )\n    ;   Action == 'put' ->\n        (   member([Key, _], Acc) ->\n            NewAcc = [Key-Value|remove_key(Key, Acc)]\n        ;   NewAcc = [Key-Value|Acc]\n        ),\n        length(NewAcc, Length),\n        (   Length > Capacity ->\n            LastKey-LastValue = last(NewAcc),\n            NewAcc = [NewKey-NewValue|remove_last(NewAcc)],\n            lru_cache(Capacity, N, NewAcc)\n        ;   lru_cache(Capacity, N, NewAcc)\n        )\n    ),\n    process_lines(T, Capacity, NewAcc, Cache).\n\nremove_key(Key, [Key-_|T]) :- !, T.\nremove_key(Key, [H|T]) :-\n    remove_key(Key, T).\n\nremove_last([_]) :- !, [].\nremove_last([H|T]) :-\n    remove_last(T).\n\nlast([H|T]) :-\n    (   T = [] -> H\n    ;   last(T)\n    ).\n```"
+}

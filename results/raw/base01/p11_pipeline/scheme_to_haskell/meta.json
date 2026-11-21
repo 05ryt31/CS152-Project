@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "scheme",
+  "tgt": "haskell",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:51:49+00:00",
+  "source_file": "p11_pipeline.scm",
+  "target_file": "p11_pipeline.hs",
+  "attempts": 1,
+  "duration_s": 25.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 722,
+    "completion_tokens": 489
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List (splitAt, intersperse)\nimport System.IO (hGetContents, hPutStr, stdin, stdout)\nimport Control.Monad (forever, when)\n\n-- Convert a list of strings to a list of numbers\nnumbers :: String -> [Int]\nnumbers line = if null line then [] else map read $ words line\n\n-- Sum a list of numbers\nsumValues :: [Int] -> Int\nsumValues = sum\n\n-- Find the maximum value in a list of numbers\nmaximumValue :: [Int] -> Int\nmaximumValue = maximum\n\n-- Keep elements in a list that satisfy a predicate\nkeep :: (a -> Bool) -> [a] -> [a]\nkeep _ [] = []\nkeep pred (x:xs) = if pred x then x : keep pred xs else keep pred xs\n\n-- Apply a stage transformation to a list of numbers based on the given parts\napplyStage :: [Int] -> [String] -> [Int]\napplyStage values parts = case parts of\n    [\"map\", \"add\", amount] -> map (+ read amount) values\n    [\"map\", \"mul\", amount] -> map (* read amount) values\n    [\"filter\", \"even\"] -> filter even values\n    [\"filter\", \"odd\"] -> filter odd values\n    [\"filter\", \"gt\", amount] -> filter (> read amount) values\n    [\"sum\"] -> [sumValues values]\n    _ -> [maximumValue values]\n\n-- Process the pipeline for a given number of stages\npipeline :: Int -> [Int] -> IO ()\npipeline k values = go 0 values\n  where\n    go i result\n      | i == k = do\n          when (not . null $ result) $ do\n              hPutStr stdout $ show (head result)\n              hPutStr stdout $ concatMap (\" \" ++) (map show (tail result))\n              hPutStrLn stdout \"\"\n          return ()\n      | otherwise = do\n          line <- hGetLine stdin\n          let parts = words line\n          let newResult = applyStage result parts\n          go (i + 1) newResult\n\n-- Main function to read input and process the pipeline\nmain :: IO ()\nmain = do\n    line <- hGetLine stdin\n    let values = numbers line\n    k <- readLn\n    pipeline k values\n```"
+}

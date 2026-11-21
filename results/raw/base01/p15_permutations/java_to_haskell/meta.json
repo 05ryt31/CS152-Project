@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p15_permutations",
+  "src": "java",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:23:16+00:00",
+  "source_file": "P15Permutations.java",
+  "target_file": "p15_permutations.hs",
+  "attempts": 1,
+  "duration_s": 9.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 457,
+    "completion_tokens": 184
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nmodule Main where\n\nimport Data.List (sort)\nimport System.IO (getContents, putStr)\n\ngenerate :: [Char] -> [Bool] -> String -> IO ()\ngenerate letters used current\n  | length current == length letters = do\n      putStrLn current\n      return ()\n  | otherwise = do\n      let unusedIndices = [i | (i, _) <- zip [0..] used, not used !! i]\n      mapM_ (\\i -> do\n          let newUsed = take i used ++ True : drop (i + 1) used\n              newCurrent = current ++ [letters !! i]\n          generate letters newUsed newCurrent\n      ) unusedIndices\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let letters = sort $ head $ lines input\n  generate letters (replicate (length letters) False) \"\"\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p08_bank",
+  "src": "javascript",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:19:16+00:00",
+  "source_file": "p08_bank.js",
+  "target_file": "p08_bank.pl",
+  "attempts": 1,
+  "duration_s": 16.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 482,
+    "completion_tokens": 295
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(readutil)).\n:- use_module(library(lists)).\n\np08_bank :-\n    read_lines(InputLines),\n    process_commands(InputLines, Output),\n    print_output(Output),\n    halt.\n\nread_lines([]) :-\n    at_end_of_stream(current_input), !.\nread_lines([Line | Lines]) :-\n    read_line_to_string(current_input, Line),\n    read_lines(Lines).\n\nprocess_commands([], []).\nprocess_commands([Command | Commands], Output) :-\n    process_command(Command, Output1),\n    process_commands(Commands, Output2),\n    append(Output1, Output2, Output).\n\nprocess_command(['deposit', AmountStr], ['ok' | Rest]) :-\n    number(Amount, AmountStr),\n    NewBalance is CurrentBalance + Amount,\n    process_command(['balance'], ['NewBalance' | Rest]).\nprocess_command(['withdraw', AmountStr], ['error' | Rest]) :-\n    number(Amount, AmountStr),\n    CurrentBalance >= Amount,\n    NewBalance is CurrentBalance - Amount,\n    process_command(['balance'], ['NewBalance' | Rest]).\nprocess_command(['balance'], [CurrentBalance | _]) :-\n    get_balance(CurrentBalance).\n\nget_balance(Balance) :-\n    retractall(balance(_)),\n    assertz(balance(Balance)),\n    balance(Balance).\n\nprint_output([]).\nprint_output([Output | Outputs]) :-\n    format('~w~n', [Output]),\n    print_output(Outputs).\n```"
+}

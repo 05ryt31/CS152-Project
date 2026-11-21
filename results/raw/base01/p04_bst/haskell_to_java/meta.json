@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "haskell",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:52:11+00:00",
+  "source_file": "p04_bst.hs",
+  "target_file": "P04Bst.java",
+  "attempts": 1,
+  "duration_s": 29.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 585,
+    "completion_tokens": 556
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p04_bst.haskell_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class P04Bst {\n    public static void main(String[] args) {\n        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {\n            List<Integer> values = new ArrayList<>();\n            String line = reader.readLine();\n            while (line != null && !line.isEmpty()) {\n                for (String value : line.split(\"\\\\s+\")) {\n                    values.add(Integer.parseInt(value));\n                }\n                line = reader.readLine();\n            }\n\n            TreeNode root = null;\n            for (int value : values) {\n                root = insert(root, value);\n            }\n\n            System.out.println(showLine(inorder(root)));\n            System.out.println(showLine(preorder(root)));\n            System.out.println(height(root));\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    }\n\n    private static TreeNode insert(TreeNode node, int key) {\n        if (node == null) {\n            return new TreeNode(key);\n        }\n        if (key < node.value) {\n            node.left = insert(node.left, key);\n        } else {\n            node.right = insert(node.right, key);\n        }\n        return node;\n    }\n\n    private static List<Integer> inorder(TreeNode node) {\n        List<Integer> result = new ArrayList<>();\n        inorderHelper(node, result);\n        return result;\n    }\n\n    private static void inorderHelper(TreeNode node, List<Integer> result) {\n        if (node != null) {\n            inorderHelper(node.left, result);\n            result.add(node.value);\n            inorderHelper(node.right, result);\n        }\n    }\n\n    private static List<Integer> preorder(TreeNode node) {\n        List<Integer> result = new ArrayList<>();\n        preorderHelper(node, result);\n        return result;\n    }\n\n    private static void preorderHelper(TreeNode node, List<Integer> result) {\n        if (node != null) {\n            result.add(node.value);\n            preorderHelper(node.left, result);\n            preorderHelper(node.right, result);\n        }\n    }\n\n    private static int height(TreeNode node) {\n        if (node == null) {\n            return 0;\n        }\n        return 1 + Math.max(height(node.left), height(node.right));\n    }\n\n    private static String showLine(List<Integer> xs) {\n        return xs.stream().map(String::valueOf).collect(Collectors.joining(\" \"));\n    }\n\n    private static class TreeNode {\n        int value;\n        TreeNode left;\n        TreeNode right;\n\n        TreeNode(int value) {\n            this.value = value;\n            this.left = null;\n            this.right = null;\n        }\n    }\n}\n```"
+}

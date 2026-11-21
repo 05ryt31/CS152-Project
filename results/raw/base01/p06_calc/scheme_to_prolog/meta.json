@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p06_calc",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:08:08+00:00",
+  "source_file": "p06_calc.scm",
+  "target_file": "p06_calc.pl",
+  "attempts": 1,
+  "duration_s": 26.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 803,
+    "completion_tokens": 486
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\np06_calc :-\n    read_line_to_string(current_input, Input),\n    Output is calc(Input),\n    format('~w~n', [Output]),\n    halt(0).\n\ncalc(Str) :-\n    Tokens = tokenize(Str),\n    parse_expr(Tokens, Result),\n    !,\n    Result.\n\ntokenize(Str) :-\n    string_codes(Str, Codes),\n    tokenize(Codes, [], Tokens).\n\ntokenize([], _, []) :- !.\ntokenize([C | Cs], Acc, Tokens) :-\n    char_whitespace(C), !,\n    tokenize(Cs, Acc, Tokens).\ntokenize([C | Cs], Acc, Tokens) :-\n    char_numeric(C), !,\n    number_loop(Cs, [C | Acc], NewAcc),\n    reverse(NewAcc, Num),\n    tokenize(Cs, [], [Num | Tokens]).\ntokenize([C | Cs], Acc, Tokens) :-\n    tokenize(Cs, [C | Acc], Tokens).\n\nnumber_loop([], Acc, Acc) :- !.\nnumber_loop([C | Cs], Acc, NewAcc) :-\n    char_numeric(C), !,\n    number_loop(Cs, [C | Acc], NewAcc).\nnumber_loop(_, Acc, Acc) :- !.\n\nparse_expr(Tokens, Result) :-\n    parse_term(Tokens, TermResult, Rest1),\n    parse_expr(Rest1, ExprResult, Rest2),\n    !,\n    Result is TermResult + ExprResult.\n\nparse_expr(Rest, Result, Rest) :-\n    !,\n    Result is 0.\n\nparse_term(Tokens, Result, Rest) :-\n    parse_factor(Tokens, FactorResult, Rest1),\n    parse_term(Rest1, TermResult, Rest2),\n    !,\n    Result is FactorResult * TermResult.\n\nparse_term(Rest, Result, Rest) :-\n    !,\n    Result is 0.\n\nparse_factor(Tokens, Result, Rest) :-\n    number(Tokens, Result, Rest), !.\nparse_factor(Tokens, Result, Rest) :-\n    Tokens = [_ | Rest],\n    parse_expr(Rest, Result, _).\n\nnumber([N | _], N, []) :-\n    number(N), !.\nnumber([H | T], Result, Rest) :-\n    number(H), number_codes(Result, [H | T]), !,\n    Rest = [].\n```"
+}

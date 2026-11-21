@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "python",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:10:44+00:00",
+  "source_file": "p14_bfs.py",
+  "target_file": "p14_bfs.hs",
+  "attempts": 1,
+  "duration_s": 18.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 472,
+    "completion_tokens": 340
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nmodule Main where\n\nimport Data.List (findIndex)\nimport Data.Maybe (fromJust)\n\nmain :: IO ()\nmain = do\n    [n, m] <- map read . words <$> getLine\n    let neighbours = replicate (n + 1) []\n    edges <- replicateM m $ do\n        [u, v] <- map read . words <$> getLine\n        return (u, v)\n    let graph = foldl addEdge neighbours edges\n    [s, t] <- map read . words <$> getLine\n    case bfs graph s t of\n        Just dist -> print dist\n        Nothing   -> print (-1)\n\naddEdge :: [[Int]] -> (Int, Int) -> [[Int]]\naddEdge g (u, v) = updateAt u (v:) g ++ updateAt v (u:) g\n    where\n        updateAt idx f xs = take idx xs ++ [f (xs !! idx)] ++ drop (idx + 1) xs\n\nbfs :: [[Int]] -> Int -> Int -> Maybe Int\nbfs graph start end = go [start] (repeat Nothing)\n    where\n        go [] _ = Nothing\n        go (node:rest) distances\n            | node == end = Just (fromJust (distances !! node))\n            | otherwise   = go newQueue newDistances\n            where\n                newDistances = updateAt node (Just . (+1)) distances\n                unvisitedNeighbours = filter (\\n -> isNothing (newDistances !! n)) (graph !! node)\n                newQueue = rest ++ unvisitedNeighbours\n```"
+}

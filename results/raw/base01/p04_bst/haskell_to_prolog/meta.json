@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:53:02+00:00",
+  "source_file": "p04_bst.hs",
+  "target_file": "p04_bst.pl",
+  "attempts": 1,
+  "duration_s": 25.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 607,
+    "completion_tokens": 475
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\n% Define the Tree data structure\ntree(Empty).\ntree(node(X, Left, Right)).\n\n% Insert a value into the BST\ninsert(Empty, X, node(X, Empty, Empty)).\ninsert(node(Y, Left, Right), X, node(Y, NewLeft, Right)) :-\n    X < Y,\n    insert(Left, X, NewLeft).\ninsert(node(Y, Left, Right), X, node(Y, Left, NewRight)) :-\n    X >= Y,\n    insert(Right, X, NewRight).\n\n% In-order traversal of the BST\ninorder(Empty, []).\ninorder(node(X, Left, Right), List) :-\n    inorder(Left, LeftList),\n    inorder(Right, RightList),\n    append(LeftList, [X|RightList], List).\n\n% Pre-order traversal of the BST\npreorder(Empty, []).\npreorder(node(X, Left, Right), [X|List]) :-\n    preorder(Left, LeftList),\n    preorder(Right, RightList),\n    append(LeftList, RightList, List).\n\n% Calculate the height of the BST\nheight(Empty, 0).\nheight(node(_, Left, Right), H) :-\n    height(Left, LH),\n    height(Right, RH),\n    H is 1 + max(LH, RH).\n\n% Convert list of integers to string\nshow_line(List) :-\n    maplist(writeln, List),\n    nl.\n\n% Safe get line function\nsafe_get_line(Stream, Line) :-\n    at_end_of_stream(Stream), !,\n    Line = \"\".\nsafe_get_line(Stream, Line) :-\n    read_line(Stream, Line).\n\n% Main predicate\np04_bst :-\n    current_input(Input),\n    safe_get_line(Input, Line),\n    split_string(Line, \" \", \"\", Values),\n    maplist(atom_number, Values, Numbers),\n    foldl(insert, Numbers, Empty, Tree),\n    inorder(Tree, InorderList),\n    preorder(Tree, PreorderList),\n    height(Tree, Height),\n    format(\"~w~n\", [InorderList]),\n    format(\"~w~n\", [PreorderList]),\n    format(\"~d~n\", [Height]),\n    halt.\n```"
+}

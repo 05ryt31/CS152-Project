@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p07_brackets",
+  "src": "scheme",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:14:02+00:00",
+  "source_file": "p07_brackets.scm",
+  "target_file": "p07_brackets.py",
+  "attempts": 1,
+  "duration_s": 7.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 453,
+    "completion_tokens": 133
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\ndef matching(opener, closer):\n    return (opener == '(' and closer == ')') or \\\n           (opener == '[' and closer == ']') or \\\n           (opener == '{' and closer == '}')\n\ndef balanced(text):\n    stack = []\n    for char in text:\n        if char in '([{':\n            stack.append(char)\n        elif char in ')]}':\n            if not stack or not matching(stack.pop(), char):\n                return False\n    return not stack\n\nn = int(input())\nfor _ in range(n):\n    print(\"yes\" if balanced(input()) else \"no\")\n```"
+}

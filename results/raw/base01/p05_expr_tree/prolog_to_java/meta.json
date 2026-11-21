@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p05_expr_tree",
+  "src": "prolog",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:01:17+00:00",
+  "source_file": "p05_expr_tree.pl",
+  "target_file": "P05ExprTree.java",
+  "attempts": 1,
+  "duration_s": 22.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 545,
+    "completion_tokens": 406
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p05_expr_tree.prolog_to_java;\n\nimport java.util.*;\nimport java.io.*;\n\npublic class P05ExprTree {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String line = scanner.nextLine();\n        List<String> tokens = Arrays.asList(line.split(\" \"));\n        List<Object> stack = new ArrayList<>();\n        build(tokens, stack, stack);\n        Object tree = stack.get(0);\n        System.out.println(render(tree));\n        System.exit(0);\n    }\n\n    private static void build(List<String> tokens, List<Object> stack, List<Object> result) {\n        if (tokens.isEmpty()) {\n            result.addAll(stack);\n        } else {\n            String token = tokens.get(0);\n            tokens.remove(0);\n            if (\"+\".equals(token) || \"-\".equals(token) || \"*\".equals(token)) {\n                Object right = stack.remove(0);\n                Object left = stack.remove(0);\n                stack.add(new Op(token, left, right));\n                build(tokens, stack, result);\n            } else {\n                stack.add(new Leaf(token));\n                build(tokens, stack, result);\n            }\n        }\n    }\n\n    private static String render(Object tree) {\n        if (tree instanceof Leaf) {\n            return ((Leaf) tree).text;\n        } else {\n            Op op = (Op) tree;\n            String left = render(op.left);\n            String right = render(op.right);\n            return \"(\" + left + \" \" + op.op + \" \" + right + \")\";\n        }\n    }\n\n    private static class Op {\n        String op;\n        Object left;\n        Object right;\n\n        Op(String op, Object left, Object right) {\n            this.op = op;\n            this.left = left;\n            this.right = right;\n        }\n    }\n\n    private static class Leaf {\n        String text;\n\n        Leaf(String text) {\n            this.text = text;\n        }\n    }\n}\n```"
+}

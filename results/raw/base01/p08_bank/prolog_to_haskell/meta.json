@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p08_bank",
+  "src": "prolog",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:23:44+00:00",
+  "source_file": "p08_bank.pl",
+  "target_file": "p08_bank.hs",
+  "attempts": 1,
+  "duration_s": 9.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 486,
+    "completion_tokens": 174
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport System.IO\nimport Data.List.Split\n\nmain :: IO ()\nmain = do\n    contents <- getContents\n    let lines' = lines contents\n        n = read $ head lines'\n        balance = commands (tail lines') 0\n    putStr balance\n    return ()\n\ncommands :: [String] -> Int -> String\ncommands [] _ = \"\"\ncommands (line:lines') balance =\n    let parts = splitOn \" \" line\n        newBalance = case parts of\n            [\"deposit\", amount] -> balance + read amount\n            [\"withdraw\", amount] ->\n                if read amount > balance then \"error\\n\" ++ commands lines' balance\n                else commands lines' (balance - read amount)\n            [\"balance\"] -> show balance ++ \"\\n\"\n    in newBalance ++ commands lines' newBalance\n```"
+}

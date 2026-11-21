@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p06_calc",
+  "src": "java",
+  "tgt": "javascript",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:05:16+00:00",
+  "source_file": "P06Calc.java",
+  "target_file": "p06_calc.js",
+  "attempts": 1,
+  "duration_s": 19.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 644,
+    "completion_tokens": 379
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n});\n\nrl.question('', (input) => {\n  const parser = new Parser(input);\n  console.log(parser.expression());\n  rl.close();\n});\n\nclass Parser {\n  constructor(text) {\n    this.tokens = [];\n    let pos = 0;\n    for (let i = 0; i < text.length;) {\n      const c = text[i];\n      if (/\\s/.test(c)) i++;\n      else if (/d/.test(c)) {\n        let j = i;\n        while (j < text.length && /\\d/.test(text[j])) j++;\n        this.tokens.push(text.substring(i, j));\n        i = j;\n      } else {\n        this.tokens.push(c);\n        i++;\n      }\n    }\n  }\n\n  peek() {\n    return this.pos < this.tokens.length ? this.tokens[this.pos] : null;\n  }\n\n  next() {\n    const token = this.tokens[this.pos];\n    this.pos++;\n    return token;\n  }\n\n  expression() {\n    let value = this.term();\n    while (this.peek() === '+' || this.peek() === '-') {\n      const op = this.next();\n      const right = this.term();\n      value = op === '+' ? value + right : value - right;\n    }\n    return value;\n  }\n\n  term() {\n    let value = this.factor();\n    while (this.peek() === '*') {\n      this.next();\n      value *= this.factor();\n    }\n    return value;\n  }\n\n  factor() {\n    const token = this.next();\n    if (token === '(') {\n      const value = this.expression();\n      this.next();\n      return value;\n    }\n    return parseInt(token, 10);\n  }\n}\n```"
+}

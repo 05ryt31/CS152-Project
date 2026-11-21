@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "python",
+  "tgt": "javascript",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:09:42+00:00",
+  "source_file": "p14_bfs.py",
+  "target_file": "p14_bfs.js",
+  "attempts": 1,
+  "duration_s": 16.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 467,
+    "completion_tokens": 302
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n});\n\nlet lines = [];\nrl.on('line', (line) => {\n  lines.push(line);\n}).on('close', () => {\n  const [n, m] = lines.shift().split(' ').map(Number);\n  const neighbours = {};\n  for (let i = 1; i <= n; i++) {\n    neighbours[i] = [];\n  }\n  for (let i = 0; i < m; i++) {\n    const [u, v] = lines.shift().split(' ').map(Number);\n    neighbours[u].push(v);\n    neighbours[v].push(u);\n  }\n  const [s, t] = lines.shift().split(' ').map(Number);\n  const distance = { [s]: 0 };\n  const queue = [s];\n  let head = 0;\n  while (head < queue.length) {\n    const node = queue[head];\n    head++;\n    if (node === t) {\n      break;\n    }\n    for (const other of neighbours[node]) {\n      if (!(other in distance)) {\n        distance[other] = distance[node] + 1;\n        queue.push(other);\n      }\n    }\n  }\n  if (t in distance) {\n    console.log(distance[t]);\n  } else {\n    console.log(-1);\n  }\n});\n```"
+}

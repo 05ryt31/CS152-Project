@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "javascript",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:12:07+00:00",
+  "source_file": "p14_bfs.js",
+  "target_file": "p14_bfs.scm",
+  "attempts": 1,
+  "duration_s": 23.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 524,
+    "completion_tokens": 435
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (read-lines)\n  (let loop ((lines '()))\n    (let ((line (read-line)))\n      (if (eof-object? line)\n          (reverse lines)\n          (loop (cons line lines))))))\n\n(let* ([lines (read-lines)]\n       [inputs (map string->number (string-split (car lines) #\\space))]\n       [n (car inputs)]\n       [m (cadr inputs)]\n       [graph (make-vector (+ n 1) '())]\n       [add-edge (lambda (u v)\n                   (vector-set! graph u (cons v (vector-ref graph u)))\n                   (vector-set! graph v (cons u (vector-ref graph v))))])\n  (do ([i 0 (+ i 1)])\n      ((= i m))\n    (let* ([edge (string-split (list-ref lines (+ i 1)) #\\space)]\n           [u (string->number (car edge))]\n           [v (string->number (cadr edge))])\n      (add-edge u v))))\n  \n  (let* ([targets (string-split (list-ref lines (+ m 1)) #\\space)]\n         [start (string->number (car targets))]\n         [target (string->number (cadr targets))]\n         [distance (make-vector (+ n 1) -1)]\n         [queue (list start)])\n    (vector-set! distance start 0)\n    \n    (define (bfs)\n      (if (null? queue)\n          '()\n          (let* ([node (car queue)]\n                 [rest (cdr queue)])\n            (when (= node target)\n              (return-from bfs node))\n            (for-each (lambda (next)\n                        (when (= (vector-ref distance next) -1)\n                          (vector-set! distance next (+ (vector-ref distance node) 1))\n                          (set! queue (append rest (list next)))))\n                      (vector-ref graph node))\n            (bfs))))\n    \n    (display (bfs))\n    (newline)))\n```"
+}

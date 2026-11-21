@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p06_calc",
+  "src": "haskell",
+  "tgt": "scheme",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:09:46+00:00",
+  "source_file": "p06_calc.hs",
+  "target_file": "p06_calc.scm",
+  "attempts": 1,
+  "duration_s": 25.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 644,
+    "completion_tokens": 483
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (tokens str)\n  (define (helper chars acc)\n    (cond ((null? chars) (reverse acc))\n          ((char=? (car chars) #\\space) (helper (cdr chars) acc))\n          ((member (car chars) '(#\\+ #\\- #\\* #\\( #\\))) (helper (cdr chars) (cons (string (car chars)) acc)))\n          (else (let loop ((i 1) (num \"\"))\n                 (if (and (< i (string-length str)) (char<=? #\\0 (string-ref str i) #\\9))\n                     (loop (+ i 1) (string-append num (string (string-ref str i))))\n                     (helper (append (list (substring str 0 i) num) (cdr chars)) acc)))))))\n  (helper (string->list str) '()))\n\n(define (parse-expression lst)\n  (let loop ((lst lst) (acc 0) (op #f))\n    (if (null? lst)\n        acc\n        (let ((token (car lst)))\n          (cond ((or (eq? token \"+\") (eq? token \"-\"))\n                 (loop (cdr lst) acc token))\n                ((eq? token \"*\")\n                 (loop (cdr lst) (* acc (parse-factor (cdr lst))) op))\n                ((eq? token \"(\")\n                 (let ((val (parse-expression (cdr lst))))\n                   (loop (cdr (drop-while (lambda (x) (not (eq? x \")\"))) lst)) val op)))\n                (else\n                 (loop (cdr lst) (if op (if (eq? op \"+\") (+ acc (string->number token)) (- acc (string->number token))) (string->number token)) op)))))))\n\n(define (parse-factor lst)\n  (if (eq? (car lst) \"(\")\n      (let ((val (parse-expression (cdr lst))))\n        (values val (cdr (drop-while (lambda (x) (not (eq? x \")\"))) lst))))\n      (values (string->number (car lst)) (cdr lst))))\n\n(define (main)\n  (let ((line (read-line)))\n    (display (parse-expression (tokens line)))\n    (newline)))\n\n(main)\n```"
+}

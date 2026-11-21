@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "haskell",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:51:42+00:00",
+  "source_file": "p04_bst.hs",
+  "target_file": "p04_bst.py",
+  "attempts": 1,
+  "duration_s": 14.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 501,
+    "completion_tokens": 275
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nclass TreeNode:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\ndef insert(root, value):\n    if root is None:\n        return TreeNode(value)\n    if value < root.value:\n        root.left = insert(root.left, value)\n    else:\n        root.right = insert(root.right, value)\n    return root\n\ndef inorder_traversal(node):\n    if node is None:\n        return []\n    return inorder_traversal(node.left) + [node.value] + inorder_traversal(node.right)\n\ndef preorder_traversal(node):\n    if node is None:\n        return []\n    return [node.value] + preorder_traversal(node.left) + preorder_traversal(node.right)\n\ndef height(node):\n    if node is None:\n        return 0\n    return 1 + max(height(node.left), height(node.right))\n\ndef main():\n    import sys\n    input_line = sys.stdin.read().strip()\n    values = list(map(int, input_line.split()))\n    root = None\n    for value in values:\n        root = insert(root, value)\n    \n    print(' '.join(map(str, inorder_traversal(root))))\n    print(' '.join(map(str, preorder_traversal(root))))\n    print(height(root))\n\nif __name__ == \"__main__\":\n    main()\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p07_brackets",
+  "src": "haskell",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:15:07+00:00",
+  "source_file": "p07_brackets.hs",
+  "target_file": "p07_brackets.py",
+  "attempts": 1,
+  "duration_s": 9.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 408,
+    "completion_tokens": 163
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\ndef matching(open_char, close_char):\n    return (open_char, close_char) in [('(', ')'), ('[', ']'), ('{', '}')]\n\ndef balanced(text):\n    stack = []\n    for char in text:\n        if char in \"([{\":\n            stack.append(char)\n        elif not stack:\n            return False\n        elif matching(stack[-1], char):\n            stack.pop()\n        else:\n            return False\n    return not stack\n\ndef main():\n    import sys\n    n = int(input())\n    lines = [input().strip() for _ in range(n)]\n    results = [\"yes\" if balanced(line) else \"no\" for line in lines]\n    print(\"\\n\".join(results))\n\nif __name__ == \"__main__\":\n    main()\n```"
+}

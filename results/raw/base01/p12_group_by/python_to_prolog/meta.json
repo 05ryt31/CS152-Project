@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p12_group_by",
+  "src": "python",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:57:43+00:00",
+  "source_file": "p12_group_by.py",
+  "target_file": "p12_group_by.pl",
+  "attempts": 1,
+  "duration_s": 31.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 444,
+    "completion_tokens": 588
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\np12_group_by :-\n    read_line_to_string(current_input, N),\n    string_to_integer(N, NumLines),\n    init_sums_and_counts(NumLines, Sums, Counts),\n    process_lines(Sums, Counts),\n    sort_keys(Sums, SortedKeys),\n    write_results(SortedKeys, Sums),\n    halt.\n\ninit_sums_and_counts(0, [], []).\ninit_sums_and_counts(N, [Sum|Sums], [Count|Counts]) :-\n    Sum = 0,\n    Count = 0,\n    M is N - 1,\n    init_sums_and_counts(M, Sums, Counts).\n\nprocess_lines(_, []) :- !.\nprocess_lines(Sums, [Sum|Counts]) :-\n    read_line_to_string(current_input, Line),\n    split_string(Line, \" \", _, Parts),\n    Key = Parts^0,\n    Value = Parts^1,\n    integer(Value),\n    update_sum_and_count(Sums, Counts, Key, Value, NewSums, NewCounts),\n    process_lines(NewSums, NewCounts).\n\nupdate_sum_and_count([], [], _, _, [], []).\nupdate_sum_and_count([Sum|Sums], [Count|Counts], Key, Value, NewSums, NewCounts) :-\n    (   Key == CurrentKey ->\n        NewSum is Sum + Value,\n        NewCount is Count + 1,\n        NewSums = [NewSum|Sums],\n        NewCounts = [NewCount|Counts]\n    ;   CurrentKey @< Key ->\n        NewSums = [Sum|Sums'],\n        NewCounts = [Count|Counts'],\n        update_sum_and_count(Sums', Counts', Key, Value, NewSums, NewCounts)\n    ;   CurrentKey @> Key ->\n        NewSums = [Sum|Sums'],\n        NewCounts = [Count|Counts'],\n        update_sum_and_count(Sums', Counts', Key, Value, NewSums, NewCounts)\n    ).\n\nsort_keys(Sums, SortedKeys) :-\n    findall(Key, (member(Sum-Sum, Sums), member(Count-Count, Counts), Key = Sum-Key), Keys),\n    sort(Keys, SortedKeys).\n\nwrite_results([], _) :- !.\nwrite_results([Key-Key|Rest], Sums) :-\n    findall(Sum-_, member(Sum-_, Sums), Values),\n    sum_list(Values, Total),\n    count_values(Values, Count),\n    format('~w ~d ~d~n', [Key, Total, Count]),\n    write_results(Rest, Sums).\n\ncount_values([], 0) :- !.\ncount_values([_|T], C) :-\n    count_values(T, C1),\n    C is C1 + 1.\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p06_calc",
+  "src": "haskell",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:08:54+00:00",
+  "source_file": "p06_calc.hs",
+  "target_file": "p06_calc.js",
+  "attempts": 1,
+  "duration_s": 23.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 629,
+    "completion_tokens": 445
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n    input: process.stdin,\n    output: process.stdout,\n    terminal: false\n});\n\nrl.question('', (input) => {\n    const tokens = input.split('').reduce((acc, char) => {\n        if (char === ' ') return acc;\n        if ('+-*/()'.includes(char)) return [...acc, char];\n        if ('0123456789'.includes(char)) {\n            const match = input.slice(acc.length).match(/^(\\d+)/);\n            if (match) return [...acc, match[0]];\n        }\n        return acc;\n    }, []);\n\n    const parseExpression = (p) => {\n        const [x, rest] = parseTerm(p);\n        return parseAdds(x, rest);\n    };\n\n    const parseAdds = (x, rest) => {\n        if (rest[0] === '+' || rest[0] === '-') {\n            const [y, restPrime] = parseTerm(rest.slice(1));\n            return parseAdds(\n                rest[0] === '+' ? x + y : x - y,\n                restPrime\n            );\n        }\n        return [x, rest];\n    };\n\n    const parseTerm = (p) => {\n        const [x, rest] = parseFactor(p);\n        return parseMuls(x, rest);\n    };\n\n    const parseMuls = (x, rest) => {\n        if (rest[0] === '*') {\n            const [y, restPrime] = parseFactor(rest.slice(1));\n            return parseMuls(x * y, restPrime);\n        }\n        return [x, rest];\n    };\n\n    const parseFactor = (p) => {\n        if (p[0] === '(') {\n            const [x, restPrime] = parseExpression(p.slice(1));\n            return [x, restPrime.slice(1)];\n        }\n        return [parseInt(p[0], 10), p.slice(1)];\n    };\n\n    const result = parseExpression(tokens)[0];\n    console.log(result);\n\n    rl.close();\n});\n```"
+}

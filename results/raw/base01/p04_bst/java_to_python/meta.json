@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "java",
+  "tgt": "python",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:48:06+00:00",
+  "source_file": "P04Bst.java",
+  "target_file": "p04_bst.py",
+  "attempts": 1,
+  "duration_s": 17.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 662,
+    "completion_tokens": 329
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nclass Node:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\ndef insert(root, value):\n    if root is None:\n        return Node(value)\n    current = root\n    while True:\n        if value < current.value:\n            if current.left is None:\n                current.left = Node(value)\n                return root\n            current = current.left\n        else:\n            if current.right is None:\n                current.right = Node(value)\n                return root\n            current = current.right\n\ndef inorder(node, out):\n    if node is not None:\n        inorder(node.left, out)\n        if out:\n            out.append(' ')\n        out.append(str(node.value))\n        inorder(node.right, out)\n\ndef preorder(node, out):\n    if node is not None:\n        if out:\n            out.append(' ')\n        out.append(str(node.value))\n        preorder(node.left, out)\n        preorder(node.right, out)\n\ndef height(node):\n    return 0 if node is None else 1 + max(height(node.left), height(node.right))\n\nif __name__ == \"__main__\":\n    import sys\n    line = input().strip()\n    if not line:\n        line = \"\"\n\n    root = None\n    for token in line.split():\n        if token:\n            root = insert(root, int(token))\n\n    in_order = []\n    preorder_list = []\n    inorder(root, in_order)\n    preorder(root, preorder_list)\n\n    print(\"\".join(in_order))\n    print(\"\".join(preorder_list))\n    print(height(root))\n```"
+}

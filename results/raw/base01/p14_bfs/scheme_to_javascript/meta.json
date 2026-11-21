@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "scheme",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:15:26+00:00",
+  "source_file": "p14_bfs.scm",
+  "target_file": "p14_bfs.js",
+  "attempts": 1,
+  "duration_s": 21.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 699,
+    "completion_tokens": 392
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\nimport { readFileSync } from 'node:fs';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nfunction readGraph(m) {\n  const graph = [];\n  for (let i = 0; i < m; i++) {\n    const [u, v] = readline().split(' ').map(Number);\n    graph.push([u, v]);\n    graph.push([v, u]);\n  }\n  return graph;\n}\n\nfunction getNeighbors(node, graph) {\n  return graph.filter(edge => edge[0] === node || edge[1] === node).map(edge => edge[0] === node ? edge[1] : edge[0]);\n}\n\nfunction expandLayer(layer, graph, visited) {\n  const next = new Set();\n  for (const node of layer) {\n    for (const neighbor of getNeighbors(node, graph)) {\n      if (!visited.has(neighbor)) {\n        next.add(neighbor);\n        visited.add(neighbor);\n      }\n    }\n  }\n  return [Array.from(next), [...visited]];\n}\n\nfunction bfs(start, target, graph) {\n  let layer = [start];\n  let visited = new Set([start]);\n  let dist = 0;\n\n  while (layer.length > 0) {\n    if (layer.includes(target)) {\n      return dist;\n    }\n    [layer, visited] = expandLayer(layer, graph, visited);\n    dist++;\n  }\n\n  return -1;\n}\n\nconst lines = readFileSync(0, 'utf8').split('\\n');\nconst [n, m] = lines[0].split(' ').map(Number);\nconst graph = readGraph(m);\nconst [s, t] = lines[2].split(' ').map(Number);\n\nconsole.log(bfs(s, t, graph));\n```"
+}

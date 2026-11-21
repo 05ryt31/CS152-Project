@@ -1,0 +1,28 @@
+(import scheme (chicken base) (chicken io))
+
+(define (main)
+  (let* ((n (string->number (read-line)))
+         (sums (make-hash-table))
+         (counts (make-hash-table)))
+    (do ((i 0 (+ i 1))) ((= i n))
+      (let* ((line (read-line))
+             (parts (string-split line #\space))
+             (key (car parts))
+             (value (string->number (cadr parts))))
+        (if (not (hash-table-exists? sums key))
+            (begin
+              (hash-table-set! sums key 0)
+              (hash-table-set! counts key 0))
+            (begin
+              (hash-table-set! sums key (+ (hash-table-ref sums key) value))
+              (hash-table-set! counts key (+ (hash-table-ref counts key) 1)))))
+    (for-each (lambda (key)
+                (display key)
+                (display " ")
+                (display (hash-table-ref sums key))
+                (display " ")
+                (display (hash-table-ref counts key))
+                (newline))
+              (sort (hash-table-keys sums) string<?))))
+
+(main)

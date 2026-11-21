@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p06_calc",
+  "src": "javascript",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:04:13+00:00",
+  "source_file": "p06_calc.js",
+  "target_file": "P06Calc.java",
+  "attempts": 1,
+  "duration_s": 14.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 517,
+    "completion_tokens": 274
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p06_calc.javascript_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.util.regex.Pattern;\n\npublic class P06Calc {\n    public static void main(String[] args) throws Exception {\n        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));\n        String line = reader.readLine();\n        String[] tokens = Pattern.compile(\"\\\\d+|[()+*-]\").split(line);\n        int position = 0;\n\n        System.out.println(expression(tokens));\n    }\n\n    private static double factor(String[] tokens) {\n        String token = tokens[position++];\n        if (token.equals(\"(\")) {\n            return expression(tokens);\n        }\n        return Double.parseDouble(token);\n    }\n\n    private static double term(String[] tokens) {\n        double value = factor(tokens);\n        while (position < tokens.length && tokens[position].equals(\"*\")) {\n            position++;\n            value *= factor(tokens);\n        }\n        return value;\n    }\n\n    private static double expression(String[] tokens) {\n        double value = term(tokens);\n        while (position < tokens.length && (tokens[position].equals(\"+\") || tokens[position].equals(\"-\"))) {\n            String op = tokens[position++];\n            double right = term(tokens);\n            value = op.equals(\"+\") ? value + right : value - right;\n        }\n        return value;\n    }\n}\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "python",
+  "tgt": "javascript",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:44:29+00:00",
+  "source_file": "p04_bst.py",
+  "target_file": "p04_bst.js",
+  "attempts": 1,
+  "duration_s": 21.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 561,
+    "completion_tokens": 380
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n});\n\nlet root = null;\n\nfunction Node(value) {\n  this.value = value;\n  this.left = null;\n  this.right = null;\n}\n\nfunction insert(root, value) {\n  const node = new Node(value);\n  if (root === null) {\n    return node;\n  }\n  let current = root;\n  while (true) {\n    if (value < current.value) {\n      if (current.left === null) {\n        current.left = node;\n        return root;\n      }\n      current = current.left;\n    } else {\n      if (current.right === null) {\n        current.right = node;\n        return root;\n      }\n      current = current.right;\n    }\n  }\n}\n\nfunction inorder(node, out) {\n  if (node !== null) {\n    inorder(node.left, out);\n    out.push(node.value);\n    inorder(node.right, out);\n  }\n}\n\nfunction preorder(node, out) {\n  if (node !== null) {\n    out.push(node.value);\n    preorder(node.left, out);\n    preorder(node.right, out);\n  }\n}\n\nfunction height(node) {\n  if (node === null) {\n    return 0;\n  }\n  return 1 + Math.max(height(node.left), height(node.right));\n}\n\nrl.on('line', (line) => {\n  const tokens = line.split(' ').map(Number);\n  tokens.forEach((token) => {\n    root = insert(root, token);\n  });\n  const inValues = [];\n  inorder(root, inValues);\n  const preValues = [];\n  preorder(root, preValues);\n  console.log(inValues.join(' '));\n  console.log(preValues.join(' '));\n  console.log(height(root));\n});\n```"
+}

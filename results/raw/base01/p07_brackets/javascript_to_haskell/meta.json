@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p07_brackets",
+  "src": "javascript",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:12:34+00:00",
+  "source_file": "p07_brackets.js",
+  "target_file": "p07_brackets.hs",
+  "attempts": 1,
+  "duration_s": 12.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 412,
+    "completion_tokens": 233
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\n{-# LANGUAGE OverloadedStrings #-}\n\nimport Data.Char (isDigit)\nimport Data.List (findIndex)\nimport System.IO\n\npairs :: [(Char, Char)]\npairs = [(')', '('), (']', '['), ('}', '{')]\n\nbalanced :: String -> Bool\nbalanced text = go [] text\n  where\n    go :: [Char] -> String -> Bool\n    go stack [] = null stack\n    go stack (x:xs)\n      | x `elem` \"([{\" = go (x:stack) xs\n      | otherwise       = case findIndex (== x) (map snd pairs) of\n                            Just idx -> case stack of\n                                          []     -> False\n                                          y:ys   -> y == fst (pairs !! idx) && go ys xs\n                            Nothing  -> False\n\nmain :: IO ()\nmain = do\n  input <- getContents\n  let lines = lines input\n      n = read . head $ lines\n      results = map (\\line -> if balanced line then \"yes\" else \"no\") (tail lines)\n  putStr $ unlines results\n```"
+}

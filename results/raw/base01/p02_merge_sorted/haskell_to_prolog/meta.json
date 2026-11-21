@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p02_merge_sorted",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:38:11+00:00",
+  "source_file": "p02_merge_sorted.hs",
+  "target_file": "p02_merge_sorted.pl",
+  "attempts": 1,
+  "duration_s": 14.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 519,
+    "completion_tokens": 255
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\nread_nums(S, L) :-\n    atom_codes(S, Codes),\n    split_string(Codes, \" \", \"\", Words),\n    maplist(atom_number, Words, L).\n\nmerge([], YS, YS).\nmerge(XS, [], XS).\nmerge([X|XS], [Y|YS], [X|M]) :-\n    X =< Y,\n    merge(XS, [Y|YS], M).\nmerge([X|XS], [Y|YS], [Y|M]) :-\n    X > Y,\n    merge([X|XS], YS, M).\n\nsafe_get_line(Input, Line) :-\n    at_end_of_stream(Input), !,\n    Line = \"\".\nsafe_get_line(_, Line) :-\n    read_line_to_string(current_input, Line).\n\np02_merge_sorted :-\n    safe_get_line(current_input, A),\n    safe_get_line(current_input, B),\n    read_nums(A, LA),\n    read_nums(B, LB),\n    merge(LA, LB, Result),\n    (   Result \\= []\n    ->  format(\"~w~n\", [Result])\n    ;   true\n    ),\n    halt(0).\n```"
+}

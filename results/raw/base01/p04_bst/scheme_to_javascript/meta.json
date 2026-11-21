@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "scheme",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:50:06+00:00",
+  "source_file": "p04_bst.scm",
+  "target_file": "p04_bst.js",
+  "attempts": 1,
+  "duration_s": 18.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 667,
+    "completion_tokens": 345
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\nimport { stdin, stdout } from 'node:process';\n\nconst rl = createInterface({\n  input: stdin,\n  output: stdout,\n  terminal: false\n});\n\nlet input = '';\n\nrl.on('line', (line) => {\n  input += line + '\\n';\n});\n\nrl.on('close', () => {\n  const lines = input.trim().split('\\n');\n  const numbers = lines[0].split(/\\s+/).map(Number);\n  \n  class TreeNode {\n    constructor(value) {\n      this.value = value;\n      this.left = null;\n      this.right = null;\n    }\n  }\n\n  function insert(tree, value) {\n    if (!tree) return new TreeNode(value);\n    if (value < tree.value) tree.left = insert(tree.left, value);\n    else tree.right = insert(tree.right, value);\n    return tree;\n  }\n\n  function inorder(tree) {\n    if (!tree) return [];\n    return [...inorder(tree.left), tree.value, ...inorder(tree.right)];\n  }\n\n  function preorder(tree) {\n    if (!tree) return [];\n    return [tree.value, ...preorder(tree.left), ...preorder(tree.right)];\n  }\n\n  function height(tree) {\n    if (!tree) return 0;\n    return Math.max(height(tree.left), height(tree.right)) + 1;\n  }\n\n  let root = null;\n  for (const num of numbers) {\n    root = insert(root, num);\n  }\n\n  console.log(inorder(root).join(' '));\n  console.log(preorder(root).join(' '));\n  console.log(height(root));\n});\n```"
+}

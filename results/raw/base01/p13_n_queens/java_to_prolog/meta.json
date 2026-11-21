@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p13_n_queens",
+  "src": "java",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:06:25+00:00",
+  "source_file": "P13NQueens.java",
+  "target_file": "p13_n_queens.pl",
+  "attempts": 1,
+  "duration_s": 9.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 559,
+    "completion_tokens": 187
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\nsafe(_, _, []).\nsafe(Row, Col, [C|Cs]) :-\n    Col \\= C,\n    Row - C \\= abs(Row - C),\n    safe(Row, Col, Cs).\n\ncount(N, N, _Columns) :- !, 1.\ncount(N, Row, Columns) :-\n    findall(Col, (between(0, N-1, Col), safe(Row, Col, Columns)), SafeCols),\n    length(SafeCols, Total),\n    sum_list(Total, Result),\n    count(N, Row + 1, Columns).\n\np13_n_queens :-\n    read_line_to_string(current_input, Input),\n    number_codes(Number, Input),\n    count(Number, 0, []),\n    format('~d~n', [Result]),\n    halt.\n```"
+}

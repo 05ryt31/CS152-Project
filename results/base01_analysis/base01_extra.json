@@ -1,0 +1,945 @@
+{
+    "python_javascript": {
+        "problem": {
+            "p01_rle": "1.0",
+            "p02_merge_sorted": "0.75",
+            "p03_dedupe": "0.286",
+            "p04_bst": "0.857",
+            "p05_expr_tree": "1.0",
+            "p06_calc": "1.0",
+            "p07_brackets": "0.125",
+            "p08_bank": "0.571",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.167",
+            "p13_n_queens": "1.0",
+            "p14_bfs": "1.0",
+            "p15_permutations": "1.0"
+        },
+        "heuristics": {
+            "lambdas": 32,
+            "higher_order_functions": 13
+        },
+        "rubric": {
+            "item1": 30,
+            "item2": 30,
+            "item3": 30,
+            "item4": 30,
+            "item5": 30,
+            "item6": 30
+        }
+    },
+    "python_java": {
+        "problem": {
+            "p01_rle": "1.0",
+            "p02_merge_sorted": "1.0",
+            "p03_dedupe": "0.0",
+            "p04_bst": "0.0",
+            "p05_expr_tree": "1.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "0.0",
+            "p08_bank": "0.0",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.875",
+            "p12_group_by": "0.0",
+            "p13_n_queens": "1.0",
+            "p14_bfs": "1.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "stream_pipeline": 4,
+            "double_colon_references": 4
+        },
+        "rubric": {
+            "item1": 30,
+            "item2": 30,
+            "item3": 29,
+            "item4": 30,
+            "item5": 30,
+            "item6": 30
+        }
+    },
+    "python_scheme": {
+        "problem": {
+            "p01_rle": "0.0",
+            "p02_merge_sorted": "0.0",
+            "p03_dedupe": "0.0",
+            "p04_bst": "0.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "0.125",
+            "p08_bank": "0.143",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.0",
+            "p13_n_queens": "0.375",
+            "p14_bfs": "0.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "unnecessary_begin": 9,
+            "nested_else_if": 15,
+            "do_loops": 7,
+            "car_cdr_chains": 2
+        },
+        "rubric": {
+            "item1": 25,
+            "item2": 15,
+            "item3": 30,
+            "item5": 17,
+            "item6": 29,
+            "item4": 10
+        }
+    },
+    "python_haskell": {
+        "problem": {
+            "p01_rle": "0.0",
+            "p02_merge_sorted": "0.0",
+            "p03_dedupe": "0.286",
+            "p04_bst": "1.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "0.0",
+            "p08_bank": "0.0",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.0",
+            "p13_n_queens": "0.0",
+            "p14_bfs": "0.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "unsafe_list_access": 20,
+            "list_concatenation": 4
+        },
+        "rubric": {
+            "item1": 22,
+            "item2": 22,
+            "item3": 24,
+            "item4": 28,
+            "item5": 20,
+            "item6": 30
+        }
+    },
+    "python_prolog": {
+        "problem": {
+            "p01_rle": "0.0",
+            "p02_merge_sorted": "0.0",
+            "p03_dedupe": "0.0",
+            "p04_bst": "0.0",
+            "p05_expr_tree": "0.143",
+            "p06_calc": "0.0",
+            "p07_brackets": "0.0",
+            "p08_bank": "0.0",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.0",
+            "p13_n_queens": "0.0",
+            "p14_bfs": "0.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "append_to_prepend": 6,
+            "dynamic_mutability": 9,
+            "trailing_cut": 1
+        },
+        "rubric": {
+            "item1": 21,
+            "item3": 26,
+            "item4": 30,
+            "item5": 24,
+            "item6": 30,
+            "item2": 14
+        }
+    },
+    "javascript_python": {
+        "problem": {
+            "p01_rle": "1.0",
+            "p02_merge_sorted": "0.875",
+            "p03_dedupe": "1.0",
+            "p04_bst": "1.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "1.0",
+            "p08_bank": "0.286",
+            "p09_stack_vm": "1.0",
+            "p10_lru": "0.857",
+            "p11_pipeline": "0.875",
+            "p12_group_by": "1.0",
+            "p13_n_queens": "1.0",
+            "p14_bfs": "1.0",
+            "p15_permutations": "1.0"
+        },
+        "heuristics": {
+            "higher_order_functions": 11,
+            "index_loops": 1
+        },
+        "rubric": {
+            "item1": 28,
+            "item2": 30,
+            "item4": 30,
+            "item5": 30,
+            "item6": 30,
+            "item3": 28
+        }
+    },
+    "javascript_java": {
+        "problem": {
+            "p01_rle": "1.0",
+            "p02_merge_sorted": "0.125",
+            "p03_dedupe": "0.857",
+            "p04_bst": "0.0",
+            "p05_expr_tree": "1.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "0.75",
+            "p08_bank": "0.286",
+            "p09_stack_vm": "1.0",
+            "p10_lru": "0.571",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "1.0",
+            "p13_n_queens": "1.0",
+            "p14_bfs": "1.0",
+            "p15_permutations": "1.0"
+        },
+        "heuristics": {
+            "lambdas": 4,
+            "stream_pipeline": 6,
+            "double_colon_references": 5
+        },
+        "rubric": {
+            "item1": 30,
+            "item2": 30,
+            "item3": 28,
+            "item4": 26,
+            "item5": 30,
+            "item6": 28
+        }
+    },
+    "javascript_scheme": {
+        "problem": {
+            "p01_rle": "0.0",
+            "p02_merge_sorted": "0.0",
+            "p03_dedupe": "0.0",
+            "p04_bst": "0.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "0.0",
+            "p08_bank": "0.0",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.0",
+            "p13_n_queens": "0.0",
+            "p14_bfs": "0.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "nested_else_if": 13,
+            "unnecessary_begin": 7,
+            "do_loops": 6,
+            "car_cdr_chains": 1
+        },
+        "rubric": {
+            "item1": 22,
+            "item2": 17,
+            "item3": 30,
+            "item4": 13,
+            "item5": 13,
+            "item6": 30
+        }
+    },
+    "javascript_haskell": {
+        "problem": {
+            "p01_rle": "0.0",
+            "p02_merge_sorted": "0.0",
+            "p03_dedupe": "0.0",
+            "p04_bst": "0.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "0.0",
+            "p08_bank": "0.0",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.0",
+            "p13_n_queens": "0.0",
+            "p14_bfs": "0.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "unsafe_list_access": 37,
+            "list_concatenation": 3
+        },
+        "rubric": {
+            "item1": 24,
+            "item2": 27,
+            "item3": 23,
+            "item4": 30,
+            "item5": 24,
+            "item6": 30
+        }
+    },
+    "javascript_prolog": {
+        "problem": {
+            "p01_rle": "0.0",
+            "p02_merge_sorted": "0.0",
+            "p03_dedupe": "0.0",
+            "p04_bst": "0.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.111",
+            "p07_brackets": "0.0",
+            "p08_bank": "0.0",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.0",
+            "p13_n_queens": "0.0",
+            "p14_bfs": "0.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "head_cut": 2,
+            "append_to_prepend": 1,
+            "dynamic_mutability": 2
+        },
+        "rubric": {
+            "item1": 24,
+            "item3": 28,
+            "item4": 29,
+            "item5": 23,
+            "item6": 30,
+            "item2": 19
+        }
+    },
+    "java_python": {
+        "problem": {
+            "p01_rle": "1.0",
+            "p02_merge_sorted": "0.875",
+            "p03_dedupe": "0.857",
+            "p04_bst": "0.857",
+            "p05_expr_tree": "1.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "1.0",
+            "p08_bank": "1.0",
+            "p09_stack_vm": "0.875",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.625",
+            "p12_group_by": "1.0",
+            "p13_n_queens": "1.0",
+            "p14_bfs": "1.0",
+            "p15_permutations": "1.0"
+        },
+        "heuristics": {
+            "higher_order_functions": 2,
+            "index_loops": 1
+        },
+        "rubric": {
+            "item1": 30,
+            "item2": 30,
+            "item3": 30,
+            "item4": 28,
+            "item5": 29,
+            "item6": 30
+        }
+    },
+    "java_javascript": {
+        "problem": {
+            "p01_rle": "1.0",
+            "p02_merge_sorted": "0.875",
+            "p03_dedupe": "0.429",
+            "p04_bst": "1.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "1.0",
+            "p08_bank": "1.0",
+            "p09_stack_vm": "1.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.5",
+            "p13_n_queens": "1.0",
+            "p14_bfs": "0.429",
+            "p15_permutations": "1.0"
+        },
+        "heuristics": {
+            "lambdas": 31,
+            "higher_order_functions": 10
+        },
+        "rubric": {
+            "item1": 29,
+            "item2": 30,
+            "item3": 29,
+            "item4": 30,
+            "item5": 30,
+            "item6": 29
+        }
+    },
+    "java_scheme": {
+        "problem": {
+            "p01_rle": "0.0",
+            "p02_merge_sorted": "0.0",
+            "p03_dedupe": "0.0",
+            "p04_bst": "0.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "0.0",
+            "p08_bank": "0.143",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.0",
+            "p13_n_queens": "1.0",
+            "p14_bfs": "0.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "nested_else_if": 13,
+            "unnecessary_begin": 9,
+            "do_loops": 5,
+            "car_cdr_chains": 2
+        },
+        "rubric": {
+            "item1": 20,
+            "item2": 12,
+            "item3": 30,
+            "item4": 8,
+            "item5": 20,
+            "item6": 30
+        }
+    },
+    "java_haskell": {
+        "problem": {
+            "p01_rle": "0.0",
+            "p02_merge_sorted": "0.0",
+            "p03_dedupe": "0.857",
+            "p04_bst": "0.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "0.0",
+            "p08_bank": "0.0",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.0",
+            "p13_n_queens": "1.0",
+            "p14_bfs": "0.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "list_concatenation": 2,
+            "unsafe_list_access": 29,
+            "mutable_ioref": 4
+        },
+        "rubric": {
+            "item1": 27,
+            "item2": 27,
+            "item3": 28,
+            "item4": 26,
+            "item5": 23,
+            "item6": 30
+        }
+    },
+    "java_prolog": {
+        "problem": {
+            "p01_rle": "0.0",
+            "p02_merge_sorted": "0.0",
+            "p03_dedupe": "0.143",
+            "p04_bst": "0.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "0.125",
+            "p08_bank": "0.286",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.0",
+            "p13_n_queens": "0.0",
+            "p14_bfs": "0.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "head_cut": 4,
+            "dynamic_mutability": 3
+        },
+        "rubric": {
+            "item1": 26,
+            "item2": 16,
+            "item3": 28,
+            "item4": 30,
+            "item5": 23,
+            "item6": 30
+        }
+    },
+    "scheme_python": {
+        "problem": {
+            "p01_rle": "1.0",
+            "p02_merge_sorted": "1.0",
+            "p03_dedupe": "1.0",
+            "p04_bst": "0.857",
+            "p05_expr_tree": "1.0",
+            "p06_calc": "0.333",
+            "p07_brackets": "1.0",
+            "p08_bank": "1.0",
+            "p09_stack_vm": "1.0",
+            "p10_lru": "1.0",
+            "p11_pipeline": "0.875",
+            "p12_group_by": "1.0",
+            "p13_n_queens": "0.125",
+            "p14_bfs": "1.0",
+            "p15_permutations": "1.0"
+        },
+        "heuristics": {
+            "higher_order_functions": 10,
+            "lambdas": 4
+        },
+        "rubric": {
+            "item1": 30,
+            "item2": 27,
+            "item3": 23,
+            "item4": 30,
+            "item5": 30,
+            "item6": 30
+        }
+    },
+    "scheme_javascript": {
+        "problem": {
+            "p01_rle": "1.0",
+            "p02_merge_sorted": "0.125",
+            "p03_dedupe": "0.286",
+            "p04_bst": "0.857",
+            "p05_expr_tree": "1.0",
+            "p06_calc": "0.444",
+            "p07_brackets": "1.0",
+            "p08_bank": "0.143",
+            "p09_stack_vm": "0.25",
+            "p10_lru": "1.0",
+            "p11_pipeline": "0.125",
+            "p12_group_by": "0.167",
+            "p13_n_queens": "0.375",
+            "p14_bfs": "0.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "lambdas": 44,
+            "higher_order_functions": 17
+        },
+        "rubric": {
+            "item1": 30,
+            "item2": 30,
+            "item3": 24,
+            "item4": 28,
+            "item5": 25,
+            "item6": 29
+        }
+    },
+    "scheme_java": {
+        "problem": {
+            "p01_rle": "1.0",
+            "p02_merge_sorted": "0.375",
+            "p03_dedupe": "0.0",
+            "p04_bst": "0.857",
+            "p05_expr_tree": "1.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "1.0",
+            "p08_bank": "0.0",
+            "p09_stack_vm": "0.875",
+            "p10_lru": "0.143",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "1.0",
+            "p13_n_queens": "0.375",
+            "p14_bfs": "0.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "stream_pipeline": 4,
+            "lambdas": 4,
+            "double_colon_references": 7
+        },
+        "rubric": {
+            "item1": 30,
+            "item2": 30,
+            "item3": 21,
+            "item4": 19,
+            "item5": 26,
+            "item6": 20
+        }
+    },
+    "scheme_haskell": {
+        "problem": {
+            "p01_rle": "0.0",
+            "p02_merge_sorted": "0.0",
+            "p03_dedupe": "0.0",
+            "p04_bst": "0.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.222",
+            "p07_brackets": "0.0",
+            "p08_bank": "0.0",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.0",
+            "p13_n_queens": "0.125",
+            "p14_bfs": "0.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "list_concatenation": 2,
+            "unsafe_list_access": 22
+        },
+        "rubric": {
+            "item1": 27,
+            "item2": 24,
+            "item3": 28,
+            "item4": 30,
+            "item5": 24,
+            "item6": 30
+        }
+    },
+    "scheme_prolog": {
+        "problem": {
+            "p01_rle": "0.0",
+            "p02_merge_sorted": "0.875",
+            "p03_dedupe": "0.0",
+            "p04_bst": "0.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "0.125",
+            "p08_bank": "0.286",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.0",
+            "p13_n_queens": "0.0",
+            "p14_bfs": "0.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "head_cut": 3
+        },
+        "rubric": {
+            "item1": 21,
+            "item3": 30,
+            "item4": 30,
+            "item5": 23,
+            "item6": 30,
+            "item2": 16
+        }
+    },
+    "haskell_python": {
+        "problem": {
+            "p01_rle": "1.0",
+            "p02_merge_sorted": "1.0",
+            "p03_dedupe": "1.0",
+            "p04_bst": "1.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "0.875",
+            "p08_bank": "0.714",
+            "p09_stack_vm": "0.375",
+            "p10_lru": "1.0",
+            "p11_pipeline": "0.125",
+            "p12_group_by": "1.0",
+            "p13_n_queens": "0.375",
+            "p14_bfs": "1.0",
+            "p15_permutations": "1.0"
+        },
+        "heuristics": {
+            "higher_order_functions": 13
+        },
+        "rubric": {
+            "item1": 30,
+            "item2": 27,
+            "item3": 28,
+            "item4": 30,
+            "item5": 30,
+            "item6": 30
+        }
+    },
+    "haskell_javascript": {
+        "problem": {
+            "p01_rle": "0.875",
+            "p02_merge_sorted": "0.625",
+            "p03_dedupe": "0.857",
+            "p04_bst": "1.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.222",
+            "p07_brackets": "1.0",
+            "p08_bank": "1.0",
+            "p09_stack_vm": "1.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.625",
+            "p12_group_by": "0.5",
+            "p13_n_queens": "0.375",
+            "p14_bfs": "1.0",
+            "p15_permutations": "0.167"
+        },
+        "heuristics": {
+            "higher_order_functions": 33,
+            "lambdas": 61
+        },
+        "rubric": {
+            "item1": 26,
+            "item2": 30,
+            "item3": 26,
+            "item4": 24,
+            "item5": 28,
+            "item6": 29
+        }
+    },
+    "haskell_java": {
+        "problem": {
+            "p01_rle": "1.0",
+            "p02_merge_sorted": "0.0",
+            "p03_dedupe": "0.0",
+            "p04_bst": "0.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "1.0",
+            "p08_bank": "0.0",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.429",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.0",
+            "p13_n_queens": "1.0",
+            "p14_bfs": "0.0",
+            "p15_permutations": "1.0"
+        },
+        "heuristics": {
+            "stream_pipeline": 9,
+            "double_colon_references": 9,
+            "lambdas": 11
+        },
+        "rubric": {
+            "item1": 30,
+            "item2": 30,
+            "item3": 21,
+            "item4": 13,
+            "item5": 27,
+            "item6": 24
+        }
+    },
+    "haskell_scheme": {
+        "problem": {
+            "p01_rle": "0.0",
+            "p02_merge_sorted": "0.0",
+            "p03_dedupe": "0.0",
+            "p04_bst": "0.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "0.0",
+            "p08_bank": "0.0",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.0",
+            "p13_n_queens": "0.0",
+            "p14_bfs": "0.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "nested_else_if": 15,
+            "car_cdr_chains": 1
+        },
+        "rubric": {
+            "item1": 30,
+            "item2": 26,
+            "item3": 30,
+            "item4": 24,
+            "item5": 25,
+            "item6": 30
+        }
+    },
+    "haskell_prolog": {
+        "problem": {
+            "p01_rle": "0.0",
+            "p02_merge_sorted": "0.0",
+            "p03_dedupe": "0.0",
+            "p04_bst": "0.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "0.0",
+            "p08_bank": "0.0",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.0",
+            "p13_n_queens": "0.0",
+            "p14_bfs": "0.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "head_cut": 2
+        },
+        "rubric": {
+            "item1": 29,
+            "item2": 26,
+            "item3": 30,
+            "item4": 29,
+            "item5": 18,
+            "item6": 30
+        }
+    },
+    "prolog_python": {
+        "problem": {
+            "p01_rle": "0.875",
+            "p02_merge_sorted": "0.875",
+            "p03_dedupe": "0.857",
+            "p04_bst": "0.143",
+            "p05_expr_tree": "1.0",
+            "p06_calc": "1.0",
+            "p07_brackets": "0.0",
+            "p08_bank": "1.0",
+            "p09_stack_vm": "0.75",
+            "p10_lru": "0.0",
+            "p11_pipeline": "1.0",
+            "p12_group_by": "1.0",
+            "p13_n_queens": "0.375",
+            "p14_bfs": "0.286",
+            "p15_permutations": "0.167"
+        },
+        "heuristics": {
+            "higher_order_functions": 10,
+            "index_loops": 1
+        },
+        "rubric": {
+            "item1": 30,
+            "item2": 28,
+            "item3": 13,
+            "item4": 29,
+            "item5": 29,
+            "item6": 30
+        }
+    },
+    "prolog_javascript": {
+        "problem": {
+            "p01_rle": "0.0",
+            "p02_merge_sorted": "0.875",
+            "p03_dedupe": "0.857",
+            "p04_bst": "0.286",
+            "p05_expr_tree": "0.143",
+            "p06_calc": "1.0",
+            "p07_brackets": "1.0",
+            "p08_bank": "0.0",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.125",
+            "p12_group_by": "1.0",
+            "p13_n_queens": "0.25",
+            "p14_bfs": "0.429",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "lambdas": 47,
+            "higher_order_functions": 19,
+            "not_strict_equality": 1
+        },
+        "rubric": {
+            "item1": 30,
+            "item2": 29,
+            "item4": 26,
+            "item5": 25,
+            "item3": 18,
+            "item6": 17
+        }
+    },
+    "prolog_java": {
+        "problem": {
+            "p01_rle": "0.0",
+            "p02_merge_sorted": "0.0",
+            "p03_dedupe": "0.0",
+            "p04_bst": "0.286",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.111",
+            "p07_brackets": "0.0",
+            "p08_bank": "0.143",
+            "p09_stack_vm": "0.375",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "1.0",
+            "p13_n_queens": "1.0",
+            "p14_bfs": "0.429",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "stream_pipeline": 10,
+            "lambdas": 8,
+            "double_colon_references": 7
+        },
+        "rubric": {
+            "item1": 30,
+            "item2": 30,
+            "item4": 22,
+            "item5": 25,
+            "item6": 21,
+            "item3": 20
+        }
+    },
+    "prolog_scheme": {
+        "problem": {
+            "p01_rle": "0.0",
+            "p02_merge_sorted": "0.125",
+            "p03_dedupe": "0.143",
+            "p04_bst": "0.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.0",
+            "p07_brackets": "0.0",
+            "p08_bank": "0.286",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.0",
+            "p13_n_queens": "0.0",
+            "p14_bfs": "0.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "nested_else_if": 16,
+            "unnecessary_begin": 9,
+            "car_cdr_chains": 5,
+            "do_loops": 1
+        },
+        "rubric": {
+            "item1": 30,
+            "item2": 28,
+            "item3": 30,
+            "item4": 27,
+            "item5": 28,
+            "item6": 28
+        }
+    },
+    "prolog_haskell": {
+        "problem": {
+            "p01_rle": "0.0",
+            "p02_merge_sorted": "0.0",
+            "p03_dedupe": "0.0",
+            "p04_bst": "0.0",
+            "p05_expr_tree": "0.0",
+            "p06_calc": "0.222",
+            "p07_brackets": "0.75",
+            "p08_bank": "0.0",
+            "p09_stack_vm": "0.0",
+            "p10_lru": "0.0",
+            "p11_pipeline": "0.0",
+            "p12_group_by": "0.0",
+            "p13_n_queens": "0.0",
+            "p14_bfs": "0.0",
+            "p15_permutations": "0.0"
+        },
+        "heuristics": {
+            "list_concatenation": 4,
+            "unsafe_list_access": 8
+        },
+        "rubric": {
+            "item1": 28,
+            "item2": 28,
+            "item3": 25,
+            "item4": 30,
+            "item5": 28,
+            "item6": 30
+        }
+    }
+}

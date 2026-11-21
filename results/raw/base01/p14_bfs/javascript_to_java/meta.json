@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "javascript",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:11:46+00:00",
+  "source_file": "p14_bfs.js",
+  "target_file": "P14Bfs.java",
+  "attempts": 1,
+  "duration_s": 21.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 559,
+    "completion_tokens": 385
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p14_bfs.javascript_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.util.*;\n\npublic class P14Bfs {\n    public static void main(String[] args) {\n        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {\n            String[] firstLine = reader.readLine().split(\"\\\\s+\");\n            int n = Integer.parseInt(firstLine[0]);\n            int m = Integer.parseInt(firstLine[1]);\n\n            List<Integer>[] graph = new ArrayList[n + 1];\n            for (int i = 0; i <= n; i++) {\n                graph[i] = new ArrayList<>();\n            }\n\n            for (int i = 0; i < m; i++) {\n                String[] edge = reader.readLine().split(\"\\\\s+\");\n                int u = Integer.parseInt(edge[0]);\n                int v = Integer.parseInt(edge[1]);\n                graph[u].add(v);\n                graph[v].add(u);\n            }\n\n            String[] lastLine = reader.readLine().split(\"\\\\s+\");\n            int start = Integer.parseInt(lastLine[0]);\n            int target = Integer.parseInt(lastLine[1]);\n\n            int[] distance = new int[n + 1];\n            Arrays.fill(distance, -1);\n            Queue<Integer> queue = new LinkedList<>();\n            queue.add(start);\n            distance[start] = 0;\n\n            while (!queue.isEmpty()) {\n                int node = queue.poll();\n                if (node == target) {\n                    System.out.println(distance[target]);\n                    return;\n                }\n                for (int next : graph[node]) {\n                    if (distance[next] < 0) {\n                        distance[next] = distance[node] + 1;\n                        queue.add(next);\n                    }\n                }\n            }\n\n            System.out.println(distance[target]);\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n}\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p02_merge_sorted",
+  "src": "javascript",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:34:55+00:00",
+  "source_file": "p02_merge_sorted.js",
+  "target_file": "p02_merge_sorted.pl",
+  "attempts": 1,
+  "duration_s": 12.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 519,
+    "completion_tokens": 227
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\nparse_line(Line, Numbers) :-\n    atom_codes(Line, Codes),\n    split_string(Codes, \" \", \"\", Tokens),\n    maplist(atom_number, Tokens, Numbers).\n\np02_merge_sorted :-\n    read_line_to_string(current_input, Line1),\n    parse_line(Line1, A),\n    read_line_to_string(current_input, Line2),\n    parse_line(Line2, B),\n    merge_sorted(A, B, Result),\n    format('~w~n', [Result]),\n    halt.\n\nmerge_sorted([], B, B).\nmerge_sorted(A, [], A).\nmerge_sorted([H1|T1], [H2|T2], [H1|Result]) :-\n    H1 =< H2,\n    merge_sorted(T1, [H2|T2], Result).\nmerge_sorted([H1|T1], [H2|T2], [H2|Result]) :-\n    H1 > H2,\n    merge_sorted([H1|T1], T2, Result).\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "java",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:38:40+00:00",
+  "source_file": "P10Lru.java",
+  "target_file": "p10_lru.scm",
+  "attempts": 1,
+  "duration_s": 16.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 465,
+    "completion_tokens": 306
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (main)\n  (let* ((reader (open-input-port \"stdin\"))\n         (capacity (string->number (read-line reader)))\n         (n (string->number (read-line reader)))\n         (cache (make-hash-table)))\n    (define (remove-eldest-entry? table)\n      (> (hash-table-count table) capacity))\n    (define lru-cache\n      (make-hash-table\n       :test equal?\n       :weakness 'value\n       :delete-proc (lambda (key value) (hash-table-remove! lru-cache key))))\n    (do ((i 0 (+ i 1))) ((= i n))\n      (let* ((line (read-line reader))\n             (parts (string-split line #\\space))\n             (op (car parts))\n             (key (string->number (cadr parts))))\n        (cond\n          ((string=? op \"get\")\n           (if (hash-table-exists? lru-cache key)\n               (begin\n                 (hash-table-set! lru-cache key (hash-table-ref lru-cache key))\n                 (display (hash-table-ref lru-cache key))\n                 (newline))\n               (begin\n                 (display -1)\n                 (newline))))\n          ((string=? op \"set\")\n           (hash-table-set! lru-cache key (string->number (caddr parts)))))))\n    (exit 0)))\n\n(main)\n```"
+}

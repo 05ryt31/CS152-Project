@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p12_group_by",
+  "src": "javascript",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:58:34+00:00",
+  "source_file": "p12_group_by.js",
+  "target_file": "p12_group_by.scm",
+  "attempts": 1,
+  "duration_s": 14.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 415,
+    "completion_tokens": 272
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (main args)\n  (define lines (string-split (read-string) #\\newline))\n  (define n (string->number (car lines)))\n  \n  (define groups (make-hash-table))\n  \n  (do ((i 0 (+ i 1)))\n      ((= i n))\n    (let* ((line (list-ref lines (+ i 1)))\n           (parts (string-split line #px\"\\\\s+\"))\n           (key (car parts))\n           (raw (cadr parts))\n           (value (string->number raw))\n           (group (hash-table-ref/default groups key '(0 . 0))))\n      (hash-table-set! groups key (cons (+ (car group) value) (+ (cdr group) 1)))))\n  \n  (let loop ((keys (sort (hash-table-keys groups) string<?)))\n    (if (null? keys)\n        (exit 0)\n        (begin\n          (display (car keys))\n          (display \" \")\n          (display (car (hash-table-ref groups (car keys))))\n          (display \" \")\n          (display (cdr (hash-table-ref groups (car keys))))\n          (newline)\n          (loop (cdr keys)))))))\n\n(main (command-line-arguments))\n```"
+}

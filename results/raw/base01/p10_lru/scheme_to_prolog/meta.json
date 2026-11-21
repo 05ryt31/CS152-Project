@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:40:47+00:00",
+  "source_file": "p10_lru.scm",
+  "target_file": "p10_lru.pl",
+  "attempts": 1,
+  "duration_s": 27.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 754,
+    "completion_tokens": 513
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\nfind_value(Key, Entries) :-\n    member((Key, Value), Entries),\n    !,\n    Value.\nfind_value(_, _).\n\nremove_key(Key, [], []).\nremove_key(Key, [(Key, _) | Tail], Tail).\nremove_key(Key, [Head | Tail], [Head | NewTail]) :-\n    remove_key(Key, Tail, NewTail).\n\nremove_from_order(Key, [], []).\nremove_from_order(Key, [Key | Tail], Tail).\nremove_from_order(Key, [Head | Tail], [Head | NewTail]) :-\n    remove_from_order(Key, Tail, NewTail).\n\ntouch(Key, Order) :-\n    append(Removed, [Key], Order),\n    Removed = [_].\n\nlru(Capacity, N) :-\n    lru_loop(0, [], [], Capacity, N).\n\nlru_loop(I, Entries, Order, _, _) :-\n    I =:= N,\n    !.\nlru_loop(I, Entries, Order, Capacity, N) :-\n    read_line_to_string(Input),\n    split_string(Input, Parts, \" \"),\n    Op = Parts[0],\n    Key = Parts[1],\n    (   Op == \"get\" ->\n        (   find_value(Key, Entries) = Value ->\n            format('~d~n', [Value]),\n            NewOrder = (touch(Key, Order))\n        ;   format('-1~n'),\n            NewOrder = Order\n        ),\n        lru_loop(Succ, Entries, NewOrder, Capacity, N)\n    ;   Value = Parts[2],\n        (   find_value(Key, Entries) = (Key, ExistingValue) ->\n            NewEntries = Entries,\n            NewOrder = touch(Key, Order)\n        ;   NewEntries = [(Key, Value) | remove_key(Key, Entries)],\n            NewOrder = touch(Key, Order)\n        ),\n        (   length(NewOrder) > Capacity ->\n            Oldest = NewOrder[0],\n            NewEntries = remove_key(Oldest, NewEntries),\n            NewOrder = NewOrder[1..]\n        ;   true\n        ),\n        lru_loop(Succ, NewEntries, NewOrder, Capacity, N)\n    ),\n    Succ is I + 1.\n\np10_lru :-\n    read_line_to_string(Input),\n    Capacity = Input,\n    read_line_to_string(Input),\n    N = Input,\n    lru(Capacity, N),\n    halt.\n```"
+}

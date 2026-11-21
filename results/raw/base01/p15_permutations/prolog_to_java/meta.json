@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p15_permutations",
+  "src": "prolog",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:25:22+00:00",
+  "source_file": "p15_permutations.pl",
+  "target_file": "P15Permutations.java",
+  "attempts": 1,
+  "duration_s": 18.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 414,
+    "completion_tokens": 351
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p15_permutations.prolog_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\nimport java.util.*;\n\npublic class P15Permutations {\n    public static void main(String[] args) {\n        try (Scanner scanner = new Scanner(new BufferedReader(new InputStreamReader(System.in)))) {\n            String input = scanner.nextLine();\n            permutations(input);\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    }\n\n    private static void permutations(String str) {\n        List<String> chars = new ArrayList<>();\n        for (char c : str.toCharArray()) {\n            chars.add(String.valueOf(c));\n        }\n        Collections.sort(chars);\n\n        Set<List<String>> orderedPerms = new TreeSet<>(new Comparator<List<String>>() {\n            @Override\n            public int compare(List<String> o1, List<String> o2) {\n                return o1.toString().compareTo(o2.toString());\n            }\n        });\n\n        permute(chars, new ArrayList<>(), orderedPerms);\n\n        for (List<String> perm : orderedPerms) {\n            System.out.println(String.join(\"\", perm));\n        }\n    }\n\n    private static void permute(List<String> chars, List<String> current, Set<List<String>> orderedPerms) {\n        if (chars.isEmpty()) {\n            orderedPerms.add(new ArrayList<>(current));\n        } else {\n            for (int i = 0; i < chars.size(); i++) {\n                List<String> remaining = new ArrayList<>(chars);\n                remaining.remove(i);\n                current.add(chars.get(i));\n                permute(remaining, current, orderedPerms);\n                current.remove(current.size() - 1);\n            }\n        }\n    }\n}\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "prolog",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:43:12+00:00",
+  "source_file": "p10_lru.pl",
+  "target_file": "p10_lru.py",
+  "attempts": 1,
+  "duration_s": 18.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 567,
+    "completion_tokens": 346
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\ndef p10_lru():\n    c_line = input().strip()\n    n_line = input().strip()\n    c = int(c_line)\n    n = int(n_line)\n    run(n, c, [])\n\ndef run(n, c, cache):\n    if n == 0:\n        return\n    line = input().strip()\n    parts = line.split(\" \")\n    operation(parts, c, cache)\n\ndef operation(parts, c, cache):\n    if parts[0] == \"get\":\n        key = int(parts[1])\n        for i, (k, v) in enumerate(cache):\n            if k == key:\n                print(v)\n                new_cache = [(cache[i][0], cache[i][1])] + cache[:i] + cache[i+1:]\n                run(n-1, c, new_cache)\n                return\n        print(-1)\n        run(n-1, c, cache)\n    elif parts[0] == \"put\":\n        key = int(parts[1])\n        value = int(parts[2])\n        if c == 0:\n            return\n        if any(k == key for k, _ in cache):\n            new_cache = [(key, value)] + [item for item in cache if item[0] != key]\n            run(n-1, c, new_cache)\n        else:\n            if len(cache) >= c:\n                new_cache = [(key, value)] + cache[:-1]\n            else:\n                new_cache = [(key, value)] + cache\n            run(n-1, c, new_cache)\n\nif __name__ == \"__main__\":\n    p10_lru()\n```"
+}

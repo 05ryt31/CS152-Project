@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p08_bank",
+  "src": "python",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:18:04+00:00",
+  "source_file": "p08_bank.py",
+  "target_file": "p08_bank.hs",
+  "attempts": 1,
+  "duration_s": 11.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 368,
+    "completion_tokens": 212
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport System.IO\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdin NoBuffering\n    hSetBuffering stdout NoBuffering\n    n <- readLn\n    let processCommand ('d':'e':'p':'o':'s':'i':'t':':':xs) = Just $ \\b -> b + read xs\n        processCommand ('w':'i':'t':'h':'d':'r':'a':'w':':':xs) = Just $ \\b -> \n            let amount = read xs\n            in if amount > b then Nothing else Just $ b - amount\n        processCommand ('b':'a':'l':'a':'n':'c':'e':':':_) = Just id\n        processCommand _ = Nothing\n    commands <- replicateM n getLine\n    let finalBalance = foldl (\\acc cmd -> case processCommand cmd acc of\n                                        Just f -> f\n                                        Nothing -> acc) 0 commands\n    putStrLn $ show finalBalance\n```"
+}

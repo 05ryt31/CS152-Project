@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "prolog",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:54:40+00:00",
+  "source_file": "p04_bst.pl",
+  "target_file": "p04_bst.scm",
+  "attempts": 1,
+  "duration_s": 25.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 707,
+    "completion_tokens": 482
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (main)\n  (let* ((line (read-line))\n         (ns (nums line))\n         (tree (foldl insert empty ns))\n         (in (inorder tree))\n         (pre (preorder tree)))\n    (print_nums in)\n    (print_nums pre)\n    (writeln (height tree))))\n\n(define (nums line)\n  (cond\n    [(eof-object? line) '()]\n    [(string=? line \"\") '()]\n    [else (split-string line #\\space)]))\n\n(define (insert x tree)\n  (cond\n    [(empty-tree? tree) (node x empty-tree empty-tree)]\n    [(< x (node-value tree)) (node (node-value tree) (insert x (node-left tree)) (node-right tree))]\n    [else (node (node-value tree) (node-left tree) (insert x (node-right tree)))]))\n\n(define (inorder tree)\n  (inorder-acc tree '()))\n\n(define (inorder-acc tree acc)\n  (if (empty-tree? tree)\n      acc\n      (inorder-acc (node-right tree) (cons (node-value tree) (inorder-acc (node-left tree) acc)))))\n\n(define (preorder tree)\n  (preorder-acc tree '()))\n\n(define (preorder-acc tree acc)\n  (if (empty-tree? tree)\n      acc\n      (cons (node-value tree) (append (preorder-acc (node-right tree) acc) (preorder-acc (node-left tree) acc)))))\n\n(define (height tree)\n  (if (empty-tree? tree)\n      0\n      (+ 1 (max (height (node-left tree)) (height (node-right tree))))))\n\n(define (print_nums nums)\n  (if (null? nums)\n      (newline)\n      (begin\n        (display (number->string (car nums)))\n        (display \" \")\n        (print_nums (cdr nums)))))\n\n(define-record-type node\n  (make-node value left right)\n  node?\n  (value node-value)\n  (left node-left)\n  (right node-right))\n\n(define empty-tree? null?)\n\n(define (max a b)\n  (if (> a b) a b))\n\n(main)\n```"
+}

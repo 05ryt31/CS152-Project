@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "python",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:10:20+00:00",
+  "source_file": "p14_bfs.py",
+  "target_file": "p14_bfs.scm",
+  "attempts": 1,
+  "duration_s": 24.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 482,
+    "completion_tokens": 454
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (main)\n  (let* ((input (read-line))\n         (tokens (string-split input #\\Space))\n         (n (string->number (list-ref tokens 0)))\n         (m (string->number (list-ref tokens 1)))\n         (neighbours (make-hash-table))\n         (s (string->number (list-ref tokens (+ (* 2 n) 0))))\n         (t (string->number (list-ref tokens (+ (* 2 n) 1))))\n         (distance (make-hash-table))\n         (queue '()))\n    ;; Initialize neighbors\n    (do ((i 1 (+ i 1))) ((> i n))\n      (hash-set! neighbours i '()))\n    ;; Read edges\n    (do ((i 0 (+ i 1))) ((= i m))\n      (let* ((line (read-line))\n             (tokens (string-split line #\\Space))\n             (u (string->number (list-ref tokens 0)))\n             (v (string->number (list-ref tokens 1))))\n        (hash-set! (hash-ref neighbours u) v #t)\n        (hash-set! (hash-ref neighbours v) u #t)))\n    ;; BFS initialization\n    (hash-set! distance s 0)\n    (set! queue (cons s queue))\n    ;; BFS loop\n    (let loop ()\n      (if (null? queue)\n          (void)\n          (let* ((node (car queue))\n                 (rest-queue (cdr queue)))\n            (set! queue rest-queue)\n            (when (= node t)\n              (return))\n            (for-each (lambda (other)\n                        (when (and (hash-has-key? neighbours other)\n                                   (not (hash-has-key? distance other)))\n                          (hash-set! distance other (+ 1 (hash-ref distance node)))\n                          (set! queue (cons other queue))))\n                      (hash-ref neighbours node)))))\n    ;; Output result\n    (if (hash-has-key? distance t)\n        (display (hash-ref distance t))\n        (display -1))\n    (newline)))\n\n(main)\n```"
+}

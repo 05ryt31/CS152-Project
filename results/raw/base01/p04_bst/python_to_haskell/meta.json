@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "python",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:45:40+00:00",
+  "source_file": "p04_bst.py",
+  "target_file": "p04_bst.hs",
+  "attempts": 1,
+  "duration_s": 16.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 566,
+    "completion_tokens": 304
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nmodule Main where\n\ndata Node = Node {\n    value :: Int,\n    left  :: Maybe Node,\n    right :: Maybe Node\n} deriving (Show)\n\ninsert :: Maybe Node -> Int -> Maybe Node\ninsert Nothing v = Just $ Node v Nothing Nothing\ninsert (Just node) v\n    | v < value node = Just $ node { left = insert (left node) v }\n    | otherwise      = Just $ node { right = insert (right node) v }\n\ninorder :: Maybe Node -> [Int]\ninorder Nothing = []\ninorder (Just node) = inorder (left node) ++ [value node] ++ inorder (right node)\n\npreorder :: Maybe Node -> [Int]\npreorder Nothing = []\npreorder (Just node) = [value node] ++ preorder (left node) ++ preorder (right node)\n\nheight :: Maybe Node -> Int\nheight Nothing = 0\nheight (Just node) = 1 + max (height (left node)) (height (right node))\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let tokens = words input\n        root = foldl (\\acc token -> insert acc (read token)) Nothing tokens\n        inValues = inorder root\n        preValues = preorder root\n    putStr $ unwords (map show inValues) ++ \"\\n\"\n    putStr $ unwords (map show preValues) ++ \"\\n\"\n    print $ height root\n```"
+}

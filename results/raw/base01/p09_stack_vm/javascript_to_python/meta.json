@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "javascript",
+  "tgt": "python",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:25:40+00:00",
+  "source_file": "p09_stack_vm.js",
+  "target_file": "p09_stack_vm.py",
+  "attempts": 1,
+  "duration_s": 13.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 554,
+    "completion_tokens": 254
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\nlines = sys.stdin.read().split('\\n')\nn = int(lines[0])\n\nstack = []\noutput = []\n\nfor i in range(n):\n    parts = lines[i + 1].split()\n    op = parts[0]\n    if op == 'push':\n        stack.append(int(parts[1]))\n    elif op == 'pop':\n        if not stack:\n            output.append('error')\n        else:\n            stack.pop()\n    elif op == 'add' or op == 'mul':\n        if len(stack) < 2:\n            output.append('error')\n        else:\n            b = stack.pop()\n            a = stack.pop()\n            stack.append(a + b if op == 'add' else a * b)\n    elif op == 'dup':\n        if not stack:\n            output.append('error')\n        else:\n            stack.append(stack[-1])\n    elif op == 'swap':\n        if len(stack) < 2:\n            output.append('error')\n        else:\n            stack[-1], stack[-2] = stack[-2], stack[-1]\n    else:\n        output.append(str(stack[-1]) if stack else 'error')\n\nif output:\n    print('\\n'.join(output))\n```"
+}

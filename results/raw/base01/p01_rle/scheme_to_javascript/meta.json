@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p01_rle",
+  "src": "scheme",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:30:38+00:00",
+  "source_file": "p01_rle.scm",
+  "target_file": "p01_rle.js",
+  "attempts": 1,
+  "duration_s": 10.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 409,
+    "completion_tokens": 191
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nrl.question('', (line) => {\n  const encode = (chars) => {\n    if (chars.length === 0) return '';\n    let rest = chars.slice(1);\n    let current = chars[0];\n    let count = 1;\n    let out = '';\n    while (rest.length > 0) {\n      if (rest[0] === current) {\n        count++;\n        rest = rest.slice(1);\n      } else {\n        out += current + count.toString();\n        current = rest[0];\n        count = 1;\n        rest = rest.slice(1);\n      }\n    }\n    out += current + count.toString();\n    return out;\n  };\n\n  console.log(encode(line.split('')));\n});\n```"
+}

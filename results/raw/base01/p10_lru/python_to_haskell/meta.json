@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "python",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:36:05+00:00",
+  "source_file": "p10_lru.py",
+  "target_file": "p10_lru.hs",
+  "attempts": 1,
+  "duration_s": 18.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 419,
+    "completion_tokens": 330
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport System.IO\nimport Data.Map (Map, empty, insert, lookup, delete)\nimport qualified Data.Map as Map\nimport Data.List (elemIndex)\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdin NoBuffering\n    hSetBuffering stdout NoBuffering\n    capacity <- readLn\n    n <- readLn\n    let (values, order) = processInput capacity n []\n    putStr $ unlines $ map show order\n\nprocessInput :: Int -> Int -> [(Int, Int)] -> ([Int], [Int])\nprocessInput _ 0 _ = ([], [])\nprocessInput capacity n xs = case lines <$> getContents of\n    Just inputLines ->\n        foldl' processLine (xs, []) inputLines\n    Nothing -> ([], [])\n\nprocessLine :: ([(Int, Int)], [Int]) -> String -> ([(Int, Int)], [Int])\nprocessLine (values, order) line =\n    case words line of\n        [\"get\", k] ->\n            case lookup (read k) values of\n                Just v -> ((values, insert (read k) v order))\n                Nothing -> ((values, order ++ [read k]))\n        [\"set\", k, v] ->\n            let newOrder = case elemIndex (read k) order of\n                    Just idx -> take idx order ++ drop (idx + 1) order ++ [read k]\n                    Nothing -> order ++ [read k]\n            in ((insert (read k) (read v) values, newOrder))\n        _ -> ((values, order))\n\n```"
+}

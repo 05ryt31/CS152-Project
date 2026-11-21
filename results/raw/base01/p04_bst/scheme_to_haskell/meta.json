@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "scheme",
+  "tgt": "haskell",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:50:59+00:00",
+  "source_file": "p04_bst.scm",
+  "target_file": "p04_bst.hs",
+  "attempts": 1,
+  "duration_s": 18.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 672,
+    "completion_tokens": 342
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List (maximumBy, intersperse)\nimport Data.Maybe (fromJust)\nimport System.IO (hFlush, stdout)\n\ndata Tree = Empty | Node Int Tree Tree deriving (Show)\n\ninsert :: Tree -> Int -> Tree\ninsert Empty v = Node v Empty Empty\ninsert (Node x left right) v\n  | v < x     = Node x (insert left v) right\n  | otherwise = Node x left (insert right v)\n\ninorder :: Tree -> [Int]\ninorder Empty = []\ninorder (Node x left right) = inorder left ++ [x] ++ inorder right\n\npreorder :: Tree -> [Int]\npreorder Empty = []\npreorder (Node x left right) = [x] ++ preorder left ++ preorder right\n\nheight :: Tree -> Int\nheight Empty = 0\nheight (Node _ left right) = 1 + max (height left) (height right)\n\nprintList :: [Int] -> IO ()\nprintList [] = return ()\nprintList xs = do\n  putStr $ intercalate \" \" (map show xs)\n  putStrLn \"\"\n\nnumbers :: String -> [Int]\nnumbers = map read . words\n\nsafeReadLine :: IO String\nsafeReadLine = hGetLine stdin >>= \\line -> if null line then return \"\" else return line\n\nbuildTree :: [Int] -> Tree\nbuildTree = foldl insert Empty\n\nmain :: IO ()\nmain = do\n  line <- safeReadLine\n  let values = numbers line\n      tree = buildTree values\n  printList $ inorder tree\n  printList $ preorder tree\n  print $ height tree\n```"
+}

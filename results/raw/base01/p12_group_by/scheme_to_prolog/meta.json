@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p12_group_by",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:01:12+00:00",
+  "source_file": "p12_group_by.scm",
+  "target_file": "p12_group_by.pl",
+  "attempts": 1,
+  "duration_s": 15.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 636,
+    "completion_tokens": 287
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\np12_group_by :-\n    read_line_to_string(current_input, N),\n    number_codes(N, Number),\n    read_groups(Number, Groups),\n    print_groups(Groups),\n    halt.\n\nread_groups(0, []) :- !.\nread_groups(N, Groups) :-\n    read_line_to_string(current_input, Line),\n    split_string(Line, \"\", \" \", Parts),\n    [Key, Value] = Parts,\n    number_codes(Value, Number),\n    update(Key, Number, [], NewGroups),\n    M is N - 1,\n    read_groups(M, NewGroups).\n\nupdate(Key, Value, [], [(Key, Value, 1)]) :- !.\nupdate(Key, Value, [(K, V, C)|T], Result) :-\n    Key == K,\n    !,\n    NewValue is V + Value,\n    NewCount is C + 1,\n    Result = [(K, NewValue, NewCount)|T].\nupdate(Key, Value, [(K, V, C)|T], [(K, V, C)|Result]) :-\n    update(Key, Value, T, Result).\n\nprint_groups([]) :- !.\nprint_groups([(Key, Value, Count)|T]) :-\n    format('~w ~w ~w~n', [Key, Value, Count]),\n    print_groups(T).\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p06_calc",
+  "src": "python",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:03:25+00:00",
+  "source_file": "p06_calc.py",
+  "target_file": "p06_calc.hs",
+  "attempts": 1,
+  "duration_s": 13.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 599,
+    "completion_tokens": 259
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nmodule Main where\n\nimport Data.Char (isDigit, isSpace)\nimport System.IO (hGetContents, stdout)\n\ndata Token = Number Int | Operator Char deriving (Show)\n\ntokenize :: String -> [Token]\ntokenize = filter (/= \"\") . concatMap tokenizeChar\n  where\n    tokenizeChar c\n      | isDigit c = [Number (read [c])]\n      | isSpace c = [[]]\n      | otherwise = [[Operator c]]\n\nparseExpression :: [Token] -> Int\nparseExpression = parseTerm . dropWhile (\\(Operator _) -> True)\n\nparseTerm :: [Token] -> Int\nparseTerm = foldl parseFactor 1\n\nparseFactor :: Int -> [Token] -> Int\nparseFactor acc [] = acc\nparseFactor acc ((Number n):xs) = parseFactor (acc * n) xs\nparseFactor acc ((Operator '+'):xs) = parseExpression xs + acc\nparseFactor acc ((Operator '-'):xs) = parseExpression xs - acc\nparseFactor _ _ = error \"Invalid token\"\n\nmain :: IO ()\nmain = do\n  input <- hGetContents stdin\n  let tokens = tokenize input\n  let result = parseExpression tokens\n  putStrLn $ show result\n```"
+}

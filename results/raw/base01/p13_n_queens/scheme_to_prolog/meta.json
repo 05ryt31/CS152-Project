@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p13_n_queens",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:07:21+00:00",
+  "source_file": "p13_n_queens.scm",
+  "target_file": "p13_n_queens.pl",
+  "attempts": 1,
+  "duration_s": 14.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 535,
+    "completion_tokens": 275
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\nsafe(Queens, Col) :-\n    safe_loop(Queens, Col, 1).\n\nsafe_loop([], _, _).\nsafe_loop([Row | Rest], Col, Dist) :-\n    \\+ (Row = Col ; Row =:= Col + Dist ; Row =:= Col - Dist),\n    Dist1 is Dist + 1,\n    safe_loop(Rest, Col, Dist1).\n\ncount(0, [], 1).\ncount(N, Queens, Total) :-\n    N > 0,\n    count_row(0, N, Queens, Total).\n\ncount_row(Col, N, Queens, Total) :-\n    Col =< N,\n    (   safe(Queens, Col),\n        NewQueens = [Col | Queens],\n        NextCol is Col + 1,\n        count(NextCol, NewQueens, Total1)\n    ;\n        NextCol is Col + 1,\n        count_row(NextCol, N, Queens, Total)\n    ),\n    !,\n    Total is Total1.\n\np13_n_queens :-\n    read_line_to_string(current_input, Line),\n    Number is string_to_number(Line),\n    count(Number, [], Result),\n    format('~d~n', [Result]),\n    halt.\n```"
+}

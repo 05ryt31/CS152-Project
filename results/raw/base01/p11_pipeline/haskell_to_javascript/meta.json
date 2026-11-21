@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "haskell",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:53:04+00:00",
+  "source_file": "p11_pipeline.hs",
+  "target_file": "p11_pipeline.js",
+  "attempts": 1,
+  "duration_s": 20.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 516,
+    "completion_tokens": 388
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n    input: process.stdin,\n    output: process.stdout,\n    terminal: false\n});\n\nlet values = '';\nlet k = null;\nlet stages = [];\n\nrl.on('line', (input) => {\n    if (values === '') {\n        values = input;\n    } else if (k === null) {\n        k = parseInt(input);\n    } else {\n        stages.push(input);\n    }\n}).on('close', () => {\n    const result = stages.reduce((xs, stage) => apply(xs, stage.split(' ')), readNums(values));\n    if (result.length === 0 && k > 0 && stages[stages.length - 1].startsWith('reduce')) {\n        console.log('none');\n    } else if (result.length > 0) {\n        console.log(result.map(String).join(' '));\n    }\n});\n\nfunction apply(xs, stage) {\n    const [cmd, type, ...args] = stage;\n    switch (cmd) {\n        case 'map':\n            return args[0] === 'add' ? xs.map(x => x + parseInt(args[1])) : xs.map(x => x * parseInt(args[1]));\n        case 'filter':\n            return type === 'even' ? xs.filter(x => x % 2 === 0) : type === 'odd' ? xs.filter(x => x % 2 !== 0) : xs.filter(x => x > parseInt(args[0]));\n        case 'reduce':\n            return type === 'sum' ? [xs.reduce((a, b) => a + b, 0)] : type === 'max' ? [Math.max(...xs)] : [];\n        default:\n            return xs;\n    }\n}\n\nfunction readNums(s) {\n    return s.split(' ').map(Number);\n}\n```"
+}

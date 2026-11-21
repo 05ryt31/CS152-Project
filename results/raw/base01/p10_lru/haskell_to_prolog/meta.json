@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:42:45+00:00",
+  "source_file": "p10_lru.hs",
+  "target_file": "p10_lru.pl",
+  "attempts": 1,
+  "duration_s": 27.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 695,
+    "completion_tokens": 513
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\ntouch(Key, Order) :-\n    exclude(==(Key), Order, NewOrder),\n    append(NewOrder, [Key], Result),\n    Result.\n\napply((Values, Order), Line, ((FinalValues, FinalOrder), Output)) :-\n    atom_codes(Line, Codes),\n    split_string(Codes, \" \", \"\", Words),\n    process_command(Words, Values, Order, FinalValues, FinalOrder, Output).\n\nprocess_command([\"get\", K], Values, Order, Values, Order, \"-1\") :-\n    number_string(K, Key),\n    \\+ member(Key, Values).\nprocess_command([\"get\", K], Values, Order, Values, Order, Value) :-\n    number_string(K, Key),\n    member(Key, Values),\n    Values =.. [_|Pairs],\n    find_value(Pairs, Key, Value).\nprocess_command([\"put\", K, V], Values, Order, FinalValues, FinalOrder, _) :-\n    number_string(K, Key),\n    number_string(V, Val),\n    touch(Key, Order, NewOrder),\n    (   NewOrder = [Oldest|_],\n        not(member(Key, Values)),\n        length(NewOrder) > Cap,\n        delete(Values, Oldest, UpdatedValues),\n        FinalValues = UpdatedValues,\n        FinalOrder = NewOrder\n    ;\n        FinalValues = Values,\n        FinalOrder = NewOrder\n    ).\nprocess_command(_, _, _, _, _, _).\n\nfind_value([K-V|_], K, V) :- !.\nfind_value(_-V|Pairs, K, V) :-\n    find_value(Pairs, K, V).\n\nrunLRU(Cap, Commands, Outputs) :-\n    maplist(apply((empty_dict, [])), Commands, RawOutputs),\n    cat_maybes(RawOutputs, Outputs).\n\np10_lru :-\n    read_line_to_string(current_input, Cap),\n    read_line_to_string(current_input, N),\n    read_n_lines(N, current_input, Commands),\n    runLRU(Cap, Commands, Outputs),\n    format(\"~s~n\", [string_concat(Outputs, \"\\n\")]),\n    halt.\n\nread_n_lines(0, _, _) :- !.\nread_n_lines(N, Stream, [Line|Lines]) :-\n    read_line_to_string(Stream, Line),\n    M is N - 1,\n    read_n_lines(M, Stream, Lines).\n\n:- initialization(p10_lru).\n```"
+}

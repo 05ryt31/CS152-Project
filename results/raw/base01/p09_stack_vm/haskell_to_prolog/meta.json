@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:33:02+00:00",
+  "source_file": "p09_stack_vm.hs",
+  "target_file": "p09_stack_vm.pl",
+  "attempts": 1,
+  "duration_s": 26.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 737,
+    "completion_tokens": 501
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\nstep([], \"pop\", [], \"error\").\nstep([_ | T], \"pop\", T, \"\").\nstep(Stack, \"add\", NewStack, \"\") :-\n    length(Stack, Len),\n    Len >= 2,\n    [X, Y | Rest] = Stack,\n    NewStack is X + Y,\n    append(Rest, [NewStack], NewStackList),\n    !.\nstep(Stack, \"add\", Stack, \"error\").\n\nstep(Stack, \"mul\", NewStack, \"\") :-\n    length(Stack, Len),\n    Len >= 2,\n    [X, Y | Rest] = Stack,\n    NewStack is X * Y,\n    append(Rest, [NewStack], NewStackList),\n    !.\nstep(Stack, \"mul\", Stack, \"error\").\n\nstep([], \"dup\", [], \"error\").\nstep([X | T], \"dup\", [X, X | T], \"\").\n\nstep(Stack, \"swap\", NewStack, \"\") :-\n    length(Stack, Len),\n    Len >= 2,\n    [X, Y | Rest] = Stack,\n    append([Y, X], Rest, NewStackList),\n    !.\nstep(Stack, \"swap\", Stack, \"error\").\n\nstep([], \"print\", [], \"error\").\nstep([X | T], \"print\", T, X).\n\nstep(Stack, Command, Stack, \"error\") :-\n    atom(Command),\n    \\+ member(Command, [\"pop\", \"add\", \"mul\", \"dup\", \"swap\", \"print\"]).\n\nrunStack(Commands, Outputs) :-\n    maplist(runCommand, Commands, RawOutputs),\n    Outputs = [Output | _],\n    string_concat(Output, \"\\n\", FinalOutput),\n    format(\"~s\", [FinalOutput]).\n\nrunCommand(Command, Output) :-\n    atom(Command),\n    runStep([], Command, _, Output).\n\nrunStep(Stack, \"push\" : [X | _], NewStack, \"\") :-\n    number(X),\n    NewStack = [X | Stack].\nrunStep(Stack, Command, NewStack, Error) :-\n    step(Stack, Command, NewStack, Error).\n\np09_stack_vm :-\n    read_line_to_string(current_input, N),\n    number(N),\n    findall(Command, read_line_to_string(current_input, Command), Commands),\n    runStack(Commands, []),\n    halt(0).\n```"
+}

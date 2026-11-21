@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p07_brackets",
+  "src": "haskell",
+  "tgt": "scheme",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:15:46+00:00",
+  "source_file": "p07_brackets.hs",
+  "target_file": "p07_brackets.scm",
+  "attempts": 1,
+  "duration_s": 13.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 457,
+    "completion_tokens": 260
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (matching? open close)\n  (or (and (eq? open #\\() (eq? close #\\)))\n      (and (eq? open #\\[) (eq? close #\\]))\n      (and (eq? open #\\{) (eq? close #\\}))))\n\n(define (balanced? str)\n  (define (valid chars stack)\n    (cond ((null? chars)\n           (null? stack))\n          ((member (car chars) '(#\\(#\\[ #\\{))\n           (valid (cdr chars) (cons (car chars) stack)))\n          ((null? stack)\n           #f)\n          ((matching? (car stack) (car chars))\n           (valid (cdr chars) (cdr stack)))\n          (else\n           #f)))\n  (valid (string->list str) '()))\n\n(define (main)\n  (let* ((n (string->number (read-line)))\n         (lines (map string->list (take-n-lines n))))\n    (for-each (lambda (line)\n                (if (balanced? line)\n                    (display \"yes\")\n                    (display \"no\"))\n                (newline))\n              lines)))\n\n(main)\n```"
+}

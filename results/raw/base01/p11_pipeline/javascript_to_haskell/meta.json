@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "javascript",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:47:53+00:00",
+  "source_file": "p11_pipeline.js",
+  "target_file": "p11_pipeline.hs",
+  "attempts": 1,
+  "duration_s": 14.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 539,
+    "completion_tokens": 261
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport System.IO\nimport Data.List\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let lines = lines input\n        first = (head lines <|> \"\") >>= trim\n        values = case first of\n            \"\" -> []\n            _  -> map read . words $ first\n        k = read $ lines !! 1\n        operations = take k $ drop 2 lines\n        result = foldl applyOperation values operations\n        output = case result of\n            [] -> \"none\"\n            xs -> unwords $ map show xs\n    putStr output\n\napplyOperation :: [Int] -> String -> [Int]\napplyOperation xs op = case words op of\n    [\"map\", \"add\", n] -> map (+ read n) xs\n    [\"map\", \"mul\", n] -> map (* read n) xs\n    [\"filter\", \"even\"] -> filter even xs\n    [\"filter\", \"odd\"] -> filter odd xs\n    [\"filter\", \"gt\", n] -> filter (> read n) xs\n    [\"reduce\", \"sum\"] -> [sum xs]\n    _ -> xs\n\ntrim :: String -> String\ntrim = dropWhileEnd isSpace . dropWhile isSpace\n```"
+}

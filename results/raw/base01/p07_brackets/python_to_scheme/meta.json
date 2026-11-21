@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p07_brackets",
+  "src": "python",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:11:24+00:00",
+  "source_file": "p07_brackets.py",
+  "target_file": "p07_brackets.scm",
+  "attempts": 1,
+  "duration_s": 12.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 408,
+    "completion_tokens": 239
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define PAIRS '((#\\) . #\\() (#\\] . #\\[) (#\\} . #\\{)))\n\n(define (balanced text)\n  (define stack '())\n  (define (helper chars)\n    (cond ((null? chars) (null? stack))\n          ((member (car chars) '(#\\(#\\[ #\\{))\n           (helper (cons (cdr chars))))\n          (else\n           (if (or (null? stack) (not (eqv? (car stack) (cdr (assoc (car chars) PAIRS)))))\n               #f\n               (helper (cons (cdr chars)))))))\n  (helper (string->list text)))\n\n(define (main)\n  (let loop ()\n    (let ((n (string->number (read-line))))\n      (when (> n 0)\n        (do ((i 0 (+ i 1))) ((= i n))\n          (let ((line (read-line)))\n            (if (balanced line)\n                (display \"yes\\n\")\n                (display \"no\\n\"))))\n        (loop)))))\n\n(main)\n```"
+}

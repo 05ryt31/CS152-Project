@@ -1,0 +1,17 @@
+(import scheme (chicken base) (chicken io))
+
+(define (main)
+  (let* ((line (read-line))
+         (seen (make-hash-table))
+         (unique '()))
+    (for-each (lambda (token)
+                (let ((value (string->number token)))
+                  (unless (hash-table-exists? seen value)
+                    (hash-table-set! seen value #t)
+                    (set! unique (cons value unique)))))
+              (string-split line))
+    (when (> (length unique) 0)
+      (display (string-join (map number->string unique) " "))
+      (newline))))
+
+(main)

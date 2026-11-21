@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "java",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:49:27+00:00",
+  "source_file": "P04Bst.java",
+  "target_file": "p04_bst.pl",
+  "attempts": 1,
+  "duration_s": 22.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 768,
+    "completion_tokens": 409
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\n% Define the Node structure\nnode(value(_, Left, Right)).\n\n% Insert a value into the BST\ninsert(null, Value, node(Value, null, null)).\ninsert(node(Value, Left, Right), NewValue, node(Value, L, R)) :-\n    (   NewValue < Value -> insert(Left, NewValue, L), Right = Right\n    ;   NewValue >= Value -> Left = Left, insert(Right, NewValue, R)\n    ).\n\n% Inorder traversal of the BST\ninorder(null, []).\ninorder(node(_, Left, Right), List) :-\n    inorder(Left, LeftList),\n    inorder(Right, RightList),\n    append(LeftList, [Value | RightList], List).\n\n% Preorder traversal of the BST\npreorder(null, []).\npreorder(node(Value, Left, Right), [Value | List]) :-\n    preorder(Left, LeftList),\n    preorder(Right, RightList),\n    append(LeftList, RightList, List).\n\n% Calculate the height of the BST\nheight(null, 0).\nheight(node(_, Left, Right), H) :-\n    height(Left, LH),\n    height(Right, RH),\n    H is 1 + max(LH, RH).\n\n% Main predicate\np04_bst :-\n    read_line_to_string(current_input, Line),\n    (   Line = \"\" -> Tokens = []\n    ;   split_string(Line, \" \", \"\", Tokens)\n    ),\n    maplist(string_to_integer, Tokens, Values),\n    foldl(insert, Values, null, Root),\n    inorder(Root, InOrderList),\n    preorder(Root, PreOrderList),\n    format('~w~n', [InOrderList]),\n    format('~w~n', [PreOrderList]),\n    height(Root, Height),\n    format('~d~n', [Height]),\n    halt(0).\n```"
+}

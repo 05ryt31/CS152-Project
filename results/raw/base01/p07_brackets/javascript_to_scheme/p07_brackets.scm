@@ -1,0 +1,21 @@
+(import scheme (chicken base) (chicken io))
+
+(define pairs '((#\) . #\()) (#\] . #\[) (#\} . #\{)))
+
+(define (balanced text)
+  (define stack '())
+  (define (helper str)
+    (cond ((null? str) (null? stack))
+          ((member (car str) '(#\(#\[ #\{))
+           (helper (cons (cdr str))))
+          ((or (null? stack) (not (eq? (car stack) (cdr (assoc (car str) pairs)))))
+           #f)
+          (else (helper (cdr str)))))
+  (helper (string->list text)))
+
+(let* ((lines (string-split (read-string) "\n"))
+       (n (string->number (car lines))))
+  (do ((i 0 (+ i 1)))
+      ((= i n))
+    (display (if (balanced (list-ref lines (+ i 1))) "yes" "no"))
+    (newline))))

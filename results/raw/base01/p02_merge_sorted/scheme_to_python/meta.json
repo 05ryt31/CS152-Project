@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p02_merge_sorted",
+  "src": "scheme",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:36:13+00:00",
+  "source_file": "p02_merge_sorted.scm",
+  "target_file": "p02_merge_sorted.py",
+  "attempts": 1,
+  "duration_s": 8.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 434,
+    "completion_tokens": 151
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\ndef numbers(line):\n    return [] if line == \"\" else list(map(int, line.split()))\n\ndef merge(a, b):\n    if not a:\n        return b\n    if not b:\n        return a\n    if a[0] <= b[0]:\n        return [a[0]] + merge(a[1:], b)\n    else:\n        return [b[0]] + merge(a, b[1:])\n\ndef print_list(values):\n    if values:\n        print(' '.join(map(str, values)))\n\ndef safe_read_line():\n    try:\n        return input()\n    except EOFError:\n        return \"\"\n\nprint_list(merge(numbers(safe_read_line()), numbers(safe_read_line())))\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p07_brackets",
+  "src": "java",
+  "tgt": "javascript",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:13:06+00:00",
+  "source_file": "P07Brackets.java",
+  "target_file": "p07_brackets.js",
+  "attempts": 1,
+  "duration_s": 13.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 485,
+    "completion_tokens": 259
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nlet lines = [];\nrl.on('line', (line) => {\n  lines.push(line);\n}).on('close', () => {\n  const n = parseInt(lines.shift(), 10);\n  for (let i = 0; i < n; i++) {\n    const line = lines[i];\n    console.log(balanced(line) ? 'yes' : 'no');\n  }\n});\n\nfunction balanced(text) {\n  if (text === null) return true;\n  const stack = [];\n  for (const c of text) {\n    if (c === '(' || c === '[' || c === '{') stack.push(c);\n    else {\n      if (stack.length === 0 || \n          (c === ')' && stack[stack.length - 1] !== '(') ||\n          (c === ']' && stack[stack.length - 1] !== '[') || \n          (c === '}' && stack[stack.length - 1] !== '{')) return false;\n      stack.pop();\n    }\n  }\n  return stack.length === 0;\n}\n```"
+}

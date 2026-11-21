@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p06_calc",
+  "src": "python",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:03:38+00:00",
+  "source_file": "p06_calc.py",
+  "target_file": "p06_calc.pl",
+  "attempts": 1,
+  "duration_s": 24.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 664,
+    "completion_tokens": 471
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(readutil)).\n\np06_calc :-\n    read_line_to_string(current_input, Text),\n    Tokens = Tokens,\n    parse(Tokens, Result),\n    format('~d~n', [Result]),\n    halt(0).\n\nparse(Tokens, Result) :-\n    Parser =.. [Parser, Tokens, 0],\n    Parser:expression(Result).\n\ntokenize(Text, Tokens) :-\n    tokenize(Text, [], Tokens).\n\ntokenize([], Acc, Tokens) :-\n    reverse(Acc, Tokens).\ntokenize([H|T], Acc, Tokens) :-\n    H = ' ',\n    !,\n    tokenize(T, Acc, Tokens).\ntokenize([H|T], Acc, Tokens) :-\n    digit(H),\n    !,\n    tokenize_digits(T, [H|Acc], Tokens).\ntokenize([H|T], [H|Acc], Tokens) :-\n    tokenize(T, Acc, Tokens).\n\ndigit(C) :-\n    C >= '0',\n    C =< '9'.\n\ntokenize_digits([], Acc, Tokens) :-\n    reverse(Acc, Tokens).\ntokenize_digits([H|T], Acc, Tokens) :-\n    digit(H),\n    !,\n    tokenize_digits(T, [H|Acc], Tokens).\ntokenize_digits(_, Acc, Tokens) :-\n    reverse(Acc, Tokens).\n\nexpression(Parser, Value) :-\n    Parser:term(Value1),\n    Parser:peek(Op),\n    Op \\= nil,\n    Parser:next,\n    expression(Parser, Value2),\n    (   Op = '+'\n    ->  Value is Value1 + Value2\n    ;   Op = '-'\n    ->  Value is Value1 - Value2\n    ).\n\nterm(Parser, Value) :-\n    Parser:factor(Value1),\n    Parser:peek(Op),\n    Op = '*',\n    Parser:next,\n    term(Parser, Value2),\n    Value is Value1 * Value2.\n\nterm(Parser, Value) :-\n    Parser:factor(Value).\n\nfactor(Parser, Value) :-\n    Parser:peek('('),\n    Parser:next,\n    Parser:expression(Value),\n    Parser:peek(')'),\n    Parser:next.\n\nfactor(Parser, Value) :-\n    Parser:next(Token),\n    number(Token),\n    Value is Token.\n\nnumber(Token) :-\n    atom_number(Token, _).\n```"
+}

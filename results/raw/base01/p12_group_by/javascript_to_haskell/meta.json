@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p12_group_by",
+  "src": "javascript",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:58:49+00:00",
+  "source_file": "p12_group_by.js",
+  "target_file": "p12_group_by.hs",
+  "attempts": 1,
+  "duration_s": 10.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 405,
+    "completion_tokens": 184
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List (sort)\nimport Data.Map (Map, empty, insertWith, keys, lookup)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let lines = lines input\n        n = read . head $ lines\n        groups = foldl processLine empty (tail lines)\n    putStr . unlines $ map formatGroup (sort . keys $ groups)\n  where\n    processLine acc line = case words line of\n        [key, raw] -> insertWith (\\(_, c1) (_, c2) -> (c1 + value, c2 + 1)) key (value, 1) acc\n        _ -> acc\n      where\n        value = read raw :: Int\n    formatGroup (key, (sumValue, count)) = key ++ \" \" ++ show sumValue ++ \" \" ++ show count\n```"
+}

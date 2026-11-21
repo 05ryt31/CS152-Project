@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p12_group_by",
+  "src": "python",
+  "tgt": "javascript",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:56:51+00:00",
+  "source_file": "p12_group_by.py",
+  "target_file": "p12_group_by.js",
+  "attempts": 1,
+  "duration_s": 8.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 372,
+    "completion_tokens": 171
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nlet n;\nlet sums = {};\nlet counts = {};\n\nrl.on('line', (line) => {\n  if (!n) {\n    n = parseInt(line);\n  } else {\n    const [key, value] = line.split();\n    sums[key] = (sums[key] || 0) + parseInt(value);\n    counts[key] = (counts[key] || 0) + 1;\n  }\n}).on('close', () => {\n  Object.keys(sums).sort().forEach(key => {\n    console.log(`${key} ${sums[key]} ${counts[key]}`);\n  });\n  process.exit(0);\n});\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p02_merge_sorted",
+  "src": "haskell",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:37:42+00:00",
+  "source_file": "p02_merge_sorted.hs",
+  "target_file": "P02MergeSorted.java",
+  "attempts": 1,
+  "duration_s": 17.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 497,
+    "completion_tokens": 317
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p02_merge_sorted.haskell_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.IOException;\nimport java.io.InputStreamReader;\nimport java.util.Arrays;\nimport java.util.List;\nimport java.util.stream.Collectors;\n\npublic class P02MergeSorted {\n    public static void main(String[] args) {\n        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {\n            List<Integer> a = Arrays.stream(reader.readLine().split(\" \"))\n                                     .map(Integer::parseInt)\n                                     .collect(Collectors.toList());\n            List<Integer> b = Arrays.stream(reader.readLine().split(\" \"))\n                                     .map(Integer::parseInt)\n                                     .collect(Collectors.toList());\n            List<Integer> result = merge(a, b);\n            if (!result.isEmpty()) {\n                System.out.println(result.stream()\n                                          .map(String::valueOf)\n                                          .collect(Collectors.joining(\" \")));\n            }\n        } catch (IOException e) {\n            e.printStackTrace();\n        }\n    }\n\n    private static List<Integer> merge(List<Integer> xs, List<Integer> ys) {\n        if (xs.isEmpty()) return ys;\n        if (ys.isEmpty()) return xs;\n        if (xs.get(0) <= ys.get(0)) {\n            return Stream.concat(Stream.of(xs.get(0)), merge(xs.subList(1, xs.size()), ys))\n                         .collect(Collectors.toList());\n        } else {\n            return Stream.concat(Stream.of(ys.get(0)), merge(xs, ys.subList(1, ys.size())))\n                         .collect(Collectors.toList());\n        }\n    }\n}\n```"
+}

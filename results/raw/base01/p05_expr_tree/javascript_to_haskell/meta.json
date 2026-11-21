@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p05_expr_tree",
+  "src": "javascript",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:57:11+00:00",
+  "source_file": "p05_expr_tree.js",
+  "target_file": "p05_expr_tree.hs",
+  "attempts": 1,
+  "duration_s": 11.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 417,
+    "completion_tokens": 218
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nmodule Main where\n\nimport Data.List (intercalate)\nimport System.IO (hGetContents, stdout)\n\ndata Node = Node String Node Node | Leaf String deriving (Show)\n\nrender :: Node -> String\nrender (Leaf token) = token\nrender (Node token left right) = \"(\" ++ render left ++ \" \" ++ token ++ \" \" ++ render right ++ \")\"\n\nparseTokens :: [String] -> Node\nparseTokens [] = error \"Empty input\"\nparseTokens tokens = head $ foldl parseStack [] tokens\n  where\n    parseStack :: [Node] -> String -> [Node]\n    parseStack stack token\n      | elem token \"+-*\" = let right = head stack; left = stack !! 1 in parseStack (tail (init stack) ++ [Node token left right])\n      | otherwise = Leaf token : stack\n\nmain :: IO ()\nmain = do\n  input <- hGetContents stdin\n  let tokens = words input\n  let tree = parseTokens tokens\n  putStr $ render tree\n```"
+}

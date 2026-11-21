@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p02_merge_sorted",
+  "src": "scheme",
+  "tgt": "haskell",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:36:54+00:00",
+  "source_file": "p02_merge_sorted.scm",
+  "target_file": "p02_merge_sorted.hs",
+  "attempts": 1,
+  "duration_s": 11.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 473,
+    "completion_tokens": 205
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List.Split (splitOn)\nimport System.IO\n\nnumbers :: String -> [Int]\nnumbers line = if null line then [] else map read $ splitOn \" \" line\n\nmerge :: Ord a => [a] -> [a] -> [a]\nmerge [] ys = ys\nmerge xs [] = xs\nmerge (x:xs) (y:ys)\n  | x <= y    = x : merge xs (y:ys)\n  | otherwise = y : merge (x:xs) ys\n\nprintList :: Show a => [a] -> IO ()\nprintList = putStr . unwords . map show\n\nsafeReadLine :: IO String\nsafeReadLine = do\n  line <- getLine\n  return $ if null line then \"\" else line\n\nmain :: IO ()\nmain = do\n  line1 <- safeReadLine\n  line2 <- safeReadLine\n  printList $ merge (numbers line1) (numbers line2)\n```"
+}

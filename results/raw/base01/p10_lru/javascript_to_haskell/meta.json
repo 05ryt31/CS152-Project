@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "javascript",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:37:33+00:00",
+  "source_file": "p10_lru.js",
+  "target_file": "p10_lru.hs",
+  "attempts": 1,
+  "duration_s": 24.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 497,
+    "completion_tokens": 467
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.Map.Strict (Map, empty, insert, delete, member, lookup)\nimport System.IO (hSetBuffering, stdin, stdout, BufferMode(..))\nimport Control.Monad (when)\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdin LineBuffering\n    hSetBuffering stdout NoBuffering\n    input <- getContents\n    let lines' = lines input\n        capacity = read $ head lines'\n        n = read $ lines' !! 1\n        commands = zipWith parseCommand [3..] (drop 2 lines')\n    processCommands capacity commands\n\nparseCommand :: Int -> String -> (Int, Int, Maybe Int)\nparseCommand _ ('g':'e':'t':':':xs) = (0, read xs, Nothing)\nparseCommand _ ('s':'e':'t':':':xs) = case words xs of\n    [k, v] -> (1, read k, Just (read v))\n    _ -> error \"Invalid set command\"\nparseCommand _ _ = error \"Invalid command\"\n\nprocessCommands :: Int -> [(Int, Int, Maybe Int)] -> IO ()\nprocessCommands cap cmds = do\n    let (outputs, _) = foldl processCmd (empty, []) cmds\n    mapM_ putStrLn outputs\n\nprocessCmd :: (Map Int Int, [String]) -> (Int, Int, Maybe Int) -> (Map Int Int, [String])\nprocessCmd (cache, acc) (cmdType, key, val) = case cmdType of\n    0 -> case lookup key cache of\n        Just value -> (cache, acc ++ [show value])\n        Nothing -> (cache, acc ++ [\"-1\"])\n    1 -> case (member key cache, size cache) of\n        (True, _) -> (insert key (fromJust val) cache, acc)\n        (False, s) | s == cap -> (delete oldestKey (insert key (fromJust val) cache), acc)\n                    | otherwise -> (insert key (fromJust val) cache, acc)\n    _ -> error \"Invalid command type\"\n  where\n    oldestKey = fst . head $ toList cache\n    fromJust (Just x) = x\n```"
+}

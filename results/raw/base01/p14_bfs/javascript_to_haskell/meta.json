@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "javascript",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:12:30+00:00",
+  "source_file": "p14_bfs.js",
+  "target_file": "p14_bfs.hs",
+  "attempts": 1,
+  "duration_s": 17.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 514,
+    "completion_tokens": 320
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List (find)\nimport Data.Maybe (fromJust)\n\nmain :: IO ()\nmain = do\n    contents <- getContents\n    let lines = lines contents\n        [n, m] = map read . words $ lines !! 0\n        graph = buildGraph n m (tail lines)\n        [start, target] = map read . words $ lines !! (m + 1)\n        distance = bfsDistance graph start\n    print $ distance !! target\n\nbuildGraph :: Int -> Int -> [String] -> [[Int]]\nbuildGraph n m edges = foldl addEdge (replicate (n + 1) []) edges\n  where\n    addEdge g (e:es) = let [u, v] = map read . words $ e in g & (!! u) %~ (v :)\n                      & (!! v) %~ (u :)\n\nbfsDistance :: [[Int]] -> Int -> [Int]\nbfsDistance graph start = go [start] (-1 : repeat (-1))\n  where\n    go [] _ = []\n    go (node:rest) dists\n      | node == length dists - 1 = dists\n      | otherwise = let newDists = updateDist dists node\n                        newQueue = filter (`notElem` rest) (graph !! node ++ rest)\n                    in go newQueue newDists\n    updateDist ds idx = take idx ds ++ [(ds !! idx) + 1] ++ drop (idx + 1) ds\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "prolog",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:20:27+00:00",
+  "source_file": "p14_bfs.pl",
+  "target_file": "p14_bfs.scm",
+  "attempts": 1,
+  "duration_s": 23.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 878,
+    "completion_tokens": 436
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (main)\n  (let* ((first (read-line))\n         (ns-ms (string-split first #\\space))\n         (n (string->number (car ns-ms)))\n         (m (string->number (cadr ns-ms)))\n         (graph (make-vector n '()))\n         (last (read-line))\n         (ss-ts (string-split last #\\space))\n         (s (string->number (car ss-ts)))\n         (t (string->number (cadr ss-ts))))\n    (do ((i 0 (+ i 1)))\n        ((= i m))\n      (let* ((line (read-line))\n             (us-vs (string-split line #\\space))\n             (u (string->number (car us-vs)))\n             (v (string->number (cadr us-vs))))\n        (vector-set! graph u (cons v (vector-ref graph u)))))\n    (let ((result (bfs (list (cons s 0)) (list s) graph t)))\n      (display result)\n      (newline))))\n\n(define (bfs queue seen graph target)\n  (if (null? queue)\n      -1\n      (let ((node-distance (car queue)))\n        (if (= (cdr node-distance) target)\n            (cdr node-distance)\n            (let* ((node (car node-distance))\n                   (distance (cdr node-distance))\n                   (neighbors (vector-ref graph node))\n                   (new-seen (remove-member node seen))\n                   (added (filter (lambda (x) (not (member x new-seen))) neighbors))\n                   (entries (map (lambda (x) (cons x (+ distance 1))) added))\n                   (new-queue (append queue entries)))\n              (bfs new-queue new-seen graph target))))))\n\n(define (remove-member item lst)\n  (cond ((null? lst) '())\n        ((eq? item (car lst)) (cdr lst))\n        (else (cons (car lst) (remove-member item (cdr lst))))))\n\n(main)\n```"
+}

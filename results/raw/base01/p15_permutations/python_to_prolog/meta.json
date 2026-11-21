@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p15_permutations",
+  "src": "python",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:21:59+00:00",
+  "source_file": "p15_permutations.py",
+  "target_file": "p15_permutations.pl",
+  "attempts": 1,
+  "duration_s": 14.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 463,
+    "completion_tokens": 262
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\ngenerate(_, _, [], Out, Out).\ngenerate(Letters, Used, Current, Out, Acc) :-\n    length(Current, Len),\n    Len < length(Letters),\n    find_unused_index(Letters, Used, Index),\n    NewUsed = [New | Rest],\n    nth0(Index, Letters, Letter),\n    New = true,\n    append(Current, [Letter], NewCurrent),\n    generate(Letters, NewUsed, NewCurrent, Out, Acc).\n\nfind_unused_index([], _, _).\nfind_unused_index([H|T], [false|_], 0).\nfind_unused_index([_|T], [_|U], N) :-\n    find_unused_index(T, U, M),\n    M > 0,\n    N is M + 1.\n\np15_permutations :-\n    read_line_to_string(current_input, Line),\n    atom_codes(Line, Codes),\n    split_string(Codes, \"\", \" \", Letters),\n    sort(Letters, SortedLetters),\n    generate(SortedLetters, [false|Rest], [], Results, []),\n    maplist(atom_codes, Results, ResultCodes),\n    maplist(write, ResultCodes),\n    nl,\n    halt.\n```"
+}

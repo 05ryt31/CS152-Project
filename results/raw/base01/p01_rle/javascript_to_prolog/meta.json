@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p01_rle",
+  "src": "javascript",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:29:45+00:00",
+  "source_file": "p01_rle.js",
+  "target_file": "p01_rle.pl",
+  "attempts": 1,
+  "duration_s": 8.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 421,
+    "completion_tokens": 153
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\np01_rle :-\n    read_line_to_string(current_input, Line),\n    process_line(Line, Result),\n    format('~s~n', [Result]),\n    halt.\n\nprocess_line([], []).\nprocess_line([H|T], Result) :-\n    count_chars(T, H, Count),\n    append([H, Count], Rest, Result),\n    process_line(Rest, _).\n\ncount_chars([], _, 0).\ncount_chars([H|T], C, Count) :-\n    (   H = C -> Count1 is Count + 1, count_chars(T, C, Count1)\n    ;   Count is 1\n    ).\n```"
+}

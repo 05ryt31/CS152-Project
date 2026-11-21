@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:54:16+00:00",
+  "source_file": "p11_pipeline.hs",
+  "target_file": "p11_pipeline.pl",
+  "attempts": 1,
+  "duration_s": 30.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 586,
+    "completion_tokens": 562
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\napply(Xs, [\"map\", \"add\", N]) :- maplist(plus(N), Xs, Ys).\napply(Xs, [\"map\", \"mul\", N]) :- maplist(mult(N), Xs, Ys).\napply(Xs, [\"filter\", \"even\"]) :- keep_if(even, Xs, Ys).\napply(Xs, [\"filter\", \"odd\"]) :- keep_if(odd, Xs, Ys).\napply(Xs, [\"filter\", \"gt\", N]) :- keep_if(lambda(X, X > N), Xs, Ys).\napply([X], [\"reduce\", \"sum\"]) :- X = Y.\napply([], [\"reduce\", \"max\"]) :- !, fail.\napply(Xs, [\"reduce\", \"max\"]) :- max_list(Xs, Y).\n\nread_nums(S, L) :-\n    atom_codes(S, Codes),\n    split_string(Codes, \" \", \"\", Words),\n    maplist(atom_number, Words, L).\n\np11_pipeline :-\n    read_line_to_string(current_input, Values),\n    read_line_to_string(current_input, KStr),\n    number_string(K, KStr),\n    findall(Line, (between(1, K, _), read_line_to_string(current_input, Line)), Stages),\n    read_nums(Values, NumList),\n    foldl(apply, Stages, NumList, Result),\n    (   Result = [],\n        member(\"reduce\", LastStage),\n        LastStage =.. [_|Words],\n        member(\"max\", Words)\n    ->\n        format('none~n')\n    ;\n        Result \\= [],\n        maplist(number_string, Result, StrList),\n        format('~w~n', [StrList])\n    ),\n    halt.\n\nnumber_string(N, S) :-\n    number_codes(N, Codes),\n    atom_codes(S, Codes).\n\nkeep_if(Pred, [], []) :- !.\nkeep_if(Pred, [H|T], [H|RT]) :-\n    Pred(H),\n    keep_if(Pred, T, RT).\nkeep_if(Pred, [_|T], RT) :-\n    keep_if(Pred, T, RT).\n\nmult(N, X, Y) :-\n    Y is X * N.\n\nplus(N, X, Y) :-\n    Y is X + N.\n\nmax_list([X], X) :- !.\nmax_list([H|T], M) :-\n    max_list(T, TM),\n    (   H > TM\n    ->\n        M = H\n    ;\n        M = TM\n    ).\n\nlambda(_, true) :- !.\nlambda(X, P) :-\n    call(P, X).\n```"
+}

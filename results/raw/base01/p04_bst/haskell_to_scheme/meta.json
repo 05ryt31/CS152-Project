@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "haskell",
+  "tgt": "scheme",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:52:40+00:00",
+  "source_file": "p04_bst.hs",
+  "target_file": "p04_bst.scm",
+  "attempts": 1,
+  "duration_s": 21.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 550,
+    "completion_tokens": 392
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define-record-type tree\n  (make-tree value left right)\n  tree?\n  (value tree-value)\n  (left tree-left)\n  (right tree-right))\n\n(define (insert t v)\n  (cond ((tree? t)\n         (let* ((y (tree-value t))\n                (l (tree-left t))\n                (r (tree-right t)))\n           (if (< v y)\n               (make-tree y (insert l v) r)\n               (make-tree y l (insert r v)))))\n        (else\n         (make-tree v '() '()))))\n\n(define (inorder t)\n  (if (tree? t)\n      (append (inorder (tree-left t))\n              (list (tree-value t))\n              (inorder (tree-right t)))\n      '()))\n\n(define (preorder t)\n  (if (tree? t)\n      (append (list (tree-value t))\n              (preorder (tree-left t))\n              (preorder (tree-right t)))\n      '()))\n\n(define (height t)\n  (if (tree? t)\n      (+ 1 (max (height (tree-left t)) (height (tree-right t))))\n      0))\n\n(define (show-line xs)\n  (string-join (map number->string xs) \" \"))\n\n(define (safe-get-line)\n  (if (eof-object? (peek-char))\n      \"\"\n      (read-line)))\n\n(define main\n  (let* ((values (map string->number (string-split (safe-get-line) #\\space)))\n         (tree (foldl insert '() values)))\n    (display (show-line (inorder tree)))\n    (newline)\n    (display (show-line (preorder tree)))\n    (newline)\n    (display (number->string (height tree)))\n    (newline)))\n\n(main)\n```"
+}

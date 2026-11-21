@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "javascript",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:26:20+00:00",
+  "source_file": "p09_stack_vm.js",
+  "target_file": "p09_stack_vm.scm",
+  "attempts": 1,
+  "duration_s": 35.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 603,
+    "completion_tokens": 669
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (main args)\n  (define lines (string-split (read-all-input) #\\newline))\n  (define n (string->number (car lines)))\n  \n  (define stack '())\n  (define output '())\n  \n  (define (process-op op)\n    (cond\n      ((string=? op \"push\") (push-stack! (string->number (cadr parts))))\n      ((string=? op \"pop\") (pop-stack!))\n      ((or (string=? op \"add\") (string=? op \"mul\")) (binary-op! op))\n      ((string=? op \"dup\") (duplicate-top!))\n      ((string=? op \"swap\") (swap-tops!))\n      (else (push-output! (if (null? stack) \"error\" (number->string (car (reverse stack))))))))\n  \n  (define (push-stack! value)\n    (set! stack (cons value stack)))\n  \n  (define (pop-stack!)\n    (when (> (length stack) 0)\n      (set! stack (cdr stack))))\n  \n  (define (binary-op! op)\n    (when (> (length stack) 1)\n      (let* ((b (car stack))\n             (a (cadr stack))\n             (result (if (string=? op \"add\") (+ a b) (* a b))))\n        (pop-stack!)\n        (pop-stack!)\n        (push-stack! result))))\n  \n  (define (duplicate-top!)\n    (when (> (length stack) 0)\n      (push-stack! (car stack))))\n  \n  (define (swap-tops!)\n    (when (> (length stack) 1)\n      (let* ((top (car stack))\n             (second-top (cadr stack)))\n        (pop-stack!)\n        (pop-stack!)\n        (push-stack! second-top)\n        (push-stack! top))))\n  \n  (define (push-output! value)\n    (set! output (append output (list value))))\n  \n  (define (read-all-input)\n    (let loop ()\n      (let ((line (read-line)))\n        (if (eof-object? line)\n            \"\"\n            (string-append line \"\\n\" (loop))))))\n  \n  (define (string-split str delimiter)\n    (let loop ((chars (string->list str))\n               (current \"\")\n               (result '()))\n      (cond\n        ((null? chars)\n         (if (string=? current \"\")\n             (reverse result)\n             (reverse (cons current result))))\n        ((char=? (car chars) delimiter)\n         (loop (cdr chars) \"\" (cons current result)))\n        (else\n         (loop (cdr chars) (string-append current (string (car chars))) result)))))\n  \n  (do ((i 0 (+ i 1)))\n      ((>= i n))\n    (let ((parts (string-split (list-ref lines (+ i 1)) #\\space)))\n      (process-op (car parts))))\n  \n  (when (> (length output) 0)\n    (display (string-join output \"\\n\"))\n    (newline))\n  \n  (exit 0))\n\n(main (command-line-arguments))\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "scheme",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:39:53+00:00",
+  "source_file": "p10_lru.scm",
+  "target_file": "p10_lru.js",
+  "attempts": 1,
+  "duration_s": 17.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 682,
+    "completion_tokens": 317
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nlet capacity;\nlet n;\n\nrl.on('line', (line) => {\n  if (!capacity && !n) {\n    [capacity, n] = line.split(' ').map(Number);\n  } else {\n    const [op, keyStr, valStr] = line.split(' ');\n    const key = Number(keyStr);\n    let value = Number(valStr);\n\n    if (op === 'get') {\n      console.log(getValue(key));\n    } else {\n      setValue(key, value);\n    }\n  }\n}).on('close', () => {\n  process.exit(0);\n});\n\nconst entries = {};\nconst order = [];\n\nfunction getValue(key) {\n  const entry = entries[key];\n  if (entry) {\n    touch(key);\n    return entry.value;\n  }\n  return -1;\n}\n\nfunction setValue(key, value) {\n  const existing = entries[key];\n  if (existing) {\n    existing.value = value;\n    touch(key);\n  } else {\n    entries[key] = { value };\n    order.push(key);\n    if (order.length > capacity) {\n      const oldest = order.shift();\n      delete entries[oldest];\n    }\n  }\n}\n\nfunction touch(key) {\n  const index = order.indexOf(key);\n  if (index !== -1) {\n    order.splice(index, 1);\n    order.push(key);\n  }\n}\n```"
+}

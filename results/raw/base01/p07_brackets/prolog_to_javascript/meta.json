@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p07_brackets",
+  "src": "prolog",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:16:24+00:00",
+  "source_file": "p07_brackets.pl",
+  "target_file": "p07_brackets.js",
+  "attempts": 1,
+  "duration_s": 16.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 513,
+    "completion_tokens": 318
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nlet lines = [];\nrl.on('line', (line) => {\n  lines.push(line);\n});\n\nrl.on('close', () => {\n  const nLine = lines.shift();\n  const n = parseInt(nLine, 10);\n  run(n);\n  process.exit(0);\n});\n\nfunction run(n) {\n  if (n === 0) return;\n  const line = lines.shift();\n  if (balanced(line)) {\n    console.log('yes');\n  } else {\n    console.log('no');\n  }\n  run(n - 1);\n}\n\nfunction balanced(line) {\n  const chars = Array.from(line);\n  return balancedChars(chars, []);\n}\n\nfunction balancedChars(chars, stack) {\n  if (chars.length === 0) return stack.length === 0;\n  const [c, ...cs] = chars;\n  if (['(', '[', '{'].includes(c)) {\n    return balancedChars(cs, [c, ...stack]);\n  } else {\n    const open = stack[0];\n    if (matching(open, c)) {\n      return balancedChars(cs, stack.slice(1));\n    } else {\n      return false;\n    }\n  }\n}\n\nfunction matching(open, close) {\n  return open === '(' && close === ')' ||\n         open === '[' && close === ']' ||\n         open === '{' && close === '}';\n}\n```"
+}

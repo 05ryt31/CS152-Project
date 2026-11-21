@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:51:18+00:00",
+  "source_file": "p04_bst.scm",
+  "target_file": "p04_bst.pl",
+  "attempts": 1,
+  "duration_s": 24.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 739,
+    "completion_tokens": 446
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\ninsert(Tree, Value, NewTree) :-\n    (   Tree = [],\n        NewTree = [Value, [], []]\n    ;   Tree = [Root, Left, Right],\n        (   Value < Root,\n            insert(Left, Value, NewLeft),\n            NewTree = [Root, NewLeft, Right]\n        ;   Value >= Root,\n            insert(Right, Value, NewRight),\n            NewTree = [Root, Left, NewRight]\n        )\n    ).\n\ninorder([], []) :- !.\ninorder([Root | Rest], [Root | InorderRest]) :-\n    inorder(Rest, InorderRest).\n\npreorder([], []) :- !.\npreorder([Root | Rest], [Root | PreorderRest]) :-\n    preorder(Rest, PreorderRest).\n\nheight([], 0) :- !.\nheight([_ | Rest], Height) :-\n    height(Rest, SubHeight),\n    Height is SubHeight + 1.\n\nprint_list([]) :- !.\nprint_list([H | T]) :-\n    write(H),\n    (   T = []\n    ->  nl\n    ;   write(' '),\n        print_list(T)\n    ).\n\nnumbers(Line, Values) :-\n    (   Line = \"\",\n        Values = []\n    ;   split_string(Line, \" \", \"\", Tokens),\n        maplist(atom_number, Tokens, Values)\n    ).\n\nsafe_read_line(Line) :-\n    read_line_to_string(current_input, Line),\n    (   Line = \"\",\n        true\n    ;   true\n    ).\n\nbuild_tree([], Tree) :-\n    Tree = [].\nbuild_tree([H | T], Tree) :-\n    build_tree(T, NewTree),\n    insert(NewTree, H, Tree).\n\np04_bst :-\n    safe_read_line(Line),\n    numbers(Line, Values),\n    build_tree(Values, Tree),\n    inorder(Tree, InorderList),\n    preorder(Tree, PreorderList),\n    height(Tree, Height),\n    print_list(InorderList),\n    print_list(PreorderList),\n    format('~d~n', [Height]),\n    halt.\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "javascript",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:26:55+00:00",
+  "source_file": "p09_stack_vm.js",
+  "target_file": "p09_stack_vm.hs",
+  "attempts": 1,
+  "duration_s": 23.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 593,
+    "completion_tokens": 440
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport System.IO\n\nmain :: IO ()\nmain = do\n    contents <- getContents\n    let lines = lines contents\n        n = read $ head lines\n        (_, _, result) = foldl processCommand ([], [], []) $ zip [\"\"] (tail lines)\n    putStr $ unlines result\n\nprocessCommand :: ([Int], [String], [String]) -> (String, String) -> ([Int], [String], [String])\nprocessCommand (stack, errors, results) (op, arg) = case op of\n    \"push\" -> (stack', errors, results)\n      where\n        stack' = read arg : stack\n    \"pop\" -> (stack', errorOrResult, results)\n      where\n        stack' = tail stack\n        errorOrResult = if null stack then \"error\" else \"\"\n    \"add\" -> (stack', errorOrResult, results)\n      | length stack < 2 = (stack, \"error\", results)\n      | otherwise = (a + b : init stack, \"\", results)\n      where\n        (b:a:rest) = stack\n    \"mul\" -> (stack', errorOrResult, results)\n      | length stack < 2 = (stack, \"error\", results)\n      | otherwise = (a * b : init stack, \"\", results)\n      where\n        (b:a:rest) = stack\n    \"dup\" -> (stack', errorOrResult, results)\n      | null stack = (stack, \"error\", results)\n      | otherwise = (top : stack, \"\", results)\n      where\n        top = last stack\n    \"swap\" -> (stack', errorOrResult, results)\n      | length stack < 2 = (stack, \"error\", results)\n      | otherwise = (swappedStack, \"\", results)\n      where\n        (x:y:xs) = stack\n        swappedStack = y : x : xs\n    _ -> (stack, errorOrResult, results)\n      where\n        errorOrResult = if null stack then \"error\" else show (last stack)\n```"
+}

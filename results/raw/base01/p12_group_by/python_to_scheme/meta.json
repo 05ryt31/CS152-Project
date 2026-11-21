@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p12_group_by",
+  "src": "python",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:57:14+00:00",
+  "source_file": "p12_group_by.py",
+  "target_file": "p12_group_by.scm",
+  "attempts": 1,
+  "duration_s": 13.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 387,
+    "completion_tokens": 253
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (main)\n  (let* ((n (string->number (read-line)))\n         (sums (make-hash-table))\n         (counts (make-hash-table)))\n    (do ((i 0 (+ i 1))) ((= i n))\n      (let* ((line (read-line))\n             (parts (string-split line #\\space))\n             (key (car parts))\n             (value (string->number (cadr parts))))\n        (if (not (hash-table-exists? sums key))\n            (begin\n              (hash-table-set! sums key 0)\n              (hash-table-set! counts key 0))\n            (begin\n              (hash-table-set! sums key (+ (hash-table-ref sums key) value))\n              (hash-table-set! counts key (+ (hash-table-ref counts key) 1)))))\n    (for-each (lambda (key)\n                (display key)\n                (display \" \")\n                (display (hash-table-ref sums key))\n                (display \" \")\n                (display (hash-table-ref counts key))\n                (newline))\n              (sort (hash-table-keys sums) string<?))))\n\n(main)\n```"
+}

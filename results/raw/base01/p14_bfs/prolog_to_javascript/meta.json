@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "prolog",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:19:40+00:00",
+  "source_file": "p14_bfs.pl",
+  "target_file": "p14_bfs.js",
+  "attempts": 1,
+  "duration_s": 24.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 863,
+    "completion_tokens": 458
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nlet lines = [];\nrl.on('line', (line) => {\n  lines.push(line);\n});\n\nrl.on('close', () => {\n  const [firstLine, lastLine] = lines;\n  const [N, M] = firstLine.split(' ').map(Number);\n  let graph = [];\n  for (let i = 0; i < M; i++) {\n    const [U, V] = lines[i + 1].split(' ').map(Number);\n    graph = addEdge(U, V, graph);\n  }\n  const [S, T] = lastLine.split(' ').map(Number);\n  const result = bfs([[S, 0]], [S], graph, T);\n  console.log(result);\n  process.exit(0);\n});\n\nfunction addEdge(u, v, graph) {\n  return updateAdj(u, v, graph, []).concat(updateAdj(v, u, graph, []));\n}\n\nfunction updateAdj(node, neighbor, graph, acc) {\n  if (graph.length === 0) {\n    return [{ [node]: [neighbor] }];\n  }\n  const [head, ...tail] = graph;\n  if (Object.keys(head)[0] == node) {\n    return [...acc, { ...head, [node]: head[node].concat(neighbor) }];\n  }\n  return [head, ...updateAdj(node, neighbor, tail, acc)];\n}\n\nfunction bfs(queue, seen, graph, target) {\n  if (queue.length === 0) return -1;\n  const [current, distance] = queue.shift();\n  if (current === target) return distance;\n  const neighbors = getNeighbors(current, graph);\n  const unseenNeighbors = neighbors.filter(n => !seen.includes(n));\n  const newQueue = queue.concat(unseenNeighbors.map(n => [n, distance + 1]));\n  return bfs(newQueue, [...seen, current], graph, target);\n}\n\nfunction getNeighbors(node, graph) {\n  return Object.values(graph.find(g => g.hasOwnProperty(node)) || {}).flat();\n}\n```"
+}

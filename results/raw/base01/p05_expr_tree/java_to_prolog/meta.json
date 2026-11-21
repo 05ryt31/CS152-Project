@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p05_expr_tree",
+  "src": "java",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:58:21+00:00",
+  "source_file": "P05ExprTree.java",
+  "target_file": "p05_expr_tree.pl",
+  "attempts": 1,
+  "duration_s": 14.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 603,
+    "completion_tokens": 265
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(read_util)).\n:- use_module(library(lists)).\n\np05_expr_tree :-\n    read_line_to_string(current_input, Input),\n    split_string(Input, Tokens, ' '),\n    parse_tokens(Tokens, Stack),\n    LastNode = Stack,\n    format('~w~n', [render(LastNode)]),\n    halt(0).\n\nparse_tokens([], []).\nparse_tokens([Token | Rest], Stack) :-\n    (   Token = '+' ; Token = '-' ; Token = '*' ),\n    pop(Stack, Right),\n    pop(Stack, Left),\n    NewNode =.. [Token, Left, Right],\n    push(NewNode, Stack, NewStack),\n    parse_tokens(Rest, NewStack).\nparse_tokens([Token | Rest], [Node | Stack]) :-\n    Node =.. [Token],\n    parse_tokens(Rest, [Node | Stack]).\n\npop([H | T], H, T).\n\npush(X, Stack, [X | Stack]).\n\nrender(Node) :-\n    Node =.. [Token, Left, Right],\n    render(Left, LeftStr),\n    render(Right, RightStr),\n    format('~w ~w ~w', [LeftStr, Token, RightStr]).\nrender(Token, Token) :-\n    atom(Token).\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "prolog",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:55:30+00:00",
+  "source_file": "p11_pipeline.pl",
+  "target_file": "P11Pipeline.java",
+  "attempts": 1,
+  "duration_s": 29.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 773,
+    "completion_tokens": 557
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p11_pipeline.prolog_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.List;\nimport java.util.Scanner;\n\npublic class P11Pipeline {\n    public static void main(String[] args) {\n        try (Scanner scanner = new Scanner(new BufferedReader(new InputStreamReader(System.in)))) {\n            List<String> parts = Arrays.asList(scanner.nextLine().split(\" \"));\n            List<Integer> values = parts.stream()\n                    .skip(1)\n                    .map(Integer::parseInt)\n                    .toList();\n            int k = Integer.parseInt(scanner.nextLine());\n            List<Object> result = stages(k, values);\n            output(result);\n        } catch (Exception e) {\n            System.err.println(\"Error: \" + e.getMessage());\n            System.exit(1);\n        }\n    }\n\n    private static List<Object> stages(int k, List<Integer> values) {\n        if (k == 0) return values;\n        List<String> parts = Arrays.asList(scanner.nextLine().split(\" \"));\n        List<Integer> newValues = applyStage(parts, values);\n        return stages(k - 1, newValues);\n    }\n\n    private static List<Integer> applyStage(List<String> parts, List<Integer> values) {\n        String operation = parts.get(0);\n        String type = parts.get(1);\n        int n = parts.size() > 2 ? Integer.parseInt(parts.get(2)) : 0;\n        switch (operation + \"_\" + type) {\n            case \"map_add\":\n                return values.stream().map(x -> x + n).toList();\n            case \"map_mul\":\n                return values.stream().map(x -> x * n).toList();\n            case \"filter_even\":\n                return values.stream().filter(x -> x % 2 == 0).toList();\n            case \"filter_odd\":\n                return values.stream().filter(x -> x % 2 != 0).toList();\n            case \"filter_gt\":\n                return values.stream().filter(x -> x > n).toList();\n            case \"reduce_sum\":\n                return List.of(values.stream().mapToInt(Integer::intValue).sum());\n            default:\n                throw new IllegalArgumentException(\"Unknown operation: \" + operation + \"_\" + type);\n        }\n    }\n\n    private static void output(Object result) {\n        if (result instanceof List<?> list && !list.isEmpty()) {\n            System.out.println(list.stream().map(Object::toString).collect(Collectors.joining(\" \")));\n        } else if (result instanceof Integer integer) {\n            System.out.println(integer);\n        } else if (result instanceof String string) {\n            System.out.println(string);\n        } else {\n            System.out.println(\"none\");\n        }\n    }\n}\n```"
+}

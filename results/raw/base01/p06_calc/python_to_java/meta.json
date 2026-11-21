@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p06_calc",
+  "src": "python",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:02:28+00:00",
+  "source_file": "p06_calc.py",
+  "target_file": "P06Calc.java",
+  "attempts": 1,
+  "duration_s": 25.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 639,
+    "completion_tokens": 483
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p06_calc.python_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class P06Calc {\n    public static void main(String[] args) throws Exception {\n        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));\n        String text = reader.readLine();\n        List<String> tokens = tokenize(text);\n        Parser parser = new Parser(tokens);\n        System.out.println(parser.expression());\n    }\n\n    private static List<String> tokenize(String text) {\n        List<String> tokens = new ArrayList<>();\n        int i = 0;\n        while (i < text.length()) {\n            char ch = text.charAt(i);\n            if (ch == ' ') {\n                i++;\n            } else if (Character.isDigit(ch)) {\n                int j = i;\n                while (j < text.length() && Character.isDigit(text.charAt(j))) {\n                    j++;\n                }\n                tokens.add(text.substring(i, j));\n                i = j;\n            } else {\n                tokens.add(String.valueOf(ch));\n                i++;\n            }\n        }\n        return tokens;\n    }\n\n    private static class Parser {\n        private final List<String> tokens;\n        private int pos;\n\n        public Parser(List<String> tokens) {\n            this.tokens = tokens;\n            this.pos = 0;\n        }\n\n        private String peek() {\n            if (pos < tokens.size()) {\n                return tokens.get(pos);\n            }\n            return null;\n        }\n\n        private String next() {\n            String token = tokens.get(pos);\n            pos++;\n            return token;\n        }\n\n        private int expression() {\n            int value = term();\n            while (peek().equals(\"+\") || peek().equals(\"-\")) {\n                String op = next();\n                int right = term();\n                if (op.equals(\"+\")) {\n                    value += right;\n                } else {\n                    value -= right;\n                }\n            }\n            return value;\n        }\n\n        private int term() {\n            int value = factor();\n            while (peek().equals(\"*\")) {\n                next();\n                value *= factor();\n            }\n            return value;\n        }\n\n        private int factor() {\n            String token = next();\n            if (token.equals(\"(\")) {\n                int value = expression();\n                next();\n                return value;\n            }\n            return Integer.parseInt(token);\n        }\n    }\n}\n```"
+}

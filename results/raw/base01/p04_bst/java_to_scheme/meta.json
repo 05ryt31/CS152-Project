@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "java",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:48:45+00:00",
+  "source_file": "P04Bst.java",
+  "target_file": "p04_bst.scm",
+  "attempts": 1,
+  "duration_s": 27.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 711,
+    "completion_tokens": 505
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define-record-type node\n  (make-node value left right)\n  node?\n  (value node-value)\n  (left node-left set-node-left!)\n  (right node-right set-node-right!))\n\n(define (insert root value)\n  (if (null? root)\n      (make-node value #f #f)\n      (let loop ((current root))\n        (cond ((< value (node-value current))\n               (if (null? (node-left current))\n                   (begin\n                     (set-node-left! current (make-node value #f #f))\n                     root)\n                   (loop (node-left current))))\n              ((> value (node-value current))\n               (if (null? (node-right current))\n                   (begin\n                     (set-node-right! current (make-node value #f #f))\n                     root)\n                   (loop (node-right current))))))))\n\n(define (inorder node out)\n  (when node\n    (inorder (node-left node) out)\n    (when (> (string-length out) 0) (display \" \" out))\n    (display (number->string (node-value node)) out)\n    (inorder (node-right node) out)))\n\n(define (preorder node out)\n  (when node\n    (when (> (string-length out) 0) (display \" \" out))\n    (display (number->string (node-value node)) out)\n    (preorder (node-left node) out)\n    (preorder (node-right node) out)))\n\n(define (height node)\n  (if (null? node)\n      0\n      (+ 1 (max (height (node-left node)) (height (node-right node))))))\n\n(define (main)\n  (define line (read-line))\n  (define root #f)\n  (for-each (lambda (token)\n              (when (not (string=? token \"\"))\n                (set! root (insert root (string->number token)))))\n            (string-split line #px\"[\\\\s]+\"))\n\n  (define in (open-output-string))\n  (define pre (open-output-string))\n  (inorder root in)\n  (preorder root pre)\n\n  (display (get-output-string in))\n  (newline)\n  (display (get-output-string pre))\n  (newline)\n  (display (number->string (height root)))\n  (newline))\n\n(main)\n```"
+}

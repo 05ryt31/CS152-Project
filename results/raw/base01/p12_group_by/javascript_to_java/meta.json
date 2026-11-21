@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p12_group_by",
+  "src": "javascript",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:58:20+00:00",
+  "source_file": "p12_group_by.js",
+  "target_file": "P12GroupBy.java",
+  "attempts": 1,
+  "duration_s": 13.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 450,
+    "completion_tokens": 246
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p12_group_by.javascript_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.util.HashMap;\nimport java.util.Map;\nimport java.util.TreeSet;\n\npublic class P12GroupBy {\n    public static void main(String[] args) throws Exception {\n        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));\n        int n = Integer.parseInt(reader.readLine());\n        \n        Map<String, int[]> groups = new HashMap<>();\n        for (int i = 0; i < n; i++) {\n            String[] parts = reader.readLine().split(\"\\\\s+\");\n            String key = parts[0];\n            int value = Integer.parseInt(parts[1]);\n            groups.merge(key, new int[]{value, 1}, (a, b) -> new int[]{a[0] + b[0], a[1] + b[1]});\n        }\n        \n        TreeSet<String> sortedKeys = new TreeSet<>(groups.keySet());\n        for (String key : sortedKeys) {\n            int[] group = groups.get(key);\n            System.out.println(key + \" \" + group[0] + \" \" + group[1]);\n        }\n    }\n}\n```"
+}

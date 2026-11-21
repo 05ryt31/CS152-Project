@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "java",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:49:52+00:00",
+  "source_file": "P11Pipeline.java",
+  "target_file": "p11_pipeline.pl",
+  "attempts": 1,
+  "duration_s": 36.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 820,
+    "completion_tokens": 685
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\np11_pipeline :-\n    read_line_to_string(current_input, Line),\n    split_string(Line, ' ', '', Tokens),\n    maplist(string_to_integer, Tokens, Values),\n\n    read_line_to_string(current_input, KLine),\n    string_to_integer(KLine, K),\n\n    process_commands(Values, K, Result),\n\n    print_result(Result),\n    halt.\n\nprocess_commands(_, 0, _).\n\nprocess_commands(Values, K, Result) :-\n    read_line_to_string(current_input, Command),\n    parse_command(Command, Action, Arg1, Arg2),\n    update_values(Values, Action, Arg1, Arg2, NewValues),\n    K1 is K - 1,\n    process_commands(NewValues, K1, Result).\n\nparse_command(Command, Action, Arg1, Arg2) :-\n    split_string(Command, ' ', '', Parts),\n    nth0(0, Parts, Action),\n    nth0(1, Parts, Arg1),\n    nth0(2, Parts, Arg2).\n\nupdate_values(Values, 'map', 'add', Amount, NewValues) :-\n    maplist(add_amount(Amount), Values, NewValues).\nupdate_values(Values, 'map', 'mul', Amount, NewValues) :-\n    maplist(mul_amount(Amount), Values, NewValues).\nupdate_values(Values, 'filter', 'even', _, NewValues) :-\n    keep_if_even(Values, NewValues).\nupdate_values(Values, 'filter', 'odd', _, NewValues) :-\n    keep_if_odd(Values, NewValues).\nupdate_values(Values, 'filter', 'gt', Threshold, NewValues) :-\n    keep_if_gt(Values, Threshold, NewValues).\nupdate_values(Values, 'sum', _, _, Sum) :-\n    sum_list(Values, Sum).\nupdate_values(Values, 'max', _, _, Max) :-\n    find_max(Values, Max).\n\nadd_amount(Amount, Value, NewValue) :-\n    NewValue is Value + Amount.\n\nmul_amount(Amount, Value, NewValue) :-\n    NewValue is Value * Amount.\n\nkeep_if_even([], []).\nkeep_if_even([H|T], [H|NT]) :-\n    H mod 2 =:= 0,\n    keep_if_even(T, NT).\nkeep_if_even([_|T], NT) :-\n    keep_if_even(T, NT).\n\nkeep_if_odd([], []).\nkeep_if_odd([H|T], [H|NT]) :-\n    H mod 2 =\\= 0,\n    keep_if_odd(T, NT).\nkeep_if_odd([_|T], NT) :-\n    keep_if_odd(T, NT).\n\nkeep_if_gt([], _, []).\nkeep_if_gt([H|T], Threshold, [H|NT]) :-\n    H > Threshold,\n    keep_if_gt(T, Threshold, NT).\nkeep_if_gt([_|T], Threshold, NT) :-\n    keep_if_gt(T, Threshold, NT).\n\nprint_result(List) :-\n    maplist(print_number, List),\n    nl.\nprint_result(Sum) :-\n    format('~d~n', [Sum]).\nprint_result(Max) :-\n    format('~d~n', [Max]).\n\nprint_number(Number) :-\n    write(Number),\n    write(' ').\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p12_group_by",
+  "src": "prolog",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:02:35+00:00",
+  "source_file": "p12_group_by.pl",
+  "target_file": "p12_group_by.py",
+  "attempts": 1,
+  "duration_s": 13.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 516,
+    "completion_tokens": 240
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\ndef p12_group_by():\n    n_line = input().strip()\n    n = int(n_line)\n    groups = []\n    rows(n, [], groups)\n    sorted_groups = sorted(groups)\n    print_groups(sorted_groups)\n\ndef rows(n, groups, result):\n    if n == 0:\n        result.extend(groups)\n    else:\n        line = input().strip()\n        key, value = line.split(\" \", 1)\n        v = int(value)\n        new_groups = update(key, v, groups)\n        n1 = n - 1\n        rows(n1, new_groups, result)\n\ndef update(key, value, groups):\n    for i, (k, s, c) in enumerate(groups):\n        if k == key:\n            return groups[:i] + [(key, s + value, c + 1)] + groups[i+1:]\n    return groups + [(key, value, 1)]\n\ndef print_groups(groups):\n    for key, s, c in groups:\n        print(f\"{key} {s} {c}\")\n\nif __name__ == \"__main__\":\n    p12_group_by()\n```"
+}

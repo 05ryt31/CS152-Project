@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p01_rle",
+  "src": "scheme",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:30:48+00:00",
+  "source_file": "p01_rle.scm",
+  "target_file": "P01Rle.java",
+  "attempts": 1,
+  "duration_s": 11.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 457,
+    "completion_tokens": 219
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p01_rle.scheme_to_java;\n\nimport java.util.Scanner;\nimport java.io.PrintWriter;\n\npublic class P01Rle {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        PrintWriter writer = new PrintWriter(System.out);\n\n        String line = scanner.nextLine();\n        String encodedLine = encode(line.toCharArray());\n        writer.println(encodedLine);\n        writer.flush();\n\n        scanner.close();\n        writer.close();\n    }\n\n    private static String encode(char[] chars) {\n        if (chars.length == 0) return \"\";\n\n        StringBuilder out = new StringBuilder();\n        int count = 1;\n        char current = chars[0];\n\n        for (int i = 1; i < chars.length; i++) {\n            if (chars[i] == current) {\n                count++;\n            } else {\n                out.append(current).append(count);\n                current = chars[i];\n                count = 1;\n            }\n        }\n        out.append(current).append(count);\n\n        return out.toString();\n    }\n}\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p14_bfs",
+  "src": "java",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:14:39+00:00",
+  "source_file": "P14Bfs.java",
+  "target_file": "p14_bfs.pl",
+  "attempts": 1,
+  "duration_s": 31.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 669,
+    "completion_tokens": 597
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\np14_bfs :-\n    read_line_to_string(current_input, Line),\n    split_string(Line, ' ', '', First),\n    [N, M | _] = First,\n    N_int is string_to_integer(N),\n    M_int is string_to_integer(M),\n    initialize_neighbours(N_int, M_int, Neighbours),\n\n    read_lines(M_int, Neighbours, Edges),\n    add_edges(Edges, Neighbours, FinalNeighbours),\n\n    read_line_to_string(current_input, LastLine),\n    split_string(LastLine, ' ', '', Last),\n    [StartStr, TargetStr | _] = Last,\n    Start is string_to_integer(StartStr),\n    Target is string_to_integer(TargetStr),\n\n    bfs(FinalNeighbours, Start, Target, Distance),\n    format('~d~n', [Distance]),\n    halt.\n\ninitialize_neighbours(N, _, [[] | _]) :-\n    length(List, N),\n    maplist(=([]), List).\n\nread_lines(0, _, _) :- !.\nread_lines(N, Neighbours, [Edge | Edges]) :-\n    read_line_to_string(current_input, Line),\n    split_string(Line, ' ', '', Edge),\n    read_lines(N-1, Neighbours, Edges).\n\nadd_edges([], _, Neighbours) :- !.\nadd_edges([[U, V], Rest], Neighbours, NewNeighbours) :-\n    append(Neighbours, [[U, V], [V, U]], Temp),\n    add_edges(Rest, Temp, NewNeighbours).\n\nbfs(Neighbours, Start, Target, Distance) :-\n    findall(-1, between(1, Length, _), DistanceList),\n    Length is length(Neighbours),\n    nth0(Start, DistanceList, StartDist),\n    StartDist = 0,\n    bfs_helper(Neighbours, Start, Target, DistanceList, Visited),\n    nth0(Target, DistanceList, Result),\n    Result \\= -1.\n\nbfs_helper(_, _, _, [], _) :- !.\nbfs_helper(Neighbours, Node, Target, DistanceList, Visited) :-\n    findall(X, (member([Node, X], Neighbours), \\+ member(X, Visited)), NextNodes),\n    update_distances(DistanceList, NextNodes, NewDistanceList),\n    append(Visited, NextNodes, NewVisited),\n    bfs_helper(Neighbours, Target, Target, NewDistanceList, NewVisited).\n\nupdate_distances(DistanceList, [], DistanceList).\nupdate_distances(DistanceList, [X | Xs], NewDistanceList) :-\n    nth0(X, DistanceList, CurrentDist),\n    NewDist is CurrentDist + 1,\n    nth0(X, DistanceList, NewDist),\n    update_distances(DistanceList, Xs, NewDistanceList).\n```"
+}

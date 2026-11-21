@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p13_n_queens",
+  "src": "java",
+  "tgt": "javascript",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:05:49+00:00",
+  "source_file": "P13NQueens.java",
+  "target_file": "p13_n_queens.js",
+  "attempts": 1,
+  "duration_s": 11.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 485,
+    "completion_tokens": 220
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n});\n\nrl.question('', (input) => {\n  const n = parseInt(input.trim(), 10);\n  console.log(count(n, 0, new Array(n).fill(0)));\n  rl.close();\n});\n\nfunction safe(columns, row, col) {\n  for (let previous = 0; previous < row; previous++) {\n    if (columns[previous] === col || Math.abs(columns[previous] - col) === row - previous) return false;\n  }\n  return true;\n}\n\nfunction count(n, row, columns) {\n  if (row === n) return 1;\n\n  let total = 0;\n  for (let col = 0; col < n; col++) {\n    if (safe(columns, row, col)) {\n      columns[row] = col;\n      total += count(n, row + 1, columns);\n    }\n  }\n\n  return total;\n}\n```"
+}

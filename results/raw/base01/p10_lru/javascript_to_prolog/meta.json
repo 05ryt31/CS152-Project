@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "javascript",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:37:58+00:00",
+  "source_file": "p10_lru.js",
+  "target_file": "p10_lru.pl",
+  "attempts": 1,
+  "duration_s": 24.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 564,
+    "completion_tokens": 463
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\ntouch(Key, Values) :-\n    member(Key-Value, Values),\n    delete(Values, Key-_, NewValues),\n    append(NewValues, [Key-Value], NewValues2),\n    !,\n    NewValues2.\ntouch(_, Values) :-\n    Values.\n\np10_lru :-\n    read_line_to_string(current_input, Line1),\n    string_to_number(Line1, Capacity),\n    read_line_to_string(current_input, Line2),\n    string_to_number(Line2, N),\n    findall(Line, read_line_to_string(current_input, Line), Lines),\n    process_lines(Capacity, N, Lines, [], []),\n    !,\n    halt.\n\nprocess_lines(_, _, [], _, Output) :-\n    format('~w~n', [Output]).\nprocess_lines(Capacity, N, [Line|Lines], Values, Output) :-\n    split_string(Line, \" \", \"\", Parts),\n    get_part(Parts, Action, Key, Value),\n    handle_action(Action, Key, Value, Capacity, Values, NewValues),\n    process_lines(Capacity, N, Lines, NewValues, NewOutput),\n    !.\n\nhandle_action('get', Key, _, _, Values, Output) :-\n    (   member(Key-Value, Values)\n    ->  format('~w~n', [Value]),\n        touch(Key, Values, NewValues),\n        Output = NewValues\n    ;   format('-1~n'),\n        Output = Values\n    ).\nhandle_action(_, Key, Value, Capacity, Values, Output) :-\n    (   member(Key-_, Values)\n    ->  touch(Key, Values, NewValues)\n    ;   (   length(Values) >= Capacity\n        ->  delete_first_key(Values, NewValues)\n        ;   NewValues = Values\n        ),\n        NewValues = [Key-Value | NewValues]\n    ),\n    Output = NewValues.\n\ndelete_first_key([_|T], T).\n\nget_part([Action, Key|_], Action, Key, _).\nget_part([Action, Key, Value|_], Action, Key, Value).\n\nstring_to_number(S, N) :-\n    number_codes(N, S).\n```"
+}

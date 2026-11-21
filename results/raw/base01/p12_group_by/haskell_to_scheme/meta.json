@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p12_group_by",
+  "src": "haskell",
+  "tgt": "scheme",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:02:04+00:00",
+  "source_file": "p12_group_by.hs",
+  "target_file": "p12_group_by.scm",
+  "attempts": 1,
+  "duration_s": 11.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 499,
+    "completion_tokens": 224
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (process-rows rows)\n  (define (add groups line)\n    (let* ((words (string-split line))\n           (key (car words))\n           (value (string->number (cadr words))))\n      (if (= (length words) 2)\n          (hash-table-update! groups key (lambda (pair) (cons (+ (car pair) value) (+ 1 (cdr pair)))) #f)\n          groups)))\n  (define (show-group key pair)\n    (string-append key \" \" (number->string (car pair)) \" \" (number->string (cdr pair))))\n  (map (lambda (pair) (show-group (car pair) (cdr pair))) (sort (hash-table->list (foldl add (make-hash-table) rows)) car)))\n\n(define (main)\n  (let* ((n (string->number (read-line)))\n         (rows (build-list n read-line)))\n    (for-each displayln (process-rows rows))))\n\n(main)\n```"
+}

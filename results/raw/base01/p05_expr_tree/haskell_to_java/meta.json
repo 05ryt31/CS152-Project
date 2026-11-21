@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p05_expr_tree",
+  "src": "haskell",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:00:00+00:00",
+  "source_file": "p05_expr_tree.hs",
+  "target_file": "P05ExprTree.java",
+  "attempts": 1,
+  "duration_s": 22.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 455,
+    "completion_tokens": 427
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p05_expr_tree.haskell_to_java;\n\nimport java.util.*;\n\npublic class P05ExprTree {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        String line = scanner.nextLine();\n        System.out.println(render(buildTree(line)));\n    }\n\n    private static Tree buildTree(String line) {\n        return head(foldl(step, new ArrayList<>(), Arrays.asList(line.split(\" \"))));\n    }\n\n    private static List<Tree> foldl(Function<List<Tree>, String, List<Tree>> f, List<Tree> acc, List<String> list) {\n        if (list.isEmpty()) {\n            return acc;\n        }\n        return foldl(f, f.apply(acc, list.get(0)), list.subList(1, list.size()));\n    }\n\n    private static List<Tree> step(List<Tree> stack, String token) {\n        if (!stack.isEmpty() && stack.size() >= 2 && \"+-*/\".contains(token)) {\n            Tree right = stack.remove(stack.size() - 1);\n            Tree left = stack.remove(stack.size() - 1);\n            return Collections.singletonList(new Op(token, left, right));\n        } else {\n            return Collections.singletonList(new Leaf(token));\n        }\n    }\n\n    private static Tree head(List<Tree> list) {\n        return list.get(0);\n    }\n\n    private static String render(Tree tree) {\n        if (tree instanceof Leaf) {\n            return ((Leaf) tree).value;\n        } else {\n            Op op = (Op) tree;\n            return \"(\" + render(op.left) + \" \" + op.op + \" \" + render(op.right) + \")\";\n        }\n    }\n\n    private static class Tree {\n        String value;\n        Tree left;\n        Tree right;\n\n        Tree(String value) {\n            this.value = value;\n        }\n\n        Tree(String op, Tree left, Tree right) {\n            this.op = op;\n            this.left = left;\n            this.right = right;\n        }\n\n        String op;\n    }\n}\n```"
+}

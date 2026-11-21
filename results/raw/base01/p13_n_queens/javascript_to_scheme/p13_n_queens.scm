@@ -1,0 +1,25 @@
+(import scheme (chicken base) (chicken io))
+
+(define (safe columns row col)
+  (define (loop previous)
+    (cond ((>= previous row) #t)
+          ((or (= (list-ref columns previous) col)
+               (= (abs (- (list-ref columns previous) col)) (- row previous)))
+           #f)
+          (else (loop (+ previous 1)))))
+  (loop 0))
+
+(define (count row columns)
+  (if (= row n)
+      1
+      (let loop ((col 0) (total 0))
+        (if (< col n)
+            (if (safe columns row col)
+                (loop (+ col 1) (+ total (count (+ row 1) (cons col columns))))
+                (loop (+ col 1) total))
+            total))))
+
+(let* ((n (string->number (read-line)))
+       (result (count 0 '())))
+  (display result)
+  (newline))

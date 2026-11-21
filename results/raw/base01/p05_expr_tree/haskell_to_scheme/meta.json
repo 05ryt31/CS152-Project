@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p05_expr_tree",
+  "src": "haskell",
+  "tgt": "scheme",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:00:22+00:00",
+  "source_file": "p05_expr_tree.hs",
+  "target_file": "p05_expr_tree.scm",
+  "attempts": 1,
+  "duration_s": 12.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 420,
+    "completion_tokens": 230
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define-record-type tree\n  (make-tree value left right)\n  tree?\n  (value tree-value)\n  (left tree-left)\n  (right tree-right))\n\n(define (build-tree line)\n  (car (foldl step '() (string-split line))))\n\n(define (step stack token)\n  (if (member token '(\"+\" \"-\" \"*\"))\n      (cons (make-tree token (cadr stack) (car stack)) (cddr stack))\n      (cons (make-tree token #f #f) stack)))\n\n(define (render tree)\n  (cond ((tree? tree)\n         (if (and (tree-left tree) (tree-right tree))\n             (string-append \"(\" (render (tree-left tree)) \" \" (tree-value tree) \" \" (render (tree-right tree)) \")\")\n             (tree-value tree)))\n        (else\n         (error \"Invalid tree\"))))\n\n(define (main)\n  (let ((line (read-line)))\n    (display (render (build-tree line)))\n    (newline)))\n\n(main)\n```"
+}

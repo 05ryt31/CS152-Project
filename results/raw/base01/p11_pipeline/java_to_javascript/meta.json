@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "java",
+  "tgt": "javascript",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:48:54+00:00",
+  "source_file": "P11Pipeline.java",
+  "target_file": "p11_pipeline.js",
+  "attempts": 1,
+  "duration_s": 19.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 750,
+    "completion_tokens": 370
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nimport { createInterface } from 'node:readline';\n\nconst rl = createInterface({\n  input: process.stdin,\n  output: process.stdout,\n  terminal: false\n});\n\nlet values = [];\nrl.on('line', (line) => {\n  if (values.length === 0) {\n    values = line.split(/\\s+/).filter(Boolean).map(Number);\n  } else if (k === undefined) {\n    k = parseInt(line);\n  } else {\n    const [command, type, ...args] = line.split(/\\s+/);\n    if (command === 'map') {\n      const amount = parseInt(args[1]);\n      values = values.map(value => type === 'add' ? value + amount : value * amount);\n    } else if (command === 'filter') {\n      values = values.filter(value => {\n        if (type === 'even') return value % 2 === 0;\n        if (type === 'odd') return value % 2 !== 0;\n        if (type === 'gt') return value > parseInt(args[1]);\n        return false;\n      });\n    } else if (type === 'sum') {\n      const sum = values.reduce((acc, val) => acc + val, 0);\n      console.log(sum);\n      process.exit(0);\n    } else {\n      if (values.length === 0) {\n        console.log('none');\n      } else {\n        const max = Math.max(...values);\n        console.log(max);\n      }\n      process.exit(0);\n    }\n  }\n}).on('close', () => {\n  if (Array.isArray(values)) {\n    if (values.length > 0) {\n      console.log(values.join(' '));\n    }\n  } else {\n    console.log(values);\n  }\n});\n```"
+}

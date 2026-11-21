@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p11_pipeline",
+  "src": "haskell",
+  "tgt": "scheme",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:53:53+00:00",
+  "source_file": "p11_pipeline.hs",
+  "target_file": "p11_pipeline.scm",
+  "attempts": 1,
+  "duration_s": 23.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 531,
+    "completion_tokens": 444
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (apply xs stage)\n  (let* ((tokens (string-split stage))\n         (op (car tokens))\n         (arg (cadr tokens))\n         (n (string->number arg)))\n    (cond\n      ((and (= (length tokens) 3) (string=? op \"map\") (string=? arg \"add\")) (map (lambda (x) (+ x n)) xs))\n      ((and (= (length tokens) 3) (string=? op \"map\") (string=? arg \"mul\")) (map (lambda (x) (* x n)) xs))\n      ((and (= (length tokens) 2) (string=? op \"filter\") (string=? arg \"even\")) (filter even? xs))\n      ((and (= (length tokens) 2) (string=? op \"filter\") (string=? arg \"odd\")) (filter odd? xs))\n      ((and (= (length tokens) 3) (string=? op \"filter\") (string=? arg \"gt\")) (filter (lambda (x) (> x n)) xs))\n      ((and (= (length tokens) 2) (string=? op \"reduce\") (string=? arg \"sum\")) (list (apply + xs)))\n      ((and (= (length tokens) 2) (string=? op \"reduce\") (string=? arg \"max\"))\n       (if (null? xs) '() (list (apply max xs)))))))\n\n(define (read-numbers s)\n  (map string->number (string-split s)))\n\n(define (main)\n  (let* ((values (read-line))\n         (k (string->number (read-line)))\n         (stages (build-list k read-line))\n         (result (foldl apply (read-numbers values) stages)))\n    (cond\n      ((and (null? result) (> k 0) (member \"reduce\" stages)) (displayln \"none\"))\n      ((null? result) (void))\n      (else (displayln (string-join (map number->string result) \" \"))))))\n\n(main)\n```"
+}

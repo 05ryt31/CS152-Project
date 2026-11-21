@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "scheme",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:39:37+00:00",
+  "source_file": "p10_lru.scm",
+  "target_file": "p10_lru.py",
+  "attempts": 1,
+  "duration_s": 16.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 648,
+    "completion_tokens": 306
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\ndef find_value(key, entries):\n    return next((v for k, v in entries if k == key), None)\n\ndef remove_key(key, entries):\n    return [(k, v) for k, v in entries if k != key]\n\ndef remove_from_order(key, order):\n    return [x for x in order if x != key]\n\ndef touch(key, order):\n    return [x for x in order if x != key] + [key]\n\ndef lru(capacity, n):\n    entries = []\n    order = []\n    for _ in range(n):\n        parts = input().split()\n        op = parts[0]\n        key = int(parts[1])\n        if op == \"get\":\n            value = find_value(key, entries)\n            print(value if value is not None else -1)\n            if value is not None:\n                order = touch(key, order)\n        else:\n            value = int(parts[2])\n            existing = find_value(key, entries)\n            new_entries = remove_key(key, entries) + [(key, value)]\n            new_order = touch(key, order)\n            if not existing and len(new_order) > capacity:\n                oldest = new_order[0]\n                new_entries = remove_key(oldest, new_entries)\n                new_order = new_order[1:]\n            entries = new_entries\n            order = new_order\n\ncapacity = int(input())\nn = int(input())\nlru(capacity, n)\n```"
+}

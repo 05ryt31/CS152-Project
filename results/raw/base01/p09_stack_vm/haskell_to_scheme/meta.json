@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "haskell",
+  "tgt": "scheme",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:32:35+00:00",
+  "source_file": "p09_stack_vm.hs",
+  "target_file": "p09_stack_vm.scm",
+  "attempts": 1,
+  "duration_s": 26.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 680,
+    "completion_tokens": 500
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (step stack cmd)\n  (cond\n    [(string=? cmd \"pop\") (if (null? stack) (values stack '(\"error\")) (values (cdr stack) #f))]\n    [(string=? cmd \"add\") (if (< (length stack) 2) (values stack '(\"error\")) (let* ((a (car stack)) (b (cadr stack))) (values (cons (+ a b) (cddr stack)) #f)))]\n    [(string=? cmd \"mul\") (if (< (length stack) 2) (values stack '(\"error\")) (let* ((a (car stack)) (b (cadr stack))) (values (cons (* a b) (cddr stack)) #f)))]\n    [(string=? cmd \"dup\") (if (null? stack) (values stack '(\"error\")) (let ((top (car stack))) (values (append stack (list top)) #f)))]\n    [(string=? cmd \"swap\") (if (< (length stack) 2) (values stack '(\"error\")) (let* ((a (car stack)) (b (cadr stack))) (values (cons b (cons a (cddr stack)))))]\n    [(string=? cmd \"print\") (if (null? stack) (values stack '(\"error\")) (let ((top (car stack))) (values stack (list (number->string top)))))]\n    [else (values stack #f)]))\n\n(define (apply stack cmds)\n  (define-values (new-stack maybe-error) (step stack (car cmds)))\n  (if maybe-error\n      (values new-stack (cons maybe-error (apply new-stack (cdr cmds))))\n      (apply new-stack (cdr cmds))))\n\n(define (run-stack cmds)\n  (let loop ((stack '()) (cmds cmds) (outputs '()))\n    (if (null? cmds)\n        outputs\n        (let-values (((new-stack new-outputs) (apply stack (car cmds))))\n          (loop new-stack (cdr cmds) (append outputs new-outputs))))))\n\n(define (main)\n  (let* ((n (string->number (read-line)))\n         (commands (build-list n read-line))\n         (results (run-stack commands)))\n    (for-each display results)\n    (newline)))\n\n(main)\n```"
+}

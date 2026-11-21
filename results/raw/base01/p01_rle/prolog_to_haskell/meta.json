@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p01_rle",
+  "src": "prolog",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:32:40+00:00",
+  "source_file": "p01_rle.pl",
+  "target_file": "p01_rle.hs",
+  "attempts": 1,
+  "duration_s": 9.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 438,
+    "completion_tokens": 171
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport System.IO\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdin NoBuffering\n    hSetBuffering stdout NoBuffering\n    line <- getContents\n    let chars = filter (/= '\\n') line\n    out <- encode chars\n    putStr out\n    return ()\n\nencode :: String -> IO String\nencode [] = pure []\nencode (c:cs) = do\n    rest <- encode cs\n    count <- run c cs 1\n    let encoded = show count ++ [c]\n    pure $ encoded ++ rest\n\nrun :: Char -> String -> Int -> IO Int\nrun _ [] n = pure n\nrun c (x:xs) n | c == x = run c xs (n + 1)\n               | otherwise = pure n\n```"
+}

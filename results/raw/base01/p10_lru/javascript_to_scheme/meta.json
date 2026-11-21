@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "javascript",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:37:15+00:00",
+  "source_file": "p10_lru.js",
+  "target_file": "p10_lru.scm",
+  "attempts": 1,
+  "duration_s": 18.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 507,
+    "completion_tokens": 334
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(import scheme (chicken base) (chicken io))\n\n(define (touch key)\n  (let ((item (hash-table-ref values key #f)))\n    (when item\n      (hash-table-remove! values key)\n      (hash-table-set! values key item))))\n\n(let* ((lines (string-split (read-string) \"\\n\"))\n       (capacity (string->number (car lines)))\n       (n (string->number (cadr lines)))\n       (values (make-hash-table))\n       (output '()))\n  (do ((i 0 (+ i 1))) ((= i n))\n    (let* ((parts (string-split (list-ref lines (+ i 2)) #\\space))\n           (key (string->number (cadr parts))))\n      (cond\n        ((string=? (car parts) \"get\")\n         (if (hash-table-exists? values key)\n             (begin\n               (set! output (append output (list (number->string (hash-table-ref values key)))))\n               (touch key))\n             (set! output (append output (list \"-1\")))))\n        (else\n         (if (hash-table-exists? values key)\n             (touch key)\n             (when (= (hash-table-count values) capacity)\n               (let ((first-key (car (hash-table-keys values))))\n                 (hash-table-remove! values first-key))))\n         (hash-table-set! values key (string->number (caddr parts)))))))\n  (unless (null? output)\n    (display (string-join output \"\\n\"))\n    (newline)))\n\n(exit 0)\n```"
+}

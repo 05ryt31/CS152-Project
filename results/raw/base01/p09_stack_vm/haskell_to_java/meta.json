@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "haskell",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:32:02+00:00",
+  "source_file": "p09_stack_vm.hs",
+  "target_file": "P09StackVm.java",
+  "attempts": 1,
+  "duration_s": 33.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 715,
+    "completion_tokens": 625
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p09_stack_vm.haskell_to_java;\n\nimport java.util.*;\n\npublic class P09StackVm {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int n = Integer.parseInt(scanner.nextLine());\n        List<String> commands = new ArrayList<>();\n        for (int i = 0; i < n; i++) {\n            commands.add(scanner.nextLine());\n        }\n        System.out.println(String.join(\"\\n\", runStack(commands)));\n    }\n\n    private static List<String> runStack(List<String> commands) {\n        return new ArrayList<>(Arrays.asList(catMaybes(rawOutputs(commands))));\n    }\n\n    private static List<Optional<String>> rawOutputs(List<String> commands) {\n        Stack<Integer> stack = new Stack<>();\n        for (String command : commands) {\n            Optional<String> output = apply(stack, command);\n            if (output.isPresent()) {\n                System.out.print(output.get() + \"\\n\");\n            }\n        }\n        return Collections.emptyList();\n    }\n\n    private static Optional<String> apply(Stack<Integer> stack, String command) {\n        String[] parts = command.split(\" \");\n        if (\"push\".equals(parts[0])) {\n            try {\n                stack.push(Integer.parseInt(parts[1]));\n                return Optional.empty();\n            } catch (NumberFormatException e) {\n                return Optional.of(\"error\");\n            }\n        } else if (\"pop\".equals(parts[0])) {\n            if (stack.isEmpty()) {\n                return Optional.of(\"error\");\n            } else {\n                stack.pop();\n                return Optional.empty();\n            }\n        } else if (\"add\".equals(parts[0])) {\n            if (stack.size() < 2) {\n                return Optional.of(\"error\");\n            } else {\n                int b = stack.pop();\n                int a = stack.pop();\n                stack.push(a + b);\n                return Optional.empty();\n            }\n        } else if (\"mul\".equals(parts[0])) {\n            if (stack.size() < 2) {\n                return Optional.of(\"error\");\n            } else {\n                int b = stack.pop();\n                int a = stack.pop();\n                stack.push(a * b);\n                return Optional.empty();\n            }\n        } else if (\"dup\".equals(parts[0])) {\n            if (stack.isEmpty()) {\n                return Optional.of(\"error\");\n            } else {\n                int a = stack.peek();\n                stack.push(a);\n                return Optional.empty();\n            }\n        } else if (\"swap\".equals(parts[0])) {\n            if (stack.size() < 2) {\n                return Optional.of(\"error\");\n            } else {\n                int b = stack.pop();\n                int a = stack.pop();\n                stack.push(b);\n                stack.push(a);\n                return Optional.empty();\n            }\n        } else if (\"print\".equals(parts[0])) {\n            if (stack.isEmpty()) {\n                return Optional.of(\"error\");\n            } else {\n                return Optional.of(String.valueOf(stack.peek()));\n            }\n        } else {\n            return Optional.of(\"error\");\n        }\n    }\n}\n```"
+}

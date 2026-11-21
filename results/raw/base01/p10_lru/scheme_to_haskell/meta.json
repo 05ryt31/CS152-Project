@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p10_lru",
+  "src": "scheme",
+  "tgt": "haskell",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:40:27+00:00",
+  "source_file": "p10_lru.scm",
+  "target_file": "p10_lru.hs",
+  "attempts": 1,
+  "duration_s": 20.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 687,
+    "completion_tokens": 390
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List (delete, find, isPrefixOf, tails)\nimport System.IO (hSetBuffering, stdin, stdout, BufferMode(..))\nimport Text.Read (readsPrec)\n\nmain :: IO ()\nmain = do\n    hSetBuffering stdin LineBuffering\n    hSetBuffering stdout NoBuffering\n    capacity <- readLn\n    n <- readLn\n    lru capacity n\n\nlru :: Int -> Int -> IO ()\nlru capacity n = go 0 [] []\n  where\n    go i entries order\n      | i == n = return ()\n      | otherwise = do\n          line <- getLine\n          let [op, key] = words line\n              key' = read key\n          case op of\n            \"get\" -> do\n              case find (\\(k, _) -> k == key') entries of\n                Just (_, v) -> print v\n                Nothing     -> print (-1)\n              go (i + 1) entries (if Just (_, v) <- find (\\(k, _) -> k == key') entries then touch key' order else order)\n            _ -> do\n              let value = read (head $ tail $ words line)\n                  existing = find (\\(k, _) -> k == key') entries\n                  newEntries = (key', value) : delete (key', value) entries\n                  newOrder = touch key' order\n              if not (isJust existing) && length newOrder > capacity\n                then do\n                  let oldest = head newOrder\n                  go (i + 1) (delete (oldest, value) newEntries) (tail newOrder)\n                else\n                  go (i + 1) newEntries newOrder\n\ntouch :: Eq a => a -> [a] -> [a]\ntouch x xs = delete x xs ++ [x]\n```"
+}

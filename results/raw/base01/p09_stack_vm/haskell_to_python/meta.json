@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "haskell",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:31:17+00:00",
+  "source_file": "p09_stack_vm.hs",
+  "target_file": "p09_stack_vm.py",
+  "attempts": 1,
+  "duration_s": 19.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 631,
+    "completion_tokens": 340
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nimport sys\n\ndef step(stack, command):\n    if command == \"pop\":\n        if not stack:\n            return stack, \"error\"\n        else:\n            return stack[1:], None\n    elif command == \"add\":\n        if len(stack) < 2:\n            return stack, \"error\"\n        else:\n            return [stack[0] + stack[1]] + stack[2:], None\n    elif command == \"mul\":\n        if len(stack) < 2:\n            return stack, \"error\"\n        else:\n            return [stack[0] * stack[1]] + stack[2:], None\n    elif command == \"dup\":\n        if not stack:\n            return stack, \"error\"\n        else:\n            return [stack[0]] + stack, None\n    elif command == \"swap\":\n        if len(stack) < 2:\n            return stack, \"error\"\n        else:\n            return [stack[1], stack[0]] + stack[2:], None\n    elif command == \"print\":\n        if not stack:\n            return stack, \"error\"\n        else:\n            return stack, str(stack[0])\n    else:\n        return stack, None\n\ndef run_stack(commands):\n    stack = []\n    outputs = []\n    for command in commands:\n        _, output = step(stack, command)\n        if output is not None:\n            outputs.append(output)\n    return outputs\n\ndef main():\n    n = int(input())\n    commands = [input().strip() for _ in range(n)]\n    print(\"\\n\".join(run_stack(commands)))\n\nif __name__ == \"__main__\":\n    main()\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p13_n_queens",
+  "src": "prolog",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-15T00:09:02+00:00",
+  "source_file": "p13_n_queens.pl",
+  "target_file": "P13NQueens.java",
+  "attempts": 1,
+  "duration_s": 17.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 539,
+    "completion_tokens": 327
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p13_n_queens.prolog_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class P13NQueens {\n    public static void main(String[] args) {\n        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {\n            String line = reader.readLine();\n            int n = Integer.parseInt(line);\n            List<List<Integer>> solutions = new ArrayList<>();\n            solveNQueens(n, 0, new ArrayList<>(), solutions);\n            System.out.println(solutions.size());\n        } catch (Exception e) {\n            e.printStackTrace();\n        }\n    }\n\n    private static void solveNQueens(int n, int row, List<Integer> columns, List<List<Integer>> solutions) {\n        if (row == n) {\n            solutions.add(new ArrayList<>(columns));\n            return;\n        }\n        for (int col = 0; col < n; col++) {\n            if (isSafe(columns, row, col)) {\n                columns.add(col);\n                solveNQueens(n, row + 1, columns, solutions);\n                columns.remove(columns.size() - 1);\n            }\n        }\n    }\n\n    private static boolean isSafe(List<Integer> columns, int row, int col) {\n        for (int i = 0; i < row; i++) {\n            if (columns.get(i) == col || Math.abs(columns.get(i) - col) == row - i) {\n                return false;\n            }\n        }\n        return true;\n    }\n}\n```"
+}

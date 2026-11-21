@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "src": "java",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T23:28:45+00:00",
+  "source_file": "P09StackVm.java",
+  "target_file": "p09_stack_vm.hs",
+  "attempts": 1,
+  "duration_s": 26.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 614,
+    "completion_tokens": 503
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nmodule Main where\n\nimport Data.List.Split (splitOn)\nimport Control.Monad (when)\n\nmain :: IO ()\nmain = do\n    input <- getContents\n    let lines' = lines input\n    let n = read $ head lines'\n    let commands = tail lines'\n    processCommands n commands\n\nprocessCommands :: Int -> [String] -> IO ()\nprocessCommands _ [] = return ()\nprocessCommands n commands = do\n    let (cmd:rest) = commands\n    case cmd of\n        \"push\" -> push rest\n        \"pop\" -> pop\n        \"add\" -> add\n        \"mul\" -> mul\n        \"dup\" -> dup\n        \"swap\" -> swap\n        \"print\" -> printTop\n        _ -> putStrLn \"error\"\n    processCommands n rest\n\npush :: [String] -> IO ()\npush (x:xs) = modifyStack (\\s -> x : s)\npush _ = putStrLn \"error\"\n\npop :: IO ()\npop = modifyStack (\\s -> case s of\n    [] -> error \"empty stack\"\n    (_:ss) -> ss)\n\nadd :: IO ()\nadd = binaryOp (+)\n\nmul :: IO ()\nmul = binaryOp (*)\n\ndup :: IO ()\ndup = modifyStack (\\s -> case s of\n    [] -> error \"empty stack\"\n    (x:xs) -> x : x : xs)\n\nswap :: IO ()\nswap = modifyStack (\\s -> case s of\n    [] -> error \"empty stack\"\n    [_] -> error \"not enough elements on stack\"\n    (a:b:xs) -> b : a : xs)\n\nprintTop :: IO ()\nprintTop = modifyStack (\\s -> case s of\n    [] -> error \"empty stack\"\n    (x:_) -> putStrLn x)\n\nbinaryOp :: (Int -> Int -> Int) -> IO ()\nbinaryOp op = modifyStack (\\s -> case s of\n    [] -> error \"empty stack\"\n    [_] -> error \"not enough elements on stack\"\n    (b:a:xs) -> op a b : xs)\n\nmodifyStack :: ([String] -> [String]) -> IO ()\nmodifyStack f = do\n    stack <- readIORef stackRef\n    let newStack = f stack\n    writeIORef stackRef newStack\n\nstackRef :: IORef [String]\nstackRef = unsafePerformIO $ newIORef []\n\n{-# NOINLINE stackRef #-}\n```"
+}

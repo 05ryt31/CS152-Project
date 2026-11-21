@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p04_bst",
+  "src": "javascript",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:47:41+00:00",
+  "source_file": "p04_bst.js",
+  "target_file": "p04_bst.pl",
+  "attempts": 1,
+  "duration_s": 24.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 709,
+    "completion_tokens": 442
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lists)).\n:- use_module(library(readutil)).\n\n:- initialization(p04_bst).\n\np04_bst :-\n    read_line_to_string(current_input, Line),\n    trim(Line, Trimmed),\n    split_string(Trimmed, ' ', '', Values),\n    maplist(string_to_number, Values, Numbers),\n    build_tree(Numbers, Root),\n    inorder_traversal(Root, InOrder),\n    preorder_traversal(Root, PreOrder),\n    format('~w~n', [InOrder]),\n    format('~w~n', [PreOrder]),\n    format('~d~n', [height(Root)]),\n    halt.\n\nstring_to_number(S, N) :-\n    number_string(N, S).\n\nbuild_tree([], _).\nbuild_tree([H|T], Tree) :-\n    insert(H, T, Tree).\n\ninsert(X, [], X).\ninsert(X, [Y|T], Tree) :-\n    (   X < Y -> Tree =.. ['.', X, Left, Right],\n        insert(X, T, Left),\n        Tree =.. ['.', X, Left, Right]\n    ;   otherwise -> Tree =.. ['.', Y, Left, Right],\n        insert(X, T, Right),\n        Tree =.. ['.', Y, Left, Right]\n    ).\n\ninorder_traversal([], []).\ninorder_traversal([Node|T], InOrder) :-\n    inorder_traversal(Node, Left),\n    append(Left, [Node], Temp),\n    inorder_traversal(T, Right),\n    append(Temp, Right, InOrder).\n\npreorder_traversal([], []).\npreorder_traversal([Node|T], PreOrder) :-\n    append([Node], Left, Temp),\n    preorder_traversal(Node, Left),\n    preorder_traversal(T, Right),\n    append(Temp, Right, PreOrder).\n\nheight([]) :- !, 0.\nheight([_]) :- !, 1.\nheight([_, L, R]) :-\n    height(L, HL),\n    height(R, HR),\n    max(HL, HR, H),\n    H1 is H + 1,\n    H1.\n```"
+}

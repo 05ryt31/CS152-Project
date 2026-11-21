@@ -1,0 +1,41 @@
+{
+  "run_id": "base01",
+  "problem": "p05_expr_tree",
+  "src": "javascript",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "768247f96d96faa515d881c82c555cc9d8e727623687707cf218d58456366d42",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "05ryt31/lost-across-paradigms",
+      "revision": null,
+      "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-14T22:56:43+00:00",
+  "source_file": "p05_expr_tree.js",
+  "target_file": "P05ExprTree.java",
+  "attempts": 1,
+  "duration_s": 17.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 462,
+    "completion_tokens": 328
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\npackage results.raw.base01.p05_expr_tree.javascript_to_java;\n\nimport java.io.BufferedReader;\nimport java.io.InputStreamReader;\nimport java.util.Stack;\n\npublic class P05ExprTree {\n    public static void main(String[] args) {\n        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {\n            String input = reader.readLine();\n            if (input == null || input.trim().isEmpty()) {\n                System.exit(0);\n            }\n\n            String[] tokens = input.split(\"\\\\s+\");\n            Stack<Node> stack = new Stack<>();\n\n            for (String token : tokens) {\n                if (\"+-*\".contains(token)) {\n                    Node right = stack.pop();\n                    Node left = stack.pop();\n                    stack.push(new Node(token, left, right));\n                } else {\n                    stack.push(new Node(token));\n                }\n            }\n\n            System.out.println(render(stack.peek()));\n        } catch (Exception e) {\n            e.printStackTrace();\n            System.exit(1);\n        }\n    }\n\n    private static String render(Node node) {\n        if (node.left == null && node.right == null) {\n            return node.token;\n        }\n        return \"(\" + render(node.left) + \" \" + node.token + \" \" + render(node.right) + \")\";\n    }\n\n    private static class Node {\n        String token;\n        Node left;\n        Node right;\n\n        Node(String token) {\n            this.token = token;\n        }\n\n        Node(String token, Node left, Node right) {\n            this.token = token;\n            this.left = left;\n            this.right = right;\n        }\n    }\n}\n```"
+}
