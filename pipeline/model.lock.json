@@ -1,5 +1,5 @@
 {
-  "pinned_at": "2026-10-16",
+  "pinned_at": "2026-11-21",
   "base": {
     "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
     "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
@@ -11,9 +11,9 @@
     "license": "apache-2.0"
   },
   "adapter": {
-    "repo": "05ryt31/lost-across-paradigms",
-    "revision": null,
-    "note": "null until the first adapter is pushed; the fallback run uses adapter=none"
+    "repo": "ellm135/lost-across-paradigms",
+    "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+    "note": "fine tuned on Rosetta Code pairs"
   },
   "decoding": {"temperature": 0, "max_new_tokens": 2048, "seed": 0},
   "prompt": {"file": "pipeline/prompts/v1.md", "sha256": null}
