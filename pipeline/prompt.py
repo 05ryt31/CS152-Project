@@ -34,6 +34,15 @@ def load_template(path: Path) -> Template:
         rules=rules,
     )
 
+def load_ruleless_template(path: Path) -> Template:
+    text = path.read_text()
+    return Template(
+        version=path.stem,
+        sha256=hashlib.sha256(text.encode()).hexdigest(),
+        system=_fenced(_section(text, "## System")),
+        user=_fenced(_section(text, "## User")),
+        rules=None,
+    )
 
 def _section(text: str, heading: str) -> str:
     """Text after `heading` up to the next heading of the same or higher level."""
