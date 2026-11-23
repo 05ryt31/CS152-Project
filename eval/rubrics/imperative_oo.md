@@ -11,10 +11,12 @@
 
 # Python
 
+The intention of item 2, `Functional structures`, is to catch code that is too strongly functional, particularly when an imperative structure is more elegant. Using functional structures in a way that is idiomatic in Python should not incur a penalty. For example, list comprehensions and higher-order functions as small helpers should generally not be penalized.
+
 | Criterion | 0 - Not idiomatic | 1 - Partially idiomatic | 2 - Idiomatic |
 |---|---|---|---|
 | Mutation and state management | Consistently uses unnecessary global or shared states. | Limits global and shared states, but includes some avoidable global states or unclear ownership. | Keeps state local with clear ownership and little to no unnecessary shared states. |
-| Functional structures | Extensively uses higher-order functions or other hallmarks of functional Python. | Uses some higher-order functions or other functional structures where imperative ones are appropriate. | Primarily uses imperative loops and structures, with few to no higher-order functions. |
+| Functional structures | Extensively uses higher-order functions or other hallmarks of functional Python. | Uses some higher-order functions or other functional structures where imperative ones are more appropriate. | Primarily uses imperative loops and structures, with higher-order functions used only when appropriate. |
 | Iteration and structure | Uses excessive recursion, low-level loops, or awkward structures. | Includes some awkward or poorly written loops and structures. | Uses clear, concise structures and iteration, including recursion only when appropriate. |
 | Standard library use | Reimplements standard library functions or uses outdated or inappropriate ones. | Uses some standard library functions, but reimplements or misuses others. | Appropriately uses standard library functions and services. |
 | Abstraction and clarity | Uses overly complex, convoluted functions or classes with limited reusability. | Uses complex functions or classes with limited reusability. | Uses small, reusable functions and classes with clear purposes. |
@@ -29,4 +31,4 @@
 | Iteration and structure | Uses excessive recursion, low-level loops, or awkward structures. | Includes some awkward or poorly written loops and structures. | Uses clear, concise structures and iteration, including recursion only when appropriate. |
 | Standard library use | Reimplements standard library functions or uses outdated or inappropriate ones. | Uses some standard library functions, but reimplements or misuses others. | Appropriately uses standard library functions and services. |
 | Abstraction and clarity | Uses overly complex, convoluted functions or classes with limited reusability. | Uses complex functions or classes with limited reusability. | Uses small, reusable functions and classes with clear purposes. |
-| Naming and conventions | Uses poor formatting, misleading names, or names that violate conventions (i.e. camel case function names). | Uses some names that are confusing, has inconsistent formatting, or uses inconsistent naming conventions. | Uses clear names and formatting that adhere to Python conventions. |
+| Naming and conventions | Uses poor formatting, misleading names, or names that violate conventions (i.e. snake case function names). | Uses some names that are confusing, has inconsistent formatting, or uses inconsistent naming conventions. | Uses clear names and formatting that adhere to JavaScript conventions. |
