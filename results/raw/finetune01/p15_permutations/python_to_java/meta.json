@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p15_permutations",
+  "src": "python",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:48:41+00:00",
+  "source_file": "p15_permutations.py",
+  "target_file": "P15Permutations.java",
+  "attempts": 1,
+  "duration_s": 33.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 443,
+    "completion_tokens": 270
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\nimport java.util.Arrays;\n\u00a0\npublic class Permutation {\n\tpublic static void main(String[] args) {\n\t\tString s = \"abc\";\n\t\tchar[] chars = s.toCharArray();\n\t\tArrays.sort(chars);\n\t\tdo {\n\t\t\tSystem.out.println(new String(chars));\n\t\t} while (nextPermutation(chars));\n\t}\n\u00a0\n\tprivate static boolean nextPermutation(char[] chars) {\n\t\tint i = chars.length - 2;\n\t\twhile (i >= 0 && chars[i] >= chars[i + 1]) {\n\t\t\ti--;\n\t\t}\n\t\tif (i < 0) {\n\t\t\treturn false;\n\t\t}\n\t\tint j = chars.length - 1;\n\t\twhile (chars[j] <= chars[i]) {\n\t\t\tj--;\n\t\t}\n\t\tswap(chars, i, j);\n\t\treverse(chars, i + 1, chars.length - 1);\n\t\treturn true;\n\t}\n\u00a0\n\tprivate static void swap(char[] chars, int i, int j) {\n\t\tchar temp = chars[i];\n\t\tchars[i] = chars[j];\n\t\tchars[j] = temp;\n\t}\n\u00a0\n\tprivate static void reverse(char[] chars, int start, int end) {\n\t\twhile (start < end) {\n\t\t\tswap(chars, start++, end--);\n\t\t}\n\t}\n}\n```"
+}

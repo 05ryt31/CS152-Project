@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p02_merge_sorted",
+  "src": "haskell",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T02:20:38+00:00",
+  "source_file": "p02_merge_sorted.hs",
+  "target_file": "P02MergeSorted.java",
+  "attempts": 1,
+  "duration_s": 36.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 501,
+    "completion_tokens": 288
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\nimport java.util.Arrays;\n\u00a0\npublic class MergeSort {\n\tpublic static int[] merge(int[] left, int[] right){\n\t\tint[] result = new int[left.length + right.length];\n\t\tint i = 0, j = 0, k = 0;\n\t\twhile(i < left.length && j < right.length){\n\t\t\tif(left[i] < right[j]){\n\t\t\t\tresult[k++] = left[i++];\n\t\t\t}\n\t\t\telse{\n\t\t\t\tresult[k++] = right[j++];\n\t\t\t}\n\t\t}\n\t\twhile(i < left.length){\n\t\t\tresult[k++] = left[i++];\n\t\t}\n\t\twhile(j < right.length){\n\t\t\tresult[k++] = right[j++];\n\t\t}\n\t\treturn result;\n\t}\n\u00a0\n\tpublic static int[] sort(int[] array){\n\t\tif(array.length == 1){\n\t\t\treturn array;\n\t\t}\n\t\tint mid = array.length / 2;\n\t\tint[] left = Arrays.copyOfRange(array, 0, mid);\n\t\tint[] right = Arrays.copyOfRange(array, mid, array.length);\n\t\tleft = sort(left);\n\t\tright = sort(right);\n\t\treturn merge(left, right);\n\t}\n\u00a0\n\tpublic static void main(String[] args){\n\t\tint[] array = {38, 27, 43, 3, 9, 82, 10};\n\t\tSystem.out.println(Arrays.toString(sort(array)));\n\t}\n}\n```"
+}

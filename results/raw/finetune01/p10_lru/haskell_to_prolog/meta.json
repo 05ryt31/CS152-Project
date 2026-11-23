@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p10_lru",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:14:15+00:00",
+  "source_file": "p10_lru.hs",
+  "target_file": "p10_lru.pl",
+  "attempts": 1,
+  "duration_s": 57.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 695,
+    "completion_tokens": 461
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\nlru_cache(Capacity, Cache, Commands, Result):-\n\tlru_cache(Capacity, Cache, Commands, [], Result).\n\u00a0\nlru_cache(_, _, [], Cache, Cache):-!.\n\u00a0\nlru_cache(Capacity, Cache, [[get, Key]|T], Acc, Result):-\n\t(   get_value(Cache, Key, Value)\n\t->  NewCache = Cache,\n\t    Order = [Key|Acc],\n\t    lru_cache(Capacity, NewCache, T, Order, Result)\n\t;   NewCache = Cache,\n\t    Order = Acc,\n\t    lru_cache(Capacity, NewCache, T, Order, Result)).\n\u00a0\nlru_cache(Capacity, Cache, [[put, Key, Value]|T], Acc, Result):-\n\tget_value(Cache, Key, _),\n\tdelete_key(Cache, Key, NewCache),\n\tlru_cache(Capacity, NewCache, T, [Key|Acc], Result).\n\u00a0\nlru_cache(Capacity, Cache, [[put, Key, Value]|T], Acc, Result):-\n\tlength(Acc, Length),\n\tLength < Capacity,\n\tput_value(Cache, Key, Value, NewCache),\n\tlru_cache(Capacity, NewCache, T, [Key|Acc], Result).\n\u00a0\nlru_cache(Capacity, Cache, [[put, Key, Value]|T], Acc, Result):-\n\tlength(Acc, Length),\n\tLength >= Capacity,\n\ttake_last(Acc, Last),\n\tdelete_key(Cache, Last, NewCache),\n\tput_value(NewCache, Key, Value, FinalCache),\n\tlru_cache(Capacity, FinalCache, T, [Key|Acc], Result).\n\u00a0\ntake_last([_], []):-!.\n\u00a0\ntake_last([_|T], R):-take_last(T, R).\n\u00a0\ndelete_key(Map, Key, Map):-\n\tMap \\= Map.find(Key, _).\n\u00a0\ndelete_key(Map, Key, NewMap):-\n\tMap.find(Key, _),\n\tMap.erase(Key),\n\tMap = NewMap.\n\u00a0\nget_value(Map, Key, Value):-\n\tMap.find(Key, Value).\n\u00a0\nput_value(Map, Key, Value, Map):-\n\tMap.put(Key, Value).\n\u00a0\n```"
+}

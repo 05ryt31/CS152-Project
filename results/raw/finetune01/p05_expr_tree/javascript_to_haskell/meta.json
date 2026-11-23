@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p05_expr_tree",
+  "src": "javascript",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:28:52+00:00",
+  "source_file": "p05_expr_tree.js",
+  "target_file": "p05_expr_tree.hs",
+  "attempts": 1,
+  "duration_s": 254.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 417,
+    "completion_tokens": 2048
+  },
+  "extraction": "no_fence",
+  "raw_response": "```haskell\ndata ExprTree = Val Int | Node Char ExprTree ExprTree deriving Show\n\u00a0\nparseExpr :: String -> ExprTree\nparseExpr = parse . words\n  where\n    parse [] = error \"Empty expression\"\n    parse [x] = Val $ read x\n    parse (x:xs)\n      | isOp x = Node x (parse lft) (parse rgt)\n      | otherwise = Val $ read x\n      where\n        (lft, rgt) = splitAt (length xs `div` 2) xs\n\u00a0\nisOp :: String -> Bool\nisOp = flip elem \"+-*\"\n\u00a0\nshowExpr :: ExprTree -> String\nshowExpr (Val n) = show n\nshowExpr (Node op l r) = \"(\" ++ showExpr l ++ \" \" ++ op ++ \" \" ++ showExpr r ++ \")\"\n\u00a0\nmain :: IO ()\nmain = do\n  putStrLn $ showExpr $ parseExpr \"3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3\"\n  putStrLn $ showExpr $ parseExpr \"3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2 ^ 3 ^ 2"
+}

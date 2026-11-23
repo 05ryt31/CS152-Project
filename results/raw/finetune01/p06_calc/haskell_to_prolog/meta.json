@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p06_calc",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T04:31:16+00:00",
+  "source_file": "p06_calc.hs",
+  "target_file": "p06_calc.pl",
+  "attempts": 1,
+  "duration_s": 91.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 699,
+    "completion_tokens": 732
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n\u00a0\n:- use_module(library(lambda)).\n\u00a0\n% Parser\ntokenize(Tokens, Expression) :-\n\texpression(Expression, Tokens).\n\u00a0\nexpression([Token|Tokens], Result) :-\n\tterm(Token, Terms),\n\texpression(Terms, Result, Token, Tokens).\n\u00a0\nexpression([], Result, _, []) :- !.\nexpression([+|Tokens], Result, Term, Rest) :-\n\tterm(Term, Terms),\n\texpression(Terms, Result1, Term, Tokens),\n\t!,\n\texpression(+, Result1, Result, Rest).\nexpression([-|Tokens], Result, Term, Rest) :-\n\tterm(Term, Terms),\n\texpression(Terms, Result1, Term, Tokens),\n\t!,\n\texpression(-, Result1, Result, Rest).\n\u00a0\nterm([Token|Tokens], Result) :-\n\tfactor(Token, Terms),\n\tterm(Terms, Result, Token, Tokens).\n\u00a0\nterm([], Result, _, []) :- !.\nterm([*|Tokens], Result, Factor, Rest) :-\n\tfactor(Factor, Terms),\n\tterm(Terms, Result1, Factor, Tokens),\n\t!,\n\tterm(*, Result1, Result, Rest).\nterm([/|Tokens], Result, Factor, Rest) :-\n\tfactor(Factor, Terms),\n\tterm(Terms, Result1, Factor, Tokens),\n\t!,\n\tterm(/, Result1, Result, Rest).\n\u00a0\nfactor([Token|Tokens]) :-\n\tnumber(Token),\n\t!,\n\tfactor(Token, Tokens).\nfactor([Token|Tokens]) :-\n\tToken = '(',\n\texpression(Tokens, Result, _, Rest),\n\tToken1 = ')',\n\tappend(Result, [Token1], Tokens).\n\u00a0\nfactor(Number, []) :-\n\tnumber(Number).\nfactor(Number, [_]).\n\u00a0\nnumber(Number) :-\n\tmember(Number, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]).\n\u00a0\n% Calculator\ncalculate(Expression, Result) :-\n\ttokenize(Tokens, Expression),\n\texpression(Tokens, Result).\n\u00a0\nexpression([Token|Tokens], Result) :-\n\tterm(Token, Terms),\n\texpression(Terms, Result, Token, Tokens).\n\u00a0\nexpression([], Result, _, []) :- !.\nexpression([+|Tokens], Result, Term, Rest) :-\n\tterm(Term, Terms),\n\texpression(Terms, Result1, Term, Tokens),\n\t!,\n\texpression(+, Result1, Result, Rest).\nexpression([-|Tokens], Result, Term, Rest) :-\n\tterm(Term, Terms),\n\texpression(Terms, Result1, Term, Tokens),\n\t!,\n\texpression(-, Result1, Result, Rest).\n\u00a0\nterm([Token|Tokens], Result) :-\n\tfactor(Token, Terms),\n\tterm(Terms, Result, Token, Tokens).\n\u00a0\nterm([], Result, _, []) :- !.\nterm([*|Tokens], Result, Factor, Rest) :-\n\tfactor(Factor, Terms),\n\tterm(Terms, Result1, Factor, Tokens),\n\t!,\n\tterm(*, Result1, Result, Rest).\nterm([/|Tokens], Result, Factor, Rest) :-\n\tfactor(Factor, Terms),\n\tterm(Terms, Result1, Factor, Tokens),\n\t!,\n\tterm(/, Result1, Result, Rest).\n\u00a0\nfactor(Number, Number) :-\n\tnumber(Number).\nfactor(Token, Number) :-\n\tToken = '(',\n\tcalculate(Token, Number).\n\u00a0\n% Main\ncalc :-\n\tread_line_to_string(user_input, Line),\n\tcalculate(Line, Result),\n\twriteln(Result).\n\u00a0\n```"
+}

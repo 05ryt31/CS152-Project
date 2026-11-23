@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p08_bank",
+  "src": "haskell",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:05:42+00:00",
+  "source_file": "p08_bank.hs",
+  "target_file": "p08_bank.js",
+  "attempts": 1,
+  "duration_s": 18.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 481,
+    "completion_tokens": 145
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\n\u00a0\nvar bank = {\n    account: [],\n    deposit: function(amount){\n        this.account.push(amount);\n    },\n    withdraw: function(amount){\n        var i;\n        for(i=0; i < this.account.length; i++){\n            if(this.account[i] >= amount){\n                this.account.splice(i,1);\n                return true;\n            }\n        }\n        return false;\n    },\n    balance: function(){\n        var total = 0;\n        for(var i=0; i < this.account.length; i++){\n            total += this.account[i];\n        }\n        return total;\n    }\n};\n\u00a0\nbank.deposit(50);\nbank.withdraw(30);\nbank.balance();\n\u00a0\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p09_stack_vm",
+  "src": "javascript",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:22:57+00:00",
+  "source_file": "p09_stack_vm.js",
+  "target_file": "p09_stack_vm.pl",
+  "attempts": 1,
+  "duration_s": 122.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 660,
+    "completion_tokens": 979
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n\u00a0\n:- use_module(library(clpfd)).\n\u00a0\n% Stack VM\n%\n%   push X S -> S1\n%       where S1 = [X|S]\n%\n%   pop S -> (X,S1)\n%       where S = [X|S1] and X is an integer\n%\n%   add S -> S1\n%       where S = [A,B|S1] and A,B are integers\n%       and S1 = [B+A|S1]\n%\n%   mul S -> S1\n%       where S = [A,B|S1] and A,B are integers\n%       and S1 = [B*A|S1]\n%\n%   dup S -> S1\n%       where S = [A|S1] and A is an integer\n%       and S1 = [A,A|S1]\n%\n%   swap S -> S1\n%       where S = [A,B|S1] and A,B are integers\n%       and S1 = [B,A|S1]\n%\n%   out S -> (X,S1)\n%       where S = [X|S1] and X is an integer\n%\n%   err S -> error\n%\n\u00a0\n% Pushes an integer onto the stack\npush(X, S, S1) :-\n\tS1 = [X | S].\n\u00a0\n% Pops an integer off the stack\npop(S, X, S1) :-\n\tlength(S, L),\n\tL #> 0,\n\tappend(_,[X],S),\n\t\\+ append(_,[X],S1).\n\u00a0\n% Adds the top two elements of the stack together\nadd(S, S1) :-\n\tlength(S, L),\n\tL #> 1,\n\tappend(_,[A,B|_],S),\n\tA #= B+C,\n\tappend(_,[C],S1).\n\u00a0\n% Multiplies the top two elements of the stack together\nmul(S, S1) :-\n\tlength(S, L),\n\tL #> 1,\n\tappend(_,[A,B|_],S),\n\tA #* B #= C,\n\tappend(_,[C],S1).\n\u00a0\n% Duplicates the top element of the stack\ndup(S, S1) :-\n\tlength(S, L),\n\tL #> 0,\n\tappend(_,[A|_],S),\n\tappend(_,[A,A],S1).\n\u00a0\n% Swaps the top two elements of the stack\nswap(S, S1) :-\n\tlength(S, L),\n\tL #> 1,\n\tappend(_,[A,B|_],S),\n\tappend(_,[B,A],S1).\n\u00a0\n% Outputs the top element of the stack\nout(S, X, S1) :-\n\tpop(S, X, S1).\n\u00a0\n% Errors when there is no top element of the stack\nerr(S) :-\n\tlength(S, L),\n\tL #< 1.\n\u00a0\n% Runs a list of instructions on a stack\nrun([], _, []).\nrun([push(X)|T], S, S1) :-\n\trun(T, S, S2),\n\tpush(X, S2, S1).\nrun([pop|T], S, S1) :-\n\tpop(S, _, S2),\n\trun(T, S2, S1).\nrun([add|T], S, S1) :-\n\tadd(S, S2),\n\trun(T, S2, S1).\nrun([mul|T], S, S1) :-\n\tmul(S, S2),\n\trun(T, S2, S1).\nrun([dup|T], S, S1) :-\n\tdup(S, S2),\n\trun(T, S2, S1).\nrun([swap|T], S, S1) :-\n\tswap(S, S2),\n\trun(T, S2, S1).\nrun([out|T], S, S1) :-\n\tout(S, X, S2),\n\twritef('%w ',[X]),\n\trun(T, S2, S1).\nrun([err|T], S, S1) :-\n\terr(S),\n\trun(T, S, S1).\n\u00a0\n% Tests\ntest :-\n\trun([push(5),push(3),add],[],R1),\n\twriteln(R1),\n\trun([push(5),push(3),mul],[],R2),\n\twriteln(R2),\n\trun([push(5),push(3),dup],[],R3),\n\twriteln(R3),\n\trun([push(5),push(3),swap],[],R4),\n\twriteln(R4),\n\trun([push(5),push(3),out],[],R5),\n\twriteln(R5),\n\trun([push(5),push(3),err],[],R6),\n\twriteln(R6).\n\u00a0\n```"
+}

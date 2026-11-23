@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p01_rle",
+  "src": "java",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T01:59:00+00:00",
+  "source_file": "P01Rle.java",
+  "target_file": "p01_rle.pl",
+  "attempts": 1,
+  "duration_s": 62.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 456,
+    "completion_tokens": 485
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n\u00a0\n:- use_module(library(lambda)).\n\u00a0\n% rle(\"aaabbbcccc\", L).\nrle(S, L) :-\n\tstring_chars(S, SL),\n\trun_length_encode(SL, L).\n\u00a0\n% run_length_encode([a,a,a,b,b,c,c,c], L).\nrun_length_encode([], []).\nrun_length_encode(L, R) :-\n\trun_length_encode(L, [], R).\n\u00a0\n% run_length_encode([a,a,a,b,b,c,c,c], [], L).\nrun_length_encode([], RL, RL) :-\n\trun_length(RL).\n\u00a0\n% run_length_encode([a,a,a,b,b,c,c,c], [a,3], L).\nrun_length_encode([H|T], RL, R) :-\n\t(   run_length(RL)\n\t->  last_pair(VL, N, RL),\n\t    V \\= H,\n\t    !,\n\t    N1 is N + 1,\n\t    RL1 = [(V,N1)],\n\t    run_length_encode(T, RL1, R)\n\t;   V = H,\n\t    N = 1,\n\t    !,\n\t    RL1 = [(V,N)],\n\t    run_length_encode(T, RL1, R)\n\t).\n\u00a0\n% run_length_encode([a,a,a,b,b,c,c,c], [a,3,[b,2],[c,3]], L).\nrun_length_encode([_], RL, RL).\nrun_length_encode([H|T], RL, R) :-\n\tlast_pair(VL, N, RL),\n\tV \\= H,\n\t!,\n\tN1 is N + 1,\n\tRL1 = [(VL,N1)],\n\trun_length_encode([H|T], RL1, R).\n\u00a0\n% run_length_encode([a,a,a,b,b,c,c,c], [a,3,[b,2],[c,3]], L).\nrun_length_encode([H|T], RL, R) :-\n\tlast_pair(VL, N, RL),\n\tV = H,\n\t!,\n\tN1 is N + 1,\n\tRL1 = [(VL,N1)],\n\trun_length_encode(T, RL1, R).\n\u00a0\nlast_pair(X, X, [X]).\nlast_pair(Y, X, [Z|T]) :-\n\tlast_pair(Y, X, T).\n\u00a0\nrun_length([]).\nrun_length([(V,N)|T]) :-\n\tN > 0,\n\trun_length(T).\n\u00a0\n```"
+}

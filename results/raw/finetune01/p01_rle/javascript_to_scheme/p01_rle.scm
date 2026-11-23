@@ -1,0 +1,11 @@
+(define (encode str)
+  (define (helper s count acc)
+    (if (null? s)
+        (reverse! acc)
+        (let ((char (car s)))
+          (if (= count 1)
+              (helper (cdr s) 0 (cons char acc))
+              (helper (cdr s) (- count 1) (cons count acc))))))
+  (list (helper (string->list str) 0 '())))
+ 
+(display (encode "WWWWWWWWWWWWBWWWWWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWB")) (newline)

@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p11_pipeline",
+  "src": "python",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:25:17+00:00",
+  "source_file": "p11_pipeline.py",
+  "target_file": "p11_pipeline.hs",
+  "attempts": 1,
+  "duration_s": 35.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 586,
+    "completion_tokens": 286
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List.Split (splitOn)\n\u00a0\npipeline :: [Int] -> String -> [String] -> [Int]\npipeline xs cmd args =\n  case cmd of\n    \"map\" ->\n      let amt = read $ head args\n       in case args !! 1 of\n            \"add\" -> (+ amt) <$> xs\n            \"mul\" -> (* amt) <$> xs\n    \"filter\" ->\n      case args !! 0 of\n        \"evn\" -> filter even xs\n        \"odr\" -> filter odd xs\n        \"grt\" -> filter (> amt) xs\n          where\n            amt = read $ head args\n    \"reduce\" ->\n      case args !! 0 of\n        \"sml\" -> minimum <$> pure xs\n        \"big\" -> maximum <$> pure xs\n        \"sum\" -> sum <$> pure xs\n  where\n    amt = read $ head args\n\u00a0\nmain :: IO ()\nmain = do\n  putStrLn \"Enter numbers:\"\n  nums <- map read . splitOn \" \" <$> getLine\n  putStrLn \"Enter number of stages:\"\n  nStages <- read <$> getLine\n  putStrLn \"Enter stages:\"\n  stages <- replicateM nStages $ do\n    stage <- getLine\n    return $ words stage\n  putStrLn \"Result:\"\n  print $ foldl pipeline nums stages\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p06_calc",
+  "src": "javascript",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T04:02:35+00:00",
+  "source_file": "p06_calc.js",
+  "target_file": "P06Calc.java",
+  "attempts": 1,
+  "duration_s": 65.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 521,
+    "completion_tokens": 519
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\n\u00a0\nimport java.util.*;\n\u00a0\npublic class Calc {\n\u00a0\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        System.out.println(\"Enter your equation:\");\n        String input = scanner.nextLine().trim();\n        try {\n            System.out.println(calc(input));\n        } catch (Exception e) {\n            System.err.println(e.getMessage());\n        }\n    }\n\u00a0\n    private static double calc(String input) throws Exception {\n        Stack<Double> numbers = new Stack<>();\n        Stack<String> ops = new Stack<>();\n        int i = 0;\n        while (i < input.length()) {\n            char c = input.charAt(i);\n            if (c == ' ') {\n                i++;\n                continue;\n            }\n            if (Character.isDigit(c)) {\n                StringBuilder sb = new StringBuilder();\n                while (i < input.length() && Character.isDigit(input.charAt(i))) {\n                    sb.append(input.charAt(i));\n                    i++;\n                }\n                numbers.push(Double.parseDouble(sb.toString()));\n                i--;\n            } else if (c == '(') {\n                ops.push(\"(\");\n            } else if (c == ')') {\n                while (!ops.isEmpty() && !ops.peek().equals(\"(\")) {\n                    numbers.push(applyOp(numbers.pop(), numbers.pop(), ops.pop()));\n                }\n                ops.pop();\n            } else if (c == '+' || c == '-' || c == '*' || c == '/') {\n                while (!ops.isEmpty() && hasPrecedence(c, ops.peek())) {\n                    numbers.push(applyOp(numbers.pop(), numbers.pop(), ops.pop()));\n                }\n                ops.push(\"\" + c);\n            }\n            i++;\n        }\n        while (!ops.isEmpty()) {\n            numbers.push(applyOp(numbers.pop(), numbers.pop(), ops.pop()));\n        }\n        return numbers.pop();\n    }\n\u00a0\n    private static boolean hasPrecedence(char op1, String op2) {\n        if ((op1 == '*' || op1 == '/') && (op2.equals(\"+\") || op2.equals(\"-\"))) {\n            return false;\n        }\n        return true;\n    }\n\u00a0\n    private static double applyOp(double b, double a, String op) throws Exception {\n        switch (op) {\n            case \"+\":\n                return a + b;\n            case \"-\":\n                return a - b;\n            case \"*\":\n                return a * b;\n            case \"/\":\n                if (b == 0)\n                    throw new Exception(\"Cannot divide by zero\");\n                return a / b;\n        }\n        return 0;\n    }\n}\n\u00a0\n```"
+}

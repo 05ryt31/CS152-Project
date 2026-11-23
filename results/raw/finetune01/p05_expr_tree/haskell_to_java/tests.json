@@ -1,0 +1,9 @@
+[
+    {"name": "two operators", "input": "3 4 + 2 *", "output": "((3 + 4) * 2)"},
+    {"name": "single number", "input": "5", "output": "5"},
+    {"name": "left-nested same operator", "input": "1 2 + 3 +", "output": "((1 + 2) + 3)"},
+    {"name": "right-nested same operator", "input": "1 2 3 + +", "output": "(1 + (2 + 3))"},
+    {"name": "subtraction then multiply", "input": "7 2 - 3 *", "output": "((7 - 2) * 3)"},
+    {"name": "deeper tree", "input": "2 3 4 * 5 - +", "output": "(2 + ((3 * 4) - 5))"},
+    {"name": "multi-digit numbers", "input": "12 345 *", "output": "(12 * 345)"}
+]

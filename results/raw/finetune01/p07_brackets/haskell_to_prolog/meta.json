@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p07_brackets",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T04:49:09+00:00",
+  "source_file": "p07_brackets.hs",
+  "target_file": "p07_brackets.pl",
+  "attempts": 1,
+  "duration_s": 60.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 514,
+    "completion_tokens": 486
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(clpfd)).\n\u00a0\n% Brackets in order of opening\nbracket_pairs(['(', ')'], ['[', ']'], ['{', '}']).\n\u00a0\n% Check if brackets are balanced\nbalanced_brackets(String) :-\n\tbracket_pairs(OpenBrackets, CloseBrackets),\n\t% Create lists of open and close brackets\n\textract_brackets(String, OpenBrackets, OpenList),\n\textract_brackets(String, CloseBrackets, CloseList),\n\t% Ensure there are no extra closing brackets\n\tlength(CloseList, NClose),\n\tlength(OpenList, NOpen),\n\tNClose #= NOpen,\n\t% Ensure all open brackets have corresponding closing bracket\n\tmaplist(has_corresponding_close(OpenList), CloseBrackets, CloseList).\n\u00a0\n% Extract brackets from string\nextract_brackets(String, BracketPairs, BracketList) :-\n\textract_brackets(String, BracketPairs, [], BracketList).\nextract_brackets([], _, BracketList, BracketList).\nextract_brackets([X|Rest], [OpenBracket|BracketPairs], BracketList, BracketListResult) :-\n\tX == OpenBracket,\n\textract_brackets(Rest, BracketPairs, [OpenBracket|BracketList], BracketListResult).\nextract_brackets([_|Rest], [_|BracketPairs], BracketList, BracketListResult) :-\n\textract_brackets(Rest, BracketPairs, BracketList, BracketListResult).\n\u00a0\n% Check if open bracket has corresponding closing bracket\nhas_corresponding_close(OpenList, CloseBracket, CloseBracketList) :-\n\tmember(CloseBracket, CloseBracketList),\n\tindex_of(CloseBracketList, CloseBracket, Index),\n\tnth0(Index, OpenList, OpenBracket),\n\tclose_bracket(CloseBracket, OpenBracket).\n\u00a0\n% Get index of element in list\nindex_of(List, Element, Index) :-\n\tindex_of(List, Element, 0, Index).\nindex_of([], _, Index, Index).\nindex_of([Element|_], Element, Index, Index).\nindex_of([_|Rest], Element, Index, Result) :-\n\tIndex #> 0,\n\tIndex1 #= Index + 1,\n\tindex_of(Rest, Element, Index1, Result).\n\u00a0\n% Check if brackets match\nclose_bracket(')', '(').\nclose_bracket(']', '[').\nclose_bracket('}', '{').\n\u00a0\n```"
+}

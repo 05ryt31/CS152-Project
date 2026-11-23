@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p07_brackets",
+  "src": "haskell",
+  "tgt": "scheme",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T04:48:31+00:00",
+  "source_file": "p07_brackets.hs",
+  "target_file": "p07_brackets.scm",
+  "attempts": 1,
+  "duration_s": 37.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 457,
+    "completion_tokens": 303
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base))\n(import (scheme read))\n(import (scheme write))\n(import (srfi 1)) ; lists\n(import (srfi 132)) ; ports\n\u00a0\n;; Return true if the given string is balanced.\n(define (balanced? s)\n  (let loop ((chars (string->list s)) (stack '()))\n    (cond ((null? chars)\n           (null? stack))\n          ((char=? #\\( (car chars))\n           (loop (cdr chars) (cons #\\) stack)))\n          ((char=? #\\[ (car chars))\n           (loop (cdr chars) (cons #\\] stack)))\n          ((char=? #\\{ (car chars))\n           (loop (cdr chars) (cons #\\} stack)))\n          ((or (null? stack)\n               (not (char=? (car chars) (car stack))))\n           #f)\n          (else\n           (loop (cdr chars) (cdr stack)))))))\n\u00a0\n;; Print whether each of the given strings is balanced.\n(define (test-balanced strs)\n  (for-each (lambda (str)\n              (display str)\n              (if (balanced? str)\n                  (display \" is balanced\\n\")\n                  (display \" is unbalanced\\n\")))\n            strs))\n\u00a0\n(test-balanced '(\"([]){}\" \"(){}[]\"))\n(test-balanced '(\"(}{)\" \"({)}\" \"([]{})\" \"([]{)\")\n                )\n\u00a0\n```"
+}

@@ -1,0 +1,8 @@
+[
+    {"name": "three letters", "input": "cab", "output": "abc\nacb\nbac\nbca\ncab\ncba"},
+    {"name": "one letter", "input": "a", "output": "a"},
+    {"name": "two letters sorted", "input": "ab", "output": "ab\nba"},
+    {"name": "two letters reversed", "input": "zy", "output": "yz\nzy"},
+    {"name": "reverse sorted three", "input": "dcb", "output": "bcd\nbdc\ncbd\ncdb\ndbc\ndcb"},
+    {"name": "four letters count", "input": "wxyz", "output": "wxyz\nwxzy\nwyxz\nwyzx\nwzxy\nwzyx\nxwyz\nxwzy\nxywz\nxyzw\nxzwy\nxzyw\nywxz\nywzx\nyxwz\nyxzw\nyzwx\nyzxw\nzwxy\nzwyx\nzxwy\nzxyw\nzywx\nzyxw"}
+]

@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p09_stack_vm",
+  "src": "haskell",
+  "tgt": "scheme",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:38:03+00:00",
+  "source_file": "p09_stack_vm.hs",
+  "target_file": "p09_stack_vm.scm",
+  "attempts": 1,
+  "duration_s": 253.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 680,
+    "completion_tokens": 2048
+  },
+  "extraction": "no_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base))\n(import (scheme read))\n(import (scheme write))\n(import (srfi 1)) ; lists\n(import (srfi 132)) ; vectors\n\u00a0\n;; Stack VM\n;;\n;; This is a simple stack-based virtual machine. It takes a list of\n;; instructions and executes them in order. Each instruction is either a\n;; string representing a function name or a number which represents a value\n;; to push onto the stack.\n;;\n;; Valid functions are:\n;;   pop -- pops the top item off the stack\n;;   add -- adds the top two items on the stack together\n;;   mul -- multiplies the top two items on the stack together\n;;   dup -- duplicates the top item on the stack\n;;   swap -- swaps the top two items on the stack\n;;   print -- prints the top item on the stack\n;;\n;; If there is an error during execution, it will return #f instead of the\n;; final state of the stack.\n;;\n;; Examples:\n;;   (vm '(push 1 push 2 add)) => #(1 3)\n;;   (vm '(push 1 push 2 mul)) => #(1 2)\n;;   (vm '(push 1 push 2 dup)) => #(1 2 2)\n;;   (vm '(push 1 push 2 swap)) => #(1 2 1)\n;;   (vm '(push 1 push 2 print)) => #(1 2) and prints 2\n;;   (vm '(push 1 push 2 pop)) => #(1)\n;;   (vm '(push 1 push 2 add add)) => #(1 4)\n;;   (vm '(push 1 push 2 add mul)) => #(1 6)\n;;   (vm '(push 1 push 2 mul add)) => #(1 7)\n;;   (vm '(push 1 push 2 dup swap)) => #(1 2 1 2)\n;;   (vm '(push 1 push 2 swap dup)) => #(1 2 1 2)\n;;   (vm '(push 1 push 2 swap swap)) => #(1 2 2 1)\n;;   (vm '(push 1 push 2 swap swap dup)) => #(1 2 2 1 2)\n;;   (vm '(push 1 push 2 swap swap swap)) => #(1 2 2 1 2)\n;;   (vm '(push 1 push 2 swap swap swap dup)) => #(1 2 2 1 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap)) => #(1 2 2 1 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap dup)) => #(1 2 2 1 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap)) => #(1 2 2 1 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap dup)) => #(1 2 2 1 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap)) => #(1 2 2 1 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap dup)) => #(1 2 2 1 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap)) => #(1 2 2 1 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap dup)) => #(1 2 2 1 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap)) => #(1 2 2 1 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap dup)) => #(1 2 2 1 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap)) => #(1 2 2 1 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap dup)) => #(1 2 2 1 2 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap swap)) => #(1 2 2 1 2 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap swap dup)) => #(1 2 2 1 2 2 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap swap swap)) => #(1 2 2 1 2 2 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap swap swap dup)) => #(1 2 2 1 2 2 2 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap swap swap swap)) => #(1 2 2 1 2 2 2 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap swap swap swap dup)) => #(1 2 2 1 2 2 2 2 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap swap swap swap swap)) => #(1 2 2 1 2 2 2 2 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap swap swap swap swap dup)) => #(1 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap swap swap swap swap swap)) => #(1 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap swap swap swap swap swap dup)) => #(1 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap swap swap swap swap swap swap)) => #(1 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap swap swap swap swap swap swap dup)) => #(1 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap swap swap swap swap swap swap swap)) => #(1 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap swap swap swap swap swap swap swap dup)) => #(1 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap swap swap swap swap swap swap swap swap)) => #(1 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap swap swap swap swap swap swap swap swap dup)) => #(1 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2)\n;;   (vm '(push 1 push 2 swap swap swap swap swap swap swap swap swap swap swap swap swap swap swap swap swap swap)) => #(1 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2"
+}

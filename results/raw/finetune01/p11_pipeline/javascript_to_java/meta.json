@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p11_pipeline",
+  "src": "javascript",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:27:22+00:00",
+  "source_file": "p11_pipeline.js",
+  "target_file": "P11Pipeline.java",
+  "attempts": 1,
+  "duration_s": 49.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 585,
+    "completion_tokens": 397
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\nimport java.util.Arrays;\nimport java.util.List;\nimport java.util.stream.Collectors;\n\u00a0\npublic class Pipeline {\n\tpublic static void main(String[] args) {\n\t\tList<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);\n\u00a0\n\t\tint k = 3;\n\u00a0\n\t\tfor (int i = 0; i < k; i++) {\n\t\t\tString[] command = args[i + 1].split(\" \");\n\u00a0\n\t\t\tswitch (command[0]) {\n\t\t\t\tcase \"map\":\n\t\t\t\t\tif (\"add\".equals(command[1])) {\n\t\t\t\t\t\tnumbers = numbers.stream().map(n -> n + Integer.parseInt(command[2])).collect(Collectors.toList());\n\t\t\t\t\t} else if (\"multiply\".equals(command[1])) {\n\t\t\t\t\t\tnumbers = numbers.stream().map(n -> n * Integer.parseInt(command[2])).collect(Collectors.toList());\n\t\t\t\t\t}\n\t\t\t\t\tbreak;\n\t\t\t\tcase \"filter\":\n\t\t\t\t\tif (\"even\".equals(command[1])) {\n\t\t\t\t\t\tnumbers = numbers.stream().filter(n -> n % 2 == 0).collect(Collectors.toList());\n\t\t\t\t\t} else if (\"odd\".equals(command[1])) {\n\t\t\t\t\t\tnumbers = numbers.stream().filter(n -> n % 2 != 0).collect(Collectors.toList());\n\t\t\t\t\t} else if (\"greater than\".equals(command[1])) {\n\t\t\t\t\t\tnumbers = numbers.stream().filter(n -> n > Integer.parseInt(command[2])).collect(Collectors.toList());\n\t\t\t\t\t}\n\t\t\t\t\tbreak;\n\t\t\t\tcase \"reduce\":\n\t\t\t\t\tif (\"sum\".equals(command[1])) {\n\t\t\t\t\t\tSystem.out.println(numbers.stream().mapToInt(Integer::intValue).sum());\n\t\t\t\t\t} else if (\"max\".equals(command[1])) {\n\t\t\t\t\t\tSystem.out.println(numbers.stream().max(Integer::compare).orElse(null));\n\t\t\t\t\t}\n\t\t\t\t\treturn;\n\t\t\t}\n\t\t}\n\u00a0\n\t\tSystem.out.println(numbers);\n\t}\n}\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p09_stack_vm",
+  "src": "prolog",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:49:04+00:00",
+  "source_file": "p09_stack_vm.pl",
+  "target_file": "p09_stack_vm.hs",
+  "attempts": 1,
+  "duration_s": 53.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 610,
+    "completion_tokens": 426
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List.Split (splitOn)\n\u00a0\ndata Instruction = Push Int | Pop | Add | Mul | Dup | Swap | Print deriving Show\n\u00a0\nparseInstruction :: String -> Instruction\nparseInstruction s =\n  case words s of\n    \"push\"\u00a0: x\u00a0: [] -> Push $ read x\n    \"pop\"\u00a0: [] -> Pop\n    \"add\"\u00a0: [] -> Add\n    \"mul\"\u00a0: [] -> Mul\n    \"dup\"\u00a0: [] -> Dup\n    \"swap\"\u00a0: [] -> Swap\n    \"print\"\u00a0: [] -> Print\n    _ -> error \"Invalid instruction\"\n\u00a0\ntype StackVMState = ([Int], [Instruction])\n\u00a0\nstep :: StackVMState -> StackVMState\nstep ([], _) = error \"Empty stack\"\nstep ((x:xs), (Push y\u00a0: is)) = (y:x:xs, is)\nstep ((x:xs), (Pop\u00a0: is)) = (xs, is)\nstep ((x:y:xs), (Add\u00a0: is)) = (x+y:xs, is)\nstep ((x:y:xs), (Mul\u00a0: is)) = (x*y:xs, is)\nstep ((x:xs), (Dup\u00a0: is)) = (x:x:xs, is)\nstep ((x:y:xs), (Swap\u00a0: is)) = (y:x:xs, is)\nstep ((x:xs), (Print\u00a0: is)) = (x:xs, is)\nstep (_, _) = error \"Invalid state\"\n\u00a0\nrun :: StackVMState -> StackVMState\nrun state@(stack, instructions)\n  | null instructions = state\n  | otherwise = run $ step state\n\u00a0\nmain :: IO ()\nmain = do\n  putStrLn \"Enter your program:\"\n  program <- getLine\n  putStrLn \"Enter your inputs:\"\n  inputs <- getLine\n  let vmState = ([], map parseInstruction $ splitOn \"\\n\" program)\n      finalState = run vmState\n  print finalState\n```"
+}

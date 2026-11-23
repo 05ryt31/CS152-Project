@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p09_stack_vm",
+  "src": "javascript",
+  "tgt": "python",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:13:07+00:00",
+  "source_file": "p09_stack_vm.js",
+  "target_file": "p09_stack_vm.py",
+  "attempts": 1,
+  "duration_s": 38.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 554,
+    "completion_tokens": 309
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\ndef main():\n    # read in the number of commands\n    num_commands = int(input())\n\u00a0\n    # create a list of lists where each sublist is a command\n    commands = []\n    for _ in range(num_commands):\n        commands.append(input().strip().split())\n\u00a0\n    # create a stack\n    stack = []\n\u00a0\n    # process each command\n    for cmd in commands:\n        if cmd[0] == \"push\":\n            stack.append(int(cmd[1]))\n        elif cmd[0] == \"pop\":\n            try:\n                stack.pop()\n            except IndexError:\n                print(\"ERROR\")\n        elif cmd[0] == \"add\":\n            try:\n                stack[-2] += stack[-1]\n                stack.pop()\n            except IndexError:\n                print(\"ERROR\")\n        elif cmd[0] == \"mul\":\n            try:\n                stack[-2] *= stack[-1]\n                stack.pop()\n            except IndexError:\n                print(\"ERROR\")\n        elif cmd[0] == \"dup\":\n            try:\n                stack.append(stack[-1])\n            except IndexError:\n                print(\"ERROR\")\n        elif cmd[0] == \"swap\":\n            try:\n                stack[-2], stack[-1] = stack[-1], stack[-2]\n            except IndexError:\n                print(\"ERROR\")\n        elif cmd[0] == \"out\":\n            try:\n                print(stack[-1])\n            except IndexError:\n                print(\"ERROR\")\n\u00a0\nif __name__ == \"__main__\":\n    main()\n```"
+}

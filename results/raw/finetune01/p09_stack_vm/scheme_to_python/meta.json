@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p09_stack_vm",
+  "src": "scheme",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:32:06+00:00",
+  "source_file": "p09_stack_vm.scm",
+  "target_file": "p09_stack_vm.py",
+  "attempts": 1,
+  "duration_s": 35.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 622,
+    "completion_tokens": 285
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\ndef stack_vm():\n    stack = []\n    while True:\n        cmd = input(\"Enter command: \")\n        if cmd == \"\":\n            break\n        elif cmd.startswith(\"push\"):\n            try:\n                stack.append(int(cmd.split()[1]))\n            except ValueError:\n                print(\"Error: Invalid number.\")\n        elif cmd == \"pop\":\n            try:\n                stack.pop()\n            except IndexError:\n                print(\"Error: Stack is empty.\")\n        elif cmd == \"add\":\n            try:\n                stack[-2] += stack[-1]\n                del stack[-1]\n            except IndexError:\n                print(\"Error: Not enough numbers in stack.\")\n        elif cmd == \"mul\":\n            try:\n                stack[-2] *= stack[-1]\n                del stack[-1]\n            except IndexError:\n                print(\"Error: Not enough numbers in stack.\")\n        elif cmd == \"dup\":\n            try:\n                stack.append(stack[-1])\n            except IndexError:\n                print(\"Error: Stack is empty.\")\n        elif cmd == \"swap\":\n            try:\n                stack[-2], stack[-1] = stack[-1], stack[-2]\n            except IndexError:\n                print(\"Error: Not enough numbers in stack.\")\n        else:\n            try:\n                print(stack[-1])\n            except IndexError:\n                print(\"Error: Stack is empty.\")\n\u00a0\nif __name__ == \"__main__\":\n    stack_vm()\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p06_calc",
+  "src": "javascript",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T04:08:35+00:00",
+  "source_file": "p06_calc.js",
+  "target_file": "p06_calc.pl",
+  "attempts": 1,
+  "duration_s": 129.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 540,
+    "completion_tokens": 1032
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n\u00a0\n:- use_module(library(lambda)).\n\u00a0\n% parse the string into a list of tokens\nparse(String, Tokens) :-\n\tstring_chars(String, Chars),\n\tatom_chars(Tokens, Chars),\n\tsplit_tokens(Tokens, Tokens1),\n\tTokens1 \\= [],\n\tlast(Tokens1, Token),\n\tToken \\= end,\n\tmaplist(check_token, Tokens1).\n\u00a0\ncheck_token(Token) :-\n\tmember(Token, [end, plus, minus, times, divide]),\n\t!.\ncheck_token(Token) :-\n\tnumber(Token).\n\u00a0\n% split up the tokens into a list of expressions\nsplit_tokens([], []).\nsplit_tokens([Token|Tokens], [Expression|Expressions]) :-\n\textract_expression(Token, Tokens, Expression, Rest),\n\tsplit_tokens(Rest, Expressions).\n\u00a0\nextract_expression(end, [], [], []).\nextract_expression(Token, Tokens, Expression, Rest) :-\n\tToken \\= end,\n\textract_expression(Token, Tokens, Expression, Rest).\nextract_expression(Token, [Token1|Rest1], Expression, Rest) :-\n\textract_expression(Token1, Rest1, Expression, Rest).\n\u00a0\nextract_expression(Token, [plus|Rest], Expression, Rest) :-\n\tToken \\= end,\n\tToken \\= plus,\n\tToken \\= minus,\n\tToken \\= times,\n\tToken \\= divide,\n\t!,\n\tExpression = [Token].\nextract_expression(Token, [minus|Rest], Expression, Rest) :-\n\tToken \\= end,\n\tToken \\= plus,\n\tToken \\= minus,\n\tToken \\= times,\n\tToken \\= divide,\n\t!,\n\tExpression = [-Token].\nextract_expression(Token, [times|Rest], Expression, Rest) :-\n\tToken \\= end,\n\tToken \\= plus,\n\tToken \\= minus,\n\tToken \\= times,\n\tToken \\= divide,\n\t!,\n\tExpression = [[times, Token]].\nextract_expression(Token, [divide|Rest], Expression, Rest) :-\n\tToken \\= end,\n\tToken \\= plus,\n\tToken \\= minus,\n\tToken \\= times,\n\tToken \\= divide,\n\t!,\n\tExpression = [[divide, Token]].\nextract_expression(Token, [plus|Rest], Expression, Rest1) :-\n\tToken \\= end,\n\tToken \\= plus,\n\tToken \\= minus,\n\tToken \\= times,\n\tToken \\= divide,\n\t!,\n\textract_expression(Token, Rest, Expression, Rest1).\nextract_expression(Token, [minus|Rest], Expression, Rest1) :-\n\tToken \\= end,\n\tToken \\= plus,\n\tToken \\= minus,\n\tToken \\= times,\n\tToken \\= divide,\n\t!,\n\textract_expression(Token, Rest, Expression, Rest1).\nextract_expression(Token, [times|Rest], Expression, Rest1) :-\n\tToken \\= end,\n\tToken \\= plus,\n\tToken \\= minus,\n\tToken \\= times,\n\tToken \\= divide,\n\t!,\n\textract_expression(Token, Rest, Expression, Rest1).\nextract_expression(Token, [divide|Rest], Expression, Rest1) :-\n\tToken \\= end,\n\tToken \\= plus,\n\tToken \\= minus,\n\tToken \\= times,\n\tToken \\= divide,\n\t!,\n\textract_expression(Token, Rest, Expression, Rest1).\nextract_expression(Token, [end|Rest], Expression, Rest) :-\n\tToken \\= end,\n\tToken \\= plus,\n\tToken \\= minus,\n\tToken \\= times,\n\tToken \\= divide,\n\t!,\n\tExpression = [Token].\nextract_expression(Token, [end|_], Expression, []) :-\n\tToken \\= end,\n\tToken \\= plus,\n\tToken \\= minus,\n\tToken \\= times,\n\tToken \\= divide,\n\t!,\n\tExpression = [Token].\nextract_expression(Token, [_|Rest], Expression, Rest1) :-\n\tToken \\= end,\n\tToken \\= plus,\n\tToken \\= minus,\n\tToken \\= times,\n\tToken \\= divide,\n\t!,\n\textract_expression(Token, Rest, Expression, Rest1).\n\u00a0\n% evaluate the list of expressions\nevaluate(Expression, Value) :-\n\tevaluate(Expression, 0, Value).\n\u00a0\nevaluate([], Value, Value).\nevaluate([[plus, Expression]|Expressions], Value, Result) :-\n\tevaluate(Expression, Value, V),\n\tV1 is Value + V,\n\tevaluate(Expressions, V1, Result).\nevaluate([[minus, Expression]|Expressions], Value, Result) :-\n\tevaluate(Expression, Value, V),\n\tV1 is Value - V,\n\tevaluate(Expressions, V1, Result).\nevaluate([[times, Expression]|Expressions], Value, Result) :-\n\tevaluate(Expression, Value, V),\n\tV1 is Value * V,\n\tevaluate(Expressions, V1, Result).\nevaluate([[divide, Expression]|Expressions], Value, Result) :-\n\tevaluate(Expression, Value, V),\n\tV1 is Value / V,\n\tevaluate(Expressions, V1, Result).\nevaluate([Expression|Expressions], Value, Result) :-\n\tevaluate(Expression, Value, V),\n\tevaluate(Expressions, V, Result).\n\u00a0\n% calculate the result of the string\ncalculate(String, Result) :-\n\tparse(String, Tokens),\n\tsplit_tokens(Tokens, Expressions),\n\tevaluate(Expressions, Result).\n\u00a0\n```"
+}

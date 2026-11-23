@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p07_brackets",
+  "src": "scheme",
+  "tgt": "haskell",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T04:46:18+00:00",
+  "source_file": "p07_brackets.scm",
+  "target_file": "p07_brackets.hs",
+  "attempts": 1,
+  "duration_s": 36.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 492,
+    "completion_tokens": 289
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List (foldl')\n\u00a0\n-- | Checks if a string is balanced.\nisBalanced :: String -> Bool\nisBalanced = null . go []\n  where\n    go :: [Char] -> String -> [Char]\n    go s [] = s\n    go s (x\u00a0: xs)\n      | x == '(' || x == '[' || x == '{' = go (x\u00a0: s) xs\n      | otherwise =\n          case s of\n            [] -> s\n            y\u00a0: ys ->\n              if matching y x then go ys xs else s\n\u00a0\n-- | Checks if two characters are matching brackets.\nmatching :: Char -> Char -> Bool\nmatching '(' ')' = True\nmatching '[' ']' = True\nmatching '{' '}' = True\nmatching _ _     = False\n\u00a0\n-- | Tests whether a list of strings is balanced.\ntestBalancing :: [String] -> [Bool]\ntestBalancing = map isBalanced\n\u00a0\n-- | Prints the results of balancing a list of strings.\nprintResults :: [String] -> IO ()\nprintResults = mapM_ printResult . testBalancing\n  where\n    printResult b = putStrLn $ if b then \"Yes\" else \"No\"\n\u00a0\nmain :: IO ()\nmain = do\n  n <- readLn\n  lines <- replicateM n getLine\n  printResults lines\n```"
+}

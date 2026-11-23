@@ -1,0 +1,56 @@
+ 
+(define (make-tree op left right)
+  (list op left right))
+ 
+(define (op tree)
+  (car tree))
+ 
+(define (left tree)
+  (cadr tree))
+ 
+(define (right tree)
+  (caddr tree))
+ 
+(define (leaf? tree)
+  (not (pair? tree)))
+ 
+(define (tree->string tree)
+  (if (leaf? tree)
+      (number->string (op tree))
+      (let ((op (op tree))
+	    (left (tree->string (left tree)))
+	    (right (tree->string (right tree))))
+	(string-append "(" left " " op " " right ")"))))
+ 
+(define (parse-infix s)
+  (define (parse-infix-helper s stack)
+    (cond ((null? s)
+	   (if (= (length stack) 1)
+	       (car stack)
+	       '()))
+	  ((or (eq? (car s) '+) (eq? (car s) '-))
+	   (parse-infix-helper (cdr s)
+				(list (make-tree (car s)
+						 (car stack)
+						 (cadr stack))
+					  (cddr stack))))
+	  ((or (eq? (car s) '*))
+	   (parse-infix-helper (cdr s)
+				(list (make-tree (car s)
+						 (car stack)
+						 (cadr stack))
+					  (cddr stack))))
+	  (else
+	   (parse-infix-helper (cdr s)
+			       (cons (car s) stack)))))
+  (parse-infix-helper (reverse (string-split s #\space))
+		      '()))
+ 
+(parse-infix "2")
+(parse-infix "2 + 3")
+(parse-infix "2 * 3")
+(parse-infix "2 + 3 * 4")
+(parse-infix "(2 + 3) * 4")
+(parse-infix "2 + (3 * 4)")
+(parse-infix "2 + 3 * 4 - 5 / (6 + 7)")
+ 

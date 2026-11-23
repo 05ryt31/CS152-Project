@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p05_expr_tree",
+  "src": "python",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:20:41+00:00",
+  "source_file": "p05_expr_tree.py",
+  "target_file": "p05_expr_tree.hs",
+  "attempts": 1,
+  "duration_s": 42.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 435,
+    "completion_tokens": 340
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\ndata ExprTree = Val Int | Plus ExprTree ExprTree | Minus ExprTree ExprTree | Times ExprTree ExprTree deriving Show\n\u00a0\nbuildExprTree :: [String] -> ExprTree\nbuildExprTree [] = error \"Empty list\"\nbuildExprTree [x] = Val $ read x\nbuildExprTree xs =\n  let (left,right) = splitAt ((length xs - 1) `div` 2) xs\n      op = last xs\n  in case op of\n       \"+\" -> Plus (buildExprTree left) (buildExprTree right)\n       \"-\" -> Minus (buildExprTree left) (buildExprTree right)\n       \"*\" -> Times (buildExprTree left) (buildExprTree right)\n       _   -> error $ \"Unknown operator: \" ++ op\n\u00a0\nrenderExprTree :: ExprTree -> String\nrenderExprTree (Val n) = show n\nrenderExprTree (Plus l r) = \"(\" ++ renderExprTree l ++ \" + \" ++ renderExprTree r ++ \")\"\nrenderExprTree (Minus l r) = \"(\" ++ renderExprTree l ++ \" - \" ++ renderExprTree r ++ \")\"\nrenderExprTree (Times l r) = \"(\" ++ renderExprTree l ++ \" * \" ++ renderExprTree r ++ \")\"\n\u00a0\nmain = do\n  putStrLn $ renderExprTree $ buildExprTree [\"3\", \"*\", \"(\", \"2\", \"+\", \"5\", \")\"]\n  putStrLn $ renderExprTree $ buildExprTree [\"3\", \"*\", \"(\", \"2\", \"+\", \"5\", \")\", \"*\", \"(\", \"6\", \"-\", \"4\", \")\"]\n```"
+}

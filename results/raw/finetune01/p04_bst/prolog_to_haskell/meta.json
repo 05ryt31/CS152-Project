@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p04_bst",
+  "src": "prolog",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:18:06+00:00",
+  "source_file": "p04_bst.pl",
+  "target_file": "p04_bst.hs",
+  "attempts": 1,
+  "duration_s": 40.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 697,
+    "completion_tokens": 315
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List.Split (splitOn)\n\u00a0\ndata Tree = Empty | Node Int Tree Tree deriving Show\n\u00a0\n-- Insert a value into the tree\ninsert :: Int -> Tree -> Tree\ninsert x Empty = Node x Empty Empty\ninsert x (Node y left right)\n  | x == y = Node y left right\n  | x < y = Node y (insert x left) right\n  | otherwise = Node y left (insert x right)\n\u00a0\n-- Get the height of the tree\nheight :: Tree -> Int\nheight Empty = 0\nheight (Node _ left right) = 1 + max (height left) (height right)\n\u00a0\n-- Perform an in-order traversal of the tree\ninOrder :: Tree -> [Int]\ninOrder Empty = []\ninOrder (Node x left right) = inOrder left ++ [x] ++ inOrder right\n\u00a0\n-- Perform a pre-order traversal of the tree\npreOrder :: Tree -> [Int]\npreOrder Empty = []\npreOrder (Node x left right) = [x] ++ preOrder left ++ preOrder right\n\u00a0\nmain :: IO ()\nmain = do\n  putStrLn \"Enter numbers separated by spaces:\"\n  input <- getLine\n  let nums = map read $ splitOn \" \" input\n      tree = foldr insert Empty nums\n  putStrLn \"In order:\"\n  print $ inOrder tree\n  putStrLn \"Pre order:\"\n  print $ preOrder tree\n  putStrLn $ \"Height: \" ++ show (height tree)\n```"
+}

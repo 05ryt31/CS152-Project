@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p04_bst",
+  "src": "haskell",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:09:30+00:00",
+  "source_file": "p04_bst.hs",
+  "target_file": "p04_bst.py",
+  "attempts": 1,
+  "duration_s": 68.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 501,
+    "completion_tokens": 550
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nclass BST(object):\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n \n    def insert(self, value):\n        if self.value == value:\n            return False\n        elif self.value > value:\n            if self.left is not None:\n                return self.left.insert(value)\n            else:\n                self.left = BST(value)\n                return True\n        else:\n            if self.right is not None:\n                return self.right.insert(value)\n            else:\n                self.right = BST(value)\n                return True\n \n    def find(self, value):\n        if self.value == value:\n            return True\n        elif self.value > value:\n            if self.left is not None:\n                return self.left.find(value)\n            else:\n                return False\n        else:\n            if self.right is not None:\n                return self.right.find(value)\n            else:\n                return False\n \n    def inorder(self):\n        if self.left is not None:\n            yield from self.left.inorder()\n        yield self.value\n        if self.right is not None:\n            yield from self.right.inorder()\n \n    def preorder(self):\n        yield self.value\n        if self.left is not None:\n            yield from self.left.preorder()\n        if self.right is not None:\n            yield from self.right.preorder()\n \n    def postorder(self):\n        if self.left is not None:\n            yield from self.left.postorder()\n        if self.right is not None:\n            yield from self.right.postorder()\n        yield self.value\n \n    def height(self):\n        if self.left is not None and self.right is not None:\n            return 1 + max(self.left.height(), self.right.height())\n        elif self.left:\n            return 1 + self.left.height()\n        elif self.right:\n            return 1 + self.right.height()\n        else:\n            return 1\n\u00a0\nif __name__ == '__main__':\n    bst = BST(25)\n    bst.insert(15)\n    bst.insert(50)\n    bst.insert(10)\n    bst.insert(22)\n    bst.insert(35)\n    bst.insert(70)\n    bst.insert(4)\n    bst.insert(12)\n    bst.insert(18)\n    bst.insert(24)\n    bst.insert(31)\n    bst.insert(44)\n    bst.insert(66)\n    bst.insert(90)\n    print('Inorder:', list(bst.inorder()))\n    print('Preorder:', list(bst.preorder()))\n    print('Postorder:', list(bst.postorder()))\n    print('Height:', bst.height())\n```"
+}

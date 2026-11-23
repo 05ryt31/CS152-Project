@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p12_group_by",
+  "src": "javascript",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:00:15+00:00",
+  "source_file": "p12_group_by.js",
+  "target_file": "p12_group_by.scm",
+  "attempts": 1,
+  "duration_s": 42.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 415,
+    "completion_tokens": 339
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base)\n        (scheme read)\n        (scheme write)\n        (srfi 1))\n\u00a0\n;; Return a list of lists where each sublist is a pair of a key and a list of values.\n(define (group-by proc lst)\n  (fold-left\n   ;; Fold function.\n   (lambda (result item)\n     (let ((key (proc item)))\n       (if (assoc key result)\n           (cons (cons key (cons item (cdr (assoc key result))))\n                 (remove (lambda (x) (eq? (car x) key)) result))\n           (cons (cons key (list item)) result))))\n   ;; Initial value.\n   '()\n   ;; List to fold over.\n   lst))\n\u00a0\n;; Print out the grouped data in the format specified by the problem.\n(define (print-grouped-data grouped-data)\n  (define (print-key-value-pair key-values)\n    (display (car key-values))\n    (display \": \")\n    (display (length (cdr key-values)))\n    (display \" entries\")\n    (newline))\n  (for-each print-key-value-pair grouped-data))\n\u00a0\n;; Main procedure.\n(define (main args)\n  (with-input-from-file\n      (cadr args)\n    (lambda ()\n      (let* ((num-lines (read))\n             (data (do ((index num-lines (- index 1))\n                        (data-list '()))\n                       ((zero? index) data-list)\n                     (set! data-list (cons (read) data-list)))))\n        (print-grouped-data (group-by car data))))))\n\u00a0\n(main (command-line))\n\u00a0\n```"
+}

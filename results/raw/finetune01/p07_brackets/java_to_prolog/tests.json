@@ -1,0 +1,10 @@
+[
+    {"name": "nested and crossed", "input": "2\n([]{})\n([)]", "output": "yes\nno"},
+    {"name": "empty string is balanced", "input": "1\n", "output": "yes"},
+    {"name": "lone opener, lone closer, pair", "input": "3\n(\n)\n()", "output": "no\nno\nyes"},
+    {"name": "all three kinds nested", "input": "1\n{[()]}", "output": "yes"},
+    {"name": "unmatched openers and closers", "input": "2\n(((\n)))", "output": "no\nno"},
+    {"name": "zero lines", "input": "0", "output": ""},
+    {"name": "wrong closer type", "input": "1\n(]", "output": "no"},
+    {"name": "long balanced sequence", "input": "1\n()()[]{}([]){[()]}", "output": "yes"}
+]

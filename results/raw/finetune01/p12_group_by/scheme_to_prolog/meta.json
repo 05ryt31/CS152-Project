@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p12_group_by",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:05:27+00:00",
+  "source_file": "p12_group_by.scm",
+  "target_file": "p12_group_by.pl",
+  "attempts": 1,
+  "duration_s": 125.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 636,
+    "completion_tokens": 1013
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lambda)).\n\u00a0\n% Task 1\ngroup_pairs :-\n\tL = [(a, 4), (b, 6), (a, 6), (c, 1), (b, 2)],\n\tgroup_pairs(L, L1),\n\tmap_list_to_name(L1, N),\n\tpredsort(my_compare, N, L2),\n\tformat('Grouped pairs: ~w~n', [L2]).\n\u00a0\nmy_compare(R, A, B) :-\n\tcompare(R, A, B).\n\u00a0\n% Task 2\ngroup_strings :-\n\tL = [\"aa\", \"abc\", \"bc\", \"cd\"],\n\tgroup_strings(L, L1),\n\tmap_list_to_name(L1, N),\n\tpredsort(my_compare, N, L2),\n\tformat('Grouped strings: ~w~n', [L2]).\n\u00a0\n% Task 3\ngroup_integers :-\n\tL = [1, 2, 3, 5, 8, 13, 21],\n\tgroup_integers(L, L1),\n\tmap_list_to_name(L1, N),\n\tpredsort(my_compare, N, L2),\n\tformat('Grouped integers: ~w~n', [L2]).\n\u00a0\n% Task 4\ngroup_anagrams :-\n\tL = [\"eat\", \"tea\", \"tan\", \"ate\", \"nat\", \"bat\"],\n\tgroup_anagrams(L, L1),\n\tmap_list_to_name(L1, N),\n\tpredsort(my_compare, N, L2),\n\tformat('Grouped anagrams: ~w~n', [L2]).\n\u00a0\n% Task 5\ngroup_identical_lists :-\n\tL = [[1, 2], [3, 4], [1, 2], [5, 6], [3, 4]],\n\tgroup_identical_lists(L, L1),\n\tmap_list_to_name(L1, N),\n\tpredsort(my_compare, N, L2),\n\tformat('Grouped identical lists: ~w~n', [L2]).\n\u00a0\n% Task 6\ngroup_identical_terms :-\n\tL = [a(1, 2), b(3, 4), a(1, 2), c(5, 6), b(3, 4)],\n\tgroup_identical_terms(L, L1),\n\tmap_list_to_name(L1, N),\n\tpredsort(my_compare, N, L2),\n\tformat('Grouped identical terms: ~w~n', [L2]).\n\u00a0\n% Predicates\n\u00a0\n% Task 1\ngroup_pairs([], []).\ngroup_pairs([H|T], R) :-\n\tH = (K, V),\n\tfindall((K, V1), member((K, V1), T), L),\n\tsumlist(V1, V),\n\tgroup_pairs(T, R1),\n\tR = [(K, V)|R1].\n\u00a0\n% Task 2\ngroup_strings([], []).\ngroup_strings([H|T], R) :-\n\tstring_chars(H, L),\n\tsort(L, S),\n\tgroup_strings(T, R1),\n\tR = [S|R1].\n\u00a0\n% Task 3\ngroup_integers([], []).\ngroup_integers([H|T], R) :-\n\tinteger_sum(H, T, H1, T1),\n\tgroup_integers(T1, R1),\n\tR = [H1|R1].\n\u00a0\ninteger_sum(N, [], N, []).\ninteger_sum(N, [H|T], N1, T1) :-\n\tN + H =:= N1,\n\tinteger_sum(N, T, N1, T1).\ninteger_sum(N, [H|T], N1, [H|T1]) :-\n\tN + H \\= N1,\n\tinteger_sum(N, T, N1, T1).\n\u00a0\n% Task 4\ngroup_anagrams([], []).\ngroup_anagrams([H|T], R) :-\n\tstring_chars(H, L),\n\tsplit_with_length(L, SL),\n\tgroup_anagrams(T, R1),\n\tR = [SL|R1].\n\u00a0\nsplit_with_length(L, SL) :-\n\tlength(L, Len),\n\tstring_from_char_code(S, Len),\n\tstring_chars(S, L),\n\tSL = (S, L).\n\u00a0\n% Task 5\ngroup_identical_lists([], []).\ngroup_identical_lists([H|T], R) :-\n\tmember(H, T),\n\tgroup_identical_lists(T, R).\ngroup_identical_lists([H|T], R) :-\n\t\\+member(H, T),\n\tgroup_identical_lists(T, R1),\n\tR = [H|R1].\n\u00a0\n% Task 6\ngroup_identical_terms([], []).\ngroup_identical_terms([H|T], R) :-\n\tmember(H, T),\n\tgroup_identical_terms(T, R).\ngroup_identical_terms([H|T], R) :-\n\t\\+member(H, T),\n\tgroup_identical_terms(T, R1),\n\tR = [H|R1].\n\u00a0\n```"
+}

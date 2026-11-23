@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p07_brackets",
+  "src": "java",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T04:44:07+00:00",
+  "source_file": "P07Brackets.java",
+  "target_file": "p07_brackets.hs",
+  "attempts": 1,
+  "duration_s": 33.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 490,
+    "completion_tokens": 262
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List (foldl')\n\u00a0\n-- | Checks if brackets in string are balanced.\nisBalanced :: String -> Bool\nisBalanced = null . go []\n  where\n    go []     ('('\u00a0: xs) = go [(')' , 1)] xs\n    go []     ('['\u00a0: xs) = go [(']' , 2)] xs\n    go []     ('{'\u00a0: xs) = go [('}', 3)] xs\n    go []     _          = False\n    go ((c, n):xs) (x\u00a0: xs')\n      | x == c    = go xs' xs'\n      | otherwise = case n of\n                      1 -> go ((')', 1):xs) xs'\n                      2 -> go ((']', 2):xs) xs'\n                      3 -> go (('}', 3):xs) xs'\n                      _ -> error \"impossible\"\n    go _        []       = True\n\u00a0\nmain :: IO ()\nmain =\n  do print $ isBalanced \"()\"\n     print $ isBalanced \"(]\"\n     print $ isBalanced \"{[()]}\"\n     print $ isBalanced \"{[(])}\"\n     print $ isBalanced \"{{{{}}}}\"\n```"
+}

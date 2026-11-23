@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p11_pipeline",
+  "src": "scheme",
+  "tgt": "haskell",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:40:43+00:00",
+  "source_file": "p11_pipeline.scm",
+  "target_file": "p11_pipeline.hs",
+  "attempts": 1,
+  "duration_s": 253.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 722,
+    "completion_tokens": 2048
+  },
+  "extraction": "no_fence",
+  "raw_response": "```haskell\nimport Data.List.Split (splitOn)\n\u00a0\n-- | A pipeline is a list of stages.\ntype Pipeline = [Stage]\n\u00a0\n-- | A stage is either a filter or a map.\ndata Stage = Filter String Int | Map String Int deriving Show\n\u00a0\n-- | A value is either a number or a boolean.\ndata Value = Number Int | Boolean Bool deriving Show\n\u00a0\n-- | A function that takes a pipeline and a list of numbers and returns the result.\npipeline :: Pipeline -> [Int] -> [Value]\npipeline [] _ = []\npipeline (Filter s n\u00a0: xs) ns =\n  case s of\n    \"even\" -> pipeline xs $ filter (\\x -> x `mod` 2 == 0) ns\n    \"odd\" -> pipeline xs $ filter (\\x -> x `mod` 2 /= 0) ns\n    _ -> pipeline xs $ filter (\\x -> x > n) ns\npipeline (Map s n\u00a0: xs) ns =\n  case s of\n    \"add\" -> pipeline xs $ map (+ n) ns\n    \"mul\" -> pipeline xs $ map (* n) ns\n\u00a0\n-- | A function that takes a string and returns a pipeline.\nparsePipeline :: String -> Pipeline\nparsePipeline = parse . splitOn \" \"\n  where\n    parse [\"end\"] = []\n    parse (\"filter\":s:n:xs) = Filter s (read n)\u00a0: parse xs\n    parse (\"map\":s:n:xs) = Map s (read n)\u00a0: parse xs\n\u00a0\n-- | A function that takes a pipeline and a list of numbers and prints the result.\nshowResult :: Pipeline -> [Int] -> IO ()\nshowResult p ns = do\n  let r = pipeline p ns\n  putStrLn $ show r\n\u00a0\n-- | A function that takes a pipeline and a list of numbers and returns the maximum value.\nmaxResult :: Pipeline -> [Int] -> Maybe Int\nmaxResult p ns = case pipeline p ns of\n  [] -> Nothing\n  (Number n:_) -> Just n\n  _ -> Nothing\n\u00a0\n-- | A function that takes a pipeline and a list of numbers and returns the sum of all values.\nsumResult :: Pipeline -> [Int] -> Maybe Int\nsumResult p ns = case pipeline p ns of\n  [] -> Nothing\n  (Number n:ns') -> Just $ n + maybe 0 id (sumResult p ns')\n  _ -> Nothing\n\u00a0\n-- | A function that takes a pipeline and a list of numbers and returns the first value.\nfirstResult :: Pipeline -> [Int] -> Maybe Int\nfirstResult p ns = case pipeline p ns of\n  [] -> Nothing\n  (Number n:_) -> Just n\n  _ -> Nothing\n\u00a0\n-- | A function that takes a pipeline and a list of numbers and returns the last value.\nlastResult :: Pipeline -> [Int] -> Maybe Int\nlastResult p ns = case pipeline p ns of\n  [] -> Nothing\n  (Number n:[]) -> Just n\n  (_:ns') -> lastResult p ns'\n  _ -> Nothing\n\u00a0\n-- | A function that takes a pipeline and a list of numbers and returns the second-to-last value.\nsecondLastResult :: Pipeline -> [Int] -> Maybe Int\nsecondLastResult p ns = case pipeline p ns of\n  [] -> Nothing\n  (Number n:[]) -> Just n\n  (Number _:n:[]) -> Just n\n  (_:_:ns') -> secondLastResult p ns'\n  _ -> Nothing\n\u00a0\n-- | A function that takes a pipeline and a list of numbers and returns the third-to-last value.\nthirdLastResult :: Pipeline -> [Int] -> Maybe Int\nthirdLastResult p ns = case pipeline p ns of\n  [] -> Nothing\n  (Number n:[]) -> Just n\n  (Number _:n:[]) -> Just n\n  (Number _:_:n:[]) -> Just n\n  (_:_:_:ns') -> thirdLastResult p ns'\n  _ -> Nothing\n\u00a0\n-- | A function that takes a pipeline and a list of numbers and returns the fourth-to-last value.\nfourthLastResult :: Pipeline -> [Int] -> Maybe Int\nfourthLastResult p ns = case pipeline p ns of\n  [] -> Nothing\n  (Number n:[]) -> Just n\n  (Number _:n:[]) -> Just n\n  (Number _:_:n:[]) -> Just n\n  (Number _:_:_:n:[]) -> Just n\n  (_:_:_:_:ns') -> fourthLastResult p ns'\n  _ -> Nothing\n\u00a0\n-- | A function that takes a pipeline and a list of numbers and returns the fifth-to-last value.\nfifthLastResult :: Pipeline -> [Int] -> Maybe Int\nfifthLastResult p ns = case pipeline p ns of\n  [] -> Nothing\n  (Number n:[]) -> Just n\n  (Number _:n:[]) -> Just n\n  (Number _:_:n:[]) -> Just n\n  (Number _:_:_:n:[]) -> Just n\n  (Number _:_:_:_:n:[]) -> Just n\n  (_:_:_:_:_:ns') -> fifthLastResult p ns'\n  _ -> Nothing\n\u00a0\n-- | A function that takes a pipeline and a list of numbers and returns the sixth-to-last value.\nsixthLastResult :: Pipeline -> [Int] -> Maybe Int\nsixthLastResult p ns = case pipeline p ns of\n  [] -> Nothing\n  (Number n:[]) -> Just n\n  (Number _:n:[]) -> Just n\n  (Number _:_:n:[]) -> Just n\n  (Number _:_:_:n:[]) -> Just n\n  (Number _:_:_:_:n:[]) -> Just n\n  (Number _:_:_:_:_:n:[]) -> Just n\n  (_:_:_:_:_:_:ns') -> sixthLastResult p ns'\n  _ -> Nothing\n\u00a0\n-- | A function that takes a pipeline and a list of numbers and returns the seventh-to-last value.\nseventhLastResult :: Pipeline -> [Int] -> Maybe Int\nseventhLastResult p ns = case pipeline p ns of\n  [] -> Nothing\n  (Number n:[]) -> Just n\n  (Number _:n:[]) -> Just n\n  (Number _:_:n:[]) -> Just n\n  (Number _:_:_:n:[]) -> Just n\n  (Number _:_:_:_:n:[]) -> Just n\n  (Number _:_:_:_:_:n:[]) -> Just n\n  (Number _:_:_:_:_:_:n:[]) -> Just n\n  (_:_:_:_:_:_:_:ns') -> seventhLastResult p ns'\n  _ -> Nothing\n\u00a0\n-- | A function that takes a pipeline and a list of numbers and returns the eighth-to-last value.\neighthLastResult :: Pipeline -> [Int] -> Maybe Int\neighthLastResult p ns = case pipeline p ns of\n  [] -> Nothing\n  (Number n:[]) -> Just n\n  (Number _:n:[]) -> Just n\n  (Number _:_:n:[]) -> Just n\n  (Number _:_:_:n:[]) -> Just n\n  (Number _:_:_:_:n:[]) -> Just n\n  (Number _:_:_:_:_:n:[]) -> Just n\n  (Number _:_:_:_:_:_:n:[]) -> Just n\n  (Number _:_:_:_:_:_:_:n:[]) -> Just n\n  (_:_:_:_:_:_:_:_:ns') -> eighthLastResult p ns'\n  _ -> Nothing\n\u00a0\n-- | A function that takes a pipeline and a list of numbers and returns the ninth-to-last value.\nninthLastResult :: Pipeline -> [Int] -> Maybe Int\nninthLastResult p ns = case pipeline p ns of\n  [] -> Nothing\n  (Number n:[]) -> Just n\n  (Number _:n:[]) -> Just n\n  (Number _:_:n:[]) -> Just n\n  (Number _:_:_:n:[]) -> Just n\n  (Number _:_:_:_:n:[]) -> Just n\n  (Number _:_:_:_:_:n:[]) -> Just n\n  (Number _:_:_:_:_:_:n:[]) -> Just n\n  (Number _:_:_:_:_:_:_:n:[]) -> Just n\n  (Number _:_:_:_:_:_:_:_:n:[]) -> Just n\n  (_:_:_:_:_:_:_:_:_:ns') -> ninthLastResult p ns'\n  _ -> Nothing\n\u00a0\n-- | A function that takes a pipeline and a list of numbers and returns the tenth-to-last value.\ntenthLastResult :: Pipeline -> [Int] -> Maybe Int\ntenthLastResult p ns = case pipeline p ns of\n  [] -> Nothing\n  (Number n:[]) -> Just n\n  (Number _:n:[]) -> Just n\n  (Number _:_:n:[]) -> Just n\n  (Number _:_:_:n:[]) -> Just n\n  (Number _:_:_:_:n:[]) -> Just n\n  (Number _:_:_:_:_:n:[]) -> Just n\n  (Number _:_:_:_:_:_:n:[]) -> Just n\n  (Number _:_:_:_:_:_:_:n:[]) -> Just n\n  (Number _:_:_:_:_:_:_:_:n:[]) -> Just n\n  (Number _:_:_:_:_:_:_:_:_:n:[]) -> Just n\n  (_:_"
+}

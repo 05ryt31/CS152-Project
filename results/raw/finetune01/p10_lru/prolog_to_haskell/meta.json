@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p10_lru",
+  "src": "prolog",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:19:11+00:00",
+  "source_file": "p10_lru.pl",
+  "target_file": "p10_lru.hs",
+  "attempts": 1,
+  "duration_s": 67.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 606,
+    "completion_tokens": 543
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List.Split (splitOn)\nimport qualified Data.Map.Strict as M\n\u00a0\ntype Cache = M.Map String Int\n\u00a0\n-- cache capacity\ncacheSize :: Int\ncacheSize = 3\n\u00a0\n-- cache contents\ncache :: Cache\ncache =\n  M.fromList $\n  zip [\"a\", \"b\", \"c\"] [1, 2, 3]\n\u00a0\n-- get value by key\ngetValue :: String -> Cache -> Maybe Int\ngetValue k c = M.lookup k c\n\u00a0\n-- put value by key\nputValue :: String -> Int -> Cache -> Cache\nputValue k v c = M.insert k v c\n\u00a0\n-- remove least recently used item\nremoveLRU :: Cache -> Cache\nremoveLRU c = case M.toList c of\n  [] -> c\n  ((k, v):xs) -> M.fromList xs\n\u00a0\n-- update cache\nupdateCache :: String -> Int -> Cache -> Cache\nupdateCache k v c = case getValue k c of\n  Just _ -> putValue k v $ removeLRU c\n  Nothing ->\n    if M.size c < cacheSize\n      then putValue k v c\n      else putValue k v $ removeLRU c\n\u00a0\n-- print cache\nprintCache :: Cache -> IO ()\nprintCache c = do\n  putStrLn \"Current cache:\"\n  mapM_ (\\(k, v) -> putStrLn $ k ++ \": \" ++ show v) $ M.toList c\n\u00a0\n-- process command\nprocessCommand :: String -> Cache -> Cache\nprocessCommand cmd c = case words cmd of\n  [\"get\", k] -> case getValue k c of\n    Just v -> putStrLn (\"Value of \" ++ k ++ \": \" ++ show v) >> c\n    Nothing -> putStrLn (\"No such key: \" ++ k) >> c\n  [\"put\", k, v] -> let i = read v in\n    putStrLn (\"Put \" ++ k ++ \"=\" ++ show i) >> updateCache k i c\n  _ -> error \"Invalid command\"\n\u00a0\n-- process commands\nprocessCommands :: [String] -> Cache -> Cache\nprocessCommands cmds c = foldl processCommand c cmds\n\u00a0\n-- parse commands\nparseCommands :: String -> [String]\nparseCommands s = splitOn \"\\n\" s >>= splitOn \" \"\n\u00a0\n-- main function\nmain :: IO ()\nmain = do\n  putStrLn \"Enter commands:\"\n  cmds <- getContents\n  let cmds' = parseCommands cmds\n  putStrLn \"Initial cache:\"\n  printCache cache\n  putStrLn \"Final cache:\"\n  printCache $ processCommands cmds' cache\n```"
+}

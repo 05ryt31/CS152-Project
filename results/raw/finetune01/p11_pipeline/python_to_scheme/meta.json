@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p11_pipeline",
+  "src": "python",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:22:07+00:00",
+  "source_file": "p11_pipeline.py",
+  "target_file": "p11_pipeline.scm",
+  "attempts": 1,
+  "duration_s": 190.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 596,
+    "completion_tokens": 1541
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base)\n        (scheme read)\n        (scheme write)\n        (srfi 1 lists))\n\u00a0\n;; A pipeline is represented by a list of stages.\n;;\n;; Each stage is represented by a procedure that takes two arguments:\n;;   - the previous value of the pipeline\n;;   - the current value of the pipeline\n;;\n;; Stages can be composed using compose-pipeline.\n;;\n;; Pipelines can be applied to a list of values using apply-pipeline.\n\u00a0\n(define compose-pipeline\n  ;; Compose multiple pipelines together.\n  ;;\n  ;; This function takes any number of arguments, each of which must be a\n  ;; pipeline. It returns a new pipeline that applies all of the given\n  ;; pipelines in order.\n  ;;\n  ;; For example, if we have two pipelines:\n  ;;\n  ;;   (define pipeline1 ...)\n  ;;   (define pipeline2 ...)\n  ;;\n  ;; We can combine them like this:\n  ;;\n  ;;   (compose-pipeline pipeline1 pipeline2)\n  ;;\n  ;; And then use the combined pipeline like this:\n  ;;\n  ;;   (apply-pipeline (compose-pipeline pipeline1 pipeline2) values)\n  ;;\n  ;; Or we could do it all at once:\n  ;;\n  ;;   (apply-pipeline (compose-pipeline pipeline1 pipeline2) values)\n  ;;\n  ;; If there are no arguments, the identity function is returned.\n  ;;\n  ;; If there is only one argument, that argument is returned.\n  ;;\n  ;; Otherwise, the first argument is called with the results of calling\n  ;; the second argument, and so on.\n  ;;\n  ;; In general, compose-pipeline is equivalent to:\n  ;;\n  ;;   (lambda (pipeline-values)\n  ;;     (fold-right (lambda (pipeline prev-value)\n  ;;                  (apply-pipeline pipeline (list prev-value)))\n  ;;                 pipeline-values\n  ;;                 pipelines))\n  ;;\n  ;; But it is more efficient because it avoids creating intermediate lists.\n  (case-lambda\n    ((pipeline) identity)\n    ((pipeline . pipelines)\n     (lambda (pipeline-values)\n       (let loop ((values pipeline-values)\n                  (pipelines pipelines))\n         (if (null? pipelines)\n             values\n             (loop (apply-pipeline (car pipelines) (list values))\n                   (cdr pipelines))))))))\n\u00a0\n(define apply-pipeline\n  ;; Apply a pipeline to a list of values.\n  ;;\n  ;; This function takes two arguments:\n  ;;   - a pipeline\n  ;;   - a list of values\n  ;;\n  ;; It returns the result of applying the pipeline to the list of values.\n  ;;\n  ;; For example, if we have a pipeline:\n  ;;\n  ;;   (define pipeline ...)\n  ;;\n  ;; And a list of values:\n  ;;\n  ;;   (define values '(1 2 3 4 5))\n  ;;\n  ;; We can apply the pipeline to the values like this:\n  ;;\n  ;;   (apply-pipeline pipeline values)\n  ;;\n  ;; Or we could do it all at once:\n  ;;\n  ;;   (apply-pipeline pipeline values)\n  ;;\n  ;; If the pipeline is the identity function, the values are returned\n  ;; unchanged.\n  ;;\n  ;; Otherwise, the pipeline is called with the values as its argument.\n  ;;\n  ;; In general, apply-pipeline is equivalent to:\n  ;;\n  ;;   (lambda (pipeline values)\n  ;;     (pipeline values))\n  ;;\n  ;; But it is more efficient because it avoids creating intermediate lists.\n  (lambda (pipeline values)\n    (pipeline values)))\n\u00a0\n;; Some sample pipelines.\n;;\n;; These pipelines are defined using lambda expressions, but they could also\n;; be defined using named procedures.\n;;\n;; Each pipeline takes a single argument, which is a list of values.\n;;\n;; Each pipeline returns a list of values.\n;;\n;; Each pipeline is applied to the result of the previous pipeline.\n;;\n;; The final result is a list of values.\n;;\n;; The final result is printed.\n;;\n;; The final result is compared against the expected result.\n;;\n;; If the final result matches the expected result, the test passes.\n;;\n;; If the final result does not match the expected result, the test fails.\n;;\n;; The tests are run in order.\n;;\n;; If any test fails, the program exits with a non-zero status.\n;;\n;; If all tests pass, the program exits with a zero status.\n;;\n;; The tests are:\n;;\n;;   - map-add-10\n;;   - filter-even\n;;   - reduce-sum\n;;   - map-mul-2\n;;   - filter-gt-10\n;;   - reduce-max\n;;   - map-add-10-filter-even-reduce-sum\n;;   - map-mul-2-filter-gt-10-reduce-max\n\u00a0\n(define map-add-10\n  (lambda (values)\n    (map (lambda (value)\n           (+ value 10))\n         values)))\n\u00a0\n(define filter-even\n  (lambda (values)\n    (filter even? values)))\n\u00a0\n(define reduce-sum\n  (lambda (values)\n    (fold-left + 0 values)))\n\u00a0\n(define map-mul-2\n  (lambda (values)\n    (map (lambda (value)\n           (* value 2))\n         values)))\n\u00a0\n(define filter-gt-10\n  (lambda (values)\n    (filter (lambda (value)\n              (> value 10))\n            values)))\n\u00a0\n(define reduce-max\n  (lambda (values)\n    (fold-left max -inf.0 values)))\n\u00a0\n(define map-add-10-filter-even-reduce-sum\n  (compose-pipeline map-add-10 filter-even reduce-sum))\n\u00a0\n(define map-mul-2-filter-gt-10-reduce-max\n  (compose-pipeline map-mul-2 filter-gt-10 reduce-max))\n\u00a0\n;; Run the tests.\n(map (lambda (test)\n       (let* ((pipeline (car test))\n              (values (cadr test))\n              (expected (caddr test))\n              (result (apply-pipeline pipeline values)))\n         (display (string-append\n                    (if (equal? result expected)\n                        \"PASS \"\n                        \"FAIL \")\n                    (symbol->string (car test))\n                    \": \"\n                    (number->string (length values))\n                    \" values -> \"\n                    (number->string (length result))\n                    \" values\\n\"))))\n       '((map-add-10 (1 2 3 4 5) (11 12 13 14 15))\n         (filter-even (1 2 3 4 5) (2 4))\n         (reduce-sum (1 2 3 4 5) 15)\n         (map-mul-2 (1 2 3 4 5) (2 4 6 8 10))\n         (filter-gt-10 (1 2 3 4 5) ())\n         (reduce-max (1 2 3 4 5) 5)\n         (map-add-10-filter-even-reduce-sum (1 2 3 4 5) 30)\n         (map-mul-2-filter-gt-10-reduce-max (1 2 3 4 5) 20)))\n\u00a0\n```"
+}

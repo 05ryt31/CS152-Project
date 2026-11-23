@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p14_bfs",
+  "src": "python",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:30:50+00:00",
+  "source_file": "p14_bfs.py",
+  "target_file": "p14_bfs.scm",
+  "attempts": 1,
+  "duration_s": 49.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 482,
+    "completion_tokens": 396
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base))\n(import (scheme read))\n(import (scheme write))\n(import (srfi 1)) ; lists\n(import (srfi 132)) ; vectors\n\u00a0\n;; Breadth-first search implementation\n(define (bfs graph start goal)\n  (let loop ((queue (list start))\n             (visited '()))\n    (cond ((null? queue) #f)\n          ((member (car queue) visited)\n           (loop (cdr queue) visited))\n          ((eq? (car queue) goal)\n           (car queue))\n          (else\n           (let* ((node (car queue))\n                  (edges (vector-ref graph (- node 1)))\n                  (new-queue (append edges (cdr queue))))\n             (loop new-queue (cons node visited)))))))\n\u00a0\n;; Test case\n(let* ((graph (make-vector 6))\n       (nodes '(1 2 3 4 5 6)))\n  ;; Build graph\n  (for-each (lambda (n)\n              (vector-set! graph (- n 1) (list)))\n            nodes)\n  ;; Add edges\n  (vector-set! graph 0 (list 2 3))\n  (vector-set! graph 1 (list 3 4))\n  (vector-set! graph 2 (list 5))\n  (vector-set! graph 3 (list 4 5))\n  (vector-set! graph 4 (list 6))\n  (vector-set! graph 5 (list 6))\n  ;; Search\n  (display \"BFS:\")\n  (for-each (lambda (start end)\n              (display \" \")\n              (display (if (bfs graph start end)\n                           \"connected\"\n                           \"disconnected\")))\n            '((1 2) (1 4) (3 5) (4 6)))\n  (newline))\n\u00a0\n```"
+}

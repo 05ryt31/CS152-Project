@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p14_bfs",
+  "src": "python",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:32:12+00:00",
+  "source_file": "p14_bfs.py",
+  "target_file": "p14_bfs.pl",
+  "attempts": 1,
+  "duration_s": 62.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 539,
+    "completion_tokens": 494
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\nbfs :-\n\tL = [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z],\n\tpermutation(L,L1),\n\tassert(graph(a,b)),\n\tassert(graph(b,a)), assert(graph(a,c)), assert(graph(c,a)),\n\tassert(graph(b,d)), assert(graph(d,b)), assert(graph(b,e)), assert(graph(e,b)),\n\tassert(graph(c,f)), assert(graph(f,c)), assert(graph(c,g)), assert(graph(g,c)),\n\tassert(graph(d,h)), assert(graph(h,d)), assert(graph(d,i)), assert(graph(i,d)),\n\tassert(graph(e,j)), assert(graph(j,e)), assert(graph(e,k)), assert(graph(k,e)),\n\tassert(graph(f,l)), assert(graph(l,f)), assert(graph(f,m)), assert(graph(m,f)),\n\tassert(graph(g,n)), assert(graph(n,g)), assert(graph(g,o)), assert(graph(o,g)),\n\tassert(graph(h,p)), assert(graph(p,h)), assert(graph(h,q)), assert(graph(q,h)),\n\tassert(graph(i,r)), assert(graph(r,i)), assert(graph(i,s)), assert(graph(s,i)),\n\tassert(graph(j,t)), assert(graph(t,j)), assert(graph(j,u)), assert(graph(u,j)),\n\tassert(graph(k,v)), assert(graph(v,k)), assert(graph(k,w)), assert(graph(w,k)),\n\tassert(graph(l,x)), assert(graph(x,l)), assert(graph(l,y)), assert(graph(y,l)),\n\tassert(graph(m,z)), assert(graph(z,m))),\n\tbfs(a, z, L1).\n\u00a0\nbfs(S, T, L) :-\n\tbfs(S, T, L, [], [S]).\n\u00a0\nbfs(T, T, _, _, _) :- !.\nbfs(_, _, _, Closed, _) :-\n\tmember(_, Closed), !, fail.\nbfs(S, T, L, Closed, Open) :-\n\tget_open(Open, S, RestOpen),\n\tget_successors(S, L, Successors),\n\tappend(Closed, [S], NewClosed),\n\tappend(RestOpen, Successors, NewOpen),\n\tbfs(T, T, L, NewClosed, NewOpen).\n\u00a0\nget_open([S|_Rest], S, _Rest) :- !.\nget_open([_|Rest], S, RestOpen) :-\n\tget_open(Rest, S, RestOpen).\n\u00a0\nget_successors(N, L, Successors) :-\n\tfindall(M, graph(N,M) & member(M,L), Successors).\n\u00a0\n```"
+}

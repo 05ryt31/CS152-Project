@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p09_stack_vm",
+  "src": "scheme",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:32:42+00:00",
+  "source_file": "p09_stack_vm.scm",
+  "target_file": "p09_stack_vm.js",
+  "attempts": 1,
+  "duration_s": 52.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 656,
+    "completion_tokens": 422
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nfunction StackVM() {\n\u00a0\n    var stack = [];\n    var pc = 0;\n\u00a0\n    function push(val) { stack.push(val); }\n    function pop() { return stack.pop(); }\n    function peek() { return stack[stack.length - 1]; }\n\u00a0\n    this.run = function(code) {\n        while(pc < code.length) {\n            var instr = code[pc];\n            switch(instr.opcode) {\n                case \"PUSH\":\n                    push(instr.value);\n                    break;\n                case \"POP\":\n                    if(stack.length == 0) throw new Error(\"Stack underflow\");\n                    pop();\n                    break;\n                case \"ADD\":\n                    if(stack.length < 2) throw new Error(\"Stack underflow\");\n                    var a = pop(), b = pop();\n                    push(a + b);\n                    break;\n                case \"MUL\":\n                    if(stack.length < 2) throw new Error(\"Stack underflow\");\n                    var a = pop(), b = pop();\n                    push(a * b);\n                    break;\n                case \"DUP\":\n                    if(stack.length == 0) throw new Error(\"Stack underflow\");\n                    push(peek());\n                    break;\n                case \"SWAP\":\n                    if(stack.length < 2) throw new Error(\"Stack underflow\");\n                    var a = pop(), b = pop();\n                    push(a);\n                    push(b);\n                    break;\n                default:\n                    if(stack.length == 0) throw new Error(\"Stack underflow\");\n                    console.log(pop());\n                    break;\n            }\n            pc++;\n        }\n    };\n}\n\u00a0\nvar vm = new StackVM();\nvm.run([\n    {opcode:\"PUSH\", value:5},\n    {opcode:\"PUSH\", value:3},\n    {opcode:\"ADD\"},\n    {opcode:\"PUSH\", value:4},\n    {opcode:\"MUL\"},\n    {opcode:\"PUSH\", value:2},\n    {opcode:\"DIV\"},\n    {opcode:\"PUSH\", value:7},\n    {opcode:\"SUB\"},\n    {opcode:\"PRINT\"}\n]);\n```"
+}

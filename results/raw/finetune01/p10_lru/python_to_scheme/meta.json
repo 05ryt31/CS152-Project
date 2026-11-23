@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p10_lru",
+  "src": "python",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:50:38+00:00",
+  "source_file": "p10_lru.py",
+  "target_file": "p10_lru.scm",
+  "attempts": 1,
+  "duration_s": 151.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 429,
+    "completion_tokens": 1226
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base))\n(import (scheme read))\n(import (scheme write))\n(import (srfi 1)) ; lists\n(import (srfi 69)) ; hash tables\n\u00a0\n;; A simple LRU cache implementation using a hash table and a list.\n;;\n;; The hash table maps keys to values. The list is ordered such that\n;; the head of the list contains the most recently accessed item.\n;;\n;; When an item is accessed, it is moved to the front of the list.\n;; When an item is added, it is also placed at the front of the list.\n;; If the cache exceeds its capacity, the last item in the list is removed\n;; from both the list and the hash table.\n;;\n;; This implementation assumes that all keys are unique.\n(define lru-cache?\n  (lambda (cache)\n    (and (hash-table? (lru-cache-table cache))\n         (list? (lru-cache-list cache)))))\n\u00a0\n(define make-lru-cache\n  (lambda (capacity)\n    (make-hash-table 'equal?)\n    (list capacity)))\n\u00a0\n(define lru-cache-capacity\n  (lambda (cache)\n    (car (cdr cache))))\n\u00a0\n(define lru-cache-table\n  (lambda (cache)\n    (car cache)))\n\u00a0\n(define lru-cache-list\n  (lambda (cache)\n    (cdr cache)))\n\u00a0\n(define lru-cache-add!\n  (lambda (cache key value)\n    (let ((table (lru-cache-table cache))\n          (lst (lru-cache-list cache))\n          (cap (lru-cache-capacity cache)))\n      (if (hash-table-exists? table key)\n          ;; Key already exists, move to front of list.\n          (begin\n            (hash-table-remove! table key)\n            (set-car! lst (+ cap 1)))\n          ;; Key does not exist, check capacity.\n          (when (= cap (length lst))\n            (let* ((key-to-delete (last lst))\n                   (value-to-delete (hash-table-ref table key-to-delete)))\n              (hash-table-remove! table key-to-delete)\n              (set-cdr! lst (reverse (butlast (reverse lst)))))))\n      ;; Add new key/value pair to front of list and hash table.\n      (hash-table-push! table key value)\n      (cons key lst))))\n\u00a0\n(define lru-cache-get\n  (lambda (cache key)\n    (let ((table (lru-cache-table cache))\n          (lst (lru-cache-list cache)))\n      (if (hash-table-exists? table key)\n          ;; Move key/value pair to front of list.\n          (let* ((value (hash-table-ref table key))\n                 (new-lst (remove key lst)))\n            (hash-table-remove! table key)\n            (set-car! lst (+ (car lst) 1))\n            (hash-table-push! table key value)\n            (cons key new-lst))\n          ;; Key does not exist.\n          (cons #f lst)))))\n\u00a0\n(define lru-cache-print\n  (lambda (cache)\n    (let loop ((lst (lru-cache-list cache)))\n      (unless (null? lst)\n        (display (car lst))\n        (display \": \")\n        (display (hash-table-ref (lru-cache-table cache) (car lst)))\n        (newline)\n        (loop (cdr lst))))))\n\u00a0\n;; Test cases.\n(let ((cache (make-lru-cache 3)))\n  (lru-cache-add! cache 1 10)\n  (lru-cache-add! cache 2 20)\n  (lru-cache-add! cache 3 30)\n  (lru-cache-add! cache 4 40)\n  (lru-cache-print cache))\n\u00a0\n(let ((cache (make-lru-cache 3)))\n  (lru-cache-add! cache 1 10)\n  (lru-cache-add! cache 2 20)\n  (lru-cache-add! cache 3 30)\n  (lru-cache-add! cache 1 100)\n  (lru-cache-print cache))\n\u00a0\n(let ((cache (make-lru-cache 3)))\n  (lru-cache-add! cache 1 10)\n  (lru-cache-add! cache 2 20)\n  (lru-cache-add! cache 3 30)\n  (lru-cache-add! cache 4 40)\n  (lru-cache-add! cache 1 100)\n  (lru-cache-print cache))\n\u00a0\n(let ((cache (make-lru-cache 3)))\n  (lru-cache-add! cache 1 10)\n  (lru-cache-add! cache 2 20)\n  (lru-cache-add! cache 3 30)\n  (lru-cache-add! cache 4 40)\n  (lru-cache-add! cache 5 50)\n  (lru-cache-add! cache 6 60)\n  (lru-cache-add! cache 7 70)\n  (lru-cache-print cache))\n\u00a0\n(let ((cache (make-lru-cache 3)))\n  (lru-cache-add! cache 1 10)\n  (lru-cache-add! cache 2 20)\n  (lru-cache-add! cache 3 30)\n  (lru-cache-add! cache 4 40)\n  (lru-cache-add! cache 5 50)\n  (lru-cache-add! cache 6 60)\n  (lru-cache-add! cache 7 70)\n  (lru-cache-add! cache 8 80)\n  (lru-cache-add! cache 9 90)\n  (lru-cache-add! cache 10 100)\n  (lru-cache-print cache))\n\u00a0\n```"
+}

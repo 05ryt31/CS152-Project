@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p10_lru",
+  "src": "java",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:01:48+00:00",
+  "source_file": "P10Lru.java",
+  "target_file": "p10_lru.hs",
+  "attempts": 1,
+  "duration_s": 253.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 455,
+    "completion_tokens": 2048
+  },
+  "extraction": "no_fence",
+  "raw_response": "```haskell\nimport qualified Data.Map.Strict as M\n\u00a0\nlruCache :: Int -> [(String, Int)] -> [Int]\nlruCache cap =\n  snd .\n  foldrWithKey (\\k v (m, xs) ->\n                  let m' = M.insert k v m\n                      xs' = k\u00a0: filter (/= k) xs\n                  in if M.size m' <= cap then (m', xs') else (M.delete eldest m', eldest\u00a0: xs'))\n                (M.empty, [])\n  where eldest = head xs\n\u00a0\nmain :: IO ()\nmain = do\n  print $ lruCache 3 [(\"set\", 1, 1), (\"set\", 2, 2), (\"get\", 1), (\"get\", 2), (\"get\", 3)]\n  print $ lruCache 3 [(\"set\", 1, 1), (\"set\", 2, 2), (\"set\", 3, 3), (\"get\", 1), (\"get\", 2), (\"get\", 3)]\n  print $ lruCache 3 [(\"set\", 1, 1), (\"set\", 2, 2), (\"set\", 3, 3), (\"set\", 4, 4), (\"get\", 1), (\"get\", 2), (\"get\", 3), (\"get\", 4)]\n  print $ lruCache 3 [(\"set\", 1, 1), (\"set\", 2, 2), (\"set\", 3, 3), (\"set\", 4, 4), (\"set\", 5, 5), (\"get\", 1), (\"get\", 2), (\"get\", 3), (\"get\", 4), (\"get\", 5)]\n  print $ lruCache 3 [(\"set\", 1, 1), (\"set\", 2, 2), (\"set\", 3, 3), (\"set\", 4, 4), (\"set\", 5, 5), (\"set\", 6, 6), (\"get\", 1), (\"get\", 2), (\"get\", 3), (\"get\", 4), (\"get\", 5), (\"get\", 6)]\n  print $ lruCache 3 [(\"set\", 1, 1), (\"set\", 2, 2), (\"set\", 3, 3), (\"set\", 4, 4), (\"set\", 5, 5), (\"set\", 6, 6), (\"set\", 7, 7), (\"get\", 1), (\"get\", 2), (\"get\", 3), (\"get\", 4), (\"get\", 5), (\"get\", 6), (\"get\", 7)]\n  print $ lruCache 3 [(\"set\", 1, 1), (\"set\", 2, 2), (\"set\", 3, 3), (\"set\", 4, 4), (\"set\", 5, 5), (\"set\", 6, 6), (\"set\", 7, 7), (\"set\", 8, 8), (\"get\", 1), (\"get\", 2), (\"get\", 3), (\"get\", 4), (\"get\", 5), (\"get\", 6), (\"get\", 7), (\"get\", 8)]\n  print $ lruCache 3 [(\"set\", 1, 1), (\"set\", 2, 2), (\"set\", 3, 3), (\"set\", 4, 4), (\"set\", 5, 5), (\"set\", 6, 6), (\"set\", 7, 7), (\"set\", 8, 8), (\"set\", 9, 9), (\"get\", 1), (\"get\", 2), (\"get\", 3), (\"get\", 4), (\"get\", 5), (\"get\", 6), (\"get\", 7), (\"get\", 8), (\"get\", 9)]\n  print $ lruCache 3 [(\"set\", 1, 1), (\"set\", 2, 2), (\"set\", 3, 3), (\"set\", 4, 4), (\"set\", 5, 5), (\"set\", 6, 6), (\"set\", 7, 7), (\"set\", 8, 8), (\"set\", 9, 9), (\"set\", 10, 10), (\"get\", 1), (\"get\", 2), (\"get\", 3), (\"get\", 4), (\"get\", 5), (\"get\", 6), (\"get\", 7), (\"get\", 8), (\"get\", 9), (\"get\", 10)]\n  print $ lruCache 3 [(\"set\", 1, 1), (\"set\", 2, 2), (\"set\", 3, 3), (\"set\", 4, 4), (\"set\", 5, 5), (\"set\", 6, 6), (\"set\", 7, 7), (\"set\", 8, 8), (\"set\", 9, 9), (\"set\", 10, 10), (\"set\", 11, 11), (\"get\", 1), (\"get\", 2), (\"get\", 3), (\"get\", 4), (\"get\", 5), (\"get\", 6), (\"get\", 7), (\"get\", 8), (\"get\", 9), (\"get\", 10), (\"get\", 11)]\n  print $ lruCache 3 [(\"set\", 1, 1), (\"set\", 2, 2), (\"set\", 3, 3), (\"set\", 4, 4), (\"set\", 5, 5), (\"set\", 6, 6), (\"set\", 7, 7), (\"set\", 8, 8), (\"set\", 9, 9), (\"set\", 10, 10), (\"set\", 11, 11), (\"set\", 12, 12), (\"get\", 1), (\"get\", 2), (\"get\", 3), (\"get\", 4), (\"get\", 5), (\"get\", 6), (\"get\", 7), (\"get\", 8), (\"get\", 9), (\"get\", 10), (\"get\", 11), (\"get\", 12)]\n  print $ lruCache 3 [(\"set\", 1, 1), (\"set\", 2, 2), (\"set\", 3, 3), (\"set\", 4, 4), (\"set\", 5, 5), (\"set\", 6, 6), (\"set\", 7, 7), (\"set\", 8, 8), (\"set\", 9, 9), (\"set\", 10, 10), (\"set\", 11, 11), (\"set\", 12, 12), (\"set\", 13, 13), (\"get\", 1), (\"get\", 2), (\"get\", 3), (\"get\", 4), (\"get\", 5), (\"get\", 6), (\"get\", 7), (\"get\", 8), (\"get\", 9), (\"get\", 10), (\"get\", 11), (\"get\", 12), (\"get\", 13)]\n  print $ lruCache 3 [(\"set\", 1, 1), (\"set\", 2, 2), (\"set\", 3, 3), (\"set\", 4, 4), (\"set\", 5, 5), (\"set\", 6, 6), (\"set\", 7, 7), (\"set\", 8, 8), (\"set\", 9, 9), (\"set\", 10, 10), (\"set\", 11, 11), (\"set\", 12, 12), (\"set\", 13, 13), (\"set\", 14, 14), (\"get\", 1), (\"get\", 2), (\"get\", 3), (\"get\", 4), (\"get\", 5), (\"get\", 6), (\"get\", 7), (\"get\", 8), (\"get\", 9), (\"get\", 10), (\"get\", 11), (\"get\", 12), (\"get\", 13), (\"get\", 14)]\n  print $ lruCache 3 [(\"set\", 1, 1), (\"set\", 2, 2), (\"set\", 3, 3), (\"set\", 4, 4), (\"set\", 5, 5), (\"set\", 6, 6), (\"set\", 7, 7), (\"set\", 8, 8), (\"set\", 9, 9), (\"set\", 10, 10), (\"set\", 11, 11), (\"set\", 12, 12), (\"set\", 13, 13), (\"set\", 14, 14), (\"set\", 15, 15), (\"get\", 1), (\"get\", 2), (\"get\", 3), (\"get\", 4), (\"get\", 5), (\"get\", 6), (\"get\", 7), (\"get\", 8), (\"get\", 9),"
+}

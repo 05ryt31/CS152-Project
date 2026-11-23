@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p04_bst",
+  "src": "haskell",
+  "tgt": "scheme",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:12:33+00:00",
+  "source_file": "p04_bst.hs",
+  "target_file": "p04_bst.scm",
+  "attempts": 1,
+  "duration_s": 66.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 550,
+    "completion_tokens": 531
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(define (make-tree key)\n  (list key '() '()))\n\u00a0\n(define (tree-key tree)\n  (car tree))\n\u00a0\n(define (tree-left tree)\n  (cadr tree))\n\u00a0\n(define (tree-right tree)\n  (caddr tree))\n\u00a0\n(define (set-tree-key! tree key)\n  (set-car! tree key))\n\u00a0\n(define (set-tree-left! tree subtree)\n  (set-car! (cdr tree) subtree))\n\u00a0\n(define (set-tree-right! tree subtree)\n  (set-cdr! (cdr tree) subtree))\n\u00a0\n(define (tree-insert tree key)\n  (cond ((null? tree)\n         (make-tree key))\n        ((= key (tree-key tree))\n         tree)\n        ((< key (tree-key tree))\n         (let ((left (tree-left tree)))\n           (if (null? left)\n               (begin\n                 (set-tree-left! tree (make-tree key))\n                 tree)\n               (tree-insert left key))))\n        (else\n         (let ((right (tree-right tree)))\n           (if (null? right)\n               (begin\n                 (set-tree-right! tree (make-tree key))\n                 tree)\n               (tree-insert right key))))))\n\u00a0\n(define (tree-in-order tree)\n  (if (null? tree)\n      '()\n      (append (tree-in-order (tree-left tree))\n              (list (tree-key tree))\n              (tree-in-order (tree-right tree)))))\n\u00a0\n(define (tree-pre-order tree)\n  (if (null? tree)\n      '()\n      (append (list (tree-key tree))\n              (tree-pre-order (tree-left tree))\n              (tree-pre-order (tree-right tree)))))\n\u00a0\n(define (tree-post-order tree)\n  (if (null? tree)\n      '()\n      (append (tree-post-order (tree-left tree))\n              (tree-post-order (tree-right tree))\n              (list (tree-key tree)))))\n\u00a0\n(define (tree-height tree)\n  (if (null? tree)\n      0\n      (+ 1 (max (tree-height (tree-left tree))\n                (tree-height (tree-right tree))))))\n\u00a0\n(define (tree-print tree)\n  (display \"In order:\")\n  (display (tree-in-order tree))\n  (newline)\n  (display \"Pre order:\")\n  (display (tree-pre-order tree))\n  (newline)\n  (display \"Post order:\")\n  (display (tree-post-order tree))\n  (newline)\n  (display \"Height:\")\n  (display (tree-height tree))\n  (newline))\n\u00a0\n```"
+}

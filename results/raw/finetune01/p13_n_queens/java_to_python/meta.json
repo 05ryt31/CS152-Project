@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p13_n_queens",
+  "src": "java",
+  "tgt": "python",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:18:18+00:00",
+  "source_file": "P13NQueens.java",
+  "target_file": "p13_n_queens.py",
+  "attempts": 1,
+  "duration_s": 20.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 451,
+    "completion_tokens": 164
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\ndef solveNQ(N):\n    def is_not_under_attack(y, x):\n        return all(abs(y-yi) != abs(x-xi) for xi,yi in board)\n\n    def place_queen(y, x):\n        board.append((y,x))\n\n    def remove_queen():\n        board.pop()\n\n    def backtrack(y=0):\n        # base case\n        if y >= N:\n            results.append(list(board))\n            return\n\n        for x in range(N):\n            if is_not_under_attack(y, x):\n                place_queen(y, x)\n                backtrack(y+1)\n                remove_queen()\n\n    results = []\n    board = []\n    backtrack()\n    return results\n\u00a0\nif __name__ == '__main__':\n    print(solveNQ(8))\n```"
+}

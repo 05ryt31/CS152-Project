@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p04_bst",
+  "src": "python",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T02:54:17+00:00",
+  "source_file": "p04_bst.py",
+  "target_file": "p04_bst.hs",
+  "attempts": 1,
+  "duration_s": 31.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 566,
+    "completion_tokens": 249
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\ndata Tree a = Empty | Node a (Tree a) (Tree a)\n\u00a0\ninsert :: Ord a => a -> Tree a -> Tree a\ninsert x Empty = Node x Empty Empty\ninsert x (Node y left right)\n  | x == y = Node x left right\n  | x < y = Node y (insert x left) right\n  | otherwise = Node y left (insert x right)\n\u00a0\ninorder :: Tree a -> [a]\ninorder Empty = []\ninorder (Node x left right) = inorder left ++ [x] ++ inorder right\n\u00a0\npreorder :: Tree a -> [a]\npreorder Empty = []\npreorder (Node x left right) = [x] ++ preorder left ++ preorder right\n\u00a0\nheight :: Tree a -> Int\nheight Empty = 0\nheight (Node _ left right) = 1 + max (height left) (height right)\n\u00a0\nmain :: IO ()\nmain = do\n  let tree = foldr insert Empty $ map read . words <$> getLine\n  putStrLn $ unwords $ show <$> inorder tree\n  putStrLn $ unwords $ show <$> preorder tree\n  putStrLn $ show $ height tree\n```"
+}

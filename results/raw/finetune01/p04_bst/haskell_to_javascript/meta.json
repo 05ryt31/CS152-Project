@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p04_bst",
+  "src": "haskell",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:10:38+00:00",
+  "source_file": "p04_bst.hs",
+  "target_file": "p04_bst.js",
+  "attempts": 1,
+  "duration_s": 47.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 535,
+    "completion_tokens": 380
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nfunction BSTree() {\n    this.root = null;\n}\n\u00a0\nBSTree.prototype.insert = function(val) {\n    var node = {val: val, left: null, right: null};\n    if (!this.root) {\n        this.root = node;\n    } else {\n        var current = this.root;\n        while (true) {\n            if (val < current.val) {\n                if (current.left === null) {\n                    current.left = node;\n                    break;\n                }\n                current = current.left;\n            } else {\n                if (current.right === null) {\n                    current.right = node;\n                    break;\n                }\n                current = current.right;\n            }\n        }\n    }\n};\n\u00a0\nBSTree.prototype.inOrder = function(node) {\n    if (node !== null) {\n        this.inOrder(node.left);\n        console.log(node.val);\n        this.inOrder(node.right);\n    }\n};\n\u00a0\nBSTree.prototype.preOrder = function(node) {\n    if (node !== null) {\n        console.log(node.val);\n        this.preOrder(node.left);\n        this.preOrder(node.right);\n    }\n};\n\u00a0\nBSTree.prototype.height = function(node) {\n    if (node === null) {\n        return 0;\n    } else {\n        var leftHeight = this.height(node.left);\n        var rightHeight = this.height(node.right);\n        if (leftHeight > rightHeight) {\n            return leftHeight + 1;\n        } else {\n            return rightHeight + 1;\n        }\n    }\n};\n\u00a0\nvar bst = new BSTree();\nbst.insert(5);\nbst.insert(3);\nbst.insert(7);\nbst.insert(2);\nbst.insert(4);\nbst.insert(6);\nbst.insert(8);\nbst.inOrder(bst.root);\nbst.preOrder(bst.root);\nconsole.log(\"Height:\", bst.height(bst.root));\n```"
+}

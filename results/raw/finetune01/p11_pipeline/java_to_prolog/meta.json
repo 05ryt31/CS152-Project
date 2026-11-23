@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p11_pipeline",
+  "src": "java",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:38:30+00:00",
+  "source_file": "P11Pipeline.java",
+  "target_file": "p11_pipeline.pl",
+  "attempts": 1,
+  "duration_s": 26.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 820,
+    "completion_tokens": 205
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\npipeline :-\n\tL = [1, 3, 5, 7, 9],\n\t% map add 2\n\tmaplist(add(2), L, L1),\n\twritef('Map add 2: '), writeln(L1),\n\u00a0\n\t% filter even\n\tinclude(even, L1, L2),\n\twritef('Filter even: '), writeln(L2),\n\u00a0\n\t% map mul 3\n\tmaplist(mul(3), L2, L3),\n\twritef('Map mul 3: '), writeln(L3),\n\u00a0\n\t% filter gt 10\n\tinclude(gt(10), L3, L4),\n\twritef('Filter gt 10: '), writeln(L4).\n\u00a0\nadd(X, Y, Z) :- Z is X + Y.\nmul(X, Y, Z) :- Z is X * Y.\neven(X) :- 0 is X mod 2.\ngt(V, V1) :- V1 > V.\n```"
+}

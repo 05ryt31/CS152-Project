@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p10_lru",
+  "src": "prolog",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:16:56+00:00",
+  "source_file": "p10_lru.pl",
+  "target_file": "p10_lru.scm",
+  "attempts": 1,
+  "duration_s": 134.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 616,
+    "completion_tokens": 1086
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base))\n(import (scheme cxr))\n(import (scheme write))\n(import (srfi 1))          ; lists\n(import (srfi 132))        ; hash tables\n\u00a0\n;; A simple LRU cache implementation using a hash table and a list.\n;;\n;; The hash table maps keys to values. The list contains pairs of key-value\n;; entries in order of recency. Oldest entry at head, newest at tail.\n;;\n;; When a new value is added, it is placed at the end of the list. If the\n;; cache is full, the oldest entry is removed from both the list and the hash\n;; table.\n;;\n;; get-key returns #f if the key does not exist.\n;;\n;; put-key! updates the value associated with key k, or adds a new key/value\n;; pair if key k does not exist.\n;;\n;; remove-key! removes the key/value pair associated with key k.\n;;\n;; clear-cache! clears all key/value pairs from the cache.\n;;\n;; cache-size returns the current size of the cache.\n;;\n(define lru-cache?\n  (lambda (cache)\n    (and (list? (lru-cache-list cache))\n         (hash-table? (lru-cache-hash-table cache)))))\n\u00a0\n(define make-lru-cache\n  (lambda (max-size)\n    (make-vector 2 (vector max-size))))\n\u00a0\n(define lru-cache-max-size\n  (lambda (cache)\n    (vector-ref (lru-cache cache) 0)))\n\u00a0\n(define lru-cache-list\n  (lambda (cache)\n    (vector-ref (lru-cache cache) 1)))\n\u00a0\n(define lru-cache-hash-table\n  (lambda (cache)\n    (vector-ref (lru-cache cache) 2)))\n\u00a0\n(define get-key\n  (lambda (cache k)\n    (let ((ht (lru-cache-hash-table cache)))\n      (if (hash-table-exists? ht k)\n          (let* ((v (hash-table-get ht k))\n                 (lst (lru-cache-list cache)))\n            (set-car! lst (cons (cons k v) (car lst)))\n            v)\n          #f))))\n\u00a0\n(define put-key!\n  (lambda (cache k v)\n    (let* ((ht (lru-cache-hash-table cache))\n           (lst (lru-cache-list cache))\n           (max-size (lru-cache-max-size cache)))\n      (cond ((hash-table-exists? ht k)\n             ;; Update existing key.\n             (hash-table-remove! ht k)\n             (set-cdr! (assoc k lst) v))\n            ((>= (length lst) max-size)\n             ;; Cache is full, remove least recently used item.\n             (let* ((k-v-pair (car lst))\n                    (key (car k-v-pair))\n                    (value (cdr k-v-pair)))\n               (hash-table-remove! ht key)\n               (set-car! lst (cdr lst))))\n            (else\n             ;; Add new key.\n             (hash-table-push! ht k v)))\n      ;; Place key at end of list.\n      (set-cdr! (assoc k lst) v)\n      (set-car! lst (cons (cons k v) (car lst))))))\n\u00a0\n(define remove-key!\n  (lambda (cache k)\n    (let* ((ht (lru-cache-hash-table cache))\n           (lst (lru-cache-list cache)))\n      (when (hash-table-exists? ht k)\n        (hash-table-remove! ht k)\n        (set-car! lst (filter (lambda (x) (not (eq? (car x) k))) (car lst)))))))\n\u00a0\n(define clear-cache!\n  (lambda (cache)\n    (let* ((ht (lru-cache-hash-table cache))\n           (lst (lru-cache-list cache)))\n      (hash-table-clear! ht)\n      (set-car! lst '()))))\n\u00a0\n(define cache-size\n  (lambda (cache)\n    (let ((ht (lru-cache-hash-table cache)))\n      (hash-table-count ht))))\n\u00a0\n;; Tests\n(let ((cache (make-lru-cache 4)))\n  (put-key! cache 'a 1)\n  (put-key! cache 'b 2)\n  (put-key! cache 'c 3)\n  (put-key! cache 'd 4)\n  (put-key! cache 'e 5)\n  (display (get-key cache 'a)) (newline)\n  (display (get-key cache 'b)) (newline)\n  (display (get-key cache 'c)) (newline)\n  (display (get-key cache 'd)) (newline)\n  (display (get-key cache 'e')) (newline)\n  (display (get-key cache 'f')) (newline)\n  (put-key! cache 'f' 6)\n  (display (get-key cache 'a')) (newline)\n  (display (get-key cache 'b')) (newline)\n  (display (get-key cache 'c')) (newline)\n  (display (get-key cache 'd')) (newline)\n  (display (get-key cache 'e')) (newline)\n  (display (get-key cache 'f')) (newline))\n\u00a0\n```"
+}

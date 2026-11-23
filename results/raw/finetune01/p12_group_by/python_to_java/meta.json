@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p12_group_by",
+  "src": "python",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:53:32+00:00",
+  "source_file": "p12_group_by.py",
+  "target_file": "P12GroupBy.java",
+  "attempts": 1,
+  "duration_s": 26.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 424,
+    "completion_tokens": 210
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\nimport java.util.*;\n\u00a0\npublic class GroupBy {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        Map<String, Integer> sum = new HashMap<>();\n        Map<String, Integer> count = new HashMap<>();\n        while (scanner.hasNext()) {\n            String[] split = scanner.nextLine().split(\" \");\n            String key = split[0];\n            int value = Integer.parseInt(split[1]);\n            sum.putIfAbsent(key, 0);\n            count.putIfAbsent(key, 0);\n            sum.put(key, sum.get(key) + value);\n            count.put(key, count.get(key) + 1);\n        }\n        List<Map.Entry<String, Integer>> entries = new ArrayList<>(sum.entrySet());\n        Collections.sort(entries, Comparator.comparing(Map.Entry::getKey));\n        for (Map.Entry<String, Integer> entry : entries) {\n            System.out.printf(\"%s\u00a0%d\u00a0%d%n\", entry.getKey(), entry.getValue(), count.get(entry.getKey()));\n        }\n    }\n}\n```"
+}

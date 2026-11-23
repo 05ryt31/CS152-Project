@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p14_bfs",
+  "src": "scheme",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:39:39+00:00",
+  "source_file": "p14_bfs.scm",
+  "target_file": "P14Bfs.java",
+  "attempts": 1,
+  "duration_s": 39.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 751,
+    "completion_tokens": 311
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\nimport java.util.*;\n\u00a0\npublic class Bfs {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        int n = in.nextInt();\n        int m = in.nextInt();\n        List<Integer>[] g = new ArrayList[n];\n        for (int i = 0; i < n; ++i) g[i] = new ArrayList<>();\n        for (int i = 0; i < m; ++i) {\n            int u = in.nextInt() - 1;\n            int v = in.nextInt() - 1;\n            g[u].add(v);\n            g[v].add(u);\n        }\n        int s = in.nextInt() - 1;\n        int t = in.nextInt() - 1;\n        System.out.println(bfs(g, s, t));\n    }\n\u00a0\n    private static int bfs(List<Integer>[] g, int s, int t) {\n        Queue<Integer> q = new LinkedList<>();\n        boolean[] seen = new boolean[g.length];\n        q.add(s);\n        seen[s] = true;\n        for (int d = 0; !q.isEmpty(); ++d) {\n            for (int sz = q.size(); sz > 0; --sz) {\n                int u = q.poll();\n                if (u == t) return d;\n                for (int v : g[u]) if (!seen[v]) { q.add(v); seen[v] = true; }\n            }\n        }\n        return -1;\n    }\n}\n```"
+}

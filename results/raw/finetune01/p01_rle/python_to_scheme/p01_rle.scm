@@ -1,0 +1,16 @@
+(define rle
+  (lambda (str)
+    (let loop ((chars (string->list str))
+               (count 0)
+               (char #\space)
+               (result '()))
+      (if (null? chars)
+          (reverse (cons (list count char) result))
+          (let* ((c (car chars))
+                 (rest (cdr chars)))
+            (if (eqv? c char)
+                (loop rest (+ 1 count) char result)
+                (loop rest 1 c (cons (list count char) result))))))))
+ 
+(display (rle "WWWWWWWWWWWWBWWWWWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWB"))
+(newline)

@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p05_expr_tree",
+  "src": "java",
+  "tgt": "python",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:34:07+00:00",
+  "source_file": "P05ExprTree.java",
+  "target_file": "p05_expr_tree.py",
+  "attempts": 1,
+  "duration_s": 44.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 497,
+    "completion_tokens": 349
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nfrom collections import deque\n\u00a0\ndef parse(tokens):\n    \"\"\"Parse a list of tokens into an expression tree.\"\"\"\n    # Stack for nodes.\n    s_nodes = deque()\n    # Stack for operators.\n    s_opp = deque()\n    # Priority dictionary.\n    p_opp = {\"+\": 1, \"-\": 1, \"*\": 2}\n    for t in tokens:\n        if t.isdigit():\n            s_nodes.append(t)\n        elif t in \"+-*\":\n            while len(s_opp) > 0 and p_opp[s_opp[-1]] >= p_opp[t]:\n                r = s_nodes.pop()\n                l = s_nodes.pop()\n                o = s_opp.pop()\n                n = \"(%s\u00a0%s %s)\"\u00a0% (l, o, r)\n                s_nodes.append(n)\n            s_opp.append(t)\n    # Remaining operators and operands.\n    while len(s_opp) > 0:\n        r = s_nodes.pop()\n        l = s_nodes.pop()\n        o = s_opp.pop()\n        n = \"(%s\u00a0%s %s)\"\u00a0% (l, o, r)\n        s_nodes.append(n)\n    return s_nodes[0]\n\u00a0\nif __name__ == \"__main__\":\n    print(parse(\"1 + 2 * 3\".split()))\n    print(parse(\"(1 + 2) * 3\".split()))\n    print(parse(\"1 + 2 * 3 - 4 / 5\".split()))\n    print(parse(\"1 + 2 * 3 - 4 / 5 + 6 * 7 - 8 / 9 * 10\".split()))\n```"
+}

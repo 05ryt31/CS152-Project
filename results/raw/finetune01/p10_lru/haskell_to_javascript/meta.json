@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p10_lru",
+  "src": "haskell",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:10:59+00:00",
+  "source_file": "p10_lru.hs",
+  "target_file": "p10_lru.js",
+  "attempts": 1,
+  "duration_s": 39.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 623,
+    "completion_tokens": 316
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nfunction LRUCache(capacity) {\n    this.capacity = capacity;\n    this.cache = {};\n    this.order = [];\n}\n\u00a0\nLRUCache.prototype.get = function(key) {\n    if (this.cache.hasOwnProperty(key)) {\n        var index = this.order.indexOf(key);\n        this.order.splice(index, 1);\n        this.order.push(key);\n        return this.cache[key];\n    } else {\n        return -1;\n    }\n};\n\u00a0\nLRUCache.prototype.set = function(key, value) {\n    if (this.cache.hasOwnProperty(key)) {\n        this.cache[key] = value;\n        var index = this.order.indexOf(key);\n        this.order.splice(index, 1);\n        this.order.push(key);\n    } else {\n        if (Object.keys(this.cache).length >= this.capacity) {\n            delete this.cache[this.order.shift()];\n        }\n        this.cache[key] = value;\n        this.order.push(key);\n    }\n};\n\u00a0\nvar cache = new LRUCache(2);\ncache.set(1, 1);\ncache.set(2, 2);\nprint(cache.get(1));       // returns 1\ncache.set(3, 3);    // evicts key 2\nprint(cache.get(2));       // returns -1 (not found)\ncache.set(4, 4);    // evicts key 1\nprint(cache.get(1));       // returns -1 (not found)\nprint(cache.get(3));       // returns 3\nprint(cache.get(4));       // returns 4\n```"
+}

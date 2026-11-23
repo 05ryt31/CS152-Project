@@ -1,0 +1,12 @@
+(define (permute s)
+  (cond ((null? s) '(()))
+        ((null? (cdr s)) (list (list (car s))))
+        (else (let ((rest (permute (cdr s)))
+                    (head (car s)))
+                (append (map (lambda (l) (cons head l))
+                             rest)
+                        (map (lambda (l) (cons (car l) (cons head (cdr l))))
+                             rest))))))
+ 
+(display (permute "abc"))
+(newline)

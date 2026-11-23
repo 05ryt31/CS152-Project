@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p04_bst",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:13:39+00:00",
+  "source_file": "p04_bst.hs",
+  "target_file": "p04_bst.pl",
+  "attempts": 1,
+  "duration_s": 47.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 607,
+    "completion_tokens": 377
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n\u00a0\n:- use_module(library(clpfd)).\n\u00a0\n% A binary search tree is either empty or consists of a node with two subtrees.\nbst(empty).\nbst(node(_, L, R)) :- bst(L), bst(R).\n\u00a0\n% Inserting an element in a BST.\ninsert(X, empty, node(X, empty, empty)).\ninsert(X, T, node(Y, L, R)) :-\n\tX #< Y,\n\t!,\n\tinsert(X, L, N_L),\n\tbst(node(Y, N_L, R)).\ninsert(X, T, node(Y, L, R)) :-\n\tX #>= Y,\n\t!,\n\tinsert(X, R, N_R),\n\tbst(node(Y, L, N_R)).\n\u00a0\n% In-order traversal of a BST.\nin_order(empty, []).\nin_order(node(X, L, R), O) :-\n\tin_order(L, OL),\n\tin_order(R, OR),\n\tappend(OL, [X|OR], O).\n\u00a0\n% Pre-order traversal of a BST.\npre_order(empty, []).\npre_order(node(X, L, R), [X|P]) :-\n\tpre_order(L, PL),\n\tpre_order(R, PR),\n\tappend(PL, PR, P).\n\u00a0\n% Height of a BST.\nheight(empty, 0).\nheight(node(_, L, R), H) :-\n\theight(L, HL),\n\theight(R, HR),\n\tH #= max(HL, HR) + 1.\n\u00a0\n% Example usage.\nexample :-\n\tL = [5, 3, 7, 8, 6, 9],\n\tfoldl(insert, L, empty, T),\n\tin_order(T, I),\n\twrite('In order: '), writeln(I),\n\tpre_order(T, P),\n\twrite('Pre order: '), writeln(P),\n\theight(T, H),\n\twrite('Height: '), writeln(H).\n\u00a0\n```"
+}

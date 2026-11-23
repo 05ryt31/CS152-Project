@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p14_bfs",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:41:31+00:00",
+  "source_file": "p14_bfs.scm",
+  "target_file": "p14_bfs.pl",
+  "attempts": 1,
+  "duration_s": 96.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 771,
+    "completion_tokens": 774
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(clpfd)).\n\u00a0\n% read in the data\nread_data(N,M,Edges,S,T):-\n\tread_integers(N),\n\tread_integers(M),\n\tread_edges(Edges),\n\tread_integer(S),\n\tread_integer(T).\n\u00a0\n% read N integers\nread_integers(N):-\n\tget_number(N),\n\tN #> 0,\n\t!.\n\u00a0\n% read M integers\nread_integers(M):-\n\tget_number(M),\n\tM #> 0,\n\t!.\n\u00a0\n% read edges\nread_edges([H|T]):-\n\tget_number(V1),\n\tV1 #> 0,\n\tget_number(V2),\n\tV2 #> 0,\n\tH = [V1,V2],\n\tread_edges(T).\nread_edges([]).\n\u00a0\n% read S integer\nread_integer(S):-\n\tget_number(S),\n\tS #> 0,\n\t!.\n\u00a0\n% read T integer\nread_integer(T):-\n\tget_number(T),\n\tT #> 0,\n\t!.\n\u00a0\n% get number from stdin\nget_number(X):-\n\tget_char(C),\n\t(   char_type(C,digit), !,\n\tX #= C - 48,\n\tget_number(Y),\n\tY #< 10,\n\tX #= X * 10 + Y\n\t;\n\tX #= 0\n\t).\n\u00a0\n% print out the answer\nprint_answer(A):-\n\tA #> 0,\n\tformat('Shortest path length ~w~n',A).\nprint_answer(_):- format('No solution~n').\n\u00a0\n% solve the problem\nsolve_problem(N,M,Edges,S,T,A):-\n\tlength(L,N),\n\tL ins 1..N,\n\tall_different(L),\n\u00a0\n\t% create adjacency list\n\tcreate_adjacency_list(Edges,L,AdjList),\n\u00a0\n\t% do bfs\n\tbfs(AdjList,S,T,D),\n\u00a0\n\t% check if we found a solution\n\t(D #> 0 #/\\ D #=< N #/\\ D #=< M) #==> A #= D,\n\t(D #> N #\\/ D #> M) #==> A #= -1.\n\u00a0\n% create adjacency list\ncreate_adjacency_list([],_,[]):-!.\ncreate_adjacency_list([[X,Y]|T],L,AdjList):-\n\tindex_of(X,L,I),\n\tindex_of(Y,L,J),\n\tI #\\= J,\n\t(   nth0(I,AdjList,[J|_]), ! ;\n\tnth0(I,AdjList,[J])),\n\tcreate_adjacency_list(T,L,AdjList).\n\u00a0\n% breadth first search\nbfs(AdjList,S,T,D):-\n\tlength(AdjList,N),\n\tlength(Q,N),\n\tQ = [S|Q1],\n\tlength(V,N),\n\tV = [1|V1],\n\tbfs(AdjList,Q1,V1,S,T,D).\n\u00a0\nbfs(_,[],_,_,_,D):- D #= 0, !.\nbfs(AdjList,[H|T],V,S,T,D):-\n\tmember(H,AdjList),\n\t(   V[H] #> 0 #/\\ V[H] #=< V[S]) #==> !,\n\tbfs(AdjList,T,V,S,T,D).\nbfs(AdjList,[H|T],V,S,T,D):-\n\tV[H] #= 0,\n\tV1 = V,\n\tV1[H] #= V[S] + 1,\n\t(   member(H,AdjList), ! ;\n\tAdjList = []),\n\tbfs(AdjList,T,V1,S,T,D1),\n\tD #= V[S] + 1 + D1.\n\u00a0\n% main predicate\nmain:-\n\tread_data(N,M,Edges,S,T),\n\tsolve_problem(N,M,Edges,S,T,A),\n\tprint_answer(A).\n\u00a0\n```"
+}

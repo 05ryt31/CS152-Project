@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p04_bst",
+  "src": "java",
+  "tgt": "python",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:00:16+00:00",
+  "source_file": "P04Bst.java",
+  "target_file": "p04_bst.py",
+  "attempts": 1,
+  "duration_s": 172.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 662,
+    "completion_tokens": 1382
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nclass BSTNode(object):\n    \"\"\"A node in the binary search tree.\"\"\"\n\u00a0\n    def __init__(self, key, parent):\n        self.key = key\n        self.parent = parent\n        self.data = None\n        self.left = None\n        self.right = None\n\u00a0\n    def __repr__(self):\n        return '<BSTNode {}>'.format(self.key)\n\u00a0\n    def insert(self, key, data=None):\n        \"\"\"Insert key/data pair into subtree with root *self*.\n           Duplicate keys are ignored.\"\"\"\n        if key < self.key:\n            if self.left is None:\n                self.left = BSTNode(key, self)\n            else:\n                self.left.insert(key, data)\n        elif key > self.key:\n            if self.right is None:\n                self.right = BSTNode(key, self)\n            else:\n                self.right.insert(key, data)\n        else:\n            raise ValueError(\"Key %s already present\"\u00a0% key)\n\u00a0\n    def remove(self, key):\n        \"\"\"Remove the node for key if present.\"\n           If key is present, processing node has been attached to its\n           predecessor and any children are attached to the predecessor\n           so nothing escapes!\"\n        \"\"\"\n        node = self.find(key)\n        if node is None:\n            return\n        if (node.left is not None) and (node.right is not None):\n            pred = node.get_predecessor()\n            node.key = pred.key\n            node.data = pred.data\n            node = pred\n        child = node.left or node.right or None\n        if child is not None:\n            child.parent = node.parent\n        if node.parent is not None:\n            if node is node.parent.left:\n                node.parent.left = child\n            else:\n                node.parent.right = child\n        else:\n            self.key = None\n            self.data = None\n            self.left = None\n            self.right = None\n\u00a0\n    def find(self, key):\n        \"\"\"Return the node for key if present else None\"\"\"\n        if self.key == key:\n            return self\n        elif key < self.key:\n            if self.left is None:\n                return None\n            else:\n                return self.left.find(key)\n        elif key > self.key:\n            if self.right is None:\n                return None\n            else:\n                return self.right.find(key)\n\u00a0\n    def get_predecessor(self):\n        \"Return the predecessor of *self*\"\n        if self.left is not None:\n            return self.left.get_max_node()\n        else:\n            node = self\n            ancestor = node.parent\n            while ancestor is not None and node is ancestor.left:\n                node = ancestor\n                ancestor = node.parent\n            return ancestor\n\u00a0\n    def get_successor(self):\n        \"Return the successor of *self*\"\n        if self.right is not None:\n            return self.right.get_min_node()\n        else:\n            node = self\n            ancestor = node.parent\n            while ancestor is not None and node is ancestor.right:\n                node = ancestor\n                ancestor = node.parent\n            return ancestor\n\u00a0\n    def get_min_node(self):\n        \"Return the minimum node of the subtree rooted at *self*\"\n        node = self\n        while node.left is not None:\n            node = node.left\n        return node\n\u00a0\n    def get_max_node(self):\n        \"Return the maximum node of the subtree rooted at *self*\"\n        node = self\n        while node.right is not None:\n            node = node.right\n        return node\n\u00a0\n    def inorder_walk(self):\n        \"Inorder traversal of *self*\"\n        if self.left is not None:\n            yield from self.left.inorder_walk()\n        yield self\n        if self.right is not None:\n            yield from self.right.inorder_walk()\n\u00a0\n    def preorder_walk(self):\n        \"Preorder traversal of *self*\"\n        yield self\n        if self.left is not None:\n            yield from self.left.preorder_walk()\n        if self.right is not None:\n            yield from self.right.preorder_walk()\n\u00a0\n    def postorder_walk(self):\n        \"Postorder traversal of *self*\"\n        if self.left is not None:\n            yield from self.left.postorder_walk()\n        if self.right is not None:\n            yield from self.right.postorder_walk()\n        yield self\n\u00a0\n\u00a0\nclass BinarySearchTree(object):\n    \"\"\"Binary Search Tree implementation using BSTNode as nodes.\n       This can be used with any comparable objects.\n       It does not support 'in' operator or len().\n    \"\"\"\n\u00a0\n    def __init__(self):\n        self.root = None\n\u00a0\n    def insert(self, key, data=None):\n        \"\"\"Insert key/data pair into tree\"\"\"\n        if self.root is None:\n            self.root = BSTNode(key, None)\n        else:\n            self.root.insert(key, data)\n\u00a0\n    def remove(self, key):\n        \"\"\"Remove node for key\"\"\"\n        if self.root is not None:\n            self.root.remove(key)\n\u00a0\n    def find(self, key):\n        \"\"\"Find node for key\"\"\"\n        if self.root is not None:\n            return self.root.find(key)\n        else:\n            return None\n\u00a0\n    def inorder_walk(self):\n        \"Inorder traversal of tree\"\n        if self.root is not None:\n            yield from self.root.inorder_walk()\n\u00a0\n    def preorder_walk(self):\n        \"Preorder traversal of tree\"\n        if self.root is not None:\n            yield from self.root.preorder_walk()\n\u00a0\n    def postorder_walk(self):\n        \"Postorder traversal of tree\"\n        if self.root is not None:\n            yield from self.root.postorder_walk()\n\u00a0\n\u00a0\nif __name__ == '__main__':\n    bst = BinarySearchTree()\n    for i in range(20):\n        bst.insert(i)\n    print(list(bst.inorder_walk()))\n    print(list(bst.preorder_walk()))\n    print(list(bst.postorder_walk()))\n    bst.remove(10)\n    print(list(bst.inorder_walk()))\n    bst.remove(9)\n    print(list(bst.inorder_walk()))\n    bst.remove(8)\n    print(list(bst.inorder_walk()))\n    bst.remove(7)\n    print(list(bst.inorder_walk()))\n    bst.remove(6)\n    print(list(bst.inorder_walk()))\n    bst.remove(5)\n    print(list(bst.inorder_walk()))\n    bst.remove(4)\n    print(list(bst.inorder_walk()))\n    bst.remove(3)\n    print(list(bst.inorder_walk()))\n    bst.remove(2)\n    print(list(bst.inorder_walk()))\n    bst.remove(1)\n    print(list(bst.inorder_walk()))\n    bst.remove(0)\n    print(list(bst.inorder_walk()))\n```"
+}

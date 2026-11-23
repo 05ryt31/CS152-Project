@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p06_calc",
+  "src": "scheme",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T04:18:52+00:00",
+  "source_file": "p06_calc.scm",
+  "target_file": "P06Calc.java",
+  "attempts": 1,
+  "duration_s": 55.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 782,
+    "completion_tokens": 443
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\nimport java.util.*;\n\u00a0\npublic class Calc {\n    public static void main(String[] args) {\n        Scanner in = new Scanner(System.in);\n        while (in.hasNext()) {\n            String s = in.next();\n            System.out.println(calc(s));\n        }\n    }\n\u00a0\n    private static int calc(String s) {\n        Stack<Integer> nums = new Stack<>();\n        Stack<Character> ops = new Stack<>();\n        for (int i = 0; i < s.length(); ++i) {\n            char c = s.charAt(i);\n            if (Character.isDigit(c)) {\n                nums.push(c - '0');\n            } else if (c == '(') {\n                ops.push(c);\n            } else if (c == ')') {\n                while (ops.peek() != '(') {\n                    nums.push(applyOp(nums.pop(), nums.pop(), ops.pop()));\n                }\n                ops.pop();\n            } else if (c == '+' || c == '-' || c == '*' || c == '/') {\n                while (!ops.isEmpty() && hasPrecedence(c, ops.peek())) {\n                    nums.push(applyOp(nums.pop(), nums.pop(), ops.pop()));\n                }\n                ops.push(c);\n            }\n        }\n        while (!ops.empty()) {\n            nums.push(applyOp(nums.pop(), nums.pop(), ops.pop()));\n        }\n        return nums.pop();\n    }\n\u00a0\n    private static boolean hasPrecedence(char op1, char op2) {\n        if (op2 == '(' || op2 == ')')\n            return false;\n        if ((op1 == '*' || op1 == '/') && (op2 == '+' || op2 == '-'))\n            return false;\n        else\n            return true;\n    }\n\u00a0\n    private static int applyOp(int b, int a, char op) {\n        switch (op) {\n            case '+':\n                return a + b;\n            case '-':\n                return a - b;\n            case '*':\n                return a * b;\n            case '/':\n                if (b == 0)\n                    throw new UnsupportedOperationException(\"Cannot divide by zero\");\n                return a / b;\n        }\n        return 0;\n    }\n}\n```"
+}

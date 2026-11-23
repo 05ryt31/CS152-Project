@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p05_expr_tree",
+  "src": "haskell",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:44:30+00:00",
+  "source_file": "p05_expr_tree.hs",
+  "target_file": "p05_expr_tree.py",
+  "attempts": 1,
+  "duration_s": 69.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 371,
+    "completion_tokens": 559
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nfrom collections import deque\n\u00a0\ndef build_tree(tokens):\n    \"\"\"Builds an expression tree from a list of tokens.\"\"\"\n    # Stack for storing nodes.\n    node_stack = deque()\n    # Queue for storing operators.\n    op_queue = deque()\n    while len(tokens) > 0:\n        tok = tokens.popleft()\n        if tok.isdigit():\n            node_stack.append(tok)\n        elif tok == '(':\n            op_queue.append(tok)\n        elif tok == ')':\n            while op_queue[-1] != '(':\n                process_node(node_stack, op_queue)\n            op_queue.pop() # Remove '('\n        else:\n            while (len(op_queue) > 0 and \n                   precedence[op_queue[-1]] >= precedence[tok]):\n                process_node(node_stack, op_queue)\n            op_queue.append(tok)\n    while len(op_queue) > 0:\n        process_node(node_stack, op_queue)\n    return node_stack[0]\n\u00a0\ndef process_node(nodes, ops):\n    \"\"\"Pops an operator and two operands from their respective stacks,\n       creates a new node, and pushes it onto the nodes stack.\"\"\"\n    node2 = nodes.pop()\n    node1 = nodes.pop()\n    op = ops.pop()\n    nodes.append(Node(op, node1, node2))\n\u00a0\nclass Node(object):\n    def __init__(self, value, left=None, right=None):\n        self.value = value\n        self.left = left\n        self.right = right\n\u00a0\n    def __str__(self):\n        if self.left is None and self.right is None:\n            return self.value\n        else:\n            return '(%s\u00a0%s\u00a0%s)'\u00a0% (self.left, self.value, self.right)\n\u00a0\n# Precedence dictionary.\nprecedence = {'+': 1, '-': 1, '*': 2}\n\u00a0\nif __name__ == '__main__':\n    print(build_tree(deque('1 + 2 * 3'.split())))\n    print(build_tree(deque('(1 + 2) * 3'.split())))\n    print(build_tree(deque('1 + (2 * 3)'.split())))\n    print(build_tree(deque('1 + 2 * 3 - 4'.split())))\n    print(build_tree(deque('1 + 2 * (3 - 4)'.split())))\n    print(build_tree(deque('1 + ((2 * 3) - 4)'.split())))\n    print(build_tree(deque('((1 + 2) * 3) - 4'.split())))\n    print(build_tree(deque('1 + 2 * 3 - 4 / (5 - 6) ^ 7 ^ 8'.split())))\n```"
+}

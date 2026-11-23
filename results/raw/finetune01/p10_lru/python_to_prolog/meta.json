@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p10_lru",
+  "src": "python",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:53:38+00:00",
+  "source_file": "p10_lru.py",
+  "target_file": "p10_lru.pl",
+  "attempts": 1,
+  "duration_s": 75.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 486,
+    "completion_tokens": 612
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(clpfd)).\n\u00a0\nlru_cache(Capacity, Cache, Key, Value, New_Cache) :-\n\tlength(Cache, Length),\n\tLength < Capacity,\n\t!,\n\tappend(Cache, [(Key,Value)]).\n\u00a0\nlru_cache(Capacity, Cache, Key, Value, New_Cache) :-\n\tlength(Cache, Length),\n\tLength >= Capacity,\n\t!,\n\tselect((Old_Key, Old_Value), Cache, Rest),\n\tdif(Key, Old_Key),\n\tlru_cache(Capacity, Rest, Key, Value, New_Cache).\n\u00a0\nlru_cache(_, Cache, _, _, Cache).\n\u00a0\ncache_get([(Key, Value)|_], Key, Value).\ncache_get([_|T], Key, Value) :-\n\tcache_get(T, Key, Value).\n\u00a0\ncache_get(Cache, Key, -1) :-\n\tmember((Key,_), Cache),\n\t!.\ncache_get(Cache, Key, Value) :-\n\tmember((Key,Value), Cache).\n\u00a0\ncache_put(Cache, Key, Value, New_Cache) :-\n\tselect((Key,_), Cache, Rest),\n\tappend(Rest, [(Key,Value)], New_Cache).\n\u00a0\ncache_put(Cache, Key, Value, Cache) :-\n\tmember((Key,_), Cache),\n\t!.\ncache_put(Cache, Key, Value, [(Key,Value)|Cache]).\n\u00a0\ntest :-\n\tCapacity = 3,\n\tlru_cache(Capacity, [], put, 1, 100, Cache1),\n\twritef('put 1 -> 100:\u00a0%w\\n', [Cache1]),\n\tcache_get(Cache1, 1, V1),\n\twritef('get 1:\u00a0%w\\n', [V1]),\n\tlru_cache(Capacity, Cache1, put, 2, 200, Cache2),\n\twritef('put 2 -> 200:\u00a0%w\\n', [Cache2]),\n\tcache_get(Cache2, 2, V2),\n\twritef('get 2:\u00a0%w\\n', [V2]),\n\tlru_cache(Capacity, Cache2, put, 3, 300, Cache3),\n\twritef('put 3 -> 300:\u00a0%w\\n', [Cache3]),\n\tcache_get(Cache3, 3, V3),\n\twritef('get 3:\u00a0%w\\n', [V3]),\n\tlru_cache(Capacity, Cache3, put, 4, 400, Cache4),\n\twritef('put 4 -> 400:\u00a0%w\\n', [Cache4]),\n\tcache_get(Cache4, 4, V4),\n\twritef('get 4:\u00a0%w\\n', [V4]),\n\tcache_get(Cache4, 1, V5),\n\twritef('get 1:\u00a0%w\\n', [V5]).\n\u00a0\n```"
+}

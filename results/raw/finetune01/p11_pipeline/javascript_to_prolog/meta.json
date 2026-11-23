@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p11_pipeline",
+  "src": "javascript",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:29:59+00:00",
+  "source_file": "p11_pipeline.js",
+  "target_file": "p11_pipeline.pl",
+  "attempts": 1,
+  "duration_s": 78.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 604,
+    "completion_tokens": 626
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\npipeline :-\n\tLines = [\"3 4 5 6\", \"7 8 9 10\"],\n\t% read the first line and split it into numbers\n\tread_numbers(Lines, Numbers),\n\u00a0\n\t% apply the operations in order\n\tpipeline([Numbers], Lines, Result),\n\u00a0\n\t% print the result\n\tprint_result(Result).\n\u00a0\npipeline(Accumulated, [], Accumulated):-!.\npipeline(Accumulated, [Line|Lines], FinalResult):-\n\tprocess_line(Line, Accumulated, NewAccumulated),\n\tpipeline(NewAccumulated, Lines, FinalResult).\n\u00a0\nprocess_line(Line, Accumulated, Result):-\n\tsplit_string(Line, \"\\s\\t\\n\\r,\", \"\", Tokens),\n\u00a0\n\t% get the operation name\n\toperation_name(Tokens, OperationName),\n\u00a0\n\t% get the arguments\n\targuments(Tokens, Arguments),\n\u00a0\n\t% execute the operation\n\texecute_operation(OperationName, Arguments, Accumulated, Result).\n\u00a0\nexecute_operation(sum, _, [Sum], Sum):-!.\nexecute_operation(max, _, [Max], Max):-!.\nexecute_operation(min, _, [Min], Min):-!.\nexecute_operation(map, [Operation, Value], [NewValues], NewValues):-\n\tmaplist(operation(Value, Operation), Accumulated, NewValues).\nexecute_operation(filter, [Condition, Value], [FilteredValues], FilteredValues):-\n\tfilter_values(Condition, Value, Accumulated, FilteredValues).\n\u00a0\noperation_name([OpName|_], OpName).\narguments([_|Args], Args).\n\u00a0\noperation(add, Value, X, Y):-Y is X+Value.\noperation(mul, Value, X, Y):-Y is X*Value.\n\u00a0\nfilter_values(even, _, [X|Rest], [X|Filtered]):-\n\tX mod 2 =:= 0,\n\tfilter_values(even, _, Rest, Filtered).\nfilter_values(even, _, [_|Rest], Filtered):-\n\tfilter_values(even, _, Rest, Filtered).\n\u00a0\nfilter_values(odd, _, [X|Rest], [X|Filtered]):-\n\tX mod 2 =\\= 0,\n\tfilter_values(odd, _, Rest, Filtered).\nfilter_values(odd, _, [_|Rest], Filtered):-\n\tfilter_values(odd, _, Rest, Filtered).\n\u00a0\nfilter_values(greater_than, Value, [X|Rest], [X|Filtered]):-\n\tX > Value,\n\tfilter_values(greater_than, Value, Rest, Filtered).\nfilter_values(greater_than, Value, [_|Rest], Filtered):-\n\tfilter_values(greater_than, Value, Rest, Filtered).\n\u00a0\nprint_result([]):-!.\nprint_result([X]):-\n\tformat('~w~n', [X]).\nprint_result([X|Xs]):-\n\tformat('~w ', [X]),\n\tprint_result(Xs).\n\u00a0\nread_numbers([Line|_], Numbers):-\n\tsplit_string(Line, \"\\s\\t\\n\\r,\", \"\", Tokens),\n\tmaplist(atom_number, Tokens, Numbers).\n```"
+}

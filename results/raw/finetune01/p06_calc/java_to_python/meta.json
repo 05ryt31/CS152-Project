@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p06_calc",
+  "src": "java",
+  "tgt": "python",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T04:10:45+00:00",
+  "source_file": "P06Calc.java",
+  "target_file": "p06_calc.py",
+  "attempts": 1,
+  "duration_s": 52.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 610,
+    "completion_tokens": 417
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\ndef calc(expression):\n    def evaluate(tokens):\n        stack = []\n        for token in tokens:\n            if isinstance(token, int):\n                stack.append(token)\n            elif token == '+':\n                stack.append(stack.pop() + stack.pop())\n            elif token == '-':\n                b = stack.pop()\n                stack.append(stack.pop() - b)\n            elif token == '*':\n                stack.append(stack.pop() * stack.pop())\n        return stack[0]\n\u00a0\n    def tokenize(expression):\n        tokens = []\n        i = 0\n        while i < len(expression):\n            if expression[i] == ' ':\n                i += 1\n            elif expression[i].isdigit():\n                start = i\n                while i < len(expression) and expression[i].isdigit():\n                    i += 1\n                tokens.append(int(expression[start:i]))\n            elif expression[i] in '+-*()':\n                tokens.append(expression[i])\n                i += 1\n            else:\n                raise ValueError('Unknown character')\n        return tokens\n\u00a0\n    def parse(tokens):\n        def parse_expression():\n            left = parse_term()\n            while tokens and tokens[-1] in ('+', '-'):\n                operator = tokens.pop()\n                right = parse_term()\n                if operator == '+':\n                    left += right\n                elif operator == '-':\n                    left -= right\n            return left\n\u00a0\n        def parse_term():\n            left = parse_factor()\n            while tokens and tokens[-1] == '*':\n                tokens.pop()\n                right = parse_factor()\n                left *= right\n            return left\n\u00a0\n        def parse_factor():\n            if tokens[0] == '(':\n                tokens.pop(0)\n                result = parse_expression()\n                if tokens[0] != ')':\n                    raise ValueError('Expected )')\n                tokens.pop(0)\n                return result\n            else:\n                return tokens.pop(0)\n\u00a0\n        return parse_expression()\n\u00a0\n    return parse(parse(tokenize(expression)))\n\u00a0\nif __name__ == '__main__':\n    import sys\n    print(calc(sys.argv[1]))\n```"
+}

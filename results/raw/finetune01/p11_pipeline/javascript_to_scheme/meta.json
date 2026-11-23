@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p11_pipeline",
+  "src": "javascript",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:28:11+00:00",
+  "source_file": "p11_pipeline.js",
+  "target_file": "p11_pipeline.scm",
+  "attempts": 1,
+  "duration_s": 79.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 549,
+    "completion_tokens": 639
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base)\n        (scheme read)\n        (scheme write)\n        (only (srfi 1) fold))\n\u00a0\n;; A pipeline is represented by a list of functions.\n(define-record-type pipeline\n  (make-pipeline fns)\n  pipeline?\n  (fns pipeline-fns))\n\u00a0\n;; Apply a function to each element in a list.\n(define map*\n  (lambda (fn lst)\n    (fold (lambda (x y) (cons (fn x) y)) '() lst)))\n\u00a0\n;; Filter out elements that don't satisfy a predicate.\n(define filter*\n  (lambda (pred lst)\n    (fold (lambda (x y) (if (pred x) (cons x y) y)) '() lst)))\n\u00a0\n;; Return the sum of all elements in a list.\n(define sum*\n  (lambda (lst)\n    (fold (lambda (x y) (+ x y)) 0 lst)))\n\u00a0\n;; Return the maximum value in a list.\n(define max*\n  (lambda (lst)\n    (fold (lambda (x y) (max x y)) -inf.0 lst)))\n\u00a0\n;; Create a pipeline from a list of functions.\n(define make-pipeline\n  (lambda (fns)\n    (make-pipeline fns)))\n\u00a0\n;; Execute a pipeline on a list of arguments.\n(define execute-pipeline\n  (lambda (pipe args)\n    ((pipeline-fns pipe) args)))\n\u00a0\n;; Parse a command string into a function.\n(define parse-command\n  (lambda (cmd)\n    (cond ((string=? \"map\" cmd) map*)\n          ((string=? \"filter\" cmd) filter*)\n          ((string=? \"sum\" cmd) sum*)\n          ((string=? \"max\" cmd) max*))))\n\u00a0\n;; Parse a pipeline description into a pipeline object.\n(define parse-pipeline\n  (lambda (desc)\n    (make-pipeline\n      (map parse-command desc))))\n\u00a0\n;; Parse a list of numbers into a list of integers.\n(define parse-numbers\n  (lambda (str)\n    (map string->number (string-split str #\\space))))\n\u00a0\n;; Parse a pipeline description and a list of numbers into a pipeline object.\n(define parse-input\n  (lambda (input)\n    (let* ((parts (string-split input #\\newline))\n           (desc (car parts))\n           (numbers (parse-numbers (cadr parts))))\n      (values (parse-pipeline desc) numbers))))\n\u00a0\n;; Print the result of executing a pipeline on a list of numbers.\n(define print-result\n  (lambda (result)\n    (if (null? result)\n        (display \"none\")\n        (display (string-join (map number->string result) \" \")))))\n\u00a0\n;; Main procedure.\n(define main\n  (lambda (args)\n    (call-with-current-continuation\n      (lambda (return)\n        (with-input-from-file\n          (car args)\n          (lambda ()\n            (let-values (((pipe nums) (parse-input (read-line)))\n              (print-result (execute-pipeline pipe nums)))))))))\n\u00a0\n```"
+}

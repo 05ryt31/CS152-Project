@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p01_rle",
+  "src": "haskell",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T02:01:57+00:00",
+  "source_file": "p01_rle.hs",
+  "target_file": "P01Rle.java",
+  "attempts": 1,
+  "duration_s": 43.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 356,
+    "completion_tokens": 340
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\nimport java.util.*;\n\u00a0\npublic class RLE {\n\tpublic static String encode(String s) {\n\t\tif(s == null || s.length() == 0)\n\t\t\treturn \"\";\n\t\tStringBuilder encoded = new StringBuilder();\n\t\tchar c = s.charAt(0);\n\t\tint count = 1;\n\t\tfor(int i = 1; i < s.length(); i++) {\n\t\t\tif(c != s.charAt(i)) {\n\t\t\t\tencoded.append(count).append(c);\n\t\t\t\tc = s.charAt(i);\n\t\t\t\tcount = 1;\n\t\t\t} else {\n\t\t\t\tcount++;\n\t\t\t}\n\t\t}\n\t\tencoded.append(count).append(c);\n\t\treturn encoded.toString();\n\t}\n\u00a0\n\tpublic static String decode(String s) {\n\t\tif(s == null || s.length() == 0)\n\t\t\treturn \"\";\n\t\tStringBuilder decoded = new StringBuilder();\n\t\tfor(int i = 0; i < s.length(); i += 2) {\n\t\t\tint count = Integer.parseInt(s.substring(i, i + 1));\n\t\t\twhile(count-- > 0)\n\t\t\t\tdecoded.append(s.charAt(i + 1));\n\t\t}\n\t\treturn decoded.toString();\n\t}\n\u00a0\n\tpublic static void main(String[] args) {\n\t\tSystem.out.println(\"Encoding:\");\n\t\tString[] testStrings = {\"\", \"a\", \"aa\", \"ab\", \"aabbb\", \"aaaabb\"};\n\t\tfor(String s\u00a0: testStrings)\n\t\t\tSystem.out.printf(\"%s ->\u00a0%s%n\", s, encode(s));\n\t\tSystem.out.println(\"\\nDecoding:\");\n\t\tfor(String s\u00a0: testStrings)\n\t\t\tSystem.out.printf(\"%s ->\u00a0%s%n\", s, decode(encode(s)));\n\t}\n}\n```"
+}
