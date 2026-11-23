@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p12_group_by",
+  "src": "prolog",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:11:16+00:00",
+  "source_file": "p12_group_by.pl",
+  "target_file": "p12_group_by.scm",
+  "attempts": 1,
+  "duration_s": 38.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 565,
+    "completion_tokens": 308
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base)\n        (scheme cxr)\n        (scheme write)\n        (srfi 1))\n\u00a0\n;; helper functions\n(define (string->list s)\n  (let loop ((chars (string->list s)))\n    (if (null? chars)\n      '()\n      (cons (char->integer (car chars)) (loop (cdr chars))))))\n\u00a0\n(define (list->string l)\n  (list->string (map integer->char l)))\n\u00a0\n;; main function\n(define (group-by n)\n  (define *groups* (make-vector (+ n 1) '()))\n  (do ((i 0 (+ i 1)))\n    ((>= i n))\n    (let* ((line (read-line))\n           (key-value (string-split line #\\Space))\n           (key (string->list (car key-value)))\n           (value (string->list (cadr key-value))))\n      (vector-set! *groups* (length key)\n                   (append (vector-ref *groups* (length key))\n                           (list (cons key value))))))\n  ;; print results\n  (for-each\n   (lambda (group)\n     (display (list->string (caar group))) (display \": \")\n     (display (length (cdar group))) (display \" groups of size \")\n     (display (length (cadar group))) (newline))\n   (vector-sort < *groups*)))\n\u00a0\n(group-by 4)\n\u00a0\n```"
+}

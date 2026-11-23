@@ -1,0 +1,7 @@
+{
+    "paradigm": "Functional",
+    "language": "Haskell",
+    "justification": "The problem requires maintaining a 'seen' state while processing elements, which is well-suited for a functional approach. Haskell's pure functions and immutable data structures make it ideal for this task. The use of recursion and higher-order functions like `foldl` allows for elegant and efficient solution.",
+    "alternatives": "Python could also be used with its list comprehensions and built-in functions, but Haskell provides more explicit control over state management and immutability, making it a better fit for this problem. JavaScript could work with arrays and loops, but it lacks the purity and expressiveness of Haskell.",
+    "confidence": 0.95
+}

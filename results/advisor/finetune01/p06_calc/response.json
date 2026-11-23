@@ -1,0 +1,7 @@
+{
+    "paradigm": "Functional",
+    "language": "Haskell",
+    "justification": "In Haskell, functions are first-class citizens, so we can pass them around like any other object. This makes it easy to write a function that takes another function as an argument, which is necessary for parsing expressions.",
+    "alternatives": "Python, Ruby, Perl, etc. have built-in support for regular expressions, but they don't have first-class functions. So while you could parse the input string into tokens, you'd need to write a separate function for each operator. Also, you'd need to handle operator precedence manually.",
+    "confidence": 1.0
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p10_lru",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:09:34+00:00",
+  "source_file": "p10_lru.scm",
+  "target_file": "p10_lru.pl",
+  "attempts": 1,
+  "duration_s": 46.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 754,
+    "completion_tokens": 372
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(clpfd)).\n\u00a0\n% lru_cache(Capacity, Cache, Input, Output, New_Cache).\n%\n% Capacity is the maximum number of items in cache.\n% Cache is the current state of the cache.\n% Input is a list of pairs [Key, Value].\n% Output is a list of values corresponding to keys in Input.\n% New_Cache is the updated state of the cache.\nlru_cache(Capacity, Cache, [], [], Cache):- !.\nlru_cache(Capacity, Cache, [[Key,Value]|Rest], [Value|Output], New_Cache):-\n\tmember([Key,_,_], Cache),\n\t(   select([Key,_,_], Cache, Temp), % remove item from cache\n\t    Cache = [Temp|Cache],\n\t    Cache = [Key,Value,New_Cache],\n\t    lru_cache(Capacity, Cache, Rest, Output, _).\nlru_cache(Capacity, Cache, [[Key,Value]|Rest], [Value|Output], New_Cache):-\n\tselect([_,_,_], Cache, Temp), % remove least recently used item from cache\n\tCapacity #> 0,\n\tlength(Temp, Length),\n\tLength #> 0,\n\tIndex #= 1 + random(Length),\n\tnth0(Index, Temp, [_,_,LRU]),\n\tselect([_,_,LRU], Temp, Cache),\n\tCache = [Key,Value,New_Cache],\n\tlru_cache(Capacity, Cache, Rest, Output, _).\nlru_cache(Capacity, Cache, [_|Rest], Output, New_Cache):-\n\tCapacity #> 0,\n\tlru_cache(Capacity, Cache, Rest, Output, New_Cache).\n\u00a0\n```"
+}

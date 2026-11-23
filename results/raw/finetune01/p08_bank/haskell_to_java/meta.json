@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p08_bank",
+  "src": "haskell",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:06:00+00:00",
+  "source_file": "p08_bank.hs",
+  "target_file": "P08Bank.java",
+  "attempts": 1,
+  "duration_s": 51.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 532,
+    "completion_tokens": 415
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\nimport java.util.*;\n\u00a0\nclass Bank {\n    private int balance;\n\u00a0\n    public Bank(int initialBalance) {\n        this.balance = initialBalance;\n    }\n\u00a0\n    public boolean deposit(int amount) {\n        if (amount < 0) return false;\n        balance += amount;\n        return true;\n    }\n\u00a0\n    public boolean withdraw(int amount) {\n        if (amount < 0 || amount > balance) return false;\n        balance -= amount;\n        return true;\n    }\n\u00a0\n    public int getBalance() {\n        return balance;\n    }\n}\n\u00a0\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        System.out.print(\"Initial bank balance? \");\n        int initialBalance = Integer.parseInt(scanner.nextLine());\n        Bank bank = new Bank(initialBalance);\n\u00a0\n        while (true) {\n            System.out.print(\"Command? \");\n            String command = scanner.nextLine();\n            if (\"quit\".equals(command)) break;\n            String[] parts = command.split(\"\\\\s+\");\n            switch (parts[0]) {\n                case \"deposit\":\n                    try {\n                        int amount = Integer.parseInt(parts[1]);\n                        if (!bank.deposit(amount)) {\n                            System.out.println(\"Deposit failed.\");\n                        } else {\n                            System.out.println(\"New balance is \" + bank.getBalance());\n                        }\n                    } catch (NumberFormatException e) {\n                        System.out.println(\"Invalid number format.\");\n                    }\n                    break;\n                case \"withdraw\":\n                    try {\n                        int amount = Integer.parseInt(parts[1]);\n                        if (!bank.withdraw(amount)) {\n                            System.out.println(\"Withdrawal failed.\");\n                        } else {\n                            System.out.println(\"New balance is \" + bank.getBalance());\n                        }\n                    } catch (NumberFormatException e) {\n                        System.out.println(\"Invalid number format.\");\n                    }\n                    break;\n                case \"balance\":\n                    System.out.println(\"Current balance is \" + bank.getBalance());\n                    break;\n                default:\n                    System.out.println(\"Unknown command.\");\n            }\n        }\n    }\n}\n```"
+}

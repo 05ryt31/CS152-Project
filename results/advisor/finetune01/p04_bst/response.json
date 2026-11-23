@@ -1,0 +1,7 @@
+{
+    "paradigm": "Functional",
+    "language": "Haskell",
+    "justification": "Binary trees are immutable data structures in Haskell, so we can't mutate the tree when inserting a new node. Instead, we create a new tree with the inserted node.",
+    "alternatives": "We could use a mutable tree, but that would defeat the purpose of the exercise. We could also use a different data structure like a list, but that wouldn't be a binary search tree anymore.",
+    "confidence": 1.0
+}

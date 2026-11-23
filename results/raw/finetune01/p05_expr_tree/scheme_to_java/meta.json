@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p05_expr_tree",
+  "src": "scheme",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:42:05+00:00",
+  "source_file": "p05_expr_tree.scm",
+  "target_file": "P05ExprTree.java",
+  "attempts": 1,
+  "duration_s": 64.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 485,
+    "completion_tokens": 516
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\nimport java.util.*;\n\u00a0\nclass Node {\n    String value;\n    List<Node> children = new ArrayList<>();\n\u00a0\n    public Node(String value) {\n        this.value = value;\n    }\n}\n\u00a0\npublic class ExpressionTree {\n    private static final Set<String> operators = new HashSet<>(Arrays.asList(\"+\", \"-\", \"*\", \"/\"));\n\u00a0\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        System.out.println(build(scanner.nextLine()));\n    }\n\u00a0\n    private static Node build(String expression) {\n        Stack<Node> nodes = new Stack<>();\n        Stack<Character> ops = new Stack<>();\n        int i = 0;\n        while (i < expression.length()) {\n            char c = expression.charAt(i++);\n            if (Character.isWhitespace(c))\n                continue;\n            if (Character.isDigit(c)) {\n                StringBuilder sb = new StringBuilder();\n                do {\n                    sb.append(c);\n                    c = expression.charAt(i++);\n                } while (Character.isDigit(c));\n                nodes.push(new Node(sb.toString()));\n                i--;\n            } else if (operators.contains(\"\" + c)) {\n                while (!ops.isEmpty() && precedence(ops.peek()) >= precedence(c)) {\n                    Node node = nodes.pop();\n                    Node parent = nodes.pop();\n                    parent.children.add(node);\n                    nodes.push(parent);\n                }\n                ops.push(c);\n            } else if (c == '(') {\n                nodes.push(build(expression.substring(i)));\n                i += nodes.peek().value.length();\n            } else if (c == ')') {\n                return nodes.pop();\n            }\n        }\n        while (!ops.isEmpty()) {\n            Node node = nodes.pop();\n            Node parent = nodes.pop();\n            parent.children.add(node);\n            nodes.push(parent);\n        }\n        return nodes.pop();\n    }\n\u00a0\n    private static int precedence(char op) {\n        switch (op) {\n            case '+':\n            case '-':\n                return 1;\n            case '*':\n            case '/':\n                return 2;\n            default:\n                throw new IllegalArgumentException(\"Unknown operator\");\n        }\n    }\n\u00a0\n    private static String render(Node root) {\n        if (root.children.isEmpty())\n            return root.value;\n        StringBuilder sb = new StringBuilder(\"(\");\n        for (Node child : root.children)\n            sb.append(render(child)).append(' ');\n        sb.setLength(sb.length() - 1);\n        sb.append(')').append(root.value);\n        return sb.toString();\n    }\n\u00a0\n    public static String render(Node root) {\n        return render(root).replaceAll(\"\\\\s+\", \"\");\n    }\n}\n```"
+}

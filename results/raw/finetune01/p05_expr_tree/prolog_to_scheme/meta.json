@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p05_expr_tree",
+  "src": "prolog",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:53:53+00:00",
+  "source_file": "p05_expr_tree.pl",
+  "target_file": "p05_expr_tree.scm",
+  "attempts": 1,
+  "duration_s": 40.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 510,
+    "completion_tokens": 320
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(define (parse-expr str)\n  (let ((tokens (string-split str)))\n    (if (> (length tokens) 1)\n        (let* ((left (car tokens))\n               (operator (cadr tokens))\n               (right (list-ref tokens 2)))\n          (make-node operator (parse-expr left) (parse-expr right)))\n        (make-node 'val (parse-val (car tokens)))))\n\u00a0\n(define (parse-val str)\n  (cond ((char? (string-ref str 0))\n         (make-node 'var (string->symbol str)))\n        (else\n         (make-node 'num (string->number str)))))\n\u00a0\n(define (make-node type . args)\n  (cons type args))\n\u00a0\n(define (node-type node)\n  (car node))\n\u00a0\n(define (node-args node)\n  (cdr node))\n\u00a0\n(define (tree->infix tree)\n  (let ((type (node-type tree)))\n    (cond ((eq? type 'val)\n           (cond ((eq? (node-type (car (node-args tree))) 'var)\n                  (symbol->string (node-args tree)))\n                 (else\n                  (number->string (node-args tree)))))\n          (else\n           (let* ((operator (node-args tree))\n                  (left (tree->infix (car (node-args operator))))\n                  (right (tree->infix (cadr (node-args operator)))))\n             (string-append \"(\" left \" \" operator \" \" right \")\"))))))\n\u00a0\n```"
+}

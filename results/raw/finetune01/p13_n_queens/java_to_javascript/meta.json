@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p13_n_queens",
+  "src": "java",
+  "tgt": "javascript",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:18:39+00:00",
+  "source_file": "P13NQueens.java",
+  "target_file": "p13_n_queens.js",
+  "attempts": 1,
+  "duration_s": 48.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 485,
+    "completion_tokens": 388
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nfunction solveNQueens(n) {\n    var board = [];\n    for (var i = 0; i < n; i++)\n        board[i] = [];\n\u00a0\n    function canPlaceQueen(row, col) {\n        // check this column on rows above\n        for (var r = 0; r < row; r++)\n            if (board[r][col]) return false;\n\u00a0\n        // check upper left diagonal\n        for (r = row, c = col; r >= 0 && c >= 0; r--, c--)\n            if (board[r][c]) return false;\n\u00a0\n        // check upper right diagonal\n        for (r = row, c = col; r >= 0 && c < n; r--, c++)\n            if (board[r][c]) return false;\n\u00a0\n        return true;\n    }\n\u00a0\n    function placeQueen(row, col) {\n        board[row][col] = true;\n    }\n\u00a0\n    function removeQueen(row, col) {\n        board[row][col] = false;\n    }\n\u00a0\n    function printBoard() {\n        console.log(board.map(function(row) {\n            return row.join(' ');\n        }).join('\\n'));\n    }\n\u00a0\n    function search(row) {\n        if (row === n)\n            return [board];\n        else {\n            var solutions = [];\n            for (var col = 0; col < n; col++) {\n                if (canPlaceQueen(row, col)) {\n                    placeQueen(row, col);\n                    solutions = solutions.concat(search(row + 1));\n                    removeQueen(row, col);\n                }\n            }\n            return solutions;\n        }\n    }\n\u00a0\n    return search(0);\n}\n\u00a0\n// test it out\nvar solutions = solveNQueens(8);\nfor (var i = 0; i < solutions.length; i++)\n    solutions[i].printBoard();\n```"
+}

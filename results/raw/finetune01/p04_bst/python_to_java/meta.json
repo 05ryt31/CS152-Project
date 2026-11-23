@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p04_bst",
+  "src": "python",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T02:52:20+00:00",
+  "source_file": "p04_bst.py",
+  "target_file": "P04Bst.java",
+  "attempts": 1,
+  "duration_s": 80.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 613,
+    "completion_tokens": 649
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\n\u00a0\nimport java.util.ArrayList;\nimport java.util.List;\n\u00a0\npublic class Tree {\n\u00a0\n    private Node root;\n\u00a0\n    public Tree() {\n        this.root = null;\n    }\n\u00a0\n    public boolean isEmpty() {\n        return this.root == null;\n    }\n\u00a0\n    public void insert(int key) {\n        this.root = insert(this.root, key);\n    }\n\u00a0\n    private Node insert(Node node, int key) {\n        if (node == null) {\n            node = new Node(key);\n            return node;\n        } else if (key < node.getKey()) {\n            node.setLeft(insert(node.getLeft(), key));\n        } else if (key > node.getKey()) {\n            node.setRight(insert(node.getRight(), key));\n        }\n        return node;\n    }\n\u00a0\n    public List<Integer> getInOrderTraversal() {\n        List<Integer> list = new ArrayList<>();\n        inOrderTraverse(this.root, list);\n        return list;\n    }\n\u00a0\n    private void inOrderTraverse(Node node, List<Integer> list) {\n        if (node != null) {\n            inOrderTraverse(node.getLeft(), list);\n            list.add(node.getKey());\n            inOrderTraverse(node.getRight(), list);\n        }\n    }\n\u00a0\n    public List<Integer> getPreOrderTraversal() {\n        List<Integer> list = new ArrayList<>();\n        preOrderTraverse(this.root, list);\n        return list;\n    }\n\u00a0\n    private void preOrderTraverse(Node node, List<Integer> list) {\n        if (node != null) {\n            list.add(node.getKey());\n            preOrderTraverse(node.getLeft(), list);\n            preOrderTraverse(node.getRight(), list);\n        }\n    }\n\u00a0\n    public int getHeight() {\n        return getHeight(this.root);\n    }\n\u00a0\n    private int getHeight(Node node) {\n        if (node == null) {\n            return 0;\n        } else {\n            return 1 + Math.max(getHeight(node.getLeft()), getHeight(node.getRight()));\n        }\n    }\n\u00a0\n    public static void main(String[] args) {\n        Tree tree = new Tree();\n        String[] tokens = \"3 1 4 1 5 9 2 6 5 3 5\".split(\"\\\\s+\");\n        for (String token : tokens) {\n            tree.insert(Integer.parseInt(token));\n        }\n        System.out.println(tree.getInOrderTraversal());\n        System.out.println(tree.getPreOrderTraversal());\n        System.out.println(tree.getHeight());\n    }\n}\n\u00a0\nclass Node {\n\u00a0\n    private int key;\n    private Node left;\n    private Node right;\n\u00a0\n    public Node(int key) {\n        this.key = key;\n        this.left = null;\n        this.right = null;\n    }\n\u00a0\n    public int getKey() {\n        return this.key;\n    }\n\u00a0\n    public void setKey(int key) {\n        this.key = key;\n    }\n\u00a0\n    public Node getLeft() {\n        return this.left;\n    }\n\u00a0\n    public void setLeft(Node left) {\n        this.left = left;\n    }\n\u00a0\n    public Node getRight() {\n        return this.right;\n    }\n\u00a0\n    public void setRight(Node right) {\n        this.right = right;\n    }\n}\n\u00a0\n```"
+}

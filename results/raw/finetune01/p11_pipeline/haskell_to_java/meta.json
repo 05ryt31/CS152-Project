@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p11_pipeline",
+  "src": "haskell",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:47:01+00:00",
+  "source_file": "p11_pipeline.hs",
+  "target_file": "P11Pipeline.java",
+  "attempts": 1,
+  "duration_s": 53.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 567,
+    "completion_tokens": 428
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\nimport java.util.Arrays;\nimport java.util.List;\nimport java.util.function.Function;\nimport java.util.stream.Collectors;\n\u00a0\npublic class Pipeline {\n\u00a0\n    public static void main(String[] args) {\n        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);\n        System.out.println(\"Initial list: \" + numbers);\n\u00a0\n        // Map functions\n        Function<List<Integer>, List<Integer>> addTwo = l -> l.stream().map(i -> i + 2).collect(Collectors.toList());\n        Function<List<Integer>, List<Integer>> mulThree = l -> l.stream().map(i -> i * 3).collect(Collectors.toList());\n\u00a0\n        // Filter functions\n        Function<List<Integer>, List<Integer>> evens = l -> l.stream().filter(i -> i % 2 == 0).collect(Collectors.toList());\n        Function<List<Integer>, List<Integer>> odds = l -> l.stream().filter(i -> i % 2 != 0).collect(Collectors.toList());\n        Function<List<Integer>, List<Integer>> gtFour = l -> l.stream().filter(i -> i > 4).collect(Collectors.toList());\n\u00a0\n        // Reduce functions\n        Function<List<Integer>, Integer> sum = l -> l.stream().reduce(0, (a, b) -> a + b);\n        Function<List<Integer>, Integer> max = l -> l.stream().reduce(Integer.MIN_VALUE, (a, b) -> Math.max(a, b));\n\u00a0\n        // Apply pipeline\n        List<Function<List<Integer>, List<Integer>>> pipeline = Arrays.asList(addTwo, evens, mulThree);\n        numbers = pipeline.stream().reduce(numbers, (a, f) -> f.apply(a), (a, b) -> null);\n        System.out.println(\"After pipeline: \" + numbers);\n\u00a0\n        // Apply reduce pipeline\n        pipeline = Arrays.asList(sum, max);\n        int result = pipeline.stream().reduce(numbers, (a, f) -> f.apply(a), (a, b) -> 0);\n        System.out.println(\"Reduce result: \" + result);\n    }\n}\n```"
+}

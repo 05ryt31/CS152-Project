@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p14_bfs",
+  "src": "haskell",
+  "tgt": "scheme",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:44:40+00:00",
+  "source_file": "p14_bfs.hs",
+  "target_file": "p14_bfs.scm",
+  "attempts": 1,
+  "duration_s": 44.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 575,
+    "completion_tokens": 358
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base)\n        (scheme cxr)\n        (scheme write)\n        (srfi 1)) ; for append-map\n\u00a0\n;; Breadth-first search implementation\n(define (bfs start goal? successors)\n  (let loop ((frontier (list (list start)))\n             (explored '()))\n    (if (null? frontier)\n      #f\n      (let* ((path (car frontier))\n             (node (last-pair path)))\n        (if (goal? node)\n          path\n          (loop (append (map (lambda (successor)\n                               (cons successor path))\n                             (successors node))\n                        (cdr frontier))\n                (cons node explored)))))))\n\u00a0\n;; Example usage\n(let* ((graph '((a (b c))\n                 (b (d e))\n                 (c (e f))\n                 (d ())\n                 (e (g h))\n                 (f (j k))\n                 (g ())\n                 (h (k l))\n                 (i (m n))\n                 (j ())\n                 (k (o p))\n                 (l ())\n                 (m ())\n                 (n (p))\n                 (o ())\n                 (p (q r))\n                 (q ())\n                 (r ())))\n         (start 'a)\n         (goal? (lambda (node) (member node '(g i l o q r))))\n         (successors (lambda (node) (cdr (assoc node graph)))))\n  (for-each (lambda (goal)\n              (display \"Path to \")\n              (display goal)\n              (display \": \")\n              (display (bfs start (lambda (node) (eq? node goal)) successors))\n              (newline))\n            goal?))\n\u00a0\n```"
+}

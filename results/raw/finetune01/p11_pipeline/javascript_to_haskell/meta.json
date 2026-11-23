@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p11_pipeline",
+  "src": "javascript",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:29:31+00:00",
+  "source_file": "p11_pipeline.js",
+  "target_file": "p11_pipeline.hs",
+  "attempts": 1,
+  "duration_s": 28.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 539,
+    "completion_tokens": 225
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List.Split (splitOn)\n\u00a0\npipeline :: [String] -> Int -> String\npipeline xs n =\n  let fns = take n $ map parseFn $ drop 2 xs\n      vals = read <$> splitOn \" \" (head xs)\n  in show . foldl applyFns vals $ fns\n  where\n    parseFn s =\n      case words s of\n        [\"map\", \"add\", v] -> \\xs -> (+) (read v) <$> xs\n        [\"map\", \"mul\", v] -> (*) (read v) <$> id\n        [\"filter\", \"evn\"] -> filter even\n        [\"filter\", \"odr\"] -> filter odd\n        [\"filter\", \"gt\", v] -> (>)(read v) <$> id\n        [\"reduce\", \"sum\"] -> sum\n        _ -> length\n    applyFns = foldl (<*>) <*> id\n\u00a0\nmain :: IO ()\nmain = do\n  txt <- readFile \"input.txt\"\n  putStrLn $ pipeline (lines txt) 3\n```"
+}

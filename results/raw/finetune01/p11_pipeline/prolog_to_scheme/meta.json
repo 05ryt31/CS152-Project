@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p11_pipeline",
+  "src": "prolog",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:51:08+00:00",
+  "source_file": "p11_pipeline.pl",
+  "target_file": "p11_pipeline.scm",
+  "attempts": 1,
+  "duration_s": 80.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 741,
+    "completion_tokens": 642
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base)\n        (scheme write)\n        (srfi 1))\n\u00a0\n;; helper functions\n(define (string->number s)\n  (let ((n (string->number s)))\n    (if n\n      n\n      (error \"Invalid number\" s))))\n\u00a0\n(define (parse-stage stage)\n  (match-case stage\n    (((\"map\" \"add\") n))\n    ((\"map\" \"mul\" n)))\n    ((\"filter\" \"even\"))\n    ((\"filter\" \"odd\"))\n    ((\"filter\" \"gt\" n))\n    ((\"reduce\" \"sum\")))\n    ((\"reduce\" \"max\"))))\n\u00a0\n(define (apply-map-add n lst)\n  (map (+ n) lst))\n\u00a0\n(define (apply-map-mul n lst)\n  (map (* n) lst))\n\u00a0\n(define (apply-filter-even lst)\n  (filter even? lst))\n\u00a0\n(define (apply-filter-odd lst)\n  (filter odd? lst))\n\u00a0\n(define (apply-filter-gt n lst)\n  (filter (> n) lst))\n\u00a0\n(define (apply-reduce-sum lst)\n  (fold-left + 0 lst))\n\u00a0\n(define (apply-reduce-max lst)\n  (if (null? lst)\n    #f\n    (fold-left max (car lst) (cdr lst))))\n\u00a0\n;; pipeline function\n(define (pipeline k-values k-stages)\n  (define (helper values stages)\n    (cond ((null? stages)\n            values)\n          ((equal? (caar stages) \"map\")\n           (case (cadar stages)\n             ((add) (helper (apply-map-add (cadr (car stages)) values)\n                            (cdr stages)))\n             ((mul) (helper (apply-map-mul (cadr (car stages)) values)\n                            (cdr stages)))))\n          ((equal? (caar stages) \"filter\")\n           (case (cadar stages)\n             ((even) (helper (apply-filter-even values)\n                             (cdr stages)))\n             ((odd) (helper (apply-filter-odd values)\n                            (cdr stages)))\n             ((gt) (helper (apply-filter-gt (cadr (car stages)) values)\n                           (cdr stages)))))\n          ((equal? (caar stages) \"reduce\")\n           (case (cadar stages)\n             ((sum) (helper (apply-reduce-sum values)\n                            (cdr stages)))\n             ((max) (helper (apply-reduce-max values)\n                            (cdr stages)))))))\n  (helper k-values k-stages))\n\u00a0\n;; test cases\n(let* ((values '(1 2 3 4 5 6 7 8 9 10))\n       (stages '((map add 2)\n                 (filter gt 5)\n                 (reduce sum))))\n  (display (pipeline values stages))\n  (newline))\n\u00a0\n(let* ((values '(1 2 3 4 5 6 7 8 9 10))\n       (stages '((map mul 2)\n                 (filter even)\n                 (reduce max))))\n  (display (pipeline values stages))\n  (newline))\n\u00a0\n```"
+}

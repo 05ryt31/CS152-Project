@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p02_merge_sorted",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T02:15:31+00:00",
+  "source_file": "p02_merge_sorted.scm",
+  "target_file": "p02_merge_sorted.pl",
+  "attempts": 1,
+  "duration_s": 33.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 540,
+    "completion_tokens": 256
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n\u00a0\n:- use_module(library(lambda)).\n\u00a0\n% merge two lists in order\nmerge([], B, B):-!.\nmerge(A, [], A):-!.\nmerge([H1|T1], [H2|T2], M):- H1=<H2, !, merge(T1,[H1|T2],M).\nmerge([H1|T1], [H2|T2], M):- merge([H1|T1], T2,M1), append(M1,[H2],M).\n\u00a0\n% merge all lists in order\nmerge_all([],[]):-!.\nmerge_all([A],[A]):-!.\nmerge_all([H1,H2|T],M):- merge(H1,H2,M1), merge_all([M1|T],M).\n\u00a0\n% read lines from stdin\nread_lines(N,L):-\n    aggregate(nth(N), read_line_to_string(user_input,S), L),\n    maplist(\\X^Y^(atom_number(X,Y)),L,_).\n\u00a0\nmain :-\n    read_lines(2,L),\n    maplist(atom_number,L,N),\n    merge_all(N,M),\n    sort(M,M1),\n    maplist(writeln,M1).\n\u00a0\n?- main.\n\u00a0\n```"
+}

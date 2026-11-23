@@ -1,0 +1,7 @@
+{
+    "paradigm": "Functional",
+    "language": "Haskell",
+    "justification": "The problem requires parsing an arithmetic expression with parentheses, which involves recursion and higher-order functions. Haskell's strong support for functional programming makes it well-suited for this task. The use of lazy evaluation and pure functions aligns well with the requirements of a recursive-descent parser.",
+    "alternatives": "Prolog could also be used here due to its ability to handle recursive descent parsing through DCGs. However, Haskell provides more direct support for functional programming patterns, making it a better choice for this specific problem. Python could be used with libraries like `pyparsing`, but it would require more boilerplate code compared to Haskell.",
+    "confidence": 0.9
+}

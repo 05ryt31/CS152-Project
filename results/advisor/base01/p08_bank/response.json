@@ -1,0 +1,7 @@
+{
+    "paradigm": "Object-oriented",
+    "language": "Python",
+    "justification": "The problem involves managing a bank account with specific commands, which naturally lends itself to an object-oriented approach. An object-oriented paradigm allows for encapsulation of the account's state and behaviors within a class, making it easy to manage the balance and handle different commands. Python is a versatile language that supports object-oriented programming well and has a clean syntax that makes it suitable for this type of problem.",
+    "alternatives": "Haskell could also be used here due to its strong support for functional programming, but it might require more boilerplate code compared to Python. Prolog could theoretically solve this problem using recursion and assertions, but it would be less intuitive and harder to read than an object-oriented solution. JavaScript could work as well, especially if running in a browser environment, but it lacks some of the built-in features that make Python a good choice for this kind of task.",
+    "confidence": 0.9
+}

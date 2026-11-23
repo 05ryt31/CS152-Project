@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p10_lru",
+  "src": "java",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:00:00+00:00",
+  "source_file": "P10Lru.java",
+  "target_file": "p10_lru.scm",
+  "attempts": 1,
+  "duration_s": 108.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 465,
+    "completion_tokens": 869
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base)\n        (scheme read)\n        (scheme write)\n        (srfi 1))\n\u00a0\n;; A simple LRU cache implementation using a vector of cons cells.\n;;\n;; Each cell is in the form of (key . value), where key is the item\n;; being cached and value is the associated data.\n;;\n;; The vector is circularly linked so that the first element is always\n;; the least recently used item.\n;;\n;; When an item is accessed, it is moved to the end of the list.\n;;\n;; When an item is added, it is also placed at the end of the list.\n;; If the cache has reached its maximum capacity, then the first item\n;; in the list is removed.\n;;\n;; This implementation assumes that keys are immutable.\n(define lru-cache?\n  (lambda (cache)\n    (and (vector? cache)\n         (integer? (vector-ref cache 0)))))\n\u00a0\n(define make-lru-cache\n  (lambda (max-size)\n    (let ((cache (make-vector (+ max-size 1))))\n      (vector-set! cache 0 max-size)\n      cache)))\n\u00a0\n(define lru-cache-max-size\n  (lambda (cache)\n    (vector-ref cache 0)))\n\u00a0\n(define lru-cache-count\n  (lambda (cache)\n    (- (vector-length cache) 1)))\n\u00a0\n(define lru-cache-get\n  (lambda (cache key)\n    (let loop ((index 1))\n      (if (= index (lru-cache-count cache))\n          #f\n          (let ((cell (vector-ref cache index)))\n            (cond ((eq? key (car cell)) (loop (+ index 1)))\n                  ((eq? key (car (vector-ref cache 1))) ; most recently used\n                   (begin (vector-copy! cache 1 cache)\n                          (vector-set! cache 1 cell)\n                          (cdr cell)))\n                  (else #f)))))))\n\u00a0\n(define lru-cache-add!\n  (lambda (cache key value)\n    (let* ((count (lru-cache-count cache))\n           (max-size (lru-cache-max-size cache))\n           (new-cell (cons key value)))\n      (when (> count max-size)\n        (vector-copy! cache 1 cache))\n      (vector-set! cache (+ count 1) new-cell)\n      (vector-set! cache 1 new-cell))))\n\u00a0\n;; Tests\n(let ((cache (make-lru-cache 4)))\n  (display \"Cache size: \") (display (lru-cache-max-size cache)) (newline)\n  (display \"Initial cache count: \") (display (lru-cache-count cache)) (newline)\n  (display \"Get 'a': \") (display (lru-cache-get cache 'a')) (newline)\n  (lru-cache-add! cache 'a' 1)\n  (display \"After adding 'a': \") (display (lru-cache-count cache)) (newline)\n  (display \"Get 'a': \") (display (lru-cache-get cache 'a')) (newline)\n  (lru-cache-add! cache 'b' 2)\n  (lru-cache-add! cache 'c' 3)\n  (lru-cache-add! cache 'd' 4)\n  (display \"After adding 'b', 'c', 'd': \") (display (lru-cache-count cache)) (newline)\n  (display \"Get 'a': \") (display (lru-cache-get cache 'a')) (newline)\n  (display \"Get 'b': \") (display (lru-cache-get cache 'b')) (newline)\n  (display \"Add 'e': \") (newline)\n  (lru-cache-add! cache 'e' 5)\n  (display \"After adding 'e': \") (display (lru-cache-count cache)) (newline)\n  (display \"Get 'a': \") (display (lru-cache-get cache 'a')) (newline)\n  (display \"Get 'b': \") (display (lru-cache-get cache 'b')) (newline)\n  (display \"Get 'e': \") (display (lru-cache-get cache 'e')) (newline))\n\u00a0\n```"
+}

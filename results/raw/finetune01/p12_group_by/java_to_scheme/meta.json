@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p12_group_by",
+  "src": "java",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:02:18+00:00",
+  "source_file": "P12GroupBy.java",
+  "target_file": "p12_group_by.scm",
+  "attempts": 1,
+  "duration_s": 37.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 451,
+    "completion_tokens": 301
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base)\n        (scheme read)\n        (scheme write)\n        (srfi 1))\n\u00a0\n;; Return a list of lists where each sublist is a group of lines\n;; with the same first element.\n(define (group-by-first lst)\n  (let loop ((lst lst)\n             (groups '()))\n    (if (null? lst)\n      groups\n      (let* ((key (caar lst))\n             (rest (cdr lst)))\n        (loop rest\n              (cons (list-ec (: x (filter (lambda (y) (= (car y) key)) rest))\n                             x)\n                    (cond ((any (lambda (g) (= (car g) key)) groups)\n                           groups)\n                          (else\n                            (cons (list key 0 0) groups)))))))))\n\u00a0\n;; Print out the grouped data in the format specified.\n(define (print-groups groups)\n  (for-each (lambda (g)\n              (display (car g))\n              (display \": \")\n              (display (cadr g))\n              (display \" \")\n              (display (caddr g))\n              (newline))\n            groups))\n\u00a0\n;; Process the input file and print out the results.\n(let* ((filename (command-line-arg 0))\n       (file (open-input-file filename))\n       (lines (read-lines file)))\n  (close-input-port file)\n  (print-groups (group-by-first lines)))\n\u00a0\n```"
+}

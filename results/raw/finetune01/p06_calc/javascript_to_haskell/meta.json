@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p06_calc",
+  "src": "javascript",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T04:07:57+00:00",
+  "source_file": "p06_calc.js",
+  "target_file": "p06_calc.hs",
+  "attempts": 1,
+  "duration_s": 37.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 475,
+    "completion_tokens": 300
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Text.ParserCombinators.Parsec\n\u00a0\n-- Parser for arithmetic expressions\nexpr :: Parser Int\nexpr = do\n  e <- term\n  restOfExpr e\n\u00a0\nrestOfExpr :: Int -> Parser Int\nrestOfExpr acc =\n  try ((+) <$> char '+' <*> expr)\n  <|> try ((-) <$> char '-' <*> expr)\n  <|> return acc\n\u00a0\nterm :: Parser Int\nterm = do\n  t <- factor\n  restOfTerm t\n\u00a0\nrestOfTerm :: Int -> Parser Int\nrestOfTerm acc =\n  try ((*acc) <$> char '*' <*> term)\n  <|> return acc\n\u00a0\nfactor :: Parser Int\nfactor = do\n  f <- number\n  restOfFactor f\n\u00a0\nrestOfFactor :: Int -> Parser Int\nrestOfFactor acc =\n  try ((^acc) <$> char '^' <*> factor)\n  <|> return acc\n\u00a0\nnumber :: Parser Int\nnumber = read <$> many1 digit\n\u00a0\n-- Parsing function\nparseExpr :: String -> Either ParseError Int\nparseExpr s = parse expr \"\" s\n\u00a0\n-- Main function\nmain :: IO ()\nmain = do\n  print $ parseExpr \"3\"\n  print $ parseExpr \"2 * 3 + (4 * 5)\"\n  print $ parseExpr \"7 ^ 2\"\n  print $ parseExpr \"2 + 3 * 4 ^ 5 ^ 2\"\n```"
+}

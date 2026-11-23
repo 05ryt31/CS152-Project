@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p05_expr_tree",
+  "src": "javascript",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:33:07+00:00",
+  "source_file": "p05_expr_tree.js",
+  "target_file": "p05_expr_tree.pl",
+  "attempts": 1,
+  "duration_s": 59.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 484,
+    "completion_tokens": 473
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lambda)).\n\u00a0\n% parse expression into tree\nparse_expr(In, Tree):-\n\tstring_chars(In, InList),\n\tatom_chars(' ', Space),\n\texclude(\\X^(X == Space), InList, InListNoSpace),\n\tatomic_list_concat(InListNoSpace, Tokens),\n\treverse(Tokens, TokensRev),\n\tbuild_tree(TokensRev, Tree).\n\u00a0\nbuild_tree([Token], Token):-!.\nbuild_tree([Token|TokensRest], Tree):-\n\tmember(Token, ['+', '*', '-']),\n\tmember(Index, [1,2]),\n\tnth0(Index, TokensRest, Right),\n\tIndex1 is Index + 1,\n\tsublist(TokensRest, Index1, Index, Left),\n\tbuild_tree(Left, LeftTree),\n\tbuild_tree(Right, RightTree),\n\tTree =.. [Token, LeftTree, RightTree].\n\u00a0\nsublist(List, Start, Length, Sublist):-\n\tStart >= 0,\n\tLength > 0,\n\tStart < Length,\n\tEnd is Start + Length - 1,\n\tlength(Sublist, Length),\n\tsucc(BeforeStart, Start),\n\tsucc(AfterEnd, End),\n\tappend(_Before, BeforeSublist, List),\n\tappend(BeforeSublist, _After),\n\tappend(_Before, [_First|_Middle], BeforeSublist),\n\tappend(_Middle, [_Last|_After], AfterEnd),\n\tappend(_Before, [_First|Sublist], List),\n\tappend(Sublist, [_Last|_After], List).\n\u00a0\n% print tree in infix notation\nprint_expr(Tree):-\n\tprint_expr(Tree, 0, MaxDepth),\n\twritef('(%w)\\n', [MaxDepth]).\n\u00a0\nprint_expr(Token, Depth, MaxDepth):-\n\tvar(Token),\n\tMaxDepth is Depth,\n\twritef('%w\\n', [Token]).\n\u00a0\nprint_expr(Tree, Depth, MaxDepth):-\n\tis_node(Tree),\n\tTree =.. [Op, Left, Right],\n\tDepth1 is Depth + 1,\n\tprint_expr(Left, Depth1, MaxDepth1),\n\tprint_expr(Right, Depth1, MaxDepth2),\n\tMaxDepth is max(MaxDepth1, MaxDepth2),\n\twritef('%w ', [Op]).\n\u00a0\nis_node(Node):-\n\tNode \\= [],\n\t\\+ atomic(Node).\n\u00a0\n```"
+}

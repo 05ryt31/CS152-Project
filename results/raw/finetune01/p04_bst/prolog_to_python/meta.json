@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p04_bst",
+  "src": "prolog",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:14:27+00:00",
+  "source_file": "p04_bst.pl",
+  "target_file": "p04_bst.py",
+  "attempts": 1,
+  "duration_s": 50.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 658,
+    "completion_tokens": 402
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nclass Node(object):\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\u00a0\n    def __repr__(self):\n        return '<Node\u00a0%r>'\u00a0% self.value\n\u00a0\n    def add(self, value):\n        if value <= self.value:\n            if self.left is None:\n                self.left = Node(value)\n            else:\n                self.left.add(value)\n        elif self.right is None:\n            self.right = Node(value)\n        else:\n            self.right.add(value)\n\u00a0\n    def inorder(self):\n        if self.left is not None:\n            yield from self.left.inorder()\n        yield self.value\n        if self.right is not None:\n            yield from self.right.inorder()\n\u00a0\n    def preorder(self):\n        yield self.value\n        if self.left is not None:\n            yield from self.left.preorder()\n        if self.right is not None:\n            yield from self.right.preorder()\n\u00a0\n    def postorder(self):\n        if self.left is not None:\n            yield from self.left.postorder()\n        if self.right is not None:\n            yield from self.right.postorder()\n        yield self.value\n\u00a0\n    def height(self):\n        left_height = self.left.height() if self.left is not None else 0\n        right_height = self.right.height() if self.right is not None else 0\n        return 1 + max(left_height, right_height)\n\u00a0\nif __name__ == '__main__':\n    tree = Node(5)\n    tree.add(2)\n    tree.add(7)\n    tree.add(8)\n    tree.add(6)\n    tree.add(9)\n    tree.add(1)\n    tree.add(3)\n\u00a0\n    print('In-order:', list(tree.inorder()))\n    print('Pre-order:', list(tree.preorder()))\n    print('Post-order:', list(tree.postorder()))\n    print('Height:', tree.height())\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p13_n_queens",
+  "src": "haskell",
+  "tgt": "scheme",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:25:09+00:00",
+  "source_file": "p13_n_queens.hs",
+  "target_file": "p13_n_queens.scm",
+  "attempts": 1,
+  "duration_s": 61.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 411,
+    "completion_tokens": 498
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(define *n* 8)\n(define *board-size* (*n* *n*))\n(define *board* (make-vector *board-size* #f))\n\u00a0\n;; place queen at position i\n(define (place-queen i)\n  (let ((j (quotient i *n*)))\n    (vector-set! *board* i 'Q)\n    (do ((k 0 (+ k 1))) ((>= k *n*))\n      (vector-set! *board* (+ j (* k *n*)) 'X))))\n\u00a0\n;; remove queen at position i\n(define (remove-queen i)\n  (let ((j (quotient i *n*)))\n    (vector-set! *board* i #f)\n    (do ((k 0 (+ k 1))) ((>= k *n*))\n      (vector-set! *board* (+ j (* k *n*)) #f))))\n\u00a0\n;; check if placing queen at position i is valid\n(define (valid? i)\n  (let ((j (quotient i *n*)))\n    (and (not (vector-ref *board* i))\n         (do ((k 0 (+ k 1))) ((>= k *n*) #t)\n           (if (or (eq? (vector-ref *board* (+ j (* k *n*))) 'X')\n                   (eq? (vector-ref *board* (- j (* k *n*))) 'X'))\n               #f)))))\n\u00a0\n;; print board\n(define (print-board)\n  (do ((i 0 (+ i 1))) ((= i *board-size*))\n    (cond ((eq? (vector-ref *board* i) 'Q') (display \" Q\"))\n          ((eq? (vector-ref *board* i) 'X') (display \" X\"))\n          (else (display \" .\")))\n    (when (= (modulo (+ i 1) *n*) 0) (newline))))\n\u00a0\n;; solve N Queens problem using backtracking\n(define (solve-n-queens i)\n  (cond ((= i *board-size*) (print-board) (newline))\n        ((valid? i) (place-queen i) (solve-n-queens (+ i 1)) (remove-queen i))\n        (else (solve-n-queens (+ i 1)))))\n\u00a0\n(solve-n-queens 0)\n\u00a0\n```"
+}

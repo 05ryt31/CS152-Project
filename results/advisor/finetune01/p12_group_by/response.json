@@ -1,0 +1,7 @@
+{
+    "paradigm": "Functional",
+    "language": "Haskell",
+    "justification": "This problem is a perfect fit for a functional language like Haskell. The problem involves grouping elements together based on some property (in this case, the first element of each tuple), and then performing some operation on each group (summing the second elements). This can be done using the 'group' function, followed by mapping over the groups and applying the desired operation.",
+    "alternatives": "Python would also work well here, but Haskell's built-in support for tuples makes it more convenient. Other functional languages like Lisp or OCaml could also solve this problem, though they might require more manual work.",
+    "confidence": 1.0
+}

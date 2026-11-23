@@ -1,0 +1,7 @@
+{
+    "paradigm": "Functional",
+    "language": "Haskell",
+    "justification": "The problem requires immutable data structures and pure functions, which align well with the functional programming paradigm. Haskell's strong support for recursion, higher-order functions, and lazy evaluation makes it ideal for building and traversing binary search trees without mutating state.",
+    "alternatives": "Python could also be used with its functional programming features like lambda functions and list comprehensions. However, Haskell provides more built-in support for functional programming concepts, making it a better choice for this specific problem. JavaScript could be used with an object-oriented approach, but it lacks some of the necessary tools for purely functional programming.",
+    "confidence": 0.9
+}

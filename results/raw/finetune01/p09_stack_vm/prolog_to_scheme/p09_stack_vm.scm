@@ -1,0 +1,23 @@
+ 
+(define (stack-machine)
+  (define stack '())
+  (define (empty-stack? s) (null? s))
+  (define (push x s) (cons x s))
+  (define (pop s) (if (empty-stack? s) #f (cons (car s) (cdr s))))
+  (define (top s) (if (empty-stack? s) #f (car s)))
+  (define (length s) (if (empty-stack? s) 0 (+ 1 (length (pop s)))))
+  (define (print-stack s) (display s) (newline))
+  (define (error) (display "Error") (newline))
+  (define (process-instruction instr)
+    (cond ((eq? instr 'push) (push (read) stack))
+          ((eq? instr 'pop) (set! stack (pop stack)))
+          ((eq? instr 'add) (let ((a (top stack)) (b (top (pop stack)))) (set! stack (push (+ a b) (pop (pop stack))))))
+          ((eq? instr 'mul') (let ((a (top stack)) (b (top (pop stack)))) (set! stack (push (* a b) (pop (pop stack))))))
+          ((eq? instr 'dup') (push (top stack) stack))
+          ((eq? instr 'swap') (let ((a (top stack)) (b (top (pop stack)))) (set! stack (push a (push b (pop (pop stack))))))
+          ((eq? instr 'print') (print-stack stack))
+          (else (error))))
+  (do ((instr (read) (read))) ((eof-object? instr) 'done) (process-instruction instr)))
+ 
+(stack-machine)
+ 

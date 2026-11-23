@@ -1,0 +1,52 @@
+ 
+(import (scheme base)
+        (scheme cxr)
+        (scheme write)
+        (srfi 1)) ; for append-map
+ 
+;; Breadth-first search implementation
+(define (bfs start goal? successors)
+  (let loop ((frontier (list (list start)))
+             (explored '()))
+    (if (null? frontier)
+      #f
+      (let* ((path (car frontier))
+             (node (last-pair path)))
+        (if (goal? node)
+          path
+          (loop (append (map (lambda (successor)
+                               (cons successor path))
+                             (successors node))
+                        (cdr frontier))
+                (cons node explored)))))))
+ 
+;; Example usage
+(let* ((graph '((a (b c))
+                 (b (d e))
+                 (c (e f))
+                 (d ())
+                 (e (g h))
+                 (f (j k))
+                 (g ())
+                 (h (k l))
+                 (i (m n))
+                 (j ())
+                 (k (o p))
+                 (l ())
+                 (m ())
+                 (n (p))
+                 (o ())
+                 (p (q r))
+                 (q ())
+                 (r ())))
+         (start 'a)
+         (goal? (lambda (node) (member node '(g i l o q r))))
+         (successors (lambda (node) (cdr (assoc node graph)))))
+  (for-each (lambda (goal)
+              (display "Path to ")
+              (display goal)
+              (display ": ")
+              (display (bfs start (lambda (node) (eq? node goal)) successors))
+              (newline))
+            goal?))
+ 

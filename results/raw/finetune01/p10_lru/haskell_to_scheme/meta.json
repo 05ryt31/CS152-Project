@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p10_lru",
+  "src": "haskell",
+  "tgt": "scheme",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:12:17+00:00",
+  "source_file": "p10_lru.hs",
+  "target_file": "p10_lru.scm",
+  "attempts": 1,
+  "duration_s": 117.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 638,
+    "completion_tokens": 951
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base))\n(import (scheme cxr))\n(import (scheme write))\n(import (srfi 1)) ; lists\n(import (srfi 69)) ; hash tables\n\u00a0\n;; A simple LRU cache implementation using a hash table and a list.\n;;\n;; The hash table maps keys to cons cells whose car is the value and\n;; whose cdr is the position of the key in the list.\n;;\n;; The list contains the keys in order of use, with the most recently\n;; used at the head of the list.\n;;\n;; When a key is accessed, it is moved to the front of the list.\n;;\n;; When a key is set, it is added to the front of the list. If the key\n;; was already present, it is moved to the front of the list. If the\n;; cache is full, the least recently used key is removed from both the\n;; hash table and the list.\n;;\n;; This implementation assumes that all keys are unique.\n;;\n;; Example usage:\n;;\n;;   (define cache (make-lru-cache 2))\n;;\n;;   (lru-cache-set! cache 'a 1)\n;;   (lru-cache-set! cache 'b 2)\n;;   (lru-cache-get cache 'a) ; => 1\n;;   (lru-cache-get cache 'c) ; => #f\n;;   (lru-cache-set! cache 'd 4)\n;;   (lru-cache-get cache 'b) ; => #f\n;;\n(define-record-type <lru-cache>\n  (%make-lru-cache capacity table list)\n  lru-cache?\n  (capacity lru-cache-capacity)\n  (table lru-cache-table)\n  (list lru-cache-list))\n\u00a0\n(define make-lru-cache\n  (lambda (capacity)\n    (%make-lru-cache capacity (make-hash-table) '())))\n\u00a0\n(define lru-cache-set!\n  (lambda (cache key value)\n    (let* ((table (lru-cache-table cache))\n           (list (lru-cache-list cache))\n           (entry (hash-table-ref/default table key #f)))\n      (cond\n       ((not entry)\n        ;; Key not found, so add it to the front of the list.\n        (hash-table-push! table key (cons value list))\n        (set-car! entry value)\n        (set-cdr! entry (cons key list)))\n       (else\n        ;; Key found, so move it to the front of the list.\n        (set-car! entry value)\n        (set-cdr! entry (cons key (remove key list))))))))\n\u00a0\n(define lru-cache-get\n  (lambda (cache key)\n    (let* ((table (lru-cache-table cache))\n           (list (lru-cache-list cache))\n           (entry (hash-table-ref/default table key #f)))\n      (if entry\n          (begin\n            (set-cdr! entry (cons key (remove key list)))\n            (car entry))\n          #f))))\n\u00a0\n(define lru-cache-size\n  (lambda (cache)\n    (hash-table-count (lru-cache-table cache))))\n\u00a0\n(define lru-cache-empty?\n  (lambda (cache)\n    (= 0 (lru-cache-size cache))))\n\u00a0\n(define lru-cache-full?\n  (lambda (cache)\n    (= (lru-cache-size cache) (lru-cache-capacity cache))))\n\u00a0\n(define lru-cache-clear!\n  (lambda (cache)\n    (hash-table-clear! (lru-cache-table cache))\n    (set-cdr! cache '())))\n\u00a0\n(define lru-cache->list\n  (lambda (cache)\n    (reverse (lru-cache-list cache))))\n\u00a0\n(define lru-cache-print\n  (lambda (cache)\n    (display \"Cache size: \")\n    (display (lru-cache-size cache))\n    (newline)\n    (display \"Cache contents: \")\n    (display (lru-cache->list cache))\n    (newline)))\n\u00a0\n;; Test cases.\n(let ((cache (make-lru-cache 2)))\n  (lru-cache-set! cache 'a 1)\n  (lru-cache-set! cache 'b 2)\n  (display (lru-cache-get cache 'a)) (newline) ; => 1\n  (display (lru-cache-get cache 'c)) (newline) ; => #f\n  (lru-cache-set! cache 'd 4)\n  (display (lru-cache-get cache 'b)) (newline) ; => #f\n  (lru-cache-print cache))\n\u00a0\n```"
+}

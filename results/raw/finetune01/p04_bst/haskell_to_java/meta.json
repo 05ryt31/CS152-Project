@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p04_bst",
+  "src": "haskell",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:11:26+00:00",
+  "source_file": "p04_bst.hs",
+  "target_file": "P04Bst.java",
+  "attempts": 1,
+  "duration_s": 67.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 589,
+    "completion_tokens": 528
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\nimport java.util.*;\n\u00a0\nclass BST {\n    private Node root;\n\u00a0\n    public BST() {\n        this.root = null;\n    }\n\u00a0\n    public boolean isEmpty() {\n        return this.root == null;\n    }\n\u00a0\n    public int size() {\n        return this.size(this.root);\n    }\n\u00a0\n    private int size(Node node) {\n        if (node == null)\n            return 0;\n        else\n            return 1 + this.size(node.left) + this.size(node.right);\n    }\n\u00a0\n    public void insert(int key) {\n        this.root = this.insert(this.root, key);\n    }\n\u00a0\n    private Node insert(Node node, int key) {\n        if (node == null)\n            return new Node(key);\n        else if (key < node.key)\n            node.left = this.insert(node.left, key);\n        else if (key > node.key)\n            node.right = this.insert(node.right, key);\n        return node;\n    }\n\u00a0\n    public void inOrderTraversal() {\n        this.inOrderTraversal(this.root);\n    }\n\u00a0\n    private void inOrderTraversal(Node node) {\n        if (node != null) {\n            this.inOrderTraversal(node.left);\n            System.out.print(node.key + \" \");\n            this.inOrderTraversal(node.right);\n        }\n    }\n\u00a0\n    public void preOrderTraversal() {\n        this.preOrderTraversal(this.root);\n    }\n\u00a0\n    private void preOrderTraversal(Node node) {\n        if (node != null) {\n            System.out.print(node.key + \" \");\n            this.preOrderTraversal(node.left);\n            this.preOrderTraversal(node.right);\n        }\n    }\n\u00a0\n    public int height() {\n        return this.height(this.root);\n    }\n\u00a0\n    private int height(Node node) {\n        if (node == null)\n            return -1;\n        else\n            return 1 + Math.max(this.height(node.left), this.height(node.right));\n    }\n\u00a0\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        BST bst = new BST();\n        while (sc.hasNext()) {\n            bst.insert(sc.nextInt());\n        }\n        System.out.println(\"In Order Traversal:\");\n        bst.inOrderTraversal();\n        System.out.println(\"\\nPre Order Traversal:\");\n        bst.preOrderTraversal();\n        System.out.println(\"\\nHeight of the tree: \" + bst.height());\n    }\n}\n\u00a0\nclass Node {\n    int key;\n    Node left;\n    Node right;\n\u00a0\n    public Node(int item) {\n        this.key = item;\n        this.left = this.right = null;\n    }\n}\n```"
+}

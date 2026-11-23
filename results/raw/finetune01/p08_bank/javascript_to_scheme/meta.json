@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p08_bank",
+  "src": "javascript",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T04:59:37+00:00",
+  "source_file": "p08_bank.js",
+  "target_file": "p08_bank.scm",
+  "attempts": 1,
+  "duration_s": 63.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 427,
+    "completion_tokens": 512
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base)\n        (scheme read)\n        (scheme write))\n\u00a0\n;; A bank account is represented by a list of two elements:\n;;   - the first element is the current balance\n;;   - the second element is a list of transactions\n;;\n;; Transactions are represented by lists of two elements:\n;;   - the first element is either 'deposit or 'withdraw\n;;   - the second element is the amount of money involved in the transaction\n;;\n;; Example:\n;;   '((100 ((deposit . 20) (withdraw . 40))))\n;;\n;; Note that we use cons cells instead of vectors because it makes it easier\n;; to append new transactions at the end of the list.\n(define-syntax make-account\n  (syntax-rules ()\n    ((_ balance ...)\n     (list balance ...))))\n\u00a0\n;; Return the current balance of the given account.\n(define-syntax get-balance\n  (syntax-rules ()\n    ((_ account)\n     (car account))))\n\u00a0\n;; Append a new transaction to the given account.\n(define-syntax record-transaction\n  (syntax-rules ()\n    ((_ account type amount)\n     (set-car! account (+ (get-balance account) (* type amount)))\n     (cons (cons type amount) (cdr account)))))\n\u00a0\n;; Process a command and return the updated account.\n(define-syntax process-command\n  (syntax-rules ()\n    ((_ account \"deposit\" amount)\n     (record-transaction account 1 amount))\n    ((_ account \"withdraw\" amount)\n     (if (< amount (get-balance account))\n       (record-transaction account -1 amount)\n       '(error)))))\n\u00a0\n;; Print the current balance of the given account.\n(define-syntax print-balance\n  (syntax-rules ()\n    ((_ account)\n     (display (get-balance account)))))\n\u00a0\n;; Process all commands from the given port and print the final balance.\n(define-syntax process-input-port\n  (syntax-rules ()\n    ((_ port)\n     (let loop ((line (read-line port)))\n       (unless (eof-object? line)\n         (let* ((command (string-split line #\\space))\n                (account (process-command (make-account 0) (cadr command) (string->number (caddr command)))))\n           (if (eq? (car account) 'error)\n             (display \"Error\")\n             (print-balance account))\n           (newline)\n           (loop (read-line port)))))))\n\u00a0\n(process-input-port (current-input-port))\n\u00a0\n```"
+}

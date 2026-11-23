@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p05_expr_tree",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:48:01+00:00",
+  "source_file": "p05_expr_tree.hs",
+  "target_file": "p05_expr_tree.pl",
+  "attempts": 1,
+  "duration_s": 104.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 477,
+    "completion_tokens": 831
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n\u00a0\n:- use_module(library(lambda)).\n\u00a0\n% parse tree node\ntree(node(Term, Left, Right), Term, Left, Right).\n\u00a0\n% parse tree leaf\ntree(leaf(Term), Term, nil, nil).\n\u00a0\n% parse tree root\ntree(root(Tree), _, Left, Right) :-\n\ttree(Tree, _, Left, Right).\n\u00a0\n% parse tree leaf\ntree(leaf(Term), Term, nil, nil).\n\u00a0\n% parse tree node\ntree(node(Term, Left, Right), Term, Left, Right).\n\u00a0\n% parse tree root\ntree(root(Tree), _, Left, Right) :-\n\ttree(Tree, _, Left, Right).\n\u00a0\n% build expression tree\nbuild_expression_tree(Line, Tree) :-\n\tatom_chars(Line, Chars),\n\tbuild_expression_tree(Chars, [], Tree).\n\u00a0\nbuild_expression_tree([], Stack, Tree) :-\n\tlength(Stack, 3),\n\tpop_stack(Stack, Term, Rest),\n\ttree(Tree, Term, Left, Right),\n\tbuild_expression_tree(Rest, [node(Term, Left, Right)|Stack]).\n\u00a0\nbuild_expression_tree([Term|Rest], Stack, Tree) :-\n\tmember(Term, ['+', '-', '*', '/']),\n\tstack_length(Stack, Len),\n\tLen < 2,\n\tbuild_expression_tree(Rest, [Term|Stack], Tree).\n\u00a0\nbuild_expression_tree([Term|Rest], Stack, Tree) :-\n\tmember(Term, ['+', '-', '*', '/']),\n\tstack_length(Stack, Len),\n\tLen >= 2,\n\tpop_stack(Stack, Right, Rest),\n\tpop_stack(Rest, Left, NewStack),\n\tbuild_expression_tree(Rest, [node(Term, Left, Right)|NewStack], Tree).\n\u00a0\nbuild_expression_tree([Term|Rest], Stack, Tree) :-\n\t\\+ member(Term, ['+', '-', '*', '/']),\n\tstack_length(Stack, Len),\n\tLen > 0,\n\tpop_stack(Stack, Right, Rest),\n\tbuild_expression_tree(Rest, [node(Term, leaf(Term), Right)|Rest], Tree).\n\u00a0\nbuild_expression_tree([Term|Rest], Stack, Tree) :-\n\t\\+ member(Term, ['+', '-', '*', '/']),\n\tstack_length(Stack, Len),\n\tLen =< 0,\n\tbuild_expression_tree(Rest, [leaf(Term)|Stack], Tree).\n\u00a0\n% evaluate expression tree\nevaluate_expression_tree(Tree, Value) :-\n\tevaluate_expression_tree(Tree, 0, Value).\n\u00a0\nevaluate_expression_tree(leaf(Value), _, Value).\n\u00a0\nevaluate_expression_tree(node('+', Left, Right), Acc, Value) :-\n\tevaluate_expression_tree(Left, Acc, LValue),\n\tevaluate_expression_tree(Right, LValue, RValue),\n\tValue is LValue + RValue.\n\u00a0\nevaluate_expression_tree(node('-', Left, Right), Acc, Value) :-\n\tevaluate_expression_tree(Left, Acc, LValue),\n\tevaluate_expression_tree(Right, LValue, RValue),\n\tValue is LValue - RValue.\n\u00a0\nevaluate_expression_tree(node('*', Left, Right), Acc, Value) :-\n\tevaluate_expression_tree(Left, Acc, LValue),\n\tevaluate_expression_tree(Right, LValue, RValue),\n\tValue is LValue * RValue.\n\u00a0\nevaluate_expression_tree(node('/', Left, Right), Acc, Value) :-\n\tevaluate_expression_tree(Left, Acc, LValue),\n\tevaluate_expression_tree(Right, LValue, RValue),\n\tValue is LValue / RValue.\n\u00a0\n% print expression tree\nprint_expression_tree(Tree) :-\n\tprint_expression_tree(Tree, 0).\n\u00a0\nprint_expression_tree(leaf(Value), _Acc) :-\n\twritef('%w\\n', [Value]).\n\u00a0\nprint_expression_tree(node(Term, Left, Right), Acc) :-\n\tAcc1 is Acc + 4,\n\tprint_expression_tree(Right, Acc1),\n\twritef('\u00a0%w\\n', [Term]),\n\tprint_expression_tree(Left, Acc1).\n\u00a0\n% main\nmain :-\n\tread_line_to_string(user_input, Line),\n\tbuild_expression_tree(Line, Tree),\n\tevaluate_expression_tree(Tree, Value),\n\tprint_expression_tree(Tree),\n\twriteln(Value).\n\u00a0\n```"
+}

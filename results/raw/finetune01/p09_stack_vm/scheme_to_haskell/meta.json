@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p09_stack_vm",
+  "src": "scheme",
+  "tgt": "haskell",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:34:23+00:00",
+  "source_file": "p09_stack_vm.scm",
+  "target_file": "p09_stack_vm.hs",
+  "attempts": 1,
+  "duration_s": 56.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 661,
+    "completion_tokens": 457
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List.Split (splitOn)\n\u00a0\ndata StackVM = Push Int | Pop | Add | Mul | Dup | Swap deriving Show\n\u00a0\nparseStackVM :: String -> Either String StackVM\nparseStackVM s =\n  case splitOn \" \" s of\n    [\"push\", x] -> Right $ Push $ read x\n    [\"pop\"]     -> Right Pop\n    [\"add\"]     -> Right Add\n    [\"mul\"]     -> Right Mul\n    [\"dup\"]     -> Right Dup\n    [\"swap\"]    -> Right Swap\n    _           -> Left \"Invalid instruction\"\n\u00a0\nevalStackVM :: [Int] -> StackVM -> Either String [Int]\nevalStackVM xs vm =\n  case vm of\n    Push x -> Right $ x\u00a0: xs\n    Pop ->\n      if null xs then Left \"Stack is empty\" else Right $ tail xs\n    Add ->\n      if length xs < 2 then Left \"Not enough elements in stack\" else Right $\n      let [x, y] = take 2 xs in y + x\u00a0: drop 2 xs\n    Mul ->\n      if length xs < 2 then Left \"Not enough elements in stack\" else Right $\n      let [x, y] = take 2 xs in y * x\u00a0: drop 2 xs\n    Dup ->\n      if null xs then Left \"Stack is empty\" else Right $ head xs\u00a0: xs\n    Swap ->\n      if length xs < 2 then Left \"Not enough elements in stack\" else Right $\n      let [x, y] = take 2 xs in y\u00a0: x\u00a0: drop 2 xs\n\u00a0\nrunStackVM :: [String] -> Either String Int\nrunStackVM ss =\n  case foldM evalStackVM [] $ mapM parseStackVM ss of\n    Left e -> Left e\n    Right [x] -> Right x\n    Right _ -> Left \"Stack has more than one element at end\"\n\u00a0\nmain :: IO ()\nmain = do\n  putStrLn \"Enter instructions:\"\n  ss <- getLine\n  case runStackVM $ words ss of\n    Left e -> putStrLn e\n    Right x -> print x\n```"
+}

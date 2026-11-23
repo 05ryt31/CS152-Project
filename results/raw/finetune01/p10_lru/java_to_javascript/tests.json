@@ -1,0 +1,37 @@
+[
+    {
+        "name": "hit refreshes recency",
+        "input": "2\n5\nput 1 10\nput 2 20\nget 1\nput 3 30\nget 2",
+        "output": "10\n-1"
+    },
+    {
+        "name": "capacity one",
+        "input": "1\n4\nput 1 1\nput 2 2\nget 1\nget 2",
+        "output": "-1\n2"
+    },
+    {
+        "name": "update refreshes recency",
+        "input": "2\n6\nput 1 1\nput 2 2\nput 1 9\nput 3 3\nget 2\nget 1",
+        "output": "-1\n9"
+    },
+    {
+        "name": "get missing key",
+        "input": "2\n1\nget 5",
+        "output": "-1"
+    },
+    {
+        "name": "survivor after eviction",
+        "input": "2\n5\nput 1 1\nput 2 2\nget 1\nput 3 3\nget 1",
+        "output": "1\n1"
+    },
+    {
+        "name": "no eviction under capacity",
+        "input": "3\n5\nput 1 1\nput 2 2\nput 3 3\nget 1\nget 3",
+        "output": "1\n3"
+    },
+    {
+        "name": "evicted then reinserted",
+        "input": "2\n6\nput 1 1\nput 2 2\nput 3 3\nget 1\nput 1 5\nget 1",
+        "output": "-1\n5"
+    }
+]

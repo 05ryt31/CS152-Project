@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p13_n_queens",
+  "src": "prolog",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:26:55+00:00",
+  "source_file": "p13_n_queens.pl",
+  "target_file": "p13_n_queens.js",
+  "attempts": 1,
+  "duration_s": 58.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 486,
+    "completion_tokens": 466
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nfunction solveNQueens(n) {\n    var board = [];\n    for (var i = 0; i < n; i++) {\n        board[i] = [];\n        for (var j = 0; j < n; j++)\n            board[i][j] = false;\n    }\n\u00a0\n    function canPlaceQueen(row, col) {\n        // check row\n        for (var c = 0; c < n; c++)\n            if (board[row][c])\n                return false;\n\u00a0\n        // check column\n        for (var r = 0; r < n; r++)\n            if (board[r][col])\n                return false;\n\u00a0\n        // check diagonals\n        for (var r = 0; r < n; r++) {\n            for (var c = 0; c < n; c++) {\n                if ((r+c == row+col || r-c == row-col) && board[r][c])\n                    return false;\n            }\n        }\n\u00a0\n        return true;\n    }\n\u00a0\n    function placeQueen(row, col) {\n        board[row][col] = true;\n    }\n\u00a0\n    function removeQueen(row, col) {\n        board[row][col] = false;\n    }\n\u00a0\n    function printBoard() {\n        console.log(\"Solution:\");\n        for (var i = 0; i < n; i++) {\n            var s = \"\";\n            for (var j = 0; j < n; j++)\n                s += board[i][j] ? \"Q\" : \".\";\n            console.log(s);\n        }\n    }\n\u00a0\n    function solve(row) {\n        if (row >= n)\n            return true;\n\u00a0\n        for (var col = 0; col < n; col++) {\n            if (canPlaceQueen(row, col)) {\n                placeQueen(row, col);\n                if (solve(row+1))\n                    return true;\n                removeQueen(row, col);\n            }\n        }\n\u00a0\n        return false;\n    }\n\u00a0\n    if (!solve(0))\n        throw new Error(\"No solution\");\n\u00a0\n    printBoard();\n}\n\u00a0\n// test\nfor (var i = 4; i <= 15; i+=2)\n    solveNQueens(i);\n```"
+}

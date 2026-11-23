@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p14_bfs",
+  "src": "java",
+  "tgt": "haskell",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:37:26+00:00",
+  "source_file": "P14Bfs.java",
+  "target_file": "p14_bfs.hs",
+  "attempts": 1,
+  "duration_s": 46.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 602,
+    "completion_tokens": 367
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```haskell\nimport Data.List.Split (chunksOf)\n\u00a0\nbfs :: [Int] -> [(Int, Int)] -> Int -> Int -> Maybe Int\nbfs nodes edges start end =\n  let graph = foldr (\\(a, b) g -> (a, b):g ++ (b, a):g) [] edges\n      go _ [] _ _ = Nothing\n      go seen ((x, y):xs) q d\n        | x == end || y == end = Just $ max d (max x y)\n        | otherwise =\n          let ns = filter (\\n -> n /= x && n /= y && not (elem n seen))\n              xs\n          in case ns of\n               [] -> go (x\u00a0: y\u00a0: seen) xs q d\n               _ ->\n                 let qs = chunksOf 2 $ concatMap (\\n -> [n, x]) ns ++\n                           concatMap (\\n -> [n, y]) ns\n                 in go (x\u00a0: y\u00a0: seen) xs qs (d + 1)\n  in go [] edges [start] 0\n\u00a0\nmain :: IO ()\nmain = do\n  print $\n    bfs [1 .. 6]\n      [(1, 3), (1, 5), (2, 3), (2, 4), (3, 4), (3, 5), (4, 5)]\n      1\n      4\n  print $\n    bfs [1 .. 6]\n      [(1, 3), (1, 5), (2, 3), (2, 4), (3, 4), (3, 5), (4, 5)]\n      1\n      6\n```"
+}

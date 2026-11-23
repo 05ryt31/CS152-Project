@@ -1,0 +1,7 @@
+{
+    "paradigm": "Imperative",
+    "language": "Python",
+    "justification": "Breadth-First Search (BFS) is naturally suited to an imperative approach due to its reliance on mutable data structures like queues and sets. Python's simplicity and built-in support for such data structures make it an excellent choice for implementing BFS.",
+    "alternatives": "Functional languages like Haskell could also be used to implement BFS using immutable data structures and recursion. However, they might require more boilerplate code and less readability compared to Python. Prolog could theoretically solve this problem using logic programming, but it would likely be overkill and less efficient than an imperative solution.",
+    "confidence": 0.95
+}

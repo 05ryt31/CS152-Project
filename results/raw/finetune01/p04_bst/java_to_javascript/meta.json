@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p04_bst",
+  "src": "java",
+  "tgt": "javascript",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:03:09+00:00",
+  "source_file": "P04Bst.java",
+  "target_file": "p04_bst.js",
+  "attempts": 1,
+  "duration_s": 49.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 696,
+    "completion_tokens": 393
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nfunction BSTree(){\n\tthis.root = null;\n}\n\u00a0\nBSTree.prototype.insert = function(val){\n\tif(this.root === null){\n\t\tthis.root = new Node(val);\n\t\treturn;\n\t}\n\tvar currentNode = this.root;\n\twhile(true){\n\t\tif(currentNode.val > val){\n\t\t\tif(currentNode.left === null){\n\t\t\t\tcurrentNode.left = new Node(val);\n\t\t\t\tbreak;\n\t\t\t}else{\n\t\t\t\tcurrentNode = currentNode.left;\n\t\t\t}\n\t\t}else{\n\t\t\tif(currentNode.right === null){\n\t\t\t\tcurrentNode.right = new Node(val);\n\t\t\t\tbreak;\n\t\t\t}else{\n\t\t\t\tcurrentNode = currentNode.right;\n\t\t\t}\n\t\t}\n\t}\n};\n\u00a0\nBSTree.prototype.inorder = function(){\n\tvar arr = [];\n\tfunction traverse(node){\n\t\tif(node !== null){\n\t\t\ttraverse(node.left);\n\t\t\tarr.push(node.val);\n\t\t\ttraverse(node.right);\n\t\t}\n\t}\n\ttraverse(this.root);\n\treturn arr.join(\" \");\n};\n\u00a0\nBSTree.prototype.preorder = function(){\n\tvar arr = [];\n\tfunction traverse(node){\n\t\tif(node !== null){\n\t\t\tarr.push(node.val);\n\t\t\ttraverse(node.left);\n\t\t\ttraverse(node.right);\n\t\t}\n\t}\n\ttraverse(this.root);\n\treturn arr.join(\" \");\n};\n\u00a0\nBSTree.prototype.height = function(){\n\tfunction traverse(node){\n\t\tif(node === null){\n\t\t\treturn 0;\n\t\t}\n\t\tvar left = traverse(node.left);\n\t\tvar right = traverse(node.right);\n\t\treturn Math.max(left,right)+1;\n\t}\n\treturn traverse(this.root);\n};\n\u00a0\nfunction Node(val){\n\tthis.val = val;\n\tthis.left = null;\n\tthis.right = null;\n}\n\u00a0\nvar tree = new BSTree();\ntree.insert(5);\ntree.insert(3);\ntree.insert(7);\ntree.insert(2);\ntree.insert(4);\ntree.insert(6);\ntree.insert(8);\n\u00a0\nconsole.log(tree.inorder());\nconsole.log(tree.preorder());\nconsole.log(tree.height());\n```"
+}

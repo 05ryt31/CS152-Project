@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p11_pipeline",
+  "src": "javascript",
+  "tgt": "python",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:26:28+00:00",
+  "source_file": "p11_pipeline.js",
+  "target_file": "p11_pipeline.py",
+  "attempts": 1,
+  "duration_s": 53.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 500,
+    "completion_tokens": 433
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nfrom functools import reduce\n\u00a0\ndef pipeline(*funcs):\n    def helper(arg):\n        return reduce(lambda x, f: f(x), funcs, arg)\n    return helper\n\u00a0\ndef adder(n):\n    return lambda x: n+x\n\u00a0\ndef multiplier(n):\n    return lambda x: n*x\n\u00a0\ndef filter_odd():\n    return lambda x: [i for i in x if i\u00a0% 2 == 1]\n\u00a0\ndef filter_even():\n    return lambda x: [i for i in x if i\u00a0% 2 == 0]\n\u00a0\ndef filter_gt(n):\n    return lambda x: [i for i in x if i > n]\n\u00a0\ndef sum_(x):\n    return sum(x)\n\u00a0\ndef max_(x):\n    try:\n        return max(x)\n    except ValueError:\n        return \"None\"\n\u00a0\ndef min_(x):\n    try:\n        return min(x)\n    except ValueError:\n        return \"None\"\n\u00a0\nif __name__ == '__main__':\n    data = list(map(int,input(\"Enter numbers separated by space: \").strip().split()))\n    k = int(input(\"Enter number of operations: \"))\n    ops = []\n    for _ in range(k):\n        op = input(\"Enter operation: \")\n        if op.startswith(\"map\"):\n            _, type_, num = op.split()\n            if type_ == \"add\":\n                ops.append(adder(int(num)))\n            elif type_ == \"multiply\":\n                ops.append(multiplier(int(num)))\n        elif op.startswith(\"filter\"):\n            _, type_, num = op.split()\n            if type_ == \"odd\":\n                ops.append(filter_odd())\n            elif type_ == \"even\":\n                ops.append(filter_even())\n            elif type_ == \"gt\":\n                ops.append(filter_gt(int(num)))\n        elif op.startswith(\"reduce\"):\n            _, type_ = op.split()\n            if type_ == \"sum\":\n                ops.append(sum_)\n            elif type_ == \"max\":\n                ops.append(max_)\n            elif type_ == \"min\":\n                ops.append(min_)\n    pipe = pipeline(*ops)\n    print(pipe(data))\n```"
+}

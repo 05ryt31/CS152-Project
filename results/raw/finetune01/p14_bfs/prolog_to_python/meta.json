@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p14_bfs",
+  "src": "prolog",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:45:43+00:00",
+  "source_file": "p14_bfs.pl",
+  "target_file": "p14_bfs.py",
+  "attempts": 1,
+  "duration_s": 19.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 829,
+    "completion_tokens": 146
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nfrom collections import deque\n\u00a0\ndef bfs(graph, start, goal):\n    queue = deque()\n    queue.append((start, [start]))\n    while queue:\n        (vertex, path) = queue.popleft()\n        for next in set(graph[vertex]) - set(path):\n            if next == goal:\n                yield path + [next]\n            else:\n                queue.append((next, path + [next]))\n\u00a0\ngraph = {'A': ['B', 'C'],\n         'B': ['D', 'E'],\n         'C': ['F'],\n         'D': [],\n         'E': ['F'],\n         'F': []}\nprint(list(bfs(graph, 'A', 'F')))\n```"
+}

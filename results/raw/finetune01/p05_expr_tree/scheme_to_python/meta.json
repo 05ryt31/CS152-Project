@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p05_expr_tree",
+  "src": "scheme",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:37:25+00:00",
+  "source_file": "p05_expr_tree.scm",
+  "target_file": "p05_expr_tree.py",
+  "attempts": 1,
+  "duration_s": 255.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 399,
+    "completion_tokens": 2048
+  },
+  "extraction": "no_fence",
+  "raw_response": "```python\nfrom collections import deque\n\u00a0\ndef build(tokens):\n    stack = []\n    for token in reversed(tokens):\n        if token.isdigit():\n            stack.append(int(token))\n        elif token == '+':\n            stack.append(stack.pop() + stack.pop())\n        elif token == '-':\n            stack.append(-stack.pop() + stack.pop())\n        elif token == '*':\n            stack.append(stack.pop() * stack.pop())\n    return stack[0]\n\u00a0\nif __name__ == '__main__':\n    print(build('2 3 4 * +'.split()))\n    print(build('2 3 4 * -'.split()))\n    print(build('2 3 4 * 5 /'.split()))\n    print(build('2 3 4 * 5 / 6 *'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 +'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 *'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 +'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 *'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 +'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 *'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 +'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 *'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 +'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 *'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 * 17 +'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 * 17 + 18 *'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 * 17 + 18 * 19 +'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 * 17 + 18 * 19 + 20 *'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 * 17 + 18 * 19 + 20 * 21 +'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 * 17 + 18 * 19 + 20 * 21 + 22 *'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 * 17 + 18 * 19 + 20 * 21 + 22 * 23 +'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 * 17 + 18 * 19 + 20 * 21 + 22 * 23 + 24 *'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 * 17 + 18 * 19 + 20 * 21 + 22 * 23 + 24 * 25 +'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 * 17 + 18 * 19 + 20 * 21 + 22 * 23 + 24 * 25 + 26 *'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 * 17 + 18 * 19 + 20 * 21 + 22 * 23 + 24 * 25 + 26 * 27 *'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 * 17 + 18 * 19 + 20 * 21 + 22 * 23 + 24 * 25 + 26 * 27 * 28 *'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 * 17 + 18 * 19 + 20 * 21 + 22 * 23 + 24 * 25 + 26 * 27 * 28 * 29 *'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 * 17 + 18 * 19 + 20 * 21 + 22 * 23 + 24 * 25 + 26 * 27 * 28 * 29 * 30 *'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 * 17 + 18 * 19 + 20 * 21 + 22 * 23 + 24 * 25 + 26 * 27 * 28 * 29 * 30 * 31 *'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 * 17 + 18 * 19 + 20 * 21 + 22 * 23 + 24 * 25 + 26 * 27 * 28 * 29 * 30 * 31 * 32 *'.split()))\n    print(build('2 3 4 * 5 / 6 * 7 + 8 * 9 + 10 * 11 + 12 * 13 + 14 * 15 + 16 * 17 + 18 * 1"
+}

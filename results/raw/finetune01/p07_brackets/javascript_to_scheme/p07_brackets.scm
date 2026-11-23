@@ -1,0 +1,48 @@
+ 
+(import (scheme base)
+        (scheme read)
+        (scheme write)
+        (srfi 1))
+ 
+;; Return true if all brackets in the string are balanced.
+(define (balanced-brackets? str)
+  (let loop ((chars (string->list str))
+             (stack '()))
+    (cond ((null? chars)
+           (null? stack))
+          ((char=? #\( (car chars))
+           (loop (cdr chars) (cons #\) stack)))
+          ((char=? #\[ (car chars))
+           (loop (cdr chars) (cons #\] stack)))
+          ((char=? #\{ (car chars))
+           (loop (cdr chars) (cons #\} stack)))
+          ((or (char=? #\) (car chars))
+               (char=? #\] (car chars))
+               (char=? #\} (car chars)))
+           (and (not (null? stack))
+                (char=? (car chars) (car stack))
+                (loop (cdr chars) (cdr stack))))
+          (else
+           (loop (cdr chars) stack)))))
+ 
+;; Test cases.
+(display "Test cases:\n")
+(let loop ((cases '((#f "" . "")
+                    (#t "(())" . "()")
+                    (#t "([]{})" . "{}()")
+                    (#f "(()" . "(")
+                    (#f "([)]" . ")(")
+                    (#f "{)" . "}(")
+                    (#f "[({})](" . "(({{}})))"))
+                   (first #t))
+  (if (pair? cases)
+      (begin
+        (let* ((result (balanced-brackets? (caar cases)))
+               (expected (cdar cases)))
+          (display (if first "  " "\n  "))
+          (display (if result "Balanced" "Unbalanced"))
+          (display ": ")
+          (display (if expected "PASS" "FAIL")))
+        (if (not (= (length cases) 2))
+            (loop (cdr cases) #f)))))
+ 

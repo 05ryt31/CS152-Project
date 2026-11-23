@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p09_stack_vm",
+  "src": "prolog",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:47:20+00:00",
+  "source_file": "p09_stack_vm.pl",
+  "target_file": "P09StackVm.java",
+  "attempts": 1,
+  "duration_s": 57.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 659,
+    "completion_tokens": 456
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\nimport java.util.*;\n\u00a0\npublic class StackVM {\n\u00a0\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        System.out.println(\"Enter the number of instructions:\");\n        int numInstructions = Integer.parseInt(scanner.nextLine());\n        String[] instructions = new String[numInstructions];\n        for (int i = 0; i < numInstructions; i++) {\n            instructions[i] = scanner.nextLine();\n        }\n        Stack<Integer> stack = new Stack<>();\n        for (String instruction : instructions) {\n            String[] parts = instruction.split(\"\\\\s+\");\n            switch (parts[0]) {\n                case \"push\":\n                    stack.push(Integer.parseInt(parts[1]));\n                    break;\n                case \"pop\":\n                    if (!stack.isEmpty()) {\n                        stack.pop();\n                    } else {\n                        System.err.println(\"Error: pop from empty stack\");\n                    }\n                    break;\n                case \"add\":\n                    if (stack.size() >= 2) {\n                        stack.push(stack.pop() + stack.pop());\n                    } else {\n                        System.err.println(\"Error: add requires at least two elements in stack\");\n                    }\n                    break;\n                case \"mul\":\n                    if (stack.size() >= 2) {\n                        stack.push(stack.pop() * stack.pop());\n                    } else {\n                        System.err.println(\"Error: mul requires at least two elements in stack\");\n                    }\n                    break;\n                case \"dup\":\n                    if (!stack.isEmpty()) {\n                        stack.push(stack.peek());\n                    } else {\n                        System.err.println(\"Error: dup requires at least one element in stack\");\n                    }\n                    break;\n                case \"swap\":\n                    if (stack.size() >= 2) {\n                        int temp = stack.pop();\n                        stack.pop();\n                        stack.push(temp);\n                    } else {\n                        System.err.println(\"Error: swap requires at least two elements in stack\");\n                    }\n                    break;\n                case \"print\":\n                    if (!stack.isEmpty()) {\n                        System.out.println(stack.peek());\n                    } else {\n                        System.err.println(\"Error: print requires at least one element in stack\");\n                    }\n                    break;\n                default:\n                    System.err.println(\"Unknown command: \" + parts[0]);\n                    break;\n            }\n        }\n    }\n}\n```"
+}

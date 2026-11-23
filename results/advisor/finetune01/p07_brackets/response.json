@@ -1,0 +1,7 @@
+{
+    "paradigm": "Functional",
+    "language": "Haskell",
+    "justification": "Balanced bracket checking is a classic example of a problem that can be solved using recursion and pattern matching. The solution is short and elegant.",
+    "alternatives": "This problem could also be solved using a stack-based approach in an imperative language like C++ or Java. However, the functional solution is more concise and easier to understand.",
+    "confidence": 1.0
+}

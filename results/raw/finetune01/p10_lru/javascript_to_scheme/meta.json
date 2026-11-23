@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p10_lru",
+  "src": "javascript",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:55:51+00:00",
+  "source_file": "p10_lru.js",
+  "target_file": "p10_lru.scm",
+  "attempts": 1,
+  "duration_s": 106.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 507,
+    "completion_tokens": 860
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base)\n        (scheme read)\n        (scheme write)\n        (srfi 1))\n\u00a0\n;; A simple hash table implementation using vectors.\n(define-record-type <hash-table>\n  (%make-hash-table size data)\n  hash-table?\n  (size hash-table-size)\n  (data hash-table-data))\n\u00a0\n(define make-hash-table\n  (lambda (size)\n    (%make-hash-table size (make-vector size #f))))\n\u00a0\n(define hash-table-ref\n  (lambda (table key default)\n    (let ((index (modulo (car key) (hash-table-size table))))\n      (let loop ((bucket (vector-ref (hash-table-data table) index)))\n        (cond ((not bucket) default)\n              ((eq? (caar bucket) key) (cdar bucket))\n              (else (loop (cdr bucket))))))))\n\u00a0\n(define hash-table-set!\n  (lambda (table key value)\n    (let ((index (modulo (car key) (hash-table-size table))))\n      (let loop ((bucket (vector-ref (hash-table-data table) index)))\n        (cond ((not bucket)\n               (vector-set! (hash-table-data table) index\n                            (list (cons key value))))\n              ((eq? (caar bucket) key)\n               (set-cdr! (car bucket) value))\n              (else (loop (cdr bucket))))))))\n\u00a0\n(define hash-table-delete!\n  (lambda (table key)\n    (let ((index (modulo (car key) (hash-table-size table))))\n      (let loop ((prev #f) (bucket (vector-ref (hash-table-data table) index)))\n        (cond ((not bucket))\n              ((eq? (caar bucket) key)\n               (if prev\n                   (set-cdr! prev (cdr bucket))\n                   (vector-set! (hash-table-data table) index (cdr bucket))))\n              (else (loop bucket (cdr bucket))))))))\n\u00a0\n;; LRU cache implementation.\n(define lru-cache\n  (lambda (capacity)\n    (let* ((cache (make-hash-table capacity))\n           (queue '()))\n      (define get\n        (lambda (key)\n          (let ((value (hash-table-ref cache key -1)))\n            (when (> value -1)\n                  (set! queue (delete key queue))\n                  (push! key queue))\n            value)))\n      (define set\n        (lambda (key value)\n          (unless (hash-table-ref cache key #f)\n                  (when (= (length queue) capacity)\n                        (hash-table-delete! cache (pop! queue))))\n          (hash-table-set! cache key value)\n          (push! key queue)))\n      (lambda (command . args)\n        (case command\n          ((get) (apply get args))\n          ((set) (apply set args)))))))\n\u00a0\n;; Test the cache.\n(let ((cache (lru-cache 2)))\n  (display \"LRU Cache:\\n\")\n  (display \"  get 1: \") (display (cache 'get 1)) (newline)\n  (display \"  set 1 1: \") (cache 'set 1 1) (newline)\n  (display \"  get 1: \") (display (cache 'get 1)) (newline)\n  (display \"  get 2: \") (display (cache 'get 2)) (newline)\n  (display \"  set 2 2: \") (cache 'set 2 2) (newline)\n  (display \"  get 1: \") (display (cache 'get 1)) (newline)\n  (display \"  get 2: \") (display (cache 'get 2)) (newline)\n  (display \"  set 3 3: \") (cache 'set 3 3) (newline)\n  (display \"  get 1: \") (display (cache 'get 1)) (newline)\n  (display \"  get 2: \") (display (cache 'get 2)) (newline)\n  (display \"  get 3: \") (display (cache 'get 3)) (newline))\n\u00a0\n```"
+}

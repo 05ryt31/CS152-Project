@@ -1,0 +1,4982 @@
+{
+    "p01_rle": [
+        {
+            "src": "haskell",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 2,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 1,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 5
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 1,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 5
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 1,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 1,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 2,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 1,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 5
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 1,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 2,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 4
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 1,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 1,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 5
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        }
+    ],
+    "p02_merge_sorted": [
+        {
+            "src": "haskell",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 2
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 1
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 3
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 2,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 1
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 5
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        }
+    ],
+    "p03_dedupe": [
+        {
+            "src": "haskell",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 5,
+                "explicit_boolean_comparison": 0,
+                "var": 1
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 2
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 1,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 2,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 2
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 1
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 1,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 2
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 2
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 3
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        }
+    ],
+    "p04_bst": [
+        {
+            "src": "haskell",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 5
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 3,
+                "do_loops": 0,
+                "unnecessary_begin": 2,
+                "car_cdr_chains": 1
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 2,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 6
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 1
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 1
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 2,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 1
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 2,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 6,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 6
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 2,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 1
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 2,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 23,
+                "higher_order_functions": 1,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 11
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 1
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 1
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 2,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 6,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 6
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 1
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        }
+    ],
+    "p05_expr_tree": [
+        {
+            "src": "haskell",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 7,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 6
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 1
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 1,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 7
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 1
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 2,
+                "do_loops": 1,
+                "unnecessary_begin": 1,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 5
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 1,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 3,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 6
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 1
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 7
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        }
+    ],
+    "p06_calc": [
+        {
+            "src": "haskell",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 2
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 4,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 1,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 5,
+                "explicit_boolean_comparison": 0,
+                "var": 5
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 6,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 1
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 1,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 1
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 2
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        }
+    ],
+    "p07_brackets": [
+        {
+            "src": "haskell",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 2,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 4
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 2
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 2,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 2,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 1,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 2,
+                "do_loops": 0,
+                "unnecessary_begin": 1,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 8,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 2
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 1,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 2,
+                "lambdas": 5,
+                "explicit_boolean_comparison": 0,
+                "var": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 1,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 5
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        }
+    ],
+    "p08_bank": [
+        {
+            "src": "haskell",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 4
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 1,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 1
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 1,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 1
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 1
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 1
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 1,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 1
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 1,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        }
+    ],
+    "p09_stack_vm": [
+        {
+            "src": "haskell",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 8
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 1,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 6
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 2,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 5
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 1,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 2,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 5
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 1,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 2,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 3,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 7
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        }
+    ],
+    "p10_lru": [
+        {
+            "src": "haskell",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 3
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 1,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 1,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 3
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 1,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 1,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 2,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 4
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 3
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 1,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 4,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 3
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        }
+    ],
+    "p11_pipeline": [
+        {
+            "src": "haskell",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 9,
+                "lambdas": 18,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 6,
+                "lambdas": 1,
+                "explicit_boolean_comparison": 0,
+                "var": 5
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 1,
+                "lambdas": 7,
+                "explicit_boolean_comparison": 0,
+                "var": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 1,
+                "lambdas": 9,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 3
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 1,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 5,
+                "lambdas": 5,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 2
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 2,
+                "lambdas": 6,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 2,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 5,
+                "lambdas": 10,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 2
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 1,
+                "lambdas": 6,
+                "explicit_boolean_comparison": 0,
+                "var": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 2,
+                "lambdas": 4,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 3
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 6,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 8,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 5
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 1
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 10,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 2,
+                "lambdas": 5,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 2
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 2,
+                "higher_order_functions": 11,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 4
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 1,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        }
+    ],
+    "p12_group_by": [
+        {
+            "src": "haskell",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 3
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 1,
+                "lambdas": 1,
+                "explicit_boolean_comparison": 0,
+                "var": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 1
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 1,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 1,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 3
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 1,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 1
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 2,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 1
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 4
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 1,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 3
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        }
+    ],
+    "p13_n_queens": [
+        {
+            "src": "haskell",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 10
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 4,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 2,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 1,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 7
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 1,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 2,
+                "unnecessary_begin": 1,
+                "car_cdr_chains": 2
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 2,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 12
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 1,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 10
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 1,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 10
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        }
+    ],
+    "p14_bfs": [
+        {
+            "src": "haskell",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 5
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 6
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 2,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 1,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 1,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 3
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 1,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 2,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 5
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 1,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 4
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        }
+    ],
+    "p15_permutations": [
+        {
+            "src": "haskell",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 1,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 4
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "haskell",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 1,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 4
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "java",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "javascript",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 1,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 4
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        },
+        {
+            "src": "prolog",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 1,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 4
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "python",
+            "tgt": "scheme",
+            "counts": {
+                "mutable_set": 0,
+                "nested_else_if": 0,
+                "do_loops": 0,
+                "unnecessary_begin": 0,
+                "car_cdr_chains": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "haskell",
+            "counts": {
+                "mutable_ioref": 0,
+                "list_concatenation": 0,
+                "unsafe_list_access": 0,
+                "nested_else_if": 0,
+                "imperative_indexing_loop": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "java",
+            "counts": {
+                "add_all_initialization": 0,
+                "stream_pipeline": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "double_colon_references": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "javascript",
+            "counts": {
+                "not_strict_equality": 1,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "var": 4
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "prolog",
+            "counts": {
+                "trailing_cut": 0,
+                "head_cut": 0,
+                "nested_if_else": 0,
+                "dynamic_mutability": 0,
+                "append_to_prepend": 0
+            }
+        },
+        {
+            "src": "scheme",
+            "tgt": "python",
+            "counts": {
+                "index_loops": 0,
+                "higher_order_functions": 0,
+                "lambdas": 0,
+                "explicit_boolean_comparison": 0,
+                "explicit_keys": 0
+            }
+        }
+    ]
+}

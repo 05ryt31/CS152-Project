@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p05_expr_tree",
+  "src": "javascript",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:26:11+00:00",
+  "source_file": "p05_expr_tree.js",
+  "target_file": "P05ExprTree.java",
+  "attempts": 1,
+  "duration_s": 35.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 466,
+    "completion_tokens": 287
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\nimport java.util.*;\n\u00a0\nclass Node {\n    String value;\n    Node left;\n    Node right;\n\u00a0\n    public Node(String v) {\n        this.value = v;\n    }\n}\n\u00a0\npublic class ExpressionTree {\n    private static final Set<String> operators = new HashSet<>(Arrays.asList(\"+\", \"-\", \"*\", \"/\"));\n\u00a0\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        System.out.println(\"Enter expression:\");\n        String expr = scanner.nextLine();\n        Node root = parse(expr.split(\"\\\\s+\"), 0)[0];\n        print(root, \"\");\n    }\n\u00a0\n    private static Node[] parse(String[] tokens, int index) {\n        Node root = new Node(tokens[index]);\n        if (operators.contains(tokens[index])) {\n            Node[] left = parse(tokens, index + 1);\n            Node[] right = parse(tokens, left[1] + 1);\n            root.left = left[0];\n            root.right = right[0];\n            return new Node[]{root, right[1]};\n        } else {\n            return new Node[]{root, index};\n        }\n    }\n\u00a0\n    private static void print(Node node, String indent) {\n        if (node != null) {\n            print(node.right, indent + \"   \");\n            System.out.println(indent + node.value);\n            print(node.left, indent + \"   \");\n        }\n    }\n}\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p11_pipeline",
+  "src": "haskell",
+  "tgt": "scheme",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:47:54+00:00",
+  "source_file": "p11_pipeline.hs",
+  "target_file": "p11_pipeline.scm",
+  "attempts": 1,
+  "duration_s": 77.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 531,
+    "completion_tokens": 625
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base)\n        (scheme write)\n        (only (srfi 1) fold))\n\u00a0\n;; A pipeline is represented by a list of functions.\n(define-record-type <pipeline>\n  make-pipeline\n  pipeline?\n  (stages pipeline-stages))\n\u00a0\n;; Apply a pipeline to some arguments.\n(define (run-pipeline pipeline args)\n  (fold compose identity args (pipeline-stages pipeline)))\n\u00a0\n;; Create a pipeline from a list of strings describing the operations.\n(define (make-pipeline-from-spec spec)\n  (define (parse-op op)\n    (cond ((string=? op \"add\") +)\n          ((string=? op \"mul\") *)\n          ((string=? op \"even\") even?)\n          ((string=? op \"odd\") odd?)\n          ((string=? op \"gt\") >)\n          ((string=? op \"sum\") (lambda (x y) (+ x y)))\n          ((string=? op \"max\") max)\n          (else (error \"Unknown operation\" op))))\n  (define (parse-args op)\n    (if (eq? op 'gt)\n        (list (string->number (car (reverse spec))))\n        '()))\n  (make-pipeline\n   (map (lambda (op)\n          (let* ((fn (parse-op op))\n                 (args (parse-args op)))\n            (lambda (lst)\n              (case fn\n                ((+ * even? odd? > max)\n                 (filter fn lst))\n                ((sum)\n                 (apply fn lst)))))\n          (reverse (cdr (reverse (assoc op '((\"map\" . (\"add\" \"mul\"))\n                                              (\"filter\" . (\"even\" \"odd\" \"gt\")))))))))\n     spec)))\n\u00a0\n;; Parse a string of numbers into a list of integers.\n(define (parse-numbers str)\n  (map (lambda (s) (string->number s))\n       (string-split str #\\space)))\n\u00a0\n;; Print out the results of running a pipeline on a list of numbers.\n(define (print-results pipeline nums)\n  (for-each (lambda (n) (display n) (display \" \")) (run-pipeline pipeline nums))\n  (newline))\n\u00a0\n;; Test cases.\n(print-results (make-pipeline-from-spec '(\"map\" \"add\" \"2\")) (parse-numbers \"1 2 3\"))\n(print-results (make-pipeline-from-spec '(\"map\" \"mul\" \"4\")) (parse-numbers \"1 2 3\"))\n(print-results (make-pipeline-from-spec '(\"filter\" \"even\")) (parse-numbers \"1 2 3\"))\n(print-results (make-pipeline-from-spec '(\"filter\" \"gt\" \"1\")) (parse-numbers \"1 2 3\"))\n(print-results (make-pipeline-from-spec '(\"reduce\" \"sum\")) (parse-numbers \"1 2 3\"))\n(print-results (make-pipeline-from-spec '(\"reduce\" \"max\")) (parse-numbers \"1 2 3\"))\n\u00a0\n```"
+}

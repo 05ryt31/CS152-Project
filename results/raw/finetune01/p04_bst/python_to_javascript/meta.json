@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p04_bst",
+  "src": "python",
+  "tgt": "javascript",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T02:50:36+00:00",
+  "source_file": "p04_bst.py",
+  "target_file": "p04_bst.js",
+  "attempts": 1,
+  "duration_s": 104.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 561,
+    "completion_tokens": 839
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\n\u00a0\nfunction BST() {\n    this.root = null;\n}\nBST.prototype.insert = function(val) {\n    var n = new Node(val);\n    if(this.root === null) {\n        this.root = n;\n    } else {\n        var current = this.root;\n        var parent;\n        while(true){\n            parent = current;\n            if(val < current.val){\n                current = current.left;\n                if(current == null){\n                    parent.left = n;\n                    break;\n                }\n            }else{\n                current = current.right;\n                if(current == null){\n                    parent.right = n;\n                    break;\n                }\n            }\n        }\n    }\n};\nBST.prototype.inOrder = function(n) {\n    if(n != null){\n        this.inOrder(n.left);\n        console.log(n.val.toString());\n        this.inOrder(n.right);\n    }\n};\nBST.prototype.preOrder = function(n) {\n    if(n != null){\n        console.log(n.val.toString());\n        this.preOrder(n.left);\n        this.preOrder(n.right);\n    }\n};\nBST.prototype.postOrder = function(n) {\n    if(n != null){\n        this.postOrder(n.left);\n        this.postOrder(n.right);\n        console.log(n.val.toString());\n    }\n};\nBST.prototype.getMin = function(){\n    var current = this.root;\n    while(current.left !== null){\n        current = current.left;\n    }\n    return current.val;\n};\nBST.prototype.getMax = function(){\n    var current = this.root;\n    while(current.right !== null){\n        current = current.right;\n    }\n    return current.val;\n};\nBST.prototype.find = function(val){\n    var current = this.root;\n    while(current.val != val){\n        if(val < current.val){\n            current = current.left;\n        }else{\n            current = current.right;\n        }\n        if(current == null){\n            return null;\n        }\n    }\n    return current;\n};\nBST.prototype.remove = function(val){\n    var found = false;\n    var parent = this.root;\n    var current = this.root;\n    while(!found && current != null){\n        if(val < current.val){\n            parent = current;\n            current = current.left;\n        }else if(val > current.val){\n            parent = current;\n            current = current.right;\n        }else{\n            found = true;\n        }\n    }\n    if(current == null || !found){\n        return null;\n    }\n    if(found){\n        if(current.left == null && current.right == null){\n            if(parent.left == current){\n                parent.left = null;\n            }else if(parent.right == current){\n                parent.right = null;\n            }\n        }\n        else if(current.left == null){\n            if(parent.left == current){\n                parent.left = current.right;\n            }else if(parent.right == current){\n                parent.right = current.right;\n            }\n        }\n        else if(current.right == null){\n            if(parent.left == current){\n                parent.left = current.left;\n            }else if(parent.right == current){\n                parent.right = current.left;\n            }\n        }\n        else if(current.left != null && current.right != null){\n            var succParent = current;\n            succ = current.right;\n            while(succ.left != null){\n                succParent = succ;\n                succ = succ.left;\n            }\n            if(succParent.right == succ){\n                succParent.right = succ.right;\n            }else{\n                succParent.left = succ.right;\n            }\n            current.val = succ.val;\n        }\n        return current.val;\n    }\n};\n\u00a0\nfunction Node(val) {\n    this.val = val;\n    this.left = null;\n    this.right = null;\n}\n\u00a0\nvar bst = new BST();\nbst.insert(5);\nbst.insert(3);\nbst.insert(7);\nbst.insert(2);\nbst.insert(4);\nbst.insert(6);\nbst.insert(8);\nbst.inOrder(bst.root);\nbst.preOrder(bst.root);\nbst.postOrder(bst.root);\nconsole.log(bst.getMin());\nconsole.log(bst.getMax());\nconsole.log(bst.find(4));\nconsole.log(bst.remove(4));\nbst.inOrder(bst.root);\n\u00a0\n```"
+}

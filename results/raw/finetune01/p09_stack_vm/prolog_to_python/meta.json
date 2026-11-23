@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p09_stack_vm",
+  "src": "prolog",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:46:29+00:00",
+  "source_file": "p09_stack_vm.pl",
+  "target_file": "p09_stack_vm.py",
+  "attempts": 1,
+  "duration_s": 35.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 571,
+    "completion_tokens": 285
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\ndef stackvm():\n    \"\"\"Stack VM\"\"\"\n\u00a0\n    # get the input\n    n = int(input(\"Enter the number of instructions: \"))\n    ins = []\n    for i in range(n):\n        ins.append(input(\"Enter instruction {}: \".format(i+1)))\n\u00a0\n    # create the stack\n    stack = []\n\u00a0\n    # process each instruction\n    for i in ins:\n        if i == 'pop':\n            try:\n                stack.pop()\n            except IndexError:\n                print('Error')\n        elif i == 'add':\n            try:\n                stack[-2] += stack[-1]\n                stack.pop()\n            except IndexError:\n                print('Error')\n        elif i == 'mul':\n            try:\n                stack[-2] *= stack[-1]\n                stack.pop()\n            except IndexError:\n                print('Error')\n        elif i == 'dup':\n            try:\n                stack.append(stack[-1])\n            except IndexError:\n                print('Error')\n        elif i == 'swap':\n            try:\n                stack[-2], stack[-1] = stack[-1], stack[-2]\n            except IndexError:\n                print('Error')\n        elif i == 'print':\n            try:\n                print(stack[-1])\n            except IndexError:\n                print('Error')\n        else:\n            try:\n                stack.append(int(i))\n            except ValueError:\n                print('Error')\n\u00a0\nstackvm()\n```"
+}

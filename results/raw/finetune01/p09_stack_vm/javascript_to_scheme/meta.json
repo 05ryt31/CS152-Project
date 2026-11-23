@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p09_stack_vm",
+  "src": "javascript",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:14:32+00:00",
+  "source_file": "p09_stack_vm.js",
+  "target_file": "p09_stack_vm.scm",
+  "attempts": 1,
+  "duration_s": 252.6,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 603,
+    "completion_tokens": 2048
+  },
+  "extraction": "no_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base)\n        (scheme read)\n        (scheme write))\n\u00a0\n;; Stack VM interpreter\n(define (run-stack-vm instructions)\n  ;; Return the final state of the stack\n  (fold-left\n   (lambda (state instruction)\n     (case (car instruction)\n       ((push) (cons (cadr instruction) state))\n       ((pop) (if (null? state)\n                  '(error)\n                  (cdr state)))\n       ((add mul) (if (< (length state) 2)\n                      '(error)\n                      (let* ((a (car state))\n                             (b (cadr state))\n                             (result (if (eq? (car instruction) 'add')\n                                         (+ a b)\n                                         (* a b))))\n                        (cons result (cddr state)))))\n       ((dup) (if (null? state)\n                  '(error)\n                  (cons (car state) state)))\n       ((swap) (if (< (length state) 2)\n                   '(error)\n                   (let ((a (car state))\n                         (b (cadr state)))\n                     (cons b (cons a (cddr state))))))\n       (else (list (car state))))) '()))\n\u00a0\n;; Tests\n(let ((tests '(((\"push\" 1) (\"push\" 2) (\"add\")) ; => (3)\n               ((\"push\" 1) (\"push\" 2) (\"mul\")) ; => (2)\n               ((\"push\" 1) (\"push\" 2) (\"pop\")) ; => ()\n               ((\"push\" 1) (\"push\" 2) (\"pop\") (\"add\")) ; => (error)\n               ((\"push\" 1) (\"push\" 2) (\"dup\")) ; => (1 2 2)\n               ((\"push\" 1) (\"push\" 2) (\"swap\")) ; => (2 1)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"add\")) ; => (3)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"mul\")) ; => (2)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\")) ; => (1)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\")) ; => (error)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\")) ; => (4)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\")) ; => (6)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (8)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (10)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (12)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (14)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (16)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (18)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (20)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (22)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (24)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (26)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (28)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (30)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (32)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (34)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (36)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (38)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (40)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (42)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (44)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (46)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")) ; => (48)\n               ((\"push\" 1) (\"push\" 2) (\"swap\") (\"pop\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\") (\"add\")"
+}

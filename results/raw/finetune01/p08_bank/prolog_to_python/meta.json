@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p08_bank",
+  "src": "prolog",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:08:15+00:00",
+  "source_file": "p08_bank.pl",
+  "target_file": "p08_bank.py",
+  "attempts": 1,
+  "duration_s": 26.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 447,
+    "completion_tokens": 208
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\n\u00a0\nclass BankAccount(object):\n    def __init__(self):\n        self.balance = 0\n\u00a0\n    def deposit(self, amount):\n        self.balance += amount\n\u00a0\n    def withdraw(self, amount):\n        if amount > self.balance:\n            raise ValueError('Insufficient balance')\n        self.balance -= amount\n\u00a0\n    def get_balance(self):\n        return self.balance\n\u00a0\nif __name__ == '__main__':\n    bank = BankAccount()\n    while True:\n        cmd = raw_input('> ')\n        args = cmd.split()\n        if len(args) < 2:\n            print 'Invalid command'\n            continue\n        cmd = args[0]\n        arg = int(args[1])\n        try:\n            if cmd == 'deposit':\n                bank.deposit(arg)\n            elif cmd == 'withdraw':\n                bank.withdraw(arg)\n            elif cmd == 'balance':\n                print bank.get_balance()\n            else:\n                print 'Unknown command'\n        except ValueError, e:\n            print str(e)\n\u00a0\n```"
+}

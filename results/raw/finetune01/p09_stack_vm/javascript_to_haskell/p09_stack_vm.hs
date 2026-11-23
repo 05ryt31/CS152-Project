@@ -1,0 +1,72 @@
+```haskell
+import Data.List.Split (splitOn)
+ 
+data StackVMError = EmptyStack | NotEnoughElements deriving Show
+ 
+type StackVMResult = Either StackVMError Int
+ 
+-- | A simple stack-based VM
+--
+-- >>> stackVM ["push", "5"]
+-- Right []
+-- >>> stackVM ["push", "5", "push", "3"]
+-- Right [3]
+-- >>> stackVM ["push", "5", "push", "3", "pop"]
+-- Right [3]
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop"]
+-- Right [3,5]
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop"]
+-- Left EmptyStack
+-- >>> stackVM ["push", "5", "push", "3", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop", "pop",

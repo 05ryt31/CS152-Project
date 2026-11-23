@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p07_brackets",
+  "src": "javascript",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T04:40:20+00:00",
+  "source_file": "p07_brackets.js",
+  "target_file": "p07_brackets.scm",
+  "attempts": 1,
+  "duration_s": 53.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 422,
+    "completion_tokens": 427
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base)\n        (scheme read)\n        (scheme write)\n        (srfi 1))\n\u00a0\n;; Return true if all brackets in the string are balanced.\n(define (balanced-brackets? str)\n  (let loop ((chars (string->list str))\n             (stack '()))\n    (cond ((null? chars)\n           (null? stack))\n          ((char=? #\\( (car chars))\n           (loop (cdr chars) (cons #\\) stack)))\n          ((char=? #\\[ (car chars))\n           (loop (cdr chars) (cons #\\] stack)))\n          ((char=? #\\{ (car chars))\n           (loop (cdr chars) (cons #\\} stack)))\n          ((or (char=? #\\) (car chars))\n               (char=? #\\] (car chars))\n               (char=? #\\} (car chars)))\n           (and (not (null? stack))\n                (char=? (car chars) (car stack))\n                (loop (cdr chars) (cdr stack))))\n          (else\n           (loop (cdr chars) stack)))))\n\u00a0\n;; Test cases.\n(display \"Test cases:\\n\")\n(let loop ((cases '((#f \"\" . \"\")\n                    (#t \"(())\" . \"()\")\n                    (#t \"([]{})\" . \"{}()\")\n                    (#f \"(()\" . \"(\")\n                    (#f \"([)]\" . \")(\")\n                    (#f \"{)\" . \"}(\")\n                    (#f \"[({})](\" . \"(({{}})))\"))\n                   (first #t))\n  (if (pair? cases)\n      (begin\n        (let* ((result (balanced-brackets? (caar cases)))\n               (expected (cdar cases)))\n          (display (if first \"  \" \"\\n  \"))\n          (display (if result \"Balanced\" \"Unbalanced\"))\n          (display \": \")\n          (display (if expected \"PASS\" \"FAIL\")))\n        (if (not (= (length cases) 2))\n            (loop (cdr cases) #f)))))\n\u00a0\n```"
+}

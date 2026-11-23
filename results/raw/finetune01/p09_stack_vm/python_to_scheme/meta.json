@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p09_stack_vm",
+  "src": "python",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:10:45+00:00",
+  "source_file": "p09_stack_vm.py",
+  "target_file": "p09_stack_vm.scm",
+  "attempts": 1,
+  "duration_s": 52.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 530,
+    "completion_tokens": 419
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base))\n(import (scheme read))\n(import (scheme write))\n(import (srfi 1)) ; list functions\n\u00a0\n(define (stack-machine instructions)\n  (define (helper instructions stack)\n    (if (null? instructions)\n      (list (car stack))\n      (let* ((op (caar instructions))\n             (args (cdar instructions)))\n        (cond ((eq? op 'push) (helper (cdr instructions) (cons args stack)))\n              ((eq? op 'pop) (helper (cdr instructions) (cdr stack)))\n              ((eq? op 'add) (helper (cdr instructions) (cons (+ (cadr stack) (car stack)) (cddr stack))))\n              ((eq? op 'mul) (helper (cdr instructions) (cons (* (cadr stack) (car stack)) (cddr stack))))\n              ((eq? op 'dup) (helper (cdr instructions) (cons (car stack) stack)))\n              ((eq? op 'swap) (helper (cdr instructions) (cons (cadr stack) (cons (car stack) (cddr stack)))))\n              ((eq? op 'print) (begin (display (car stack)) (newline) (helper (cdr instructions) (cdr stack))))))))\n  (helper instructions '()))\n\u00a0\n(display (stack-machine '((push 1) (push 2) (add) (print)))) (newline)\n(display (stack-machine '((push 1) (push 2) (mul) (print)))) (newline)\n(display (stack-machine '((push 1) (push 2) (dup) (print)))) (newline)\n(display (stack-machine '((push 1) (push 2) (swap) (print)))) (newline)\n(display (stack-machine '((push 1) (push 2) (pop) (print)))) (newline)\n(display (stack-machine '((push 1) (push 2) (pop) (pop) (print)))) (newline)\n\u00a0\n```"
+}

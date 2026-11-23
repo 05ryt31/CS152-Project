@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p04_bst",
+  "src": "javascript",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T02:58:22+00:00",
+  "source_file": "p04_bst.js",
+  "target_file": "P04Bst.java",
+  "attempts": 1,
+  "duration_s": 43.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 691,
+    "completion_tokens": 340
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\nimport java.util.*;\n\u00a0\npublic class BST {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        String[] nums = sc.nextLine().split(\" \");\n        int[] numArray = new int[nums.length];\n        for(int i=0;i<nums.length;i++)\n            numArray[i] = Integer.parseInt(nums[i]);\n        Node root = null;\n        for(int n:numArray)\n            root = insert(root,n);\n        System.out.println(\"In Order:\");\n        inOrder(root);\n        System.out.println(\"\\nPre Order:\");\n        preOrder(root);\n        System.out.println(\"\\nHeight of tree: \" + height(root));\n    }\n\u00a0\n    private static Node insert(Node root,int val){\n        if(root == null)\n            return new Node(val);\n        if(val < root.val)\n            root.left = insert(root.left,val);\n        else\n            root.right = insert(root.right,val);\n        return root;\n    }\n\u00a0\n    private static void inOrder(Node root){\n        if(root != null){\n            inOrder(root.left);\n            System.out.print(root.val+\" \");\n            inOrder(root.right);\n        }\n    }\n\u00a0\n    private static void preOrder(Node root){\n        if(root != null){\n            System.out.print(root.val+\" \");\n            preOrder(root.left);\n            preOrder(root.right);\n        }\n    }\n\u00a0\n    private static int height(Node root){\n        if(root == null)\n            return 0;\n        return 1+Math.max(height(root.left),height(root.right));\n    }\n}\n\u00a0\nclass Node{\n    int val;\n    Node left,right;\n    Node(int v){val=v;}\n}\n```"
+}

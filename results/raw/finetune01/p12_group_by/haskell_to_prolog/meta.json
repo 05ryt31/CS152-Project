@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p12_group_by",
+  "src": "haskell",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:09:28+00:00",
+  "source_file": "p12_group_by.hs",
+  "target_file": "p12_group_by.pl",
+  "attempts": 1,
+  "duration_s": 51.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 556,
+    "completion_tokens": 415
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lambda)).\n\u00a0\ngroup_by :-\n\tL = [\"a 5\", \"b 3\", \"a 7\", \"c 4\", \"b 9\"],\n\tgroup_pairs(L, L1),\n\tmap_list_to_pairs(\\X^Y^(atom_codes(X, Y)), L1, L2),\n\tpairs_values(L2, V),\n\tsort(V, VS),\n\tmap_list_to_pairs(\\X^Y^(length(Y, X)), VS, LV),\n\tmap_list_to_pairs(\\X^Y^(sumlist(Y, X)), LV, LVS),\n\tmap_list_to_pairs(\\X^Y^(pairing(X, Y)), LVS, LVP),\n\tmap_list_to_pairs(\\X^Y^(concat(X, Y)), LVP, LVC),\n\tmap_list_to_pairs(\\X^Y^(string_concat(X, ' ', Y)), LVC, LVD),\n\twriteln(LVD).\n\u00a0\n% group pairs\ngroup_pairs([], []):-!.\ngroup_pairs([H|T], R):-\n\tatom_codes(K, H),\n\tatom_codes(V, Tmp),\n\tnumber_codes(N, Tmp),\n\tgroup_pairs(T, RT),\n\t(   member([K, NV], RT) ->\n\t     N1 is N+NV,\n\t     R = [[K, N1]|RT]\n\t;   R = [[K, N]|RT]).\n\u00a0\n% pairing\npairing(K, V):-\n\tstring_concat(K, ' ', S1),\n\tstring_concat(S1, ':', S2),\n\tstring_concat(S2, V, S3),\n\tstring_concat(S3, '\\n', S4),\n\tpairing(K, V, S4).\n\u00a0\npairing(_, [], ''):-!.\npairing(K, [H|T], R):-\n\tstring_concat(K, ' ', S1),\n\tstring_concat(S1, H, S2),\n\tstring_concat(S2, '\\t', S3),\n\tpairing(K, T, ST),\n\tstring_concat(ST, S3, R).\n\u00a0\n```"
+}

@@ -1,0 +1,7 @@
+{
+    "paradigm": "Functional",
+    "language": "Haskell",
+    "justification": "Run-length encoding is naturally expressed using functional programming concepts such as recursion and higher-order functions. Haskell's strong support for these features makes it well-suited for this task.",
+    "alternatives": "Python could also be used with its built-in libraries and list comprehensions. However, Haskell's purely functional nature would likely result in more concise and readable code for this specific problem.",
+    "confidence": 0.95
+}

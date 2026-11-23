@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p06_calc",
+  "src": "scheme",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T04:18:26+00:00",
+  "source_file": "p06_calc.scm",
+  "target_file": "p06_calc.js",
+  "attempts": 1,
+  "duration_s": 25.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 733,
+    "completion_tokens": 197
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nfunction calc(expression){\n\tvar stack = [];\n\tvar operators = {\n\t\t'+': function(a,b){return a + b},\n\t\t'-': function(a,b){return a - b},\n\t\t'*': function(a,b){return a * b}\n\t};\n\texpression.split(' ').forEach(function(token){\n\t\tif(isNaN(parseFloat(token))){\n\t\t\tstack.push(operators[token](stack.pop(), stack.pop()));\n\t\t} else {\n\t\t\tstack.push(parseFloat(token));\n\t\t}\n\t});\n\treturn stack[0];\n}\n\u00a0\n// test cases\nprint(calc(\"1 2 +\")); // 3\nprint(calc(\"1 2 3 + *\")); // 9\nprint(calc(\"1 2 + 3 *\")); // 9\nprint(calc(\"1 2 + 3 4 + *\")); // 21\nprint(calc(\"1 2 + 3 4 + 5 * +\")); // 31\n```"
+}

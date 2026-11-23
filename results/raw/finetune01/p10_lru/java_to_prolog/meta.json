@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p10_lru",
+  "src": "java",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T06:06:01+00:00",
+  "source_file": "P10Lru.java",
+  "target_file": "p10_lru.pl",
+  "attempts": 1,
+  "duration_s": 70.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 522,
+    "completion_tokens": 566
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(clpfd)).\n\u00a0\nlru_cache(Capacity, Cache, Cache) :-\n\tlength(Cache, Capacity).\n\u00a0\nlru_cache(Capacity, Cache, New_Cache) :-\n\tlength(Cache, Len),\n\tLen < Capacity,\n\tappend(Cache, [Key], New_Cache).\n\u00a0\nlru_cache(Capacity, Cache, New_Cache) :-\n\tlength(Cache, Len),\n\tLen > Capacity,\n\tsort(1, @>=, Cache, Sorted),\n\ttaille(Sorted, Tail),\n\tappend(Tail, [Key], New_Cache).\n\u00a0\ntaille([], []).\ntaille([_H|T], T).\n\u00a0\ncache_get(Key, Cache, Value) :-\n\tmember((Key, Value), Cache).\n\u00a0\ncache_get(_, [], -1).\n\u00a0\ncache_put(Key, Value, Cache, New_Cache) :-\n\tcache_get(Key, Cache, _),\n\tretract((Cache -> Key, Value)),\n\tlru_cache(10, Cache, New_Cache).\n\u00a0\ncache_put(Key, Value, Cache, [(Key, Value)|Cache]).\n\u00a0\nmain :-\n\tread_file_to_string('input.txt', File, []),\n\tstring_to_list(File, Lst),\n\tsplit_string(Lst, \"\\n\", \"\\n\", Lines),\n\tmaplist(split_string(\"\\s+\", \" \\s+\", White_space), Lines, Tokens),\n\tmaplist(parse_command, Tokens, Commands),\n\taggregate(max(V), lru_cache(10, _, V), Max),\n\tMax #= 10,\n\tlabel(Max),\n\trun_commands(Commands, Max, Cache, Cache),\n\twrite_cache(Cache).\n\u00a0\nparse_command(['put'|Rest], Command) :-\n\t[Key, Value] = Rest,\n\tinteger(Value),\n\tCommand = put(Key, Value).\n\u00a0\nparse_command(['get'|Rest], Command) :-\n\t[Key] = Rest,\n\tinteger(Key),\n\tCommand = get(Key).\n\u00a0\nrun_commands([], _, Cache, Cache).\n\u00a0\nrun_commands([Command|Commands], Max, Cache, Final_Cache) :-\n\texecute_command(Command, Max, Cache, New_Cache),\n\trun_commands(Commands, Max, New_Cache, Final_Cache).\n\u00a0\nexecute_command(get(Key), Max, Cache, Cache) :-\n\tcache_get(Key, Cache, Value),\n\tformat('key ~w has value ~w~n', [Key, Value]).\n\u00a0\nexecute_command(put(Key, Value), Max, Cache, New_Cache) :-\n\tcache_put(Key, Value, Cache, New_Cache),\n\tlru_cache(Max, New_Cache, _).\n\u00a0\nwrite_cache([]).\n\u00a0\nwrite_cache([(Key, Value)|Cache]) :-\n\tformat('key ~w has value ~w~n', [Key, Value]),\n\twrite_cache(Cache).\n\u00a0\n```"
+}

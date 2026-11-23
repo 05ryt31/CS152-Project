@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p05_expr_tree",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:43:47+00:00",
+  "source_file": "p05_expr_tree.scm",
+  "target_file": "p05_expr_tree.pl",
+  "attempts": 1,
+  "duration_s": 43.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 505,
+    "completion_tokens": 344
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lambda)).\n\u00a0\n% parse expression into list of tokens\nparse_expr(String, Tokens) :-\n\tstring_chars(String, Chars),\n\tatom_chars(Atom, Chars),\n\tatomic_list_concat(Tokens, Atom).\n\u00a0\n% build expression tree from list of tokens\nbuild_expr_tree([Token], Token) :- atomic(Token), !.\nbuild_expr_tree(Tokens, Tree) :-\n\tsplit_token_list(Tokens, Left, Operator, Right),\n\tbuild_expr_tree(Left, LeftTree),\n\tbuild_expr_tree(Right, RightTree),\n\tTree =.. [Operator, LeftTree, RightTree].\n\u00a0\n% split token list into left, operator, and right lists\nsplit_token_list([Op, L, R], L, Op, R) :- member(Op, ['+', '-', '*', '/']), atom(L), atom(R).\n\u00a0\n% print expression tree in infix notation\nprint_expr_tree(Tree) :-\n\tprint_expr_tree(Tree, 0).\n\u00a0\nprint_expr_tree(Tree, N) :-\n\t(   atomic(Tree) ->\n\t\tformat('~w~n', [Tree])\n\t;\n\t\tlength(Tree, 3),\n\t\tappend(_,[Op, Left, Right], Tree),\n\t\tN1 is N + 1,\n\t\tprint_tree(N1, N),\n\t\twrite(Op),\n\t\tprint_tree(N, N1),\n\t\tprint_expr_tree(Left, N1),\n\t\tprint_expr_tree(Right, N1)\n\t).\n\u00a0\nprint_tree(N, M) :-\n\tbetween(M, N, _),\n\twrite(' ').\n\u00a0\nmain :-\n\tparse_expr('a+b*c-d/e', Tokens),\n\tbuild_expr_tree(Tokens, Tree),\n\tprint_expr_tree(Tree).\n\u00a0\n```"
+}

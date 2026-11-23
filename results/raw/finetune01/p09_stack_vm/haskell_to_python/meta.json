@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p09_stack_vm",
+  "src": "haskell",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:36:04+00:00",
+  "source_file": "p09_stack_vm.hs",
+  "target_file": "p09_stack_vm.py",
+  "attempts": 1,
+  "duration_s": 38.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 631,
+    "completion_tokens": 310
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\ndef main():\n    print(\"Enter your stack machine instructions:\")\n    print(\"Each instruction is on a separate line.\")\n    print(\"End your input by entering 'end'.\")\n\u00a0\n    # Get user input\n    instructions = []\n    while True:\n        ins = input()\n        if ins == \"end\":\n            break\n        instructions.append(ins)\n\u00a0\n    # Run the VM\n    vm = StackVM(instructions)\n    vm.run()\n\u00a0\nclass StackVM(object):\n    def __init__(self, instructions):\n        self.instructions = instructions\n        self.stack = []\n        self.output = \"\"\n\u00a0\n    def push(self, value):\n        self.stack.append(value)\n\u00a0\n    def pop(self):\n        return self.stack.pop()\n\u00a0\n    def add(self):\n        self.push(self.pop() + self.pop())\n\u00a0\n    def mul(self):\n        self.push(self.pop() * self.pop())\n\u00a0\n    def dup(self):\n        self.push(self.stack[-1])\n\u00a0\n    def swap(self):\n        self.stack[-1], self.stack[-2] = self.stack[-2], self.stack[-1]\n\u00a0\n    def print_(self):\n        self.output += str(self.pop()) + \"\\n\"\n\u00a0\n    def error(self):\n        raise Exception(\"Error in VM\")\n\u00a0\n    def run(self):\n        for ins in self.instructions:\n            try:\n                eval('self.' + ins + '()')\n            except AttributeError:\n                self.error()\n        print(self.output)\n\u00a0\nif __name__ == \"__main__\":\n    main()\n```"
+}

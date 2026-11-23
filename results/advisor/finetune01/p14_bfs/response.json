@@ -1,0 +1,7 @@
+{
+    "paradigm": "Imperative",
+    "language": "Python",
+    "justification": "Breadth-first search is naturally expressed using an iterative approach with a queue.",
+    "alternatives": "A functional solution would use recursion and list comprehensions. A logic-based solution could use a depth-first search algorithm with backtracking.",
+    "confidence": 1.0
+}

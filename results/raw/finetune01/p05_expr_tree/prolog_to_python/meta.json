@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p05_expr_tree",
+  "src": "prolog",
+  "tgt": "python",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:49:45+00:00",
+  "source_file": "p05_expr_tree.pl",
+  "target_file": "p05_expr_tree.py",
+  "attempts": 1,
+  "duration_s": 142.3,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 461,
+    "completion_tokens": 1137
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```python\nfrom __future__ import print_function\n\u00a0\nclass Node(object):\n    def __init__(self, value=None, left=None, right=None):\n        self.value = value\n        self.left = left\n        self.right = right\n\u00a0\n    def __str__(self):\n        return '(%s)'\u00a0% self.value if isinstance(self.value, str) \\\n            else '%s'\u00a0% self.value\n\u00a0\n    def __repr__(self):\n        return '<Node %s>'\u00a0% self.__str__()\n\u00a0\n    def __eq__(self, other):\n        return self.value == other.value and self.left == other.left \\\n            and self.right == other.right\n\u00a0\ndef parse(tokens):\n    \"\"\"Parse tokens into expression tree.\"\"\"\n    stack = []\n    for token in tokens:\n        if token.isdigit():\n            node = Node(int(token))\n        elif token in '+-*':\n            node = Node(token)\n            node.right = stack.pop()\n            node.left = stack.pop()\n        else:\n            raise ValueError('Unknown token \"%s\"'\u00a0% token)\n        stack.append(node)\n    assert len(stack) == 1\n    return stack[0]\n\u00a0\ndef pretty_print(tree, indent=0):\n    \"\"\"Pretty-print expression tree.\"\"\"\n    if tree is None:\n        return ''\n    if tree.value in '+-*':\n        return (' ' * indent + pretty_print(tree.left, indent+2) +\n                '\\n' + ' ' * indent + tree.value + '\\n' +\n                ' ' * indent + pretty_print(tree.right, indent+2))\n    else:\n        return (' ' * indent + str(tree.value))\n\u00a0\nif __name__ == '__main__':\n    # Test cases\n    test_cases = [\n        '1',\n        '1 2 +',\n        '1 2 3 * +',\n        '1 2 3 + 4 * +',\n        '1 2 + 3 4 + *',\n        '1 2 + 3 4 * + 5 -',\n        '1 2 + 3 4 * + 5 - 6 /',\n        '1 2 + 3 4 * + 5 - 6 / 7 *',\n        '1 2 + 3 4 * + 5 - 6 / 7 * 8 +',\n        '1 2 + 3 4 * + 5 - 6 / 7 * 8 + 9 -',\n        '1 2 + 3 4 * + 5 - 6 / 7 * 8 + 9 - 10 *',\n        '1 2 + 3 4 * + 5 - 6 / 7 * 8 + 9 - 10 * 11 +',\n        '1 2 + 3 4 * + 5 - 6 / 7 * 8 + 9 - 10 * 11 + 12 -',\n        '1 2 + 3 4 * + 5 - 6 / 7 * 8 + 9 - 10 * 11 + 12 - 13 *',\n        '1 2 + 3 4 * + 5 - 6 / 7 * 8 + 9 - 10 * 11 + 12 - 13 * 14 +',\n        '1 2 + 3 4 * + 5 - 6 / 7 * 8 + 9 - 10 * 11 + 12 - 13 * 14 + 15 -',\n        '1 2 + 3 4 * + 5 - 6 / 7 * 8 + 9 - 10 * 11 + 12 - 13 * 14 + 15 - 16 *',\n        '1 2 + 3 4 * + 5 - 6 / 7 * 8 + 9 - 10 * 11 + 12 - 13 * 14 + 15 - 16 * 17 +',\n        '1 2 + 3 4 * + 5 - 6 / 7 * 8 + 9 - 10 * 11 + 12 - 13 * 14 + 15 - 16 * 17 + 18 -',\n        '1 2 + 3 4 * + 5 - 6 / 7 * 8 + 9 - 10 * 11 + 12 - 13 * 14 + 15 - 16 * 17 + 18 - 19 *',\n        '1 2 + 3 4 * + 5 - 6 / 7 * 8 + 9 - 10 * 11 + 12 - 13 * 14 + 15 - 16 * 17 + 18 - 19 * 20 +',\n    ]\n    for i, tc in enumerate(test_cases):\n        print('%i:'\u00a0% i)\n        tree = parse(tc.split())\n        print('  parsed:', tree)\n        print('  pretty printed:\\n%s\\n'\u00a0% pretty_print(tree))\n```"
+}

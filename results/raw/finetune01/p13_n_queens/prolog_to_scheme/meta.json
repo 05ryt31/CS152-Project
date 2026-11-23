@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p13_n_queens",
+  "src": "prolog",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:28:36+00:00",
+  "source_file": "p13_n_queens.pl",
+  "target_file": "p13_n_queens.scm",
+  "attempts": 1,
+  "duration_s": 51.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 501,
+    "completion_tokens": 413
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n(define *board-size* 8)\n\u00a0\n;; A position is represented by a pair (x . y)\n;; where x and y are integers in the range 0..(*board-size*-1)\n;;\n;; A board is represented by a list of positions\n;; where each position is a queen\n\u00a0\n;; Return true iff no queens threaten each other\n(define (valid-board? board)\n  (let loop ((remaining board))\n    (cond ((null? remaining) #t)\n          ((threatened? (car remaining) (cdr remaining)) #f)\n          (else (loop (cdr remaining))))))\n\u00a0\n;; Return true iff pos threatens any of the other positions\n(define (threatened? pos others)\n  (if (null? others)\n      #f\n      (or (same-row-or-col? pos (car others))\n          (same-diagonal? pos (car others))\n          (threatened? pos (cdr others)))))\n\u00a0\n;; Return true iff pos and other are in the same row or column\n(define (same-row-or-col? pos other)\n  (or (= (car pos) (car other))\n      (= (cdr pos) (cdr other))))\n\u00a0\n;; Return true iff pos and other are on the same diagonal\n(define (same-diagonal? pos other)\n  (= (abs (- (* 2 (car pos)) (car other) (+ (cdr pos) (cdr other)))) 0))\n\u00a0\n;; Return all valid boards with n queens\n(define (solve-n-queens n)\n  (define (choose-queen col)\n    (map (lambda (row) (cons col row))\n         (iota n)))\n  (filter valid-board?\n          (apply append (map choose-queen (iota n)))))\n\u00a0\n;; Print all solutions\n(let ((solutions (solve-n-queens *board-size*)))\n  (for-each (lambda (solution)\n              (display solution) (newline))\n            solutions))\n(display (length solutions)) (newline))\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p04_bst",
+  "src": "prolog",
+  "tgt": "java",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:16:10+00:00",
+  "source_file": "p04_bst.pl",
+  "target_file": "P04Bst.java",
+  "attempts": 1,
+  "duration_s": 58.0,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 746,
+    "completion_tokens": 462
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\nimport java.util.*;\n\u00a0\nclass Node {\n    int value;\n    Node left = null;\n    Node right = null;\n\u00a0\n    public Node(int v) {value = v;}\n}\n\u00a0\npublic class BST {\n    private Node root = null;\n\u00a0\n    public void add(int val) {\n        if (root == null)\n            root = new Node(val);\n        else\n            add(root, val);\n    }\n\u00a0\n    private void add(Node n, int val) {\n        if (val <= n.value) {\n            if (n.left != null)\n                add(n.left, val);\n            else\n                n.left = new Node(val);\n        } else {\n            if (n.right != null)\n                add(n.right, val);\n            else\n                n.right = new Node(val);\n        }\n    }\n\u00a0\n    public void inOrder() {\n        inOrder(root);\n    }\n\u00a0\n    private void inOrder(Node n) {\n        if (n != null) {\n            inOrder(n.left);\n            System.out.print(n.value + \" \");\n            inOrder(n.right);\n        }\n    }\n\u00a0\n    public void preOrder() {\n        preOrder(root);\n    }\n\u00a0\n    private void preOrder(Node n) {\n        if (n != null) {\n            System.out.print(n.value + \" \");\n            preOrder(n.left);\n            preOrder(n.right);\n        }\n    }\n\u00a0\n    public int height() {\n        return height(root);\n    }\n\u00a0\n    private int height(Node n) {\n        if (n == null)\n            return 0;\n        else {\n            int lHeight = height(n.left);\n            int rHeight = height(n.right);\n\u00a0\n            if (lHeight > rHeight)\n                return (lHeight + 1);\n            else\n                return (rHeight + 1);\n        }\n    }\n\u00a0\n    public static void main(String[] args) {\n        BST tree = new BST();\n        Scanner s = new Scanner(System.in);\n        while (s.hasNextInt())\n            tree.add(s.nextInt());\n        System.out.println(\"In order:\");\n        tree.inOrder();\n        System.out.println(\"\\n\\nPre order:\");\n        tree.preOrder();\n        System.out.println(\"\\n\\nTree height: \" + tree.height());\n    }\n}\n```"
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p05_expr_tree",
+  "src": "haskell",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:45:40+00:00",
+  "source_file": "p05_expr_tree.hs",
+  "target_file": "p05_expr_tree.js",
+  "attempts": 1,
+  "duration_s": 40.4,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 405,
+    "completion_tokens": 322
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nfunction parse(s) {\n    var tokens = s.split(/\\s+/);\n    return parseExpr(tokens);\n}\n\u00a0\nfunction parseExpr(tokens) {\n    if (tokens.length == 1)\n        return new ExprNode(tokens[0]);\n    var expr = parseTerm(tokens);\n    while (tokens.length > 0 && tokens[0] == \"+\")\n        expr = new ExprNode(\"+\", expr, parseTerm(tokens));\n    return expr;\n}\n\u00a0\nfunction parseTerm(tokens) {\n    var term = parseFactor(tokens);\n    while (tokens.length > 0 && tokens[0] == \"*\")\n        term = new ExprNode(\"*\", term, parseFactor(tokens));\n    return term;\n}\n\u00a0\nfunction parseFactor(tokens) {\n    if (tokens.length == 0)\n        throw \"Unexpected end of expression\";\n    var token = tokens.shift();\n    if (token == \"(\") {\n        var expr = parseExpr(tokens);\n        if (tokens.length == 0 || tokens.shift() != \")\")\n            throw \"Expected closing parenthesis\";\n        return expr;\n    }\n    return new ExprNode(token);\n}\n\u00a0\nfunction ExprNode(op, left, right) {\n    this.op = op;\n    this.left = left;\n    this.right = right;\n}\n\u00a0\nExprNode.prototype.toString = function () {\n    if (this.op === undefined)\n        return this.left;\n    return \"(\" + this.left + \" \" + this.op + \" \" + this.right + \")\";\n};\n\u00a0\n// Test\nvar tree = parse(\"3 * 4 + 5\");\nprint(tree.toString());\n```"
+}

@@ -1,0 +1,7 @@
+{
+    "paradigm": "Functional",
+    "language": "Haskell",
+    "justification": "The problem involves applying a series of transformations (map, filter, reduce) to a list of integers, which aligns well with functional programming principles. Haskell is a purely functional language that supports high-level abstractions like lists, maps, filters, and folds, making it ideal for this type of problem. The immutability of data and pure functions ensure predictable behavior and easier debugging.",
+    "alternatives": "Python could also be used here due to its support for functional programming features like lambda functions, map(), filter(), and reduce(). However, Haskell's strong focus on purity and immutability makes it more suitable for this specific problem. Python might require additional libraries or manual management of side effects, which could complicate the solution.",
+    "confidence": 0.95
+}

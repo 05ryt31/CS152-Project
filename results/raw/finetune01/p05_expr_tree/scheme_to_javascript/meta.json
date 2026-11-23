@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p05_expr_tree",
+  "src": "scheme",
+  "tgt": "javascript",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:41:41+00:00",
+  "source_file": "p05_expr_tree.scm",
+  "target_file": "p05_expr_tree.js",
+  "attempts": 1,
+  "duration_s": 23.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 433,
+    "completion_tokens": 186
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```javascript\nfunction parse(tokens) {\n    var stack = [];\n\u00a0\n    while (tokens.length > 0) {\n        var token = tokens.shift();\n        if (isOperator(token)) {\n            var rhs = stack.pop();\n            var lhs = stack.pop();\n            stack.push([token, lhs, rhs]);\n        } else {\n            stack.push(parseInt(token));\n        }\n    }\n\u00a0\n    return stack[0];\n}\n\u00a0\nfunction render(tree) {\n    if (typeof tree === 'number') {\n        return tree;\n    } else {\n        return '(' + render(tree[1]) + ' ' + tree[0] + ' ' + render(tree[2]) + ')';\n    }\n}\n\u00a0\nvar expression = \"3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3\";\nvar tokens = expression.split(' ');\nvar tree = parse(tokens);\nprint(render(tree));\n```"
+}

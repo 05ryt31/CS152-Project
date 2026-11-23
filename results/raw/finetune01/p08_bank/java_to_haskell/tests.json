@@ -1,0 +1,9 @@
+[
+    {"name": "overdraw then succeed", "input": "4\ndeposit 50\nwithdraw 70\nwithdraw 20\nbalance", "output": "error\n30"},
+    {"name": "balance when empty", "input": "1\nbalance", "output": "0"},
+    {"name": "withdraw exactly the balance", "input": "3\ndeposit 10\nwithdraw 10\nbalance", "output": "0"},
+    {"name": "many errors in a row", "input": "3\nwithdraw 1\nwithdraw 1\nbalance", "output": "error\nerror\n0"},
+    {"name": "deposits only print nothing", "input": "2\ndeposit 5\ndeposit 7", "output": ""},
+    {"name": "error after balance", "input": "4\ndeposit 100\nwithdraw 30\nbalance\nwithdraw 71", "output": "70\nerror"},
+    {"name": "zero commands", "input": "0", "output": ""}
+]

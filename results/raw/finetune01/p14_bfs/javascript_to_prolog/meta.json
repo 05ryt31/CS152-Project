@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p14_bfs",
+  "src": "javascript",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T07:35:19+00:00",
+  "source_file": "p14_bfs.js",
+  "target_file": "p14_bfs.pl",
+  "attempts": 1,
+  "duration_s": 43.1,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 581,
+    "completion_tokens": 343
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\nbfs(Graph, Start, End, Path):-\n\tbfs(Graph, Start, End, [], [Start], Path).\n\u00a0\nbfs(_, _, _, _, _):-!.\n\u00a0\nbfs(Graph, Start, End, Visited, Queue, Path):-\n\tQueue = [_|Rest],\n\tmember(End, Rest),\n\tappend(Rest, Visited, Visited1),\n\tmake_queue(Graph, Rest, Visited1, Queue1),\n\tbfs(Graph, Start, End, Visited1, Queue1, Path).\n\u00a0\nbfs(Graph, Start, End, Visited, Queue, Path):-\n\tQueue = [_|Rest],\n\tretract(Rest),\n\tmake_queue(Graph, Rest, Visited, Queue1),\n\tbfs(Graph, Start, End, Visited, Queue1, Path).\n\u00a0\nmake_queue(Graph, [], _, []):-!.\n\u00a0\nmake_queue(Graph, [Node | Nodes], Visited, Queue):-\n\tfindall(Neigh, edge(Node, Neigh, Graph), Neighbors),\n\texclude(member(Node), Neighbors, Neighbors1),\n\texclude(member(_), Neighbors1, Neighbors2),\n\texclude(member(_), Neighbors2, Neighbors3),\n\tappend(Neighbors3, Visited, Neighbors4),\n\tappend(Rest, Neighbors4, Visited1),\n\tappend(Rest, Visited, Visited1),\n\tmake_queue(Graph, Nodes, Visited1, Queue).\n\u00a0\nedge(X, Y, [[X,Y]|_]).\nedge(X, Y, [[Y,X]|_]).\nedge(X, Y, [_|T]):-\n\tedge(X, Y, T).\n\u00a0\n```"
+}

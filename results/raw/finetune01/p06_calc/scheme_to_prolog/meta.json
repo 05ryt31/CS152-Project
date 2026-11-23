@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p06_calc",
+  "src": "scheme",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T04:20:18+00:00",
+  "source_file": "p06_calc.scm",
+  "target_file": "p06_calc.pl",
+  "attempts": 1,
+  "duration_s": 63.7,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 803,
+    "completion_tokens": 508
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\n:- use_module(library(lambda)).\n\u00a0\n% parse expression into list of terms\nparse_expr(S, L) :-\n\texpr(S, [], L).\n\u00a0\nexpr(S, L, R) :-\n\t(   term(S, T, S1), expr1(S1, T, L, L1),\n\t    ! ; T = [], R = L1 ).\n\u00a0\nexpr1([], T, L, L).\nexpr1(S, T, L, R) :-\n\top(Op, _, _),\n\ttoken(Op, S, S1),\n\texpr(S1, [Op,T|L], R).\n\u00a0\nterm(S, T, S1) :-\n\tnumber(T, S, S1).\nterm(S, T, S1) :-\n\tvariable(T, S, S1).\nterm(S, T, S1) :-\n\tparentheses(T, S, S1).\n\u00a0\nvariable([H|T], V, S) :-\n\tchar_type(H, alpha),\n\tname(V, [H|V1]),\n\tvariable(T, V1, S).\nvariable([], V, V).\n\u00a0\nparentheses(T, S, S1) :-\n\ttoken('(', S, S2),\n\texpr(S2, [], T1),\n\ttoken(')', T1, S1).\n\u00a0\nnumber(N, S, S1) :-\n\tnumber_chars(N, [48,49,50,51,52,53,54,55,56,57]),\n\tnumber_chars(N, S),\n\tstring_concat(_, [N|_], S1).\n\u00a0\n\u00a0\n% evaluate parsed expression\neval(L, N) :-\n\tevaluate(L, 0, N).\n\u00a0\nevaluate([], N, N).\nevaluate([+,-,A,B], N, R) :-\n\tevaluate(A, N, M),\n\tevaluate(B, M, R).\nevaluate([*,A,B], N, R) :-\n\tevaluate(A, N, M),\n\tevaluate(B, M, R).\nevaluate([A], N, R) :-\n\tevaluate(A, N, R).\nevaluate(number(N), N, N).\nevaluate(variable(V), N, R) :-\n\tbagof((X,Y), var(V,X), [(N,Y)]),\n\tmember((N,R), Y).\nevaluate(parens(P), N, R) :-\n\tevaluate(P, N, R).\n\u00a0\n\u00a0\n% calculate\ncalc(S, N) :-\n\tparse_expr(S, L),\n\tevaluate(L, N).\n\u00a0\n```"
+}

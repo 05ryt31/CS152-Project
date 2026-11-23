@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p06_calc",
+  "src": "python",
+  "tgt": "java",
+  "group": "intra",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:55:24+00:00",
+  "source_file": "p06_calc.py",
+  "target_file": "P06Calc.java",
+  "attempts": 1,
+  "duration_s": 65.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 643,
+    "completion_tokens": 515
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```java\nimport java.util.*;\n\u00a0\npublic class Calc {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        System.out.println(\"Enter your equation:\");\n        String input = scanner.nextLine();\n        System.out.println(calc(input));\n    }\n\u00a0\n    private static double calc(String input) {\n        Stack<Double> numbers = new Stack<>();\n        Stack<String> operators = new Stack<>();\n        List<String> tokens = tokenize(input);\n        for (String token : tokens) {\n            switch (token) {\n                case \"(\":\n                    operators.push(token);\n                    break;\n                case \")\":\n                    while (!operators.isEmpty() && !operators.peek().equals(\"(\")) {\n                        numbers.push(applyOp(numbers.pop(), numbers.pop(), operators.pop()));\n                    }\n                    operators.pop(); // pop \"(\"\n                    break;\n                case \"+\" :\n                case \"-\" :\n                case \"*\" :\n                case \"/\" :\n                    while (!operators.isEmpty() && precedence(operators.peek()) >= precedence(token)) {\n                        numbers.push(applyOp(numbers.pop(), numbers.pop(), operators.pop()));\n                    }\n                    operators.push(token);\n                    break;\n                default:\n                    numbers.push(Double.parseDouble(token));\n            }\n        }\n        while (!operators.isEmpty()) {\n            numbers.push(applyOp(numbers.pop(), numbers.pop(), operators.pop()));\n        }\n        return numbers.pop();\n    }\n\u00a0\n    private static List<String> tokenize(String input) {\n        List<String> tokens = new ArrayList<>();\n        StringBuilder sb = new StringBuilder();\n        for (char c : input.toCharArray()) {\n            if (Character.isDigit(c) || c == '.') {\n                sb.append(c);\n            } else if (c != ' ') {\n                tokens.add(sb.toString());\n                sb.setLength(0);\n                tokens.add(Character.toString(c));\n            }\n        }\n        tokens.add(sb.toString());\n        return tokens;\n    }\n\u00a0\n    private static int precedence(String operator) {\n        switch (operator) {\n            case \"+\":\n            case \"-\":\n                return 1;\n            case \"*\":\n            case \"/\":\n                return 2;\n        }\n        return 0;\n    }\n\u00a0\n    private static double applyOp(double b, double a, String operator) {\n        switch (operator) {\n            case \"+\":\n                return a + b;\n            case \"-\":\n                return a - b;\n            case \"*\":\n                return a * b;\n            case \"/\":\n                if (b == 0) throw new IllegalArgumentException(\"Cannot divide by zero\");\n                return a / b;\n        }\n        return 0;\n    }\n}\n```"
+}

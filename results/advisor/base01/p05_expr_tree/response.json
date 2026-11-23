@@ -1,0 +1,7 @@
+{
+    "paradigm": "Functional",
+    "language": "Haskell",
+    "justification": "The problem involves building and traversing an expression tree, which is naturally suited to functional programming paradigms. Haskell's strong support for recursion, higher-order functions, and algebraic data types makes it ideal for this task. The immutability of data in Haskell also aligns well with the nature of expression trees where nodes do not change after creation.",
+    "alternatives": "Python could also be used with its list comprehensions and recursion, but Haskell's pure functional approach would likely result in more concise and readable code. Other languages like Scala or OCaml might also be suitable, but they lack the built-in support for algebraic data types and pattern matching that Haskell provides.",
+    "confidence": 0.9
+}

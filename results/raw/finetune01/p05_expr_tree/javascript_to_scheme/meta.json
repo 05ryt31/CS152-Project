@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p05_expr_tree",
+  "src": "javascript",
+  "tgt": "scheme",
+  "group": "inter",
+  "priority": 2,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:26:47+00:00",
+  "source_file": "p05_expr_tree.js",
+  "target_file": "p05_expr_tree.scm",
+  "attempts": 1,
+  "duration_s": 125.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 427,
+    "completion_tokens": 1018
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```scheme\n\u00a0\n(import (scheme base)\n        (scheme read)\n        (scheme write))\n\u00a0\n;; A binary tree is either empty or a cons pair where the car is the value\n;; and the cdr is a cons pair whose car is the left subtree and whose cdr\n;; is the right subtree.\n;;\n;; For example, the expression \"1 + 2 * 3\" is represented by the tree:\n;;\n;;   (+ 1 (* 2 3))\n;;\n;; which can be printed in this format:\n;;\n;;   ((+ 1 ((* 2 3))))\n;;\n;; or in this format:\n;;\n;;   (+ 1 ((* 2 3)))\n;;\n;; or in this format:\n;;\n;;   (+ 1 (2 3))\n;;\n;; etc.\n;;\n;; We use the first format here because it makes it easier to print trees\n;; without quoting them.\n;;\n;; Note that we don't need to define a datatype for the tree nodes because\n;; they're just regular cons pairs.\n\u00a0\n(define (tree-print tree port)\n  ;; Print a tree to PORT.\n  ;;\n  ;; If TREE is empty, do nothing.\n  ;;\n  ;; Otherwise, print the value of the root followed by the left subtree\n  ;; and then the right subtree.\n  (if (not (null? tree))\n      (begin\n        (display (car tree) port)\n        (tree-print (cdr tree) port))))\n\u00a0\n(define (tree-eval tree)\n  ;; Evaluate a tree.\n  ;;\n  ;; If TREE is empty, return 0.\n  ;;\n  ;; Otherwise, evaluate the left subtree, the right subtree, and then\n  ;; apply the function at the root to the results of those evaluations.\n  (if (null? tree)\n      0\n      (let ((left (tree-eval (car (cdr tree)))))\n        (let ((right (tree-eval (car (cdr (cdr tree))))))\n          (case (car tree)\n            ((+) (+ left right))\n            ((-) (- left right))\n            ((*) (* left right))\n            ((/) (/ left right)))))))\n\u00a0\n(define (tokenize string)\n  ;; Convert STRING into a list of tokens.\n  ;;\n  ;; Each token is either a number or a symbol.\n  ;;\n  ;; For example, the string \"(+ 1 (* 2 3))\" becomes the list\n  ;; ((+ 1 ((* 2 3)))).\n  (define (tokenize-helper string index)\n    (cond ((>= index (string-length string))\n           '())\n          ((char-whitespace? (string-ref string index))\n           (tokenize-helper string (+ index 1)))\n          ((char-numeric? (string-ref string index))\n           (let loop ((i index)\n                      (token \"\"))\n             (if (or (= i (string-length string))\n                     (char-whitespace? (string-ref string i)))\n                 (cons (string->number token)\n                       (tokenize-helper string (+ i 1)))\n                 (loop (+ i 1)\n                       (string-append token (string (string-ref string i)))))))\n          (else\n           (let loop ((i index)\n                      (token \"\"))\n             (if (or (= i (string-length string))\n                     (char-whitespace? (string-ref string i)))\n                 (cons (string->symbol token)\n                       (tokenize-helper string (+ i 1)))\n                 (loop (+ i 1)\n                       (string-append token (string (string-ref string i)))))))))\n  (tokenize-helper string 0))\n\u00a0\n(define (parse-tokens tokens)\n  ;; Parse TOKENS into a tree.\n  ;;\n  ;; Each token is either a number or a symbol.\n  ;;\n  ;; For example, the list ((+ 1 ((* 2 3))) becomes the tree\n  ;; ((+ 1 ((* 2 3))))).\n  (define (parse-tokens-helper tokens)\n    (cond ((null? tokens)\n           '())\n          ((number? (car tokens))\n           (list (car tokens)))\n          (else\n           (let ((op (car tokens))\n                 (args (parse-tokens-helper (cdr tokens))))\n             (if (and (pair? args)\n                      (= (length args) 2))\n                 (list op (car args) (cadr args))\n                 (error \"Invalid arguments to operator\" op args))))))\n  (parse-tokens-helper tokens))\n\u00a0\n(define (main)\n  (do ((line (read-line) (read-line)))\n      ((eof-object? line))\n      (let* ((tokens (tokenize line))\n             (tree (parse-tokens tokens)))\n        (display \"Tokens:\")\n        (display tokens)\n        (newline)\n        (display \"Tree:\")\n        (tree-print tree (current-output-port))\n        (newline)\n        (display \"Value:\")\n        (display (tree-eval tree))\n        (newline))))\n\u00a0\n(main)\n\u00a0\n```"
+}

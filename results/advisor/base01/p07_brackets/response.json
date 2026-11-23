@@ -1,0 +1,7 @@
+{
+    "paradigm": "Imperative",
+    "language": "Python",
+    "justification": "This problem requires checking if brackets are balanced and properly nested. This can be efficiently solved using a stack data structure, which is naturally supported in an imperative style. Python's simplicity and readability make it an excellent choice for this task.",
+    "alternatives": "Java could also be used here, but it would require more boilerplate code due to its statically typed nature. Haskell might be an alternative if functional programming is preferred, but it would involve more complex syntax and potentially less readable code for such a straightforward problem. JavaScript could work too, but it lacks some of the built-in support for stacks that Python provides.",
+    "confidence": 0.95
+}

@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p09_stack_vm",
+  "src": "java",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T05:27:50+00:00",
+  "source_file": "P09StackVm.java",
+  "target_file": "p09_stack_vm.pl",
+  "attempts": 1,
+  "duration_s": 255.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 681,
+    "completion_tokens": 2048
+  },
+  "extraction": "no_fence",
+  "raw_response": "```prolog\n\u00a0\n:- use_module(library(clpfd)).\n\u00a0\n% Stack VM\n\u00a0\n% Pushes an integer onto the stack\npush(S, I, S1):-\n\tappend(S, [I], S1).\n\u00a0\n% Pops an integer off the stack\npop(S, I, S1):-\n\tlength(S, L),\n\tL > 0,\n\tappend(_S, [I|S1], S),\n\t_ is L - 1.\n\u00a0\n% Adds top two integers on the stack\nadd(S, S1):-\n\tpop(S, I1, S2),\n\tpop(S2, I2, S3),\n\tI is I1 + I2,\n\tpush(S3, I, S1).\n\u00a0\n% Multiplies top two integers on the stack\nmul(S, S1):-\n\tpop(S, I1, S2),\n\tpop(S2, I2, S3),\n\tI is I1 * I2,\n\tpush(S3, I, S1).\n\u00a0\n% Duplicates top integer on the stack\ndup(S, S1):-\n\tpop(S, I, S2),\n\tpush(S2, I, S3),\n\tpush(S3, I, S1).\n\u00a0\n% Swaps top two integers on the stack\nswap(S, S1):-\n\tpop(S, I1, S2),\n\tpop(S2, I2, S3),\n\tpush(S3, I1, S4),\n\tpush(S4, I2, S1).\n\u00a0\n% Prints top integer on the stack\nprint(S, I, S1):-\n\tpop(S, I, S1).\n\u00a0\n% Runs a list of instructions on a stack\nrun([], _, []):-!.\nrun([push(I)|T], S, S1):-\n\tpush(S, I, S2),\n\trun(T, S2, S1).\nrun([pop(I)|T], S, S1):-\n\tpop(S, I, S2),\n\trun(T, S2, S1).\nrun([add|T], S, S1):-\n\tadd(S, S2),\n\trun(T, S2, S1).\nrun([mul|T], S, S1):-\n\tmul(S, S2),\n\trun(T, S2, S1).\nrun([dup|T], S, S1):-\n\tdup(S, S2),\n\trun(T, S2, S1).\nrun([swap|T], S, S1):-\n\tswap(S, S2),\n\trun(T, S2, S1).\nrun([print(I)|T], S, S1):-\n\tprint(S, I, S2),\n\trun(T, S2, S1).\n\u00a0\n% Tests\ntest1:-\n\tS = [],\n\trun([push(5), push(6), add], S, S1),\n\twritef('Test 1:\u00a0%w\\n', [S1]).\n\u00a0\ntest2:-\n\tS = [],\n\trun([push(5), push(6), mul], S, S1),\n\twritef('Test 2:\u00a0%w\\n', [S1]).\n\u00a0\ntest3:-\n\tS = [],\n\trun([push(5), dup], S, S1),\n\twritef('Test 3:\u00a0%w\\n', [S1]).\n\u00a0\ntest4:-\n\tS = [],\n\trun([push(5), push(6), swap], S, S1),\n\twritef('Test 4:\u00a0%w\\n', [S1]).\n\u00a0\ntest5:-\n\tS = [],\n\trun([push(5), print(5)], S, S1),\n\twritef('Test 5:\u00a0%w\\n', [S1]).\n\u00a0\ntest6:-\n\tS = [],\n\trun([push(5), push(6), pop(7)], S, S1),\n\twritef('Test 6:\u00a0%w\\n', [S1]).\n\u00a0\ntest7:-\n\tS = [],\n\trun([push(5), push(6), add, pop(7)], S, S1),\n\twritef('Test 7:\u00a0%w\\n', [S1]).\n\u00a0\ntest8:-\n\tS = [],\n\trun([push(5), push(6), mul, pop(7)], S, S1),\n\twritef('Test 8:\u00a0%w\\n', [S1]).\n\u00a0\ntest9:-\n\tS = [],\n\trun([push(5), push(6), dup, pop(7)], S, S1),\n\twritef('Test 9:\u00a0%w\\n', [S1]).\n\u00a0\ntest10:-\n\tS = [],\n\trun([push(5), push(6), swap, pop(7)], S, S1),\n\twritef('Test 10:\u00a0%w\\n', [S1]).\n\u00a0\ntest11:-\n\tS = [],\n\trun([push(5), push(6), print(5)], S, S1),\n\twritef('Test 11:\u00a0%w\\n', [S1]).\n\u00a0\ntest12:-\n\tS = [],\n\trun([push(5), push(6), print(6)], S, S1),\n\twritef('Test 12:\u00a0%w\\n', [S1]).\n\u00a0\ntest13:-\n\tS = [],\n\trun([push(5), push(6), print(7)], S, S1),\n\twritef('Test 13:\u00a0%w\\n', [S1]).\n\u00a0\ntest14:-\n\tS = [],\n\trun([push(5), push(6), add, print(5)], S, S1),\n\twritef('Test 14:\u00a0%w\\n', [S1]).\n\u00a0\ntest15:-\n\tS = [],\n\trun([push(5), push(6), mul, print(5)], S, S1),\n\twritef('Test 15:\u00a0%w\\n', [S1]).\n\u00a0\ntest16:-\n\tS = [],\n\trun([push(5), push(6), dup, print(5)], S, S1),\n\twritef('Test 16:\u00a0%w\\n', [S1]).\n\u00a0\ntest17:-\n\tS = [],\n\trun([push(5), push(6), swap, print(5)], S, S1),\n\twritef('Test 17:\u00a0%w\\n', [S1]).\n\u00a0\ntest18:-\n\tS = [],\n\trun([push(5), push(6), add, pop(7), print(5)], S, S1),\n\twritef('Test 18:\u00a0%w\\n', [S1]).\n\u00a0\ntest19:-\n\tS = [],\n\trun([push(5), push(6), mul, pop(7), print(5)], S, S1),\n\twritef('Test 19:\u00a0%w\\n', [S1]).\n\u00a0\ntest20:-\n\tS = [],\n\trun([push(5), push(6), dup, pop(7), print(5)], S, S1),\n\twritef('Test 20:\u00a0%w\\n', [S1]).\n\u00a0\ntest21:-\n\tS = [],\n\trun([push(5), push(6), swap, pop(7), print(5)], S, S1),\n\twritef('Test 21:\u00a0%w\\n', [S1]).\n\u00a0\ntest22:-\n\tS = [],\n\trun([push(5), push(6), add, pop(7), print(6)], S, S1),\n\twritef('Test 22:\u00a0%w\\n', [S1]).\n\u00a0\ntest23:-\n\tS = [],\n\trun([push(5), push(6), mul, pop(7), print(6)], S, S1),\n\twritef('Test 23:\u00a0%w\\n', [S1]).\n\u00a0\ntest24:-\n\tS = [],\n\trun([push(5), push(6), dup, pop(7), print(6)], S, S1),\n\twritef('Test 24:\u00a0%w\\n', [S1]).\n\u00a0\ntest25:-\n\tS = [],\n\trun([push(5), push(6), swap, pop(7), print(6)], S, S1),\n\twritef('Test 25:\u00a0%w\\n', [S1]).\n\u00a0\ntest26:-\n\tS = [],\n\trun([push(5), push(6), add, pop(7), print(7)], S, S1),\n\twritef('Test 26:\u00a0%w\\n', [S1]).\n\u00a0\ntest27:-\n\tS = [],\n\trun([push(5), push(6), mul, pop(7), print(7)], S, S1),\n\twritef('Test 27:\u00a0%w\\n', [S1]).\n\u00a0\ntest28:-\n\tS = [],\n\trun([push(5), push(6), dup, pop(7), print(7)], S, S1),\n\twritef('Test 28:\u00a0%w\\n', [S1]).\n\u00a0\ntest29:-\n\tS = [],\n\trun([push(5), push(6), swap, pop(7), print(7)], S, S1),\n\twritef('Test 29:\u00a0%w\\n', [S1]).\n\u00a0\ntest30:-\n\tS = [],\n\trun([push(5), push(6), add, pop(7), print(8)], S, S1),\n\twritef('Test 30:\u00a0%w\\n', [S1]).\n\u00a0\ntest31:-\n\tS = [],\n\trun([push(5), push(6), mul, pop(7), print(8)], S, S1),\n\twritef('Test 31:\u00a0%w\\n', [S1]).\n\u00a0\ntest32:-\n\tS = [],\n\trun([push(5), push(6), dup, pop(7), print(8)], S, S1),\n\twritef('Test"
+}

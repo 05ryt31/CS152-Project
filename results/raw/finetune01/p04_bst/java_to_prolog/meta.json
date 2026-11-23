@@ -1,0 +1,41 @@
+{
+  "run_id": "finetune01",
+  "problem": "p04_bst",
+  "src": "java",
+  "tgt": "prolog",
+  "group": "inter",
+  "priority": 1,
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "f9ceca1d24c6e998a46c32867c43d32922378a6d064c75f0e4933f2d3041817d",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T03:05:08+00:00",
+  "source_file": "P04Bst.java",
+  "target_file": "p04_bst.pl",
+  "attempts": 1,
+  "duration_s": 40.9,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 768,
+    "completion_tokens": 321
+  },
+  "extraction": "tagged_fence",
+  "raw_response": "```prolog\nbst_tree([5,3,7,1,4,6,8]).\n\u00a0\n% Task 1\ninsert_node(T, V, T1):-\n    bst_tree(T),\n    insert(V, T, T1).\n\u00a0\ninsert(V, [], [V]):-!.\ninsert(V, [X|T], [X|T1]):-\n    V >= X,\n    !,\n    insert(V, T, T1).\ninsert(V, [X|T], [V,X|T]):-\n    V < X.\n\u00a0\n% Task 2\ninorder([], []):-!.\ninorder([X], [X]):-!.\ninorder([X|T], L):-\n    inorder(T, R),\n    inorder(X, R).\n\u00a0\ninorder(X, L):-\n    integer(X),\n    L = [X].\n\u00a0\ninorder([X|T], L):-\n    inorder(X, L1),\n    inorder(T, L2),\n    append(L1, L2, L).\n\u00a0\npreorder([], []):-!.\npreorder([X], [X]):-!.\npreorder([X|T], L):-\n    preorder(X, L1),\n    preorder(T, L2),\n    append(L1, L2, L3),\n    append([X], L3, L).\n\u00a0\nheight([], 0):-!.\nheight([_], 1):-!.\nheight([_|T], H):-\n    height(T, H1),\n    H is H1 + 1.\n\u00a0\n```"
+}
