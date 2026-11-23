@@ -1,0 +1,7 @@
+{
+    "paradigm": "Logic",
+    "language": "Prolog",
+    "justification": "The problem involves counting the number of solutions to the N-Queens puzzle, which is naturally suited to a logic-based approach. The canonical solution to this problem in Prolog uses backtracking through permutations and safety checks, making it well-suited to the declarative nature of the problem. Prolog's built-in support for recursion and constraint satisfaction makes it ideal for this type of combinatorial problem.",
+    "alternatives": "Haskell could also be a good alternative due to its strong support for functional programming and lazy evaluation, which can help manage the recursive nature of the problem. However, Prolog's built-in capabilities for backtracking and constraint handling might offer more straightforward and efficient solutions for this specific problem.",
+    "confidence": 0.95
+}

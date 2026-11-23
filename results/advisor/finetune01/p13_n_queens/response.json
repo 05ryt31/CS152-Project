@@ -1,0 +1,7 @@
+{
+    "paradigm": "Functional",
+    "language": "Haskell",
+    "justification": "N-Queens is a classic example of a backtracking algorithm, which is well-suited to functional programming. The solution is expressed as a pure function that returns a list of all possible solutions.",
+    "alternatives": "A procedural solution would use loops and mutable variables. A logic programming solution would express the problem in terms of constraints.",
+    "confidence": 1.0
+}

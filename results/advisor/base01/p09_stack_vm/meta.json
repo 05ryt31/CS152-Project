@@ -1,0 +1,34 @@
+{
+  "run_id": "base01",
+  "problem": "p09_stack_vm",
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "335bdf0be4826eaa7be1be6da322572ac47c2fe373f623b8947748cc254f3f5f",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T09:21:30+00:00",
+  "attempts": 1,
+  "duration_s": 13.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 540,
+    "completion_tokens": 176
+  },
+  "raw_response": "```json\n{\n    \"paradigm\": \"Imperative\",\n    \"language\": \"Python\",\n    \"justification\": \"The problem requires managing a mutable stack and performing operations based on user input. The imperative paradigm is well-suited for this task due to its ability to handle mutable state and control flow through loops and conditionals. Python is chosen because it has a simple syntax and built-in support for lists, which can be used to implement the stack.\",\n    \"alternatives\": \"Java could also be used with similar logic, but it would require more boilerplate code. Haskell could be used for a purely functional approach, but it would involve more complex data structures and functions. Scheme or Prolog might be suitable for a more declarative approach, but they are less commonly used for such tasks.\",\n    \"confidence\": 0.8\n}\n```"
+}

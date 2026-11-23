@@ -1,0 +1,34 @@
+{
+  "run_id": "finetune01",
+  "problem": "p02_merge_sorted",
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "335bdf0be4826eaa7be1be6da322572ac47c2fe373f623b8947748cc254f3f5f",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T09:27:39+00:00",
+  "attempts": 1,
+  "duration_s": 14.5,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 498,
+    "completion_tokens": 110
+  },
+  "raw_response": "```json\n{\n    \"paradigm\": \"Functional\",\n    \"language\": \"Haskell\",\n    \"justification\": \"Merging two lists is a textbook example of a functional programming technique called 'structural recursion'. The Haskell standard library provides a function named 'merge' that performs this operation.\",\n    \"alternatives\": \"This problem can also be solved using imperative techniques such as looping through the lists and comparing elements. However, this would require more code than the functional solution.\",\n    \"confidence\": 1.0\n}\n```"
+}

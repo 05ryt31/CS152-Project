@@ -1,0 +1,7 @@
+{
+    "paradigm": "Functional",
+    "language": "Haskell",
+    "justification": "This problem is naturally expressed using a fold over the list, maintaining a set of seen elements and appending each element to the result if it has not been seen before.",
+    "alternatives": "A similar solution can be written in Python using a dictionary to track seen elements. The advantage of Haskell's approach is that it is more efficient than Python's, since we don't need to search through the dictionary at each step.",
+    "confidence": 1.0
+}

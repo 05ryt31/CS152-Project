@@ -1,0 +1,34 @@
+{
+  "run_id": "base01",
+  "problem": "p08_bank",
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "335bdf0be4826eaa7be1be6da322572ac47c2fe373f623b8947748cc254f3f5f",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T09:21:14+00:00",
+  "attempts": 1,
+  "duration_s": 15.8,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4",
+  "usage": {
+    "prompt_tokens": 567,
+    "completion_tokens": 214
+  },
+  "raw_response": "```json\n{\n    \"paradigm\": \"Object-oriented\",\n    \"language\": \"Python\",\n    \"justification\": \"The problem involves managing a bank account with specific commands, which naturally lends itself to an object-oriented approach. An object-oriented paradigm allows for encapsulation of the account's state and behaviors within a class, making it easy to manage the balance and handle different commands. Python is a versatile language that supports object-oriented programming well and has a clean syntax that makes it suitable for this type of problem.\",\n    \"alternatives\": \"Haskell could also be used here due to its strong support for functional programming, but it might require more boilerplate code compared to Python. Prolog could theoretically solve this problem using recursion and assertions, but it would be less intuitive and harder to read than an object-oriented solution. JavaScript could work as well, especially if running in a browser environment, but it lacks some of the built-in features that make Python a good choice for this kind of task.\",\n    \"confidence\": 0.9\n}\n```"
+}

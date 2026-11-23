@@ -1,0 +1,34 @@
+{
+  "run_id": "finetune01",
+  "problem": "p01_rle",
+  "backend": "hf",
+  "prompt_version": "v1",
+  "prompt_sha256": "335bdf0be4826eaa7be1be6da322572ac47c2fe373f623b8947748cc254f3f5f",
+  "lock": {
+    "base": {
+      "repo": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "revision": "c03e6d358207e414f1eca0bb1891e29f1db0e242",
+      "license": "apache-2.0"
+    },
+    "adapter": {
+      "repo": "ellm135/lost-across-paradigms",
+      "revision": "2ac817dd2cf46508fe950fbac4f51d5e9a0eb35f",
+      "note": "fine tuned on Rosetta Code pairs"
+    },
+    "decoding": {
+      "temperature": 0,
+      "max_new_tokens": 2048,
+      "seed": 0
+    }
+  },
+  "timestamp": "2026-11-22T09:27:18+00:00",
+  "attempts": 1,
+  "duration_s": 20.2,
+  "status": "ok",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct@c03e6d358207+nf4+ellm135/lost-across-paradigms@2ac817dd2cf4",
+  "usage": {
+    "prompt_tokens": 491,
+    "completion_tokens": 145
+  },
+  "raw_response": "```json\n{\n    \"paradigm\": \"Functional\",\n    \"language\": \"Haskell\",\n    \"justification\": \"This problem is a good fit for functional programming because it involves processing a list of elements (characters) and transforming it into another list of elements (pairs of characters and counts). The solution can be expressed using high-level functions such as map, fold, and filter.\",\n    \"alternatives\": \"Python would also be a good choice for this problem. It has built-in support for lists and tuples, and provides powerful tools like generators and decorators that allow for elegant solutions. Other functional languages like Lisp and Scala could also be used.\",\n    \"confidence\": 1.0\n}\n```"
+}

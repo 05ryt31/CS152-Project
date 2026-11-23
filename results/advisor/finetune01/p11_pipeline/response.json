@@ -1,0 +1,7 @@
+{
+    "paradigm": "Functional",
+    "language": "Haskell",
+    "justification": "This problem is naturally expressed using functional programming techniques such as map, filter, fold, etc.",
+    "alternatives": "Python, Lisp, Ruby, Scala, F#, OCaml, Erlang, etc. all have similar capabilities.",
+    "confidence": 1.0
+}

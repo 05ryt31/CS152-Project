@@ -1,0 +1,7 @@
+{
+    "paradigm": "Imperative",
+    "language": "Python",
+    "justification": "The problem requires managing a mutable stack and performing operations based on user input. The imperative paradigm is well-suited for this task due to its ability to handle mutable state and control flow through loops and conditionals. Python is chosen because it has a simple syntax and built-in support for lists, which can be used to implement the stack.",
+    "alternatives": "Java could also be used with similar logic, but it would require more boilerplate code. Haskell could be used for a purely functional approach, but it would involve more complex data structures and functions. Scheme or Prolog might be suitable for a more declarative approach, but they are less commonly used for such tasks.",
+    "confidence": 0.8
+}

@@ -1,0 +1,7 @@
+{
+    "paradigm": "Object-oriented",
+    "language": "Python",
+    "justification": "This problem is naturally suited to an object-oriented approach. The bank account can be represented as an object with methods for depositing money, withdrawing money, and checking the balance.",
+    "alternatives": "Functional programming could also work here, but it's more awkward than object-oriented programming. In functional programming, we'd have to pass the balance around as an argument to functions, rather than having a mutable variable inside the function. This makes the code harder to read and understand.",
+    "confidence": 1.0
+}

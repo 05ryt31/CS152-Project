@@ -1,0 +1,7 @@
+{
+    "paradigm": "Object-oriented",
+    "language": "Python",
+    "justification": "LRU caches are a natural fit for object-oriented design. The cache can be represented as a class with methods for getting and setting values. This allows the cache to maintain its own state, including the order of access and the current size.",
+    "alternatives": "Functional languages like Haskell could also represent an LRU cache as a class, but they would have to use mutable data structures. Alternatively, they could implement the cache as a pure function that takes the cache as an argument and returns the new cache as a result. However, this would require passing around the cache as an argument to every function that needs to access it, which can be cumbersome. A purely functional solution would need to use a persistent data structure like a balanced tree or a hash table.",
+    "confidence": 1.0
+}

@@ -1,0 +1,7 @@
+{
+    "paradigm": "Functional",
+    "language": "Haskell",
+    "justification": "Haskell has built-in support for generating permutations.",
+    "alternatives": "Python also has built-in support for generating permutations.",
+    "confidence": 1.0
+}

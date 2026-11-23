@@ -1,0 +1,7 @@
+{
+    "paradigm": "Functional",
+    "language": "Haskell",
+    "justification": "Haskell has built-in support for algebraic data types, which makes it easy to represent trees. The syntax of the language also encourages immutability.",
+    "alternatives": "Scheme would also work well here, but it's more verbose than Haskell.",
+    "confidence": 1.0
+}

@@ -1,0 +1,7 @@
+{
+    "paradigm": "Imperative",
+    "language": "Python",
+    "justification": "Stacks are built into Python, so we can use them directly.",
+    "alternatives": "This could also be done in Java using arrays, but it would require manual resizing.",
+    "confidence": 1.0
+}
